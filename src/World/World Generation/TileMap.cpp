@@ -1,10 +1,10 @@
 ﻿#include "TileMap.h"
 
-#include "../../ResourceManagers/ResourceHolder.h"
+#include "../../Resource Managers/ResourceHolder.h"
 #include "../../Util/Constants.h"
 
 // ctor used primarily for chunks - where pos is based on chunk center
-// since pos corresponds to top left corner - a shift is performed to accomodate for chunk center
+// since pos corresponds to top left corner - a shift is performed to accommodate for chunk center
 TileMap::TileMap(sf::Vector2f pos, const std::string& tileSetSheet, sf::Vector2u tileSize, const std::vector<char>& tiles, float width, float height)
      :  tileSet(ResourceHolder::get().textures.get(tileSetSheet)), pos(pos - worldConstants::CHUNK_SIZE / 2.f)
 {

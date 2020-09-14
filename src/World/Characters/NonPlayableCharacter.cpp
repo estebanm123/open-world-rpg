@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-#include "../../ResourceManagers/ResourceHolder.h"
+#include "../../Resource Managers/ResourceHolder.h"
 
 NonPlayableCharacter::NonPlayableCharacter(NpcSprite sprite, CharacterStats stats)
 	: stats(stats), sprite(std::move(sprite)), dead(false)

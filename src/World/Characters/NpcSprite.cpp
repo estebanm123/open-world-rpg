@@ -1,6 +1,6 @@
 ﻿#include "NpcSprite.h"
 
-#include "../../ResourceManagers/ResourceHolder.h"
+#include "../../Resource Managers/ResourceHolder.h"
 
 NpcSprite::NpcSprite(const std::string& spriteSheet, sf::Vector2f pos, sf::Vector2f size, sf::RectangleShape hitBox,
 	std::unique_ptr<CharacterAnim> anim, sf::IntRect deathFrame)

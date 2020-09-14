@@ -22,7 +22,7 @@ public:
 	sf::Vector2f getLookDirection();
 	const sf::RectangleShape& getHitBox() const;
 	
-	static constexpr float WALK_SPEED = 120;
+	static constexpr float WALK_SPEED = 400;
 	static constexpr float PICK_UP_RADIUS = 20;
 	static constexpr float DEFAULT_HEALTH = 100;
 

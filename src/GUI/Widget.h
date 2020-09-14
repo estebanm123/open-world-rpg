@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <memory>
-#include "../ResourceManagers/ResourceHolder.h"
+#include "../Resource Managers/ResourceHolder.h"
 
 namespace gui
 {

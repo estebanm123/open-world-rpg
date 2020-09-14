@@ -163,10 +163,8 @@ bool ChunkManager::inMatrixBounds(const sf::Vector2i& pos)
 // check if any new chunks have loaded and allocate them, and notifies generator to keep generating
 void ChunkManager::update(float dt)
 {
-	if (updateTimer.getElapsedTime() >= sf::seconds(CHUNK_CHECK_DELAY))
+	if (!generator.chunksGeneratedIsEmpty())
 	{
-		updateTimer.restart();
-		generator.notifyChunkRequest();
 		auto chunk = generator.getGeneratedChunk();
 		while (chunk != nullptr)
 		{
@@ -181,7 +179,7 @@ void ChunkManager::update(float dt)
 void ChunkManager::allocateInitialChunks(const sf::Vector2f& pos)
 {
 	using namespace constants;
-	std::array<sf::Vector2i, 9> directions = {{
+	std::array<sf::Vector2i, 9> directions = {{  // refactor to static global obj?
 		CENTER,
 		NORTH,
 		NORTH_EAST,

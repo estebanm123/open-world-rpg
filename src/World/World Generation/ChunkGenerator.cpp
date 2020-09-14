@@ -4,10 +4,11 @@
 #include <iostream>
 #include <memory>
 
+#include "../../Debug/DebugLog.h"
 
 #include "../../Util/Constants.h"
 
-ChunkGenerator::ChunkGenerator(int seed): rand(seed), setUp(true)
+ChunkGenerator::ChunkGenerator(int seed): rand(seed), setUp(true), generating(false)
 {
 }
 
@@ -15,47 +16,40 @@ void ChunkGenerator::operator()()
 {
     while (setUp)
     {
-        auto chunkData = getNextChunkToGenerate();
-        if (chunkData == nullptr) continue;
-        generateNewChunk(*chunkData);
+        handleChunkGeneration();
     }
-    while (true)
+    // if toGenerate is empty, wait until request from manager
+    while (generating)
     {
-        std::unique_lock<std::mutex> mlock(toGenerateMutex);
-        std::cout << "GENERATOR: " << "waiting on chunk request" << std::endl;
-        chunkRequest.wait(mlock);
-        mlock.unlock();
-
-        std::cout << "GENERATOR: " << "got chunk request" << std::endl;
-        auto chunkData = getNextChunkToGenerate();
-        std::cout << "GENERATOR: " << "got the chunk to generate" << std::endl;
-        if (chunkData == nullptr) continue;
-        std::cout << "GENERATOR: " << "wasn't null" << std::endl;
-        generateNewChunk(*chunkData);
-        std::cout << "GENERATOR: " << "Finished generating" << std::endl;
+        Log("Generator", "Waiting on chunk request.")
+        if (toGenerate.empty()) {
+            std::unique_lock<std::mutex> mlock(toGenerateMutex); // relocate downward
+            chunkRequest.wait(mlock);
+            mlock.unlock(); // got request
+            Log("Generator", "Woke up.")
+        }
+        handleChunkGeneration();
     }
 }
 
-std::unique_ptr<Chunk::RequestData> ChunkGenerator::getNextChunkToGenerate()
+void ChunkGenerator::handleChunkGeneration()
 {
-    std::lock_guard<std::mutex> lock(toGenerateMutex);
-    if (toGenerate.empty()) return nullptr;
-    auto data = std::make_unique<Chunk::RequestData>(toGenerate.front());
+    if (toGenerate.empty()) return;
+    auto data = toGenerate.front();
     toGenerate.pop();
-    return data;
+    Log("Generator", "Generating next chunk")
+    generateChunk(data);
 }
 
 void ChunkGenerator::requestChunk(Chunk::RequestData data)
 {
-    std::lock_guard<std::mutex> lock(toGenerateMutex);
     toGenerate.push(data);
-    std::cout << "MANAGER: " << "notifying of request" << std::endl;
     chunkRequest.notify_one();
+    Log("Manager", "Notifying generator of chunk request")
 }
 
 std::shared_ptr<Chunk> ChunkGenerator::getGeneratedChunk()
 {
-    std::lock_guard<std::mutex> lock(generatedMutex);
     if (generated.empty()) return nullptr;
     auto chunk = generated.front();
     generated.pop();
@@ -64,31 +58,24 @@ std::shared_ptr<Chunk> ChunkGenerator::getGeneratedChunk()
 
 void ChunkGenerator::enqueueNewChunk(std::shared_ptr<Chunk> chunk)
 {
-    std::lock_guard<std::mutex> lock(generatedMutex);
     generated.push(std::move(chunk));
+    Log("Generator", "Enqueued new chunk")
 }
 
 void ChunkGenerator::disableSetUpMode()
 {
     setUp = false;
-}
-
-void ChunkGenerator::notifyChunkRequest()
-{
-    std::lock_guard<std::mutex> lock(toGenerateMutex);
-    chunkRequest.notify_one();
+    generating = true;
 }
 
 // creates a new chunk
 // establishes chunk's center relative to the current chunk's center
-void ChunkGenerator::generateNewChunk(const Chunk::RequestData& data)
+void ChunkGenerator::generateChunk(const Chunk::RequestData& data)
 {
-    std::cout << "GENERATOR: " << "generating a new chunk" << std::endl;
     using namespace worldConstants;
     auto center = Chunk::getCenterFromReqData(data);
     TileMap tileMap(center, TILE_SHEET_PATH, TILE_SIZE, generateTiles(center), TILES_PER_CHUNK.x, TILES_PER_CHUNK.y);
     enqueueNewChunk(std::make_shared<Chunk>(data, tileMap, center));
-    std::cout << "GENERATOR: " << "finished generating" << std::endl;
 }
 
 std::vector<char> ChunkGenerator::generateTiles(const sf::Vector2f& center)
@@ -103,4 +90,8 @@ std::vector<char> ChunkGenerator::generateTiles(const sf::Vector2f& center)
         map.push_back(rand.getIntInRange(0, NUM_TILES - 1));
     }
     return map;
+}
+
+bool ChunkGenerator::chunksGeneratedIsEmpty() {
+    return generated.empty();
 }

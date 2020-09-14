@@ -1,6 +1,6 @@
 #include "PlayableHumanoidSprite.h"
 
-#include "../../ResourceManagers/ResourceHolder.h"
+#include "../../Resource Managers/ResourceHolder.h"
 #include "../Animations/CharacterAnims/BodyAnims/EmptyHandedBodyAnim.h"
 
 PlayableHumanoidSprite::PlayableHumanoidSprite(const std::string & bodySheet, const std::string & headSheet, const std::string & legsSheet)

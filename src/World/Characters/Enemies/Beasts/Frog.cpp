@@ -1,6 +1,6 @@
 ﻿#include "Frog.h"
 
-#include "../../../../ResourceManagers/ResourceHolder.h"
+#include "../../../../Resource Managers/ResourceHolder.h"
 #include "../../../Animations/CharacterAnims/BeastAnims/FrogAnim.h"
 
 Frog::Frog(sf::Vector2f pos, int seed)

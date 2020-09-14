@@ -32,6 +32,6 @@ private:
 	bool inMatrixBounds(const sf::Vector2i& pos);
 	std::shared_ptr<Chunk>& getChunkFromDirection(const sf::Vector2i& dir);
 
-	static constexpr auto CHUNK_CHECK_DELAY = .5;
+	static constexpr auto CHUNK_CHECK_DELAY = 0;
 	
 };

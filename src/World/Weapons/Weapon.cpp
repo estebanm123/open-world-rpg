@@ -1,6 +1,6 @@
 #include "Weapon.h"
 
-#include "../../ResourceManagers/ResourceHolder.h"
+#include "../../Resource Managers/ResourceHolder.h"
 
 namespace
 {
