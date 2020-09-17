@@ -1,11 +1,5 @@
 ﻿#include "Beast.h"
-
-#include <iostream>
-
-
-
 #include "../../../../Util/MathExtra.h"
-#include "../../../../Util/Random.h"
 
 Beast::Beast(NpcSprite sprite, CharacterStats stats, int seed)
 	: Enemy(std::move(sprite), stats),

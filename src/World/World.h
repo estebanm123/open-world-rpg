@@ -33,7 +33,7 @@ private:
 	ChunkManager chunkManager;
 	sf::Clock chunkGenerationTimer;
 	
-	static constexpr auto CHUNK_GENERATION_TIMER = 2;
+	static constexpr auto CHUNK_GENERATION_TIMER = 1;
 
 	void handleChunkChange();
 	void updateEnemies(float dt);

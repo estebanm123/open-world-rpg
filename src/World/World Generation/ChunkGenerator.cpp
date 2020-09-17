@@ -21,12 +21,12 @@ void ChunkGenerator::operator()()
     // if toGenerate is empty, wait until request from manager
     while (generating)
     {
-        Log("Generator", "Waiting on chunk request.")
+        LOG("Generator", "Waiting on chunk request.")
         if (toGenerate.empty()) {
             std::unique_lock<std::mutex> mlock(toGenerateMutex); // relocate downward
             chunkRequest.wait(mlock);
             mlock.unlock(); // got request
-            Log("Generator", "Woke up.")
+            LOG("Generator", "Woke up.")
         }
         handleChunkGeneration();
     }
@@ -37,7 +37,7 @@ void ChunkGenerator::handleChunkGeneration()
     if (toGenerate.empty()) return;
     auto data = toGenerate.front();
     toGenerate.pop();
-    Log("Generator", "Generating next chunk")
+    LOG("Generator", "Generating next chunk")
     generateChunk(data);
 }
 
@@ -45,7 +45,7 @@ void ChunkGenerator::requestChunk(Chunk::RequestData data)
 {
     toGenerate.push(data);
     chunkRequest.notify_one();
-    Log("Manager", "Notifying generator of chunk request")
+    LOG("Manager", "Notifying generator of chunk request")
 }
 
 std::shared_ptr<Chunk> ChunkGenerator::getGeneratedChunk()
@@ -59,7 +59,7 @@ std::shared_ptr<Chunk> ChunkGenerator::getGeneratedChunk()
 void ChunkGenerator::enqueueNewChunk(std::shared_ptr<Chunk> chunk)
 {
     generated.push(std::move(chunk));
-    Log("Generator", "Enqueued new chunk")
+    LOG("Generator", "Enqueued new chunk")
 }
 
 void ChunkGenerator::disableSetUpMode()

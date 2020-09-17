@@ -22,7 +22,6 @@ void NonPlayableCharacter::update(float dt)
 
 void NonPlayableCharacter::renderBy(sf::RenderTarget& renderer) const
 {
-	// for debug
 	sprite.renderBy(renderer);
 
 }

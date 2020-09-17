@@ -76,7 +76,7 @@ void World::update(float dt)
 	handleCollisions();
 }
 
-// refactor to own class?   
+// refactor to own class?
 void World::handleChunkChange()
 {
 	if (chunkGenerationTimer.getElapsedTime() < sf::seconds(CHUNK_GENERATION_TIMER)) return;
@@ -87,7 +87,8 @@ void World::handleChunkChange()
 	bool top = playerPos.y < curChunk->getCenter().y - worldConstants::CHUNK_SIZE.y / 2.f;
 	bool right = playerPos.x > curChunk->getCenter().x + worldConstants::CHUNK_SIZE.x / 2.f;
 	bool bottom = playerPos.y > curChunk->getCenter().y + worldConstants::CHUNK_SIZE.y / 2.f;
-	
+//	std::cout << curChunk->getCenter().x << ", " << curChunk->getCenter().y << std::endl;
+//	std::cout << "top " << top << " bot " << bottom << " left " << left << " right " << right << std::endl;
 	if (top && left)
 	{
 		curChunk = chunkManager.getChunk(constants::NORTH_WEST);

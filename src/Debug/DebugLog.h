@@ -1,7 +1,7 @@
 #pragma once
-
+#include <iostream>
 #ifdef DEBUG
-#define Log(name, message) std::cout << name << ": " << message << std::endl;
+#define LOG(name, message) std::cout << name << ": " << message << std::endl;
 #else
-#define Log(name, message)
+#define LOG(name, message)
 #endif

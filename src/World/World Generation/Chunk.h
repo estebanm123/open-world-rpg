@@ -23,6 +23,6 @@ public:
 private:
 	RequestData reqData;
 	TileMap tiles;
-	sf::Vector2f center;
+	sf::Vector2f center; // position? origin?
 	// neighbors
 };

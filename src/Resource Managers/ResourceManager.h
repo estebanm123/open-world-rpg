@@ -9,7 +9,6 @@ class ResourceManager
     public:
         ResourceManager (const std::string& folder, const std::string& extension)
        :   folder    ("res/" + folder + "/")
-      // : folder ("")
         ,   extension ("." + extension)
         { }
 
@@ -31,8 +30,9 @@ class ResourceManager
         {
             Resource r;
 
-            //if the resource fails to load, then it adds a default "fail" resource
-            if(!r.loadFromFile(getFullFilename(name))) {
+            //if the resource fails to load, then it adds a default "fail" resources
+            std::string fullName = getFullFilename(name);
+            if(!r.loadFromFile(fullName)) {
                 Resource fail;
                 fail.loadFromFile(folder + "_fail_" + extension);
                 resources.insert(std::make_pair(name, fail));

@@ -19,7 +19,7 @@ public:
 	void move(sf::Vector2f offset);
 	void rotate(float angle);
 	void renderBy(sf::RenderTarget& renderer) const;
-	const sf::RectangleShape& getHitBox() const;
+	const sf::RectangleShape& getHitBox() const; // probably can just use intrect
 private:
 	sf::Sprite sprite;
 	sf::RectangleShape hitBox;
