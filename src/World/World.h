@@ -8,7 +8,7 @@
 #include "Characters/Enemies/Enemy.h"
 #include "World Generation/Chunk.h"
 #include "World Generation/ChunkManager.h"
-#include "World Generation/TileMap.h"
+#include "World Generation/Tiles/TileMap.h"
 #include "Player/Player.h"
 #include "Projectiles/Projectile.h"
 #include "Weapons/ProjectileWeapon.h"

@@ -24,7 +24,7 @@ void drawChunkOutlines(sf::RenderTarget &renderTargetRef, sf::Vector2f center, s
     outline.setOutlineThickness(1);
     renderTargetRef.draw(outline);
 }
-// put in own file
+
 void debugRenderChunkOutlines(
         sf::RenderTarget &renderTargetRef,
         const std::array < std::array < std::shared_ptr<Chunk> , 3 > , 3 >& chunks) {

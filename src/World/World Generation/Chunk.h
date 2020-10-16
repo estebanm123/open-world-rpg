@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include <SFML/System/Vector2.hpp>
 
-#include "TileMap.h"
+#include "Tiles/TileMap.h"
 
 class Chunk
 {

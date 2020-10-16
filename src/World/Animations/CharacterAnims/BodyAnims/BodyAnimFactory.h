@@ -6,7 +6,7 @@
 
 class Revolver;
 
-// generates bodyAnim based on weapon type
+// Generates bodyAnim based on weapon type
 // Intended for players and npcs that can hold weapons
 class BodyAnimFactory
 {
