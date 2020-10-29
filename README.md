@@ -8,4 +8,4 @@ Currently features an infinite procedurally generated world. World chunks are ge
 
 Right now, I'm working on overhauling the tile generation system to add support for more complex tile groups and, most importantly, to allow for the introduction of a noise algorithm/ hash function, which will make make different tile types appear more natural.
 
-Here's an early demo from May 2020: https://www.youtube.com/watch?v=0c8xLTAbcqw
+Here's an old demo from May 2020: https://www.youtube.com/watch?v=0c8xLTAbcqw
