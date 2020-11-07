@@ -2,24 +2,21 @@
 
 
 Animation::Animation(AnimationData animationData)
-    : data(animationData)
-{
+        : data(animationData) {
     initializeAnims();
 }
 
-void Animation::addFrame(int col, int row)
-{
+void Animation::addFrame(int col, int row) {
     sf::IntRect bounds;
     bounds.top = row * data.frameHeight;
     bounds.height = data.frameHeight;
-    bounds.width  = data.frameWidth;
-    bounds.left   = col * data.frameWidth;
+    bounds.width = data.frameWidth;
+    bounds.left = col * data.frameWidth;
 
     frames.emplace_back(bounds, data.delay);
 }
 
-void Animation::resetAnimation()
-{
+void Animation::resetAnimation() {
     framePointer = 0;
 }
 
@@ -55,28 +52,22 @@ void Animation::resetAnimation()
 // assumes all anims span at most 1 row, and are contiguous
 // If there are inverting frame patterns, frames between 'inverting frames'
 // will be repeated in reverse order
-void Animation::initializeAnims()
-{
+void Animation::initializeAnims() {
     auto prevLimit = data.startFrame;
-    for (auto inversionFrame : data.inversionFrames)
-    {
-        for (auto j = prevLimit; j <= inversionFrame; j++)
-        {
+    for (auto inversionFrame : data.inversionFrames) {
+        for (auto j = prevLimit; j <= inversionFrame; j++) {
             addFrame(j, data.row);
         }
 
         // check whether to repeat inversion frame
-        for (auto j = inversionFrame - 1; j >= prevLimit; j--)
-        {
+        for (auto j = inversionFrame - 1; j >= prevLimit; j--) {
             addFrame(j, data.row);
         }
         prevLimit = inversionFrame + 1;
     }
 
-    if (data.inversionFrames.empty() || (data.inversionFrames[data.inversionFrames.size() - 1] != data.endFrame))
-    {
-        for (auto j = prevLimit; j <= data.endFrame; j++)
-        {
+    if (data.inversionFrames.empty() || (data.inversionFrames[data.inversionFrames.size() - 1] != data.endFrame)) {
+        for (auto j = prevLimit; j <= data.endFrame; j++) {
             addFrame(j, data.row);
         }
     }

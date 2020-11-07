@@ -1,8 +1,10 @@
 #pragma once
 
+#include <memory>
+#include "Env.h"
 
-class EnvGenerator {
-
+struct EnvGenerator {
+    static std::shared_ptr<Env> getEnvironment(sf::Vector2f coords);
 };
 
 

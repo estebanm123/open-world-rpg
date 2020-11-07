@@ -4,37 +4,41 @@
 
 #include "Widget.h"
 
-namespace gui
-{
-    class TextBox : public gui::Widget
-    {
-        public:
-            TextBox(std::string& modString);
+namespace gui {
+    class TextBox : public gui::Widget {
+    public:
+        TextBox(std::string &modString);
 
-            void setLabel       (const std::string& str);
-            void setTexture     (const sf::Texture& tex);
+        void setLabel(const std::string &str);
 
-            void handleEvent    (sf::Event e, const sf::RenderWindow& window) override;
-            void render         (sf::RenderTarget& renderer)    override;
-            void setPosition    (const sf::Vector2f& pos)       override;
-            sf::Vector2f getSize() const                        override;
+        void setTexture(const sf::Texture &tex);
 
-        private:
-            void handleClick    (sf::Event e, const sf::RenderWindow& window);
-            void handleTextInput(sf::Event e);
+        void handleEvent(sf::Event e, const sf::RenderWindow &window) override;
 
-            bool isValidCharacter   (unsigned char keyCode);
-            bool isBackspace        (unsigned char keycode);
+        void render(sf::RenderTarget &renderer) override;
 
-            sf::Vector2f    position;
+        void setPosition(const sf::Vector2f &pos) override;
 
-            Rectangle       rect;
-            Text            text;
-            Text            label;
-            std::string*    pModString;
+        sf::Vector2f getSize() const override;
 
-            bool isActive = false;
+    private:
+        void handleClick(sf::Event e, const sf::RenderWindow &window);
+
+        void handleTextInput(sf::Event e);
+
+        bool isValidCharacter(unsigned char keyCode);
+
+        bool isBackspace(unsigned char keycode);
+
+        sf::Vector2f position;
+
+        Rectangle rect;
+        Text text;
+        Text label;
+        std::string *pModString;
+
+        bool isActive = false;
     };
 
-    inline std::unique_ptr<TextBox> makeTextBox(std::string& modStr) { return std::make_unique<TextBox>(modStr); }
+    inline std::unique_ptr<TextBox> makeTextBox(std::string &modStr) { return std::make_unique<TextBox>(modStr); }
 }

@@ -6,21 +6,22 @@
 
 #include "Widget.h"
 
-namespace gui
-{
+namespace gui {
 
-class StackMenu : public sf::NonCopyable
-{
+    class StackMenu : public sf::NonCopyable {
     public:
-        StackMenu(const sf::RenderWindow& window, float baseY);
-        StackMenu(const sf::Vector2f& position);
+        StackMenu(const sf::RenderWindow &window, float baseY);
 
-        StackMenu(StackMenu&& other);
-        StackMenu& operator =(StackMenu&& other);
+        StackMenu(const sf::Vector2f &position);
+
+        StackMenu(StackMenu &&other);
+
+        StackMenu &operator=(StackMenu &&other);
 
         ~StackMenu() = default;
 
         void addWidget(std::unique_ptr<Widget> w);
+
         /*
         template<typename T, typename... Args>
         void addWidget(Args&&... args) {
@@ -29,17 +30,18 @@ class StackMenu : public sf::NonCopyable
             widgets.push_back(std::move(w));
         }*/
 
-        void setTitle(const std::string& title);
+        void setTitle(const std::string &title);
 
-        void handleEvent   (sf::Event e, const sf::RenderWindow& window);
-        void render        (sf::RenderTarget& renderer);
+        void handleEvent(sf::Event e, const sf::RenderWindow &window);
+
+        void render(sf::RenderTarget &renderer);
 
     private:
-        const sf::RenderWindow& getWindow() const;
+        const sf::RenderWindow &getWindow() const;
 
-        void initWidget(Widget& w);
+        void initWidget(Widget &w);
 
-        const sf::RenderWindow* pWindow;
+        const sf::RenderWindow *pWindow;
 
         std::vector<std::unique_ptr<Widget>> widgets;
         sf::RectangleShape background;
@@ -48,6 +50,6 @@ class StackMenu : public sf::NonCopyable
         sf::Vector2f baseSize;
 
         Widget::Text titleText;
-};
+    };
 
 }

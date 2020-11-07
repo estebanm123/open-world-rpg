@@ -1,8 +1,9 @@
 #pragma once
 
-struct NonMoveable
-{
+struct NonMoveable {
     NonMoveable() = default;
-    NonMoveable& operator = (sf::NonCopyable&&) = delete;
-    NonMoveable(sf::NonCopyable&&) = delete;
+
+    NonMoveable &operator=(sf::NonCopyable &&) = delete;
+
+    NonMoveable(sf::NonCopyable &&) = delete;
 };

@@ -3,16 +3,15 @@
 class Subject;
 
 
+class Observer {
 
-class Observer
-{
-	
 public:
-	enum NotifType
-	{
-		PLAYER_HIT,
-		ENEMY_KILLED
-	};
-	virtual void update(const Subject& info, NotifType type) = 0;
-	virtual ~Observer() = default;
+    enum NotifType {
+        PLAYER_HIT,
+        ENEMY_KILLED
+    };
+
+    virtual void update(const Subject &info, NotifType type) = 0;
+
+    virtual ~Observer() = default;
 };

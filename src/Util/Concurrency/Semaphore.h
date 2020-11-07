@@ -1,17 +1,19 @@
 #pragma once
+
 #include <condition_variable>
 
-class Semaphore
-{
+class Semaphore {
 public:
-    Semaphore(int init) : value(init) { }
+    Semaphore(int init) : value(init) {}
 
     void down();
+
     void up();
+
 private:
-    int value;                   
-    std::mutex mux;              
-    std::condition_variable waitcond; 
+    int value;
+    std::mutex mux;
+    std::condition_variable waitcond;
 };
 	
 

@@ -1,10 +1,9 @@
 #pragma
 
-template <typename T>
-class SpscQueue
-{
+template<typename T>
+class SpscQueue {
 public:
-	SpscQueue() {
+    SpscQueue() {
 
-	}
+    }
 };

@@ -1,7 +1,6 @@
 #include "Semaphore.h"
 
-void Semaphore::down()
-{
+void Semaphore::down() {
     std::unique_lock<std::mutex> lck(mux);
 
     if (--value < 0) {
@@ -9,8 +8,7 @@ void Semaphore::down()
     }
 }
 
-void Semaphore::up()
-{
+void Semaphore::up() {
     std::unique_lock<std::mutex> lck(mux);
     if (++value <= 0) waitcond.notify_one();
 }

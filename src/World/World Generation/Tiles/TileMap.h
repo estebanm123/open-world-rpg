@@ -12,11 +12,21 @@
 #include "Tile.h"
 #include "../../../Util/Constants.h"
 #include "../Chunk.h"
+#include "TileContainer.h"
+#include "TileMapGenerator.h"
 
-class TileMap : public sf::Drawable, public sf::Transformable {
+class TileMap {
 public:
-    TileMap(sf::Vector2f pos, sf::Vector2i size);
+    explicit TileMap(sf::Vector2f pos);
 
     void renderBy(sf::RenderTarget &target) const;
 
-private: static unsigned long long array < std::array < std::shared_ptr<Tile>, reinterpret_cast<unsigned long long>(worldConstants::TILES_PER_CHUNK.x) sf::Vector2f pos; };
+    constexpr static int SIZE_X = worldConstants::TILES_PER_CHUNK_X;
+    constexpr static int SIZE_Y = worldConstants::TILES_PER_CHUNK_Y;
+
+    typedef std::array<std::array<std::shared_ptr<Tile>, TileMap::SIZE_Y>, TileMap::SIZE_X> Tiles;
+private:
+    Tiles tiles;
+    sf::Vector2f pos;
+
+};
