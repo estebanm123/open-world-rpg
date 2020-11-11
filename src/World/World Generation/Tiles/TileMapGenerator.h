@@ -3,11 +3,8 @@
 #include <vector>
 #include <memory>
 #include <SFML/Graphics.hpp>
-#include "Tile.h"
 #include "TileContainer.h"
-#include "../Environments/Env.h"
 #include "TileMap.h"
-
 
 class TileMapGenerator {
 public:
@@ -15,10 +12,10 @@ public:
 
 private:
     static void
-    assignContainer(std::shared_ptr<TileContainer> container, sf::Vector2i localCoords, const TileMap::Tiles &tiles);
+    assignContainer(const std::shared_ptr<TileContainer> & container, sf::Vector2i localCoords, TileMap::Tiles &tiles);
 
-    static const TileContainer &
-    fetchTileContainer(sf::Vector2i localCoords, sf::Vector2f pos, const TileMap::Tiles &tiles);
+    static void
+    fetchAndAssignTileContainer(sf::Vector2i localCoords, sf::Vector2f pos, TileMap::Tiles &tiles);
 };
 
 

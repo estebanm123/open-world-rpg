@@ -2,18 +2,18 @@
 
 
 Animation::Animation(AnimationData animationData)
-        : data(animationData) {
+        : metadata(animationData) {
     initializeAnims();
 }
 
 void Animation::addFrame(int col, int row) {
     sf::IntRect bounds;
-    bounds.top = row * data.frameHeight;
-    bounds.height = data.frameHeight;
-    bounds.width = data.frameWidth;
-    bounds.left = col * data.frameWidth;
+    bounds.top = row * metadata.frameHeight;
+    bounds.height = metadata.frameHeight;
+    bounds.width = metadata.frameWidth;
+    bounds.left = col * metadata.frameWidth;
 
-    frames.emplace_back(bounds, data.delay);
+    frames.emplace_back(bounds, metadata.delay);
 }
 
 void Animation::resetAnimation() {
@@ -23,7 +23,7 @@ void Animation::resetAnimation() {
 ////Returns the current/active frame of the animation
 //const sf::IntRect& Animation::getFrame()
 //{
-//  if (!data.repeating && framePointer >= frames.size()) return animConstants::EMPTY_FRAME;
+//  if (!metadata.repeating && framePointer >= frames.size()) return animConstants::EMPTY_FRAME;
 //  //Add the elapsed time since last getFrame() call to timeSinceLastFrame
 //  timeSinceLastFrame += timer.getElapsedTime();
 //
@@ -53,22 +53,22 @@ void Animation::resetAnimation() {
 // If there are inverting frame patterns, frames between 'inverting frames'
 // will be repeated in reverse order
 void Animation::initializeAnims() {
-    auto prevLimit = data.startFrame;
-    for (auto inversionFrame : data.inversionFrames) {
+    auto prevLimit = metadata.startFrame;
+    for (auto inversionFrame : metadata.inversionFrames) {
         for (auto j = prevLimit; j <= inversionFrame; j++) {
-            addFrame(j, data.row);
+            addFrame(j, metadata.row);
         }
 
         // check whether to repeat inversion frame
         for (auto j = inversionFrame - 1; j >= prevLimit; j--) {
-            addFrame(j, data.row);
+            addFrame(j, metadata.row);
         }
         prevLimit = inversionFrame + 1;
     }
 
-    if (data.inversionFrames.empty() || (data.inversionFrames[data.inversionFrames.size() - 1] != data.endFrame)) {
-        for (auto j = prevLimit; j <= data.endFrame; j++) {
-            addFrame(j, data.row);
+    if (metadata.inversionFrames.empty() || (metadata.inversionFrames[metadata.inversionFrames.size() - 1] != metadata.endFrame)) {
+        for (auto j = prevLimit; j <= metadata.endFrame; j++) {
+            addFrame(j, metadata.row);
         }
     }
 }

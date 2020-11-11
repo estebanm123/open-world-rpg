@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-class Subject;
+class Observable;
 
 
 class Observer {
@@ -11,7 +11,7 @@ public:
         ENEMY_KILLED
     };
 
-    virtual void update(const Subject &info, NotifType type) = 0;
+    virtual void update(const Observable &info, NotifType type) = 0;
 
     virtual ~Observer() = default;
 };

@@ -1,6 +1,8 @@
 ﻿#pragma once
 
 #include <SFML/System/Vector2.hpp>
+#include <array>
+#include <string>
 
 namespace constants {
     const inline sf::Vector2i NORTH = {0, 1};
@@ -32,7 +34,7 @@ namespace worldConstants {
     constexpr inline int TILES_PER_CHUNK_Y = 32;
 
     const inline int NUM_TILES = 16;
-    const inline sf::Vector2f TILE_SIZE = {32, 32}; // (all sizes in pixels)
+    const inline sf::Vector2f TILE_SIZE = {48, 48}; // (all sizes in pixels)
     const inline sf::Vector2f TILES_PER_CHUNK = {TILES_PER_CHUNK_X, TILES_PER_CHUNK_Y};
     const inline sf::Vector2f CHUNK_SIZE = {TILE_SIZE.x * TILES_PER_CHUNK.x, TILE_SIZE.y * TILES_PER_CHUNK.y};
     const inline sf::Vector2f INITIAL_PLAYER_POS = {400, 400};

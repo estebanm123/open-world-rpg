@@ -1,8 +1,10 @@
 
 
 #include "EnvGenerator.h"
+#include "EnvTypes.h"
 
-std::shared_ptr<Env> EnvGenerator::getEnvironment(sf::Vector2f coords) {
+
+const Env & EnvGenerator::getEnvironment(sf::Vector2f coords) {
     // TODO: hook up perlin noise
-    return
+    return EnvTypes::Dirt;
 }

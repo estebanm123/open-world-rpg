@@ -12,7 +12,7 @@ class ResourceManager
         ,   extension ("." + extension)
         { }
 
-        Resource& get(const std::string& name)
+        const Resource& get(const std::string& name)
         {
             if (!exists(name)) {
                 add(name);
@@ -30,14 +30,12 @@ class ResourceManager
         {
             Resource r;
 
-            //if the resource fails to load, then it adds a default "fail" resources
             std::string fullName = getFullFilename(name);
             if(!r.loadFromFile(fullName)) {
                 Resource fail;
                 fail.loadFromFile(folder + "_fail_" + extension);
                 resources.insert(std::make_pair(name, fail));
-            }
-            else {
+            } else {
                 resources.insert(std::make_pair(name, r));
             }
         }

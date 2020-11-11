@@ -1,4 +1,5 @@
 #pragma once
+#include <SFML/System/NonCopyable.hpp>
 
 struct NonMoveable {
     NonMoveable() = default;

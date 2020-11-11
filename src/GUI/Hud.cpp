@@ -1,9 +1,10 @@
 ﻿#include "Hud.h"
+#include "../Util/Observer/Observable.h"
 
 Hud::Hud() : kills(0), ammo(-1), health() {
 }
 
-void Hud::update(const Subject &info, Observer::NotifType type) {
+void Hud::update(const Observable &info, Observer::NotifType type) {
     switch (type) {
         case (Observer::ENEMY_KILLED):
             kills++;

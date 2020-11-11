@@ -11,9 +11,6 @@
 #include <memory>
 #include "Tile.h"
 #include "../../../Util/Constants.h"
-#include "../Chunk.h"
-#include "TileContainer.h"
-#include "TileMapGenerator.h"
 
 class TileMap {
 public:

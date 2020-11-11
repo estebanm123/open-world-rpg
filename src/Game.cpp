@@ -1,11 +1,13 @@
 #include "Game.h"
 
 #include "States/StatePlaying.h"
+#include "World/World Generation/Environments/EnvTypes.h"
 
 Game::Game()
         : window({1280, 720}, "Test") {
     window.setPosition({window.getPosition().x, 0});
     window.setFramerateLimit(120);
+    EnvTypes::initialize();
     pushState<StatePlaying>(*this);
 }
 

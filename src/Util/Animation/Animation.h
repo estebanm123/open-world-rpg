@@ -55,11 +55,11 @@ private:
     void initializeAnims();
 
 protected:
-    AnimationData data;           // animation meta-data, customizable from outside
+    AnimationData metadata;           // animation meta-metadata, customizable from outside
 
     sf::Clock timer;              //Timer for progressing the animation
-    sf::Time timeSinceLastFrameChange;      //Overlapped time from last getFrame() call
-    std::vector<Frame> frames;    //List of animation frames
-    unsigned framePointer = 0;    //The index of the current active frame
+    sf::Time timeSinceLastFrameChange;      // Overlapped time from last getFrame() call
+    std::vector<Frame> frames;
+    unsigned framePointer = 0;    //index of the active frame
 
 };

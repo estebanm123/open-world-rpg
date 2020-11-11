@@ -5,9 +5,9 @@
 #include "Observer.h"
 
 
-class Subject {
+class Observable {
 public:
-    Subject() = default;
+    Observable() = default;
 
     void notifyObservers(Observer::NotifType type);
 

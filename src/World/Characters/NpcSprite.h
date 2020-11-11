@@ -15,7 +15,7 @@ public:
 
     NpcSprite(NpcSprite &&other) noexcept;
 
-    void playMoveAnim();
+    [[noreturn]] void playMoveAnim();
 
     void playIdleAnim();
 

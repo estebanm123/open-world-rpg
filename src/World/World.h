@@ -3,7 +3,6 @@
 #include <SFML/Graphics/View.hpp>
 
 
-#include "../Util/Observer Pattern/Subject.h"
 #include "../Util/Random/Random.h"
 #include "Characters/Enemies/Enemy.h"
 #include "World Generation/Chunk.h"
@@ -13,8 +12,9 @@
 #include "Projectiles/Projectile.h"
 #include "Weapons/ProjectileWeapon.h"
 #include "World Generation/ChunkManager.h"
+#include "../Util/Observer/Observable.h"
 
-class World : Subject {
+class World : Observable {
 public:
     explicit World(std::shared_ptr<sf::View> worldView);
 
