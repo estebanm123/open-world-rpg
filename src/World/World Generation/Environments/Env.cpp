@@ -18,8 +18,8 @@ void Env::setSingleTileContainers(TileContainer::TileContainers & tileContainers
     this->singleTileContainers = tileContainers;
 }
 
-Env::Env(std::string spriteSheet, TileContainer::TileContainers & singleTileContainers)
-        :  spriteSheet(std::move(spriteSheet)), singleTileContainers((singleTileContainers)) {
+Env::Env(std::string spriteSheet, int multiTileIndex)
+        :  spriteSheet(std::move(spriteSheet)), multiTileIndex(multiTileIndex) {
 }
 
 

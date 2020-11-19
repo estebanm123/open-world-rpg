@@ -10,7 +10,7 @@
 
 class Env : NonMoveable, sf::NonCopyable {
 public:
-    Env(std::string spriteSheet, TileContainer::TileContainers & singleTileContainers);
+    Env(std::string spriteSheet, int multiTileIndex);
 
     // TODO: encapsulate into a single interface method that takes
     //          in both coords and size to allocate, so both single and multi
@@ -23,7 +23,8 @@ public:
 
 private:
     const std::string spriteSheet;
-    TileContainer::TileContainers & singleTileContainers;
+    TileContainer::TileContainers singleTileContainers;
+    const int multiTileIndex;
 };
 
 

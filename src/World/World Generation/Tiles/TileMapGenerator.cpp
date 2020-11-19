@@ -21,7 +21,6 @@ TileMap::Tiles TileMapGenerator::generate(sf::Vector2f pos, sf::Vector2i size) {
 
 // TODO: refactor as a static func in a lib class
 sf::Vector2f convertLocalToGlobalCoords(sf::Vector2i localCoords, sf::Vector2f globalPos) {
-    sf::Vector2f sizeCopy {worldConstants::TILE_SIZE.x, worldConstants::TILE_SIZE.y};
     auto localCoordsFloat = static_cast<sf::Vector2f>(localCoords); // safe cast, as localCoords will never be very high
     sf::Vector2f relativePosition  {localCoordsFloat.x * worldConstants::TILE_SIZE.x, localCoordsFloat.y * worldConstants::TILE_SIZE.y};
     return globalPos + relativePosition;
@@ -36,7 +35,7 @@ TileMapGenerator::fetchAndAssignTileContainer(sf::Vector2i localCoords, sf::Vect
     // TODO: process neighbors and return a config struct for env to
     //  process as a param - it will be responsible for determining how many TileContainers get returned
 
-    const auto & tileContainer =  environment.getSingleTileContainer(globalCoords); // TODO: extend to more complex tile shapes
+    const auto & tileContainer = environment.getSingleTileContainer(globalCoords); // TODO: extend to more complex tile shapes
     assignContainer(tileContainer, localCoords, tiles);
 }
 

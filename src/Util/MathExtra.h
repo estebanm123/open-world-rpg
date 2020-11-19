@@ -52,3 +52,6 @@ float angleBetweenTwoVectorsRad(sf::Vector2<T> v1, sf::Vector2<T> v2) {
     if (dp == 0) return PI / 2;
     return acos(dp / (length(v1) * length(v2)));
 }
+
+template<typename T>
+static int fastFloor(T f) { return f >= 0 ? (int) f : (int) f - 1; }
