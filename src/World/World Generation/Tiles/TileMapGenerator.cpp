@@ -1,6 +1,6 @@
 
 #include "TileMapGenerator.h"
-#include "../Environments/EnvGenerator.h"
+#include "../Environments/EnvSelector.h"
 #include "Tile.h"
 #include "../Environments/Env.h"
 
@@ -30,7 +30,7 @@ sf::Vector2f convertLocalToGlobalCoords(sf::Vector2i localCoords, sf::Vector2f g
 void
 TileMapGenerator::fetchAndAssignTileContainer(sf::Vector2i localCoords, sf::Vector2f pos, TileMap::Tiles &tiles) {
     auto globalCoords = convertLocalToGlobalCoords(localCoords, pos);
-    const auto & environment = EnvGenerator::getEnvironment(globalCoords);
+    const auto & environment = EnvSelector::getEnvironment(globalCoords);
 
     // TODO: process neighbors and return a config struct for env to
     //  process as a param - it will be responsible for determining how many TileContainers get returned

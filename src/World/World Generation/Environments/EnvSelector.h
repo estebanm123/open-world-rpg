@@ -5,7 +5,7 @@
 
 class Env;
 
-struct EnvGenerator {
+struct EnvSelector {
     static const Env & getEnvironment(sf::Vector2f coords);
 };
 
