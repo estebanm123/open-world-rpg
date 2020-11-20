@@ -2,7 +2,7 @@
 
 #include "Env.h"
 
-std::shared_ptr<TileContainer> Env::getSingleTileContainer(const sf::Vector2f & coords) const {
+std::shared_ptr<TileContainer> Env::getSingleTileContainer(const sf::Vector2f &coords) const {
     // todo: refactor to a separate class when tile fetching gets more complex
     auto tileContainerIndex = hashWithSize(coords.x, coords.y, singleTileContainers.size());
     auto tileContainer = singleTileContainers[tileContainerIndex];
@@ -14,12 +14,12 @@ const std::string &Env::getSpriteSheetPath() const {
     return spriteSheet;
 }
 
-void Env::setSingleTileContainers(TileContainer::TileContainers & tileContainers) {
+void Env::setSingleTileContainers(TileContainer::TileContainers &tileContainers) {
     this->singleTileContainers = tileContainers;
 }
 
-Env::Env(std::string spriteSheet, int multiTileIndex)
-        :  spriteSheet(std::move(spriteSheet)), multiTileIndex(multiTileIndex) {
+Env::Env(struct Env::Config config) noexcept
+        : spriteSheet(std::move(config.spriteSheet)), multiTileIndex(config.multiTileIndex) {
 }
 
 

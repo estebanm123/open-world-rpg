@@ -8,9 +8,18 @@
 #include "../../../Util/NonMoveable.h"
 #include "../Tiles/TileContainer.h"
 
+
 class Env : NonMoveable, sf::NonCopyable {
 public:
-    Env(std::string spriteSheet, int multiTileIndex);
+    static inline std::string TILE_SHEET_PATH = "Levels/tiles";
+
+    struct Config {
+        Config() {};
+        std::string spriteSheet = TILE_SHEET_PATH;
+        int multiTileIndex = -1;
+    };
+
+    explicit Env(struct Env::Config config = Env::Config{}) noexcept;
 
     // TODO: encapsulate into a single interface method that takes
     //          in both coords and size to allocate, so both single and multi
