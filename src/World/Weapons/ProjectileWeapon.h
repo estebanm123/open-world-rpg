@@ -10,7 +10,7 @@ public:
 
     virtual ~ProjectileWeapon() = default;
 
-    virtual std::unique_ptr<Projectile> generateProjectile(sf::Vector2f direction, sf::Vector2f origin) = 0;
+    virtual std::unique_ptr<Projectile> generateProjectile(const sf::Vector2f & direction sf::Vector2f origin) = 0;
 
     void setProjGenerationLock(bool lock);
 
