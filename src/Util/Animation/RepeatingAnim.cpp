@@ -13,7 +13,6 @@ const sf::IntRect &RepeatingAnim::getFrame() {
     //greater than the total delay of the skipped frames, to ensure smoother anims
     while (timeSinceLastFrameChange >= frames[framePointer % frames.size()].delay) {
         timeSinceLastFrameChange -= frames[framePointer % frames.size()].delay;
-
         framePointer++;
     }
 

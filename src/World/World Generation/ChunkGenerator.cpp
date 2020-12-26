@@ -69,18 +69,6 @@ void ChunkGenerator::generateChunk(const Chunk::RequestData &data) {
     enqueueNewChunk(std::make_shared<Chunk>(data, tileMap, center));
 }
 
-//std::vector<char> ChunkGenerator::generateTiles(const sf::Vector2f &center) {
-//    using namespace worldConstants;
-//    std::vector<char> map;
-//    auto max = center.x > center.y ? center.x : center.y;
-//    auto min = max == center.x ? center.x : center.y;
-//    Random<> chunkRand(abs(static_cast<int>(rand.getFloatInRange(min, max) * 10000)));
-//    for (auto i = 0; i <= TILES_PER_CHUNK.x * TILES_PER_CHUNK.y; i++) {
-//        map.push_back(rand.getIntInRange(0, NUM_TILES - 1));
-//    }
-//    return map;
-//}
-
 bool ChunkGenerator::chunksGeneratedIsEmpty() {
     return generated.empty();
 }

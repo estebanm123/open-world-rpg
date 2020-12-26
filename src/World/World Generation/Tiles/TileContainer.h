@@ -1,36 +1,29 @@
 #pragma once
 
 #include <vector>
-#include <SFML/System/NonCopyable.hpp>
 #include <memory>
 #include "Tile.h"
-#include "../../../Util/NonMoveable.h"
 
 class Env;
 
 class TileContainer {
 
 public:
-    TileContainer(int numTiles, const Env &env);
+
+    TileContainer(int numTiles);
 
     typedef std::vector<std::shared_ptr<TileContainer>> TileContainers;
 
-    virtual std::shared_ptr<Tile> extractFirstTile() const = 0;
+    virtual std::shared_ptr<Tile> extractFirstTile(const Tile::Metadata & metadata) const = 0;
 
-    virtual std::vector<std::shared_ptr<Tile>> extractTiles() const = 0;
-
-    void setExtractionPosition(const sf::Vector2f &position);
+    virtual std::vector<std::shared_ptr<Tile>> extractTiles(const Tile::Metadata & metadata) const = 0;
 
     int getNumTiles() const;
 
 
 protected:
     int numTiles;
-    sf::Vector2f pos;
-    const Env &environment;
-
 };
-
 
 
 

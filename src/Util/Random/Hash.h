@@ -19,5 +19,5 @@ int hashWithSize(T a, T b, X size) {
 //    }
 //    lastResult = newResult;
     return newResult;
-
 }
+

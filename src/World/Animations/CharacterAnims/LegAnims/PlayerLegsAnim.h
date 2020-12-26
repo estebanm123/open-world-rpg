@@ -1,9 +1,9 @@
 ﻿#pragma once
 
 #include "../../../../Util/Animation/RepeatingAnim.h"
-#include "../../AnimationWrapper.h"
+#include "../../AnimationPlayer.h"
 
-class PlayerLegsAnim : public AnimationWrapper {
+class PlayerLegsAnim : public AnimationPlayer {
 public:
     PlayerLegsAnim();
 

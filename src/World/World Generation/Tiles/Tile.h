@@ -2,22 +2,35 @@
 
 
 #include <SFML/Graphics/Sprite.hpp>
-class Env;
+#include <memory>
+
+class CompleteEnv;
 
 class Tile {
 public:
-    // note: spritesheet path is taken Env
-    Tile(const sf::IntRect &spriteSheetCoords, const sf::Vector2f &pos, const Env &environment,  sf::Vector2i localCoords = {0,0});
+    struct Metadata {
+        // All the data needed to extract tile(s)
+        Metadata(std::shared_ptr<CompleteEnv> completeEnv,
+                 const sf::Vector2f &globalCoords, const std::string & spriteSheetPath, float rotationAngle = 0) : rotationAngle(rotationAngle),
+                                                         spriteSheetPath(spriteSheetPath),
+                                                         completeEnv(std::move(completeEnv)),
+                                                         globalCoords(globalCoords) {}
+
+        float rotationAngle;
+        const std::string & spriteSheetPath;
+        const std::shared_ptr<CompleteEnv> completeEnv; // Could be initialized by temp NeighboredEnv
+        sf::Vector2f globalCoords;
+    };
+
+    // spritesheet path is taken from Env
+    Tile(const sf::IntRect &spriteSheetCoords, const Metadata & metadata);
 
     void renderBy(sf::RenderTarget &target) const;
-    int getLocalX() const;
-    int getLocalY() const;
 
 private:
     sf::Sprite sprite;
     sf::Vector2f pos;
-    sf::Vector2i localCoords;
-    const Env & environment; // maybe refactor to a pointer?
+    const std::shared_ptr<CompleteEnv> environment;
 
 };
 

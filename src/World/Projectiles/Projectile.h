@@ -23,7 +23,7 @@ public:
     // speed is managed by weapon - add modifier later heres
     float damage;
     float velocity;
-    const sf::Vector2f & direct;
+    const sf::Vector2f & direction;
     sf::RectangleShape sprite;
     float curDistTravelled;
 

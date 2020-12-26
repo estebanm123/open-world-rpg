@@ -5,14 +5,14 @@
 #include "../../Util/Animation/Animation.h"
 
 
-class AnimationWrapper : sf::NonCopyable {
+class AnimationPlayer : sf::NonCopyable {
 public:
-    virtual ~AnimationWrapper() = default;
+    virtual ~AnimationPlayer() = default;
 
     virtual sf::IntRect resetAnimation() = 0;
 
 protected:
-    std::shared_ptr<Animation> curAnim;
+    std::shared_ptr<Animation> curAnim; // are there shared owners?
 
     virtual const sf::IntRect &playAnim(const std::shared_ptr<Animation> &anim);
 

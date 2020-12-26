@@ -9,8 +9,9 @@
 #include <string>
 #include <array>
 #include <memory>
-#include "Tile.h"
 #include "../../../Util/Constants.h"
+
+class Tile;
 
 class TileMap {
 public:
@@ -22,6 +23,8 @@ public:
     constexpr static int SIZE_Y = worldConstants::TILES_PER_CHUNK_Y;
 
     typedef std::array<std::array<std::shared_ptr<Tile>, TileMap::SIZE_Y>, TileMap::SIZE_X> Tiles;
+
+    static sf::Vector2f convertLocalToGlobalCoords(sf::Vector2i localCoords, sf::Vector2f globalPos);
 private:
     Tiles tiles;
     sf::Vector2f pos;

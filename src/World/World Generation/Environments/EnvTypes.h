@@ -8,32 +8,52 @@
 
 namespace EnvTypes {
 
-    const inline int DIRT_NUM_TILES = 6;
-    const inline int DIRT_START_TILE = 0;
-
-    const inline int WATER_NUM_TILES = 1;
-    const inline int WATER_START_TILE = 6;
-
     using namespace worldConstants;
 
-    // todo: refactor to a default sheet path, and create a ctor overload that auto sets multi tile index
-    inline Env Dirt;
-    inline Env Water;
+     inline std::shared_ptr<SingleTileContainer> makeSingleTileContainer(int left) {
+         return std::make_shared<SingleTileContainer>(SingleTileContainer(
+                 {left * TILE_SIZE_INT_X, 0, TILE_SIZE_INT_X, TILE_SIZE_INT_Y}));
+     }
 
     // todo: initialize animated tiles separately
-    inline void initializeTiles(Env & environment, int startTile, int numTiles) {
+    inline TileContainer::TileContainers initializeCompleteTiles(int startTile, int numTiles) {
         TileContainer::TileContainers tileContainers;
         for (int i = startTile; i < startTile + numTiles; i++) {
-            const auto tileSizeX = static_cast<int>(TILE_SIZE.x);
-            tileContainers.push_back(std::make_shared<SingleTileContainer>(SingleTileContainer(
-                    {i * tileSizeX, 0, static_cast<int>(TILE_SIZE.x), static_cast<int>(TILE_SIZE.y)}, environment)));
-            environment.setSingleTileContainers(tileContainers);
+            tileContainers.push_back(makeSingleTileContainer(i));
         }
+        return tileContainers;
     }
 
+
+    const inline int DIRT_START_TILE = 0;
+    const inline int DIRT_NUM_FULL_TILES = 6;
+    const inline int DIRT_CORNER_END = 7;
+    const inline int DIRT_SPLIT_END = 8;
+
+    const inline int WATER_START_TILE = 8;
+    const inline int WATER_NUM_FULL_TILES = 1;
+    const inline int WATER_CORNER_END = 10;
+
+    inline Env Dirt {initializeCompleteTiles(DIRT_START_TILE, DIRT_NUM_FULL_TILES)};
+    inline Env Water {initializeCompleteTiles(DIRT_SPLIT_END, WATER_NUM_FULL_TILES)};
+
+    inline void initializeBorderTiles() {
+        Env::BorderTileContainers waterCorners;
+        waterCorners.insert({&Dirt, {makeSingleTileContainer(WATER_START_TILE + WATER_NUM_FULL_TILES)}});
+        Env::BorderTileContainers dirtCorners;
+        dirtCorners.insert({&Water, {makeSingleTileContainer(DIRT_START_TILE + DIRT_NUM_FULL_TILES)}});
+
+        Env::BorderTileContainers  dirtSplits;
+        dirtSplits.insert({&Water, {makeSingleTileContainer(DIRT_CORNER_END)}});
+        Env::BorderTileContainers waterSplits;
+
+        Dirt.setBorderTileContainers(dirtSplits, dirtCorners);
+        Water.setBorderTileContainers(waterSplits, waterCorners);
+    }
+
+
     inline void initialize() {
-        initializeTiles(Dirt, DIRT_START_TILE, DIRT_NUM_TILES);
-        initializeTiles(Water, WATER_START_TILE, WATER_NUM_TILES);
+        initializeBorderTiles();
     }
 
 }

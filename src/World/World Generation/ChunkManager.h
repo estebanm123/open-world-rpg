@@ -6,7 +6,6 @@
 #include <SFML/System/Vector2.hpp>
 #include <thread>
 #include "../../Util/NonMoveable.h"
-#include "Chunk.h"
 #include "ChunkGenerator.h"
 
 class ChunkManager : sf::NonCopyable, NonMoveable {

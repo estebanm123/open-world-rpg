@@ -5,7 +5,6 @@
 
 #include "../../../../Util/Animation/NonRepeatingAnim.h"
 #include "../../../../Util/Animation/RepeatingAnim.h"
-#include "EmptyHandedBodyAnim.h"
 
 RevolverBodyAnim::RevolverBodyAnim()
         : AttackableCharacterAnim(

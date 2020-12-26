@@ -1,8 +1,8 @@
 ﻿#pragma once
 
-#include "../AnimationWrapper.h"
+#include "../AnimationPlayer.h"
 
-class CharacterAnim : public AnimationWrapper {
+class CharacterAnim : public AnimationPlayer {
 public:
     CharacterAnim(std::shared_ptr<Animation> moveAnim, std::shared_ptr<Animation> idleAnim);
 

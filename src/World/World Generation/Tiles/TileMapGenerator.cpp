@@ -1,68 +1,73 @@
-
 #include "TileMapGenerator.h"
 #include "../Environments/EnvSelector.h"
+#include "../Environments/Temporary Environments/EnvAllocator.h"
 #include "../Environments/Env.h"
+#include "../Environments/Temporary Environments/NeighboredEnv.h"
 
-// Main generation function
-TileMap::Tiles TileMapGenerator::generate(sf::Vector2f pos, sf::Vector2i size) {
-    TileMap::Tiles tiles;
 
-    for (int x = 0; x < size.x; x++) {
-        for (int y = 0; y < size.y; y++) {
-            if (tiles[x][y] != nullptr) continue;
+// This offset compensates for the extra rows/columns we examine from our neighboring chunks
+void applyPositionalOffset(sf::Vector2f &pos) {
+    pos.x -= worldConstants::TILE_SIZE.x;
+    pos.y -= worldConstants::TILE_SIZE.y;
+}
 
+// Allocate an env to each cell in our extended matrix (covers adjacent chunks' first/ last row/col)
+// These Envs are purely temporary, and will be used for the generation of border Envs.
+void generateInitialEnvs(EnvAllocator::EnvMap &initialEnvs, const sf::Vector2f &pos) {
+    for (int x = 0; x < initialEnvs.size(); x++) {
+        for (int y = 0; y < initialEnvs[0].size(); y++) {
             sf::Vector2i localCoords{x, y};
-            fetchAndAssignTileContainer(localCoords, pos, tiles);
+            auto globalCoords = TileMap::convertLocalToGlobalCoords(localCoords, pos);
+            const auto &environment = EnvSelector::getEnvironment(globalCoords);
+            initialEnvs[x][y] = environment->extractEnvWrapper();
         }
     }
-    return tiles;
 }
 
-// TODO: refactor as a static func in a lib class
-sf::Vector2f convertLocalToGlobalCoords(sf::Vector2i localCoords, sf::Vector2f globalPos) {
-    auto localCoordsFloat = static_cast<sf::Vector2f>(localCoords); // safe cast, as localCoords will never be very high
-    sf::Vector2f relativePosition{localCoordsFloat.x * worldConstants::TILE_SIZE.x,
-                                  localCoordsFloat.y * worldConstants::TILE_SIZE.y};
-    return globalPos + relativePosition;
-}
-
-// Fetches a random TileContainer based on the Environment the current coordinates are found on
 void
-TileMapGenerator::fetchAndAssignTileContainer(sf::Vector2i localCoords, sf::Vector2f pos, TileMap::Tiles &tiles) {
-    auto globalCoords = convertLocalToGlobalCoords(localCoords, pos);
-    const auto &environment = EnvSelector::getEnvironment(globalCoords);
-
-    // TODO: process neighbors and return a config struct for env to
-    //  process as a param - it will be responsible for determining how many TileContainers get returned
-
-    const auto &tileContainer = environment.getSingleTileContainer(
-            globalCoords); // TODO: extend to more complex tile shapes
-    assignContainer(tileContainer, localCoords, tiles);
-}
-
-// Handles assignment and possible splitting of a TileContainer into tiles
-void
-TileMapGenerator::assignContainer(const std::shared_ptr<TileContainer> &container, const sf::Vector2i coords,
-                                  TileMap::Tiles &tiles) {
+assignContainer(const NeighboredEnv::TileContainerWrapper &tileContainerWrapper, const sf::Vector2i coords,
+                TileMap::Tiles &tiles) {
     int x = coords.x;
     int y = coords.y;
-    if (container->getNumTiles() == 1) {
-        std::shared_ptr<Tile> tile = container->extractFirstTile();
+    if (tileContainerWrapper.tileContainer->getNumTiles() == 1) {
+        std::shared_ptr<Tile> tile = tileContainerWrapper.tileContainer->extractFirstTile(
+                tileContainerWrapper.metadata);
         tiles[x][y] = (tile);
     } else {
-        auto generatedTiles = container->extractTiles();
-        for (const auto &tile : generatedTiles) {
-            tiles[x + tile->getLocalX()][y + tile->getLocalY()] = tile;
+// Todo: refactor to use array of standardized coordinates
+//        auto generatedTiles = container->extractTiles();
+//        for (const auto &tile : generatedTiles) {
+//            tiles[x][y] = tile;
+//        }
+    }
+}
+
+void allocateTiles(TileMap::Tiles &tiles, const EnvAllocator::FinalNeighboredEnvs &currentEnvs,
+                   const sf::Vector2f &globalPos) {
+    for (int x = 0; x < currentEnvs.size(); x++) {
+        for (int y = 0; y < currentEnvs[0].size(); y++) {
+            const auto tilePos = TileMap::convertLocalToGlobalCoords({x, y}, globalPos);
+            const auto tileContainerWrapper = currentEnvs[x][y]->extractTileMetadata(tilePos);
+            assignContainer(tileContainerWrapper, {x,y}, tiles);
         }
     }
 }
 
-// Processes data about space available to allocate TileContainer, border/structured tile data
-void processNeighbors(const Env &curEnvironment) {
-    // get space available to allocate
-    //  keep a size available to allocate field, decrement it every time a TileContainer is selected
+// Primary generation function
+TileMap::Tiles TileMapGenerator::generate(sf::Vector2f pos) {
+    EnvAllocator::EnvMap initialEnvs;
 
-    // check if border/ structured tile
+    auto initialEnvsPos = pos;
+    applyPositionalOffset(initialEnvsPos);
+    generateInitialEnvs(initialEnvs, initialEnvsPos);
+    auto finalNeighborEnvs = EnvAllocator::allocateEnvs(initialEnvs);
+
+    // (later - multitle support can be added in if 4 adjacent envs (completeenv) are found)
+    TileMap::Tiles finalTiles;
+    allocateTiles(finalTiles, finalNeighborEnvs, pos);
+
+    return finalTiles;
 }
+
 
 
