@@ -1,8 +1,7 @@
 ﻿#include "BasicHeadAnim.h"
 
 
-#include "../../../../Util/Animation/RepeatingAnim.h"
-#include "../BodyAnims/EmptyHandedBodyAnim.h"
+#include "../../../../Animation/RepeatingAnim.h"
 
 BasicHeadAnim::BasicHeadAnim()
         : AttackableCharacterAnim(

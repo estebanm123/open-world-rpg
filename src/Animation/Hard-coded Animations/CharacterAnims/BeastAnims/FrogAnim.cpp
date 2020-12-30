@@ -1,6 +1,6 @@
 ﻿#include "FrogAnim.h"
 
-#include "../../../../Util/Animation/RepeatingAnim.h"
+#include "../../../../Animation/RepeatingAnim.h"
 
 FrogAnim::FrogAnim()
         : CharacterAnim(

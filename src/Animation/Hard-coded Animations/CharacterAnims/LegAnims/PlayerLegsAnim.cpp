@@ -1,6 +1,6 @@
 ﻿#include "PlayerLegsAnim.h"
 
-#include "../../../../Util/Animation/RepeatingAnim.h"
+#include "../../../../Animation/RepeatingAnim.h"
 
 PlayerLegsAnim::PlayerLegsAnim() {
     initializeLegAnim(0, verticalAnim);

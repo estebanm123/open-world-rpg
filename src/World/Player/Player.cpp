@@ -102,7 +102,6 @@ void Player::die() {
     velocity = {0, 0};
 }
 
-
 sf::Vector2f Player::getPosition() const {
     return sprite.getPosition();
 }

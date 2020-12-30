@@ -3,8 +3,8 @@
 #include <memory>
 
 
-#include "../../../../Util/Animation/NonRepeatingAnim.h"
-#include "../../../../Util/Animation/RepeatingAnim.h"
+#include "../../../../Animation/NonRepeatingAnim.h"
+#include "../../../../Animation/RepeatingAnim.h"
 
 RevolverBodyAnim::RevolverBodyAnim()
         : AttackableCharacterAnim(

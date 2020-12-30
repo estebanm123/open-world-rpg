@@ -6,7 +6,7 @@
 #include <SFML/System/NonCopyable.hpp>
 #include <string>
 
-#include "../Animations/CharacterAnims/CharacterAnim.h"
+#include "../../Animation/Hard-coded Animations/CharacterAnims/CharacterAnim.h"
 
 class NpcSprite : sf::NonCopyable {
 public:

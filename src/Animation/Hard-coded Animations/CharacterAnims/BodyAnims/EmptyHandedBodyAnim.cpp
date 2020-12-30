@@ -1,5 +1,5 @@
 ﻿#include "EmptyHandedBodyAnim.h"
-#include "../../../../Util/Animation/RepeatingAnim.h"
+#include "../../../../Animation/RepeatingAnim.h"
 
 using namespace animConstants;
 

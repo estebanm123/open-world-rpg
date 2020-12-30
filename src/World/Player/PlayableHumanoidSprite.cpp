@@ -1,7 +1,7 @@
 #include "PlayableHumanoidSprite.h"
 
 #include "../../Resource Managers/ResourceHolder.h"
-#include "../Animations/CharacterAnims/BodyAnims/EmptyHandedBodyAnim.h"
+#include "../../Animation/Hard-coded Animations/CharacterAnims/BodyAnims/EmptyHandedBodyAnim.h"
 
 PlayableHumanoidSprite::PlayableHumanoidSprite(const std::string &bodySheet, const std::string &headSheet,
                                                const std::string &legsSheet)
@@ -133,7 +133,7 @@ void PlayableHumanoidSprite::playMoveAnimOnSprite(const sf::IntRect &legsBound) 
         auto bounds = bodyAnim->playFireAnim();
         if (bounds != animConstants::EMPTY_FRAME) {
             body.setTextureRect(bounds);
-            head.setTextureRect(headAnim->playMoveAnim()); // change to a specific fire anim
+            head.setTextureRect(headAnim->playMoveAnim()); // change to a specific }ire anim
         } else {
             lockAnim = false;
         }

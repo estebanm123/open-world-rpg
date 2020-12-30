@@ -4,7 +4,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <string>
 
-#include "../Animations/CharacterAnims/BodyAnims/BodyAnimFactory.h"
+#include "../../Animation/Hard-coded Animations/CharacterAnims/BodyAnims/BodyAnimFactory.h"
 
 class AttackableCharacterAnim;
 

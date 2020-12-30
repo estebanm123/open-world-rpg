@@ -3,11 +3,11 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <string>
 
-#include "../../Util/Animation/Animation.h"
-#include "../Animations/CharacterAnims/BodyAnims/BodyAnimFactory.h"
-#include "../Animations/CharacterAnims/AttackableCharacterAnim.h"
-#include "../Animations/CharacterAnims/HeadAnims/BasicHeadAnim.h"
-#include "../Animations/CharacterAnims/LegAnims/PlayerLegsAnim.h"
+#include "../../Animation/Animation.h"
+#include "../../Animation/Hard-coded Animations/CharacterAnims/BodyAnims/BodyAnimFactory.h"
+#include "../../Animation/Hard-coded Animations/CharacterAnims/AttackableCharacterAnim.h"
+#include "../../Animation/Hard-coded Animations/CharacterAnims/HeadAnims/BasicHeadAnim.h"
+#include "../../Animation/Hard-coded Animations/CharacterAnims/LegAnims/PlayerLegsAnim.h"
 #include "../Weapons/Weapon.h"
 
 // Generalized with the thought of multiplayer support in the future
@@ -50,8 +50,7 @@ public:
 
 private:
     sf::Sprite body;
-    sf::Sprite legs;
-    sf::Sprite head;
+    sf::Sprite legs;sf::Sprite head;
     sf::RectangleShape hitBox;
     std::unique_ptr<AttackableCharacterAnim> bodyAnim;
     std::unique_ptr<PlayerLegsAnim> legAnim;

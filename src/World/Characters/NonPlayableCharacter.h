@@ -1,8 +1,9 @@
 ﻿#pragma once
 
 #include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 
-#include "../Animations/CharacterAnims/CharacterAnim.h"
+#include "../../Animation/Hard-coded Animations/CharacterAnims/CharacterAnim.h"
 #include "CharacterStats.h"
 #include "NpcSprite.h"
 

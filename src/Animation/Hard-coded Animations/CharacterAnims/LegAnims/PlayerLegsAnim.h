@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "../../../../Util/Animation/RepeatingAnim.h"
+#include "../../../../Animation/RepeatingAnim.h"
 #include "../../AnimationPlayer.h"
 
 class PlayerLegsAnim : public AnimationPlayer {

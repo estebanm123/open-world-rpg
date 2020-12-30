@@ -1,5 +1,4 @@
-﻿// ReSharper disable CppMemberFunctionMayBeConst
-#include "PlayerInputManager.h"
+﻿#include "PlayerInputManager.h"
 
 #include <iostream>
 

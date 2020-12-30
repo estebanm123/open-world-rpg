@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "../../../Util/Animation/Animation.h"
+#include "../../../Animation/Animation.h"
 #include "../AnimationPlayer.h"
 #include "CharacterAnim.h"
 

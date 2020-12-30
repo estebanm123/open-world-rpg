@@ -43,7 +43,6 @@ void NpcSprite::move(sf::Vector2f offset) {
 void NpcSprite::rotate(float angle) {
     sprite.rotate(angle);
     hitBox.rotate(angle);
-
 }
 
 void NpcSprite::renderBy(sf::RenderTarget &renderer) const {

@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "../../Util/Animation/Animation.h"
+#include "../../Animation/Animation.h"
 
 
 class AnimationPlayer : sf::NonCopyable {

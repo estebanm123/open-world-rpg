@@ -1,7 +1,7 @@
 ﻿#include "Frog.h"
 
 #include "../../../../Resource Managers/ResourceHolder.h"
-#include "../../../Animations/CharacterAnims/BeastAnims/FrogAnim.h"
+#include "../../../../Animation/Hard-coded Animations/CharacterAnims/BeastAnims/FrogAnim.h"
 
 Frog::Frog(sf::Vector2f pos, int seed)
         : Beast(Frog::initSprite(pos), Frog::initStats(), seed) {
