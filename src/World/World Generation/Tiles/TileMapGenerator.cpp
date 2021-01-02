@@ -30,9 +30,8 @@ assignContainer(const NeighboredEnv::TileContainerWrapper &tileContainerWrapper,
     int x = coords.x;
     int y = coords.y;
     if (tileContainerWrapper.tileContainer->getNumTiles() == 1) {
-        std::shared_ptr<Tile> tile = tileContainerWrapper.tileContainer->extractFirstTile(
+        tiles[x][y] = tileContainerWrapper.tileContainer->extractFirstTile(
                 tileContainerWrapper.metadata);
-        tiles[x][y] = (tile);
     } else {
 // Todo: refactor to use array of standardized coordinates
 //        auto generatedTiles = container->extractTiles();

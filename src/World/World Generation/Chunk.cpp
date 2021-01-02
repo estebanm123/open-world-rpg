@@ -1,8 +1,6 @@
 ﻿#include "Chunk.h"
 
-#include "../../Util/Constants.h"
-#include <SFML/Graphics/RectangleShape.hpp>
-#include "../../Debug/DebugLog.h"
+#include "Tiles/Tile.h"
 
 Chunk::Chunk(const RequestData &reqData, TileMap tiles, const sf::Vector2f &center)
         : reqData(reqData), tiles(std::move(tiles)), center(center) {
