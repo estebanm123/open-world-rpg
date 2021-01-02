@@ -4,8 +4,8 @@ RepeatingAnim::RepeatingAnim(AnimationData data) : Animation(std::move(data)) {
 
 }
 
-const sf::IntRect &RepeatingAnim::getFrame() {
-    //Add the elapsed time since last getFrame() call to timeSinceLastFrame
+const sf::IntRect &RepeatingAnim::getFrameAndAdvanceAnim() {
+    //Add the elapsed time since last getFrameAndAdvanceAnim() call to timeSinceLastFrame
     timeSinceLastFrameChange += timer.getElapsedTime();
 
     //Run while the timeSinceLastFrame is greater than the current frames delay.
@@ -18,4 +18,12 @@ const sf::IntRect &RepeatingAnim::getFrame() {
 
     timer.restart();
     return frames[framePointer % frames.size()].bounds;
+}
+
+const sf::IntRect &RepeatingAnim::peekNextFrame() const {
+    if (framePointer >= frames.size() - 1) {
+        return frames[0].bounds;
+    } else {
+        return frames[framePointer].bounds;
+    }
 }

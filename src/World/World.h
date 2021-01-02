@@ -4,10 +4,9 @@
 
 
 #include "../Util/Random/Random.h"
-#include "Characters/Enemies/Enemy.h"
 #include "World Generation/ChunkManager.h"
-#include "Player/Player.h"
 #include "Projectiles/Projectile.h"
+#include "Entities/Organisms/Humanoid/Player/Player.h"
 #include "Weapons/ProjectileWeapon.h"
 #include "../Util/Observer/Observable.h"
 
@@ -15,16 +14,16 @@ class World : Observable {
 public:
     explicit World(std::shared_ptr<sf::View> worldView);
 
-    void renderBy(sf::RenderTarget &renderer) const;
+    void renderBy(sf::RenderTarget &renderer);
 
     void handleInput(sf::RenderWindow &window);
 
     void update(float dt);
 
 private:
-    std::vector<std::shared_ptr<ProjectileWeapon>> projWeapons; // includes weapon held by player/ enemies
+    std::vector<std::shared_ptr<ProjectileWeapon>> projWeapons; // includes weapon held by humanoids
     std::vector<std::unique_ptr<Projectile>> projectiles;
-    std::vector<std::unique_ptr<Enemy>> enemies;
+//    std::vector<std::unique_ptr<Enemy>> enemies;
     std::shared_ptr<sf::View> worldView;
     Random<> rand;
     const int seed;

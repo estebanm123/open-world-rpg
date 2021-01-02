@@ -3,39 +3,18 @@
 
 #include <iostream>
 
-#include "../Util/CollisionChecker.h"
-#include "../Util/Constants.h"
-#include "Weapons/Revolver.h"
-
 World::World(std::shared_ptr<sf::View> worldView) :
         worldView(std::move(worldView)),
         seed(generateSeed()),
         player(worldConstants::INITIAL_PLAYER_POS),
         chunkManager(seed, worldConstants::INITIAL_PLAYER_POS) {
-    curChunk = chunkManager.getChunk(constants::CENTER);
-    // testing various objects
-    //
-    //projWeapons.push_back(std::make_shared<Revolver>(300));
-    //projWeapons[0]->setPosition(450, 450);
-    //sf::Vector2f pos1 = { 600,500 };
-    //sf::Vector2f pos2 = { 500,550 };
-    //sf::Vector2f pos3 = { 550,600 };
-    //sf::Vector2f pos4 = { 500,500 };
-    //sf::Vector2f pos5 = { 400,500 };
-    //sf::Vector2f pos6 = { 550,550 };
-    //enemies.push_back(std::make_unique<Frog>(pos1, generateRandomFloat()));
-    //enemies.push_back(std::make_unique<Frog>(pos2, generateRandomFloat()));
-    //enemies.push_back(std::make_unique<Frog>(pos3, generateRandomFloat()));
-    //enemies.push_back(std::make_unique<Frog>(pos4, generateRandomFloat()));
-    //enemies.push_back(std::make_unique<Frog>(pos5, generateRandomFloat()));
-    //enemies.push_back(std::make_unique<Frog>(pos6, generateRandomFloat()));
-
+        curChunk = chunkManager.getChunk(constants::CENTER);
+        // testing various objects
 }
 
 
-void World::renderBy(sf::RenderTarget &renderer) const {
+void World::renderBy(sf::RenderTarget &renderer) {
     chunkManager.renderChunks(renderer);
-    //curChunk->renderBy(renderer); // also perform rendering on other chunks - do it through chunk manager
     for (const auto &weapon: projWeapons) {
         // debug why weapon is not showing -> then why
         if (weapon->isDropped()) {
@@ -46,9 +25,9 @@ void World::renderBy(sf::RenderTarget &renderer) const {
     for (const auto &projectile : projectiles) {
         projectile->renderBy(renderer);
     }
-    for (const auto &enemy : enemies) {
-        enemy->renderBy(renderer);
-    }
+//    for (const auto &enemy : enemies) {
+//        enemy->renderBy(renderer);
+//    }
 
     player.renderBy(renderer);
 
@@ -103,9 +82,9 @@ void World::handleChunkChange() {
 
 
 void World::updateEnemies(float dt) {
-    for (const auto &enemy : enemies) {
-        enemy->update(dt);
-    }
+//    for (const auto &enemy : enemies) {
+//        enemy->update(dt);
+//    }
 }
 
 void World::updateWeapons(float dt) {
@@ -138,10 +117,10 @@ void World::handleCollisions() {
 
 void World::handlePlayerDroppedWeaponCollisions() {
     for (const auto &projWeapon : projWeapons) {
-        if (player.isPickingUp() && projWeapon->isDropped() &&
-            CollisionChecker::intersect(player.getPickUpLimit(), projWeapon->getBounds())) {
-            player.setWeapon(projWeapon);
-        }
+//        if (player.isPickingUp() && projWeapon->isDropped() &&
+//            CollisionChecker::intersect(player.getPickUpLimit(), projWeapon->getBounds())) {
+//            player.setWeapon(projWeapon);
+//        }
     }
 }
 
@@ -149,26 +128,26 @@ void World::handleProjectileCollisions() {
 
     for (auto it = projectiles.begin(); it != projectiles.end();) {
         auto deleted = false;
-        for (const auto &enemy : enemies) {
-            if (CollisionChecker::intersect(enemy->getHitBox(), (*it)->getSprite())) {
-                enemy->die();
-                it = projectiles.erase(it);
-                notifyObservers(Observer::ENEMY_KILLED);
-                deleted = true;
-                break;
-            }
+//        for (const auto &enemy : enemies) {
+//            if (CollisionChecker::intersect(enemy->getHitBox(), (*it)->getSprite())) {
+//                enemy->die();
+//                it = projectiles.erase(it);
+//                notifyObservers(Observer::ENEMY_KILLED);
+//                deleted = true;
+//                break;
+//            }
         }
-        if (!deleted) ++it;
-    }
+//        if (!deleted) ++it;
+//    }
 }
 
 void World::handlePlayerEnemyCollisions() {
-    for (const auto &enemy : enemies) {
+//    for (const auto &enemy : enemies) {
         /*if (CollisionChecker::intersect(enemy->getHitBox(), player.getHitBox()))
         {
             player.die();
         }*/
-    }
+//    }
 }
 
 int World::generateSeed() {

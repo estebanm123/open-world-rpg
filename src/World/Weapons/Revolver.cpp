@@ -9,7 +9,7 @@ Revolver::Revolver(int ammo) : ProjectileWeapon(ammo, BASE_DAMAGE, "Objects/Weap
 
 // decreases ammo by 1, resets projectile generation flag, and returns a projectile
 // returns nullptr if not enough ammo or if projectile generation is locked
-std::unique_ptr<Projectile> Revolver::generateProjectile(const sf::Vector2f & direction, sf::Vector2f origin) {
+std::unique_ptr<Projectile> Revolver::generateProjectile(const sf::Vector2f &direction, sf::Vector2f origin) {
     // have shell anim originate from here
     if (curAmmo <= 0 || generateProjLock) return nullptr;
     generateProjLock = true;
@@ -17,6 +17,6 @@ std::unique_ptr<Projectile> Revolver::generateProjectile(const sf::Vector2f & di
     return std::make_unique<SmallBullet>(BASE_DAMAGE, PROJ_VELOCITY, direction, origin);
 }
 
-std::unique_ptr<AttackableCharacterAnim> Revolver::accept(BodyAnimFactory factory) {
-    return factory.generate(*this);
-}
+//std::unique_ptr<AttackableCharacterAnim> Revolver::accept(BodyAnimFactory factory) {
+//    return factory.generate(*this);
+//}

@@ -4,7 +4,6 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <string>
 
-#include "../../Animation/Hard-coded Animations/CharacterAnims/BodyAnims/BodyAnimFactory.h"
 
 class AttackableCharacterAnim;
 
@@ -30,7 +29,7 @@ public:
 
     sf::Rect<float> getBounds() const;
 
-    virtual std::unique_ptr<AttackableCharacterAnim> accept(BodyAnimFactory factory) = 0;
+//    virtual std::unique_ptr<AttackableCharacterAnim> accept(BodyAnimFactory factory) = 0;
 
 private:
     sf::Sprite sprite;

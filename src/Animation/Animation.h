@@ -27,16 +27,17 @@ public:
     };
 
     typedef struct AnimationData {
-        AnimationData(int frameWidth, int frameHeight, int startFrame, int endFrame, int row,
+        AnimationData(int frameWidth, int frameHeight, int startFrame, int endFrame, int row, int priority,
                       sf::Time delay, std::vector<int> inversionFrames)
                 : frameWidth(frameWidth), frameHeight(frameHeight), startFrame(startFrame), endFrame(endFrame),
-                  row(row), delay(delay), inversionFrames(std::move(inversionFrames)) {}
+                  row(row), priority(priority), delay(delay), inversionFrames(std::move(inversionFrames)) {}
 
         int frameWidth;
         int frameHeight;
         int startFrame;
         int endFrame;
         int row;
+        int priority;
         sf::Time delay;
         std::vector<int> inversionFrames;
     } AnimationData;
@@ -45,9 +46,13 @@ public:
 
     void addFrame(int col, int row);
 
+    int getPriority() const;
+
     void resetAnimation();
 
-    virtual const sf::IntRect &getFrame() = 0;
+    virtual const sf::IntRect &getFrameAndAdvanceAnim() = 0;
+
+    virtual const sf::IntRect &peekNextFrame() const = 0;
 
     virtual ~Animation() = default;
 
@@ -58,7 +63,7 @@ protected:
     AnimationData metadata;           // animation meta-metadata, customizable from outside
 
     sf::Clock timer;              //Timer for progressing the animation
-    sf::Time timeSinceLastFrameChange;      // Overlapped time from last getFrame() call
+    sf::Time timeSinceLastFrameChange;      // Overlapped time from last getFrameAndAdvanceAnim() call
     std::vector<Frame> frames;
     unsigned framePointer = 0;    //index of the active frame
 

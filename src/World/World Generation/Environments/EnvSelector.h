@@ -6,7 +6,7 @@
 class Env;
 
 struct EnvSelector {
-    static const Env * getEnvironment(sf::Vector2f coords);
+    static const Env *getEnvironment(sf::Vector2f coords);
 };
 
 

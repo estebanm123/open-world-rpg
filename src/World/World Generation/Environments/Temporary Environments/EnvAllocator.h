@@ -34,8 +34,8 @@ struct EnvAllocator {
                         const EnvAllocator::TmpNeighboredEnvs &finalEnvs);
 
     static struct {
-        bool operator()(const std::shared_ptr<NeighboredEnv> & a, const std::shared_ptr<NeighboredEnv> & b) const {
-            auto aCornerCasted = dynamic_cast<EnvBorderCorner*>(a.get());
+        bool operator()(const std::shared_ptr<NeighboredEnv> &a, const std::shared_ptr<NeighboredEnv> &b) const {
+            auto aCornerCasted = dynamic_cast<EnvBorderCorner *>(a.get());
             if (aCornerCasted != nullptr) {
                 return true;
             }

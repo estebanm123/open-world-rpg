@@ -11,7 +11,7 @@ int hashWithSize(T a, T b, X size) {
     auto inta = static_cast<int>(a);
     auto intb = static_cast<int>(b);
     inta = ~inta + (intb << 15);
-    int num = (inta * inta) / intb ^ RAND_MIXER_1 + inta;
+    int num = (inta * inta) / intb ^RAND_MIXER_1 + inta;
     num = num << RAND_MIXER_2 ^ RAND_MIXER_1;
     int newResult = num % size; // todo: write a script that explores collision detection
 //    if (newResult == lastResult) {

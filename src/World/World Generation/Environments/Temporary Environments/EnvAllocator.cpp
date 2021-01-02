@@ -142,7 +142,7 @@ void allocateColumn(const EnvAllocator::EnvMap &initialEnvs, EnvAllocator::TmpNe
 
 // For rows shared between different chunks
 void allocateRow(const EnvAllocator::EnvMap &initialEnvs, EnvAllocator::TmpNeighboredEnvs &finalEnvs,
-                         sf::Vector2i right, sf::Vector2i left, bool isPriority = false) {
+                 sf::Vector2i right, sf::Vector2i left, bool isPriority = false) {
     right.x--;
     left.x++;
     while (left.x <= right.x) {
@@ -196,8 +196,8 @@ EnvAllocator::allocateInnerCells(const EnvAllocator::EnvMap &initialEnvs, EnvAll
     int sizeX = static_cast<int>(initialEnvs.size());
     int sizeY = static_cast<int>(initialEnvs[0].size());
 
-    sf::Vector2i bottom {2, sizeY - 2};
-    sf::Vector2i top {2, 1};
+    sf::Vector2i bottom{2, sizeY - 2};
+    sf::Vector2i top{2, 1};
 
     while (top.x < sizeX - 2) {
         allocateColumn(initialEnvs, finalEnvs, bottom, top);
@@ -206,7 +206,7 @@ EnvAllocator::allocateInnerCells(const EnvAllocator::EnvMap &initialEnvs, EnvAll
     }
 }
 
-EnvAllocator::FinalNeighboredEnvs resizeFinalEnvs(const EnvAllocator::TmpNeighboredEnvs & finalEnvs) {
+EnvAllocator::FinalNeighboredEnvs resizeFinalEnvs(const EnvAllocator::TmpNeighboredEnvs &finalEnvs) {
     EnvAllocator::FinalNeighboredEnvs result;
     for (int x = 0; x < result.size(); x++) {
         for (int y = 0; y < result[0].size(); y++) {

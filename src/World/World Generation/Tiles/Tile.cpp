@@ -9,7 +9,8 @@ void Tile::renderBy(sf::RenderTarget &renderer) const {
     renderer.draw(sprite);
 }
 
-Tile::Tile(const sf::IntRect &spriteSheetCoords, const Metadata & metadata) : environment(metadata.completeEnv), pos(metadata.globalCoords) {
+Tile::Tile(const sf::IntRect &spriteSheetCoords, const Metadata &metadata) : environment(metadata.completeEnv),
+                                                                             pos(metadata.globalCoords) {
     using namespace worldConstants;
     sprite.setOrigin(TILE_SIZE / 2.f);
     sprite.setRotation(metadata.rotationAngle);

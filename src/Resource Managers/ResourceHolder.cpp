@@ -1,15 +1,11 @@
 #include "ResourceHolder.h"
 
-ResourceHolder& ResourceHolder::get()
-{
+ResourceHolder &ResourceHolder::get() {
     static ResourceHolder holder;
     return holder;
 }
 
 ResourceHolder::ResourceHolder()
-:   fonts           ("Fonts", "ttf")
-,   textures        ("Textures", "png")
-,   soundBuffers    ("Sound", "ogg")
-{
+        : fonts("Fonts", "ttf"), textures("Textures", "png"), soundBuffers("Sound", "ogg") {
 
 }

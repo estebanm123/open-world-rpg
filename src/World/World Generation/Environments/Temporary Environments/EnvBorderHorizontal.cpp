@@ -5,7 +5,8 @@
 #include "EnvWrapper.h"
 
 
-EnvBorderHorizontal::EnvBorderHorizontal(const std::shared_ptr<EnvWrapper> &primary, const std::shared_ptr<EnvWrapper> &secondary)
+EnvBorderHorizontal::EnvBorderHorizontal(const std::shared_ptr<EnvWrapper> &primary,
+                                         const std::shared_ptr<EnvWrapper> &secondary)
         : EnvBorderData(
         primary, secondary) {}
 

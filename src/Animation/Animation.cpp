@@ -2,7 +2,7 @@
 
 
 Animation::Animation(AnimationData animationData)
-        : metadata(animationData) {
+        : metadata(std::move(animationData)) {
     initializeAnims();
 }
 
@@ -21,10 +21,10 @@ void Animation::resetAnimation() {
 }
 
 ////Returns the current/active frame of the animation
-//const sf::IntRect& Animation::getFrame()
+//const sf::IntRect& Animation::getFrameAndAdvanceAnim()
 //{
 //  if (!metadata.repeating && framePointer >= frames.size()) return animConstants::EMPTY_FRAME;
-//  //Add the elapsed time since last getFrame() call to timeSinceLastFrame
+//  //Add the elapsed time since last getFrameAndAdvanceAnim() call to timeSinceLastFrame
 //  timeSinceLastFrame += timer.getElapsedTime();
 //
 //  //Run while the timeSinceLastFrame is greater than the current frames delay.
@@ -66,9 +66,14 @@ void Animation::initializeAnims() {
         prevLimit = inversionFrame + 1;
     }
 
-    if (metadata.inversionFrames.empty() || (metadata.inversionFrames[metadata.inversionFrames.size() - 1] != metadata.endFrame)) {
+    if (metadata.inversionFrames.empty() ||
+        (metadata.inversionFrames[metadata.inversionFrames.size() - 1] != metadata.endFrame)) {
         for (auto j = prevLimit; j <= metadata.endFrame; j++) {
             addFrame(j, metadata.row);
         }
     }
+}
+
+int Animation::getPriority() const {
+    return metadata.priority;
 }

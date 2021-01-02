@@ -13,8 +13,8 @@ TileMap::TileMap(sf::Vector2f pos) : pos(pos - worldConstants::CHUNK_SIZE / 2.f)
 }
 
 void TileMap::renderBy(sf::RenderTarget &target) const {
-    for (const auto & tileRow : tiles) {
-        for (const auto & tile : tileRow) {
+    for (const auto &tileRow : tiles) {
+        for (const auto &tile : tileRow) {
             tile->renderBy(target);
         }
     }

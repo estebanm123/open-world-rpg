@@ -10,10 +10,10 @@ namespace EnvTypes {
 
     using namespace worldConstants;
 
-     inline std::shared_ptr<SingleTileContainer> makeSingleTileContainer(int left) {
-         return std::make_shared<SingleTileContainer>(SingleTileContainer(
-                 {left * TILE_SIZE_INT_X, 0, TILE_SIZE_INT_X, TILE_SIZE_INT_Y}));
-     }
+    inline std::shared_ptr<SingleTileContainer> makeSingleTileContainer(int left) {
+        return std::make_shared<SingleTileContainer>(SingleTileContainer(
+                {left * TILE_SIZE_INT_X, 0, TILE_SIZE_INT_X, TILE_SIZE_INT_Y}));
+    }
 
     // todo: initialize animated tiles separately
     inline TileContainer::TileContainers initializeCompleteTiles(int startTile, int numTiles) {
@@ -34,8 +34,8 @@ namespace EnvTypes {
     const inline int WATER_NUM_FULL_TILES = 1;
     const inline int WATER_CORNER_END = 10;
 
-    inline Env Dirt {initializeCompleteTiles(DIRT_START_TILE, DIRT_NUM_FULL_TILES)};
-    inline Env Water {initializeCompleteTiles(DIRT_SPLIT_END, WATER_NUM_FULL_TILES)};
+    inline Env Dirt{initializeCompleteTiles(DIRT_START_TILE, DIRT_NUM_FULL_TILES)};
+    inline Env Water{initializeCompleteTiles(DIRT_SPLIT_END, WATER_NUM_FULL_TILES)};
 
     inline void initializeBorderTiles() {
         Env::BorderTileContainers waterCorners;
@@ -43,7 +43,7 @@ namespace EnvTypes {
         Env::BorderTileContainers dirtCorners;
         dirtCorners.insert({&Water, {makeSingleTileContainer(DIRT_START_TILE + DIRT_NUM_FULL_TILES)}});
 
-        Env::BorderTileContainers  dirtSplits;
+        Env::BorderTileContainers dirtSplits;
         dirtSplits.insert({&Water, {makeSingleTileContainer(DIRT_CORNER_END)}});
         Env::BorderTileContainers waterSplits;
 

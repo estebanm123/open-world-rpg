@@ -7,7 +7,7 @@
 
 class Projectile {
 public:
-    Projectile(float damage, float velocity, const sf::Vector2f & direction, sf::Vector2f origin, sf::Vector2f size);
+    Projectile(float damage, float velocity, const sf::Vector2f &direction, sf::Vector2f origin, sf::Vector2f size);
 
     virtual ~Projectile() = default;
 
@@ -23,7 +23,7 @@ public:
     // speed is managed by weapon - add modifier later heres
     float damage;
     float velocity;
-    const sf::Vector2f & direction;
+    const sf::Vector2f &direction;
     sf::RectangleShape sprite;
     float curDistTravelled;
 

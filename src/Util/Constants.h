@@ -20,16 +20,16 @@ namespace constants {
 
 using namespace constants;
 const inline std::array<sf::Vector2i, 9> directions{
-                                                            CENTER,
-                                                            NORTH,
-                                                            NORTH_EAST,
-                                                            NORTH_WEST,
-                                                            SOUTH_EAST,
-                                                            SOUTH,
-                                                            SOUTH_WEST,
-                                                            EAST,
-                                                            WEST,
-                                                    };
+        CENTER,
+        NORTH,
+        NORTH_EAST,
+        NORTH_WEST,
+        SOUTH_EAST,
+        SOUTH,
+        SOUTH_WEST,
+        EAST,
+        WEST,
+};
 
 namespace worldConstants {
 

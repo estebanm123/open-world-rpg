@@ -48,7 +48,7 @@ void allocateTiles(TileMap::Tiles &tiles, const EnvAllocator::FinalNeighboredEnv
         for (int y = 0; y < currentEnvs[0].size(); y++) {
             const auto tilePos = TileMap::convertLocalToGlobalCoords({x, y}, globalPos);
             const auto tileContainerWrapper = currentEnvs[x][y]->extractTileMetadata(tilePos);
-            assignContainer(tileContainerWrapper, {x,y}, tiles);
+            assignContainer(tileContainerWrapper, {x, y}, tiles);
         }
     }
 }

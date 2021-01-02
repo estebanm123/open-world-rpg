@@ -6,7 +6,8 @@
 #include "EnvBorderHorizontal.h"
 #include "../Env.h"
 
-EnvBorderCorner::EnvBorderCorner(const std::shared_ptr<EnvWrapper> & primary, const std::shared_ptr<EnvWrapper> & secondary, float rotationAngle)
+EnvBorderCorner::EnvBorderCorner(const std::shared_ptr<EnvWrapper> &primary,
+                                 const std::shared_ptr<EnvWrapper> &secondary, float rotationAngle)
         : EnvBorderData(primary,
                         secondary),
           rotationAngle(rotationAngle) {
@@ -35,7 +36,7 @@ NeighboredEnv::Neighbors EnvBorderCorner::getCompatibleNeighbors(const sf::Vecto
 
 NeighboredEnv::Neighbors EnvBorderCorner::getNorthNeighbors() const {
     if (rotationAngle == 270 || rotationAngle == 180) {
-        return NeighboredEnv::Neighbors {
+        return NeighboredEnv::Neighbors{
                 std::make_unique<EnvBorderCorner>(primaryEnv, nullptr, 90),
                 std::make_unique<EnvBorderCorner>(primaryEnv, nullptr, 0),
                 primaryEnv,
@@ -43,14 +44,14 @@ NeighboredEnv::Neighbors EnvBorderCorner::getNorthNeighbors() const {
         };
     }
     if (rotationAngle == 0) {
-        return NeighboredEnv::Neighbors {
+        return NeighboredEnv::Neighbors{
                 std::make_unique<EnvBorderCorner>(primaryEnv, secondaryEnv, 270),
                 std::make_unique<EnvBorderCorner>(secondaryEnv, primaryEnv, 180),
                 std::make_unique<EnvBorderVertical>(secondaryEnv, primaryEnv),
         };
     }
     if (rotationAngle == 90) {
-        return NeighboredEnv::Neighbors {
+        return NeighboredEnv::Neighbors{
                 std::make_unique<EnvBorderCorner>(primaryEnv, secondaryEnv, 180),
                 std::make_unique<EnvBorderCorner>(secondaryEnv, primaryEnv, 270),
                 std::make_unique<EnvBorderVertical>(primaryEnv, secondaryEnv)
@@ -61,25 +62,25 @@ NeighboredEnv::Neighbors EnvBorderCorner::getNorthNeighbors() const {
 
 NeighboredEnv::Neighbors EnvBorderCorner::getSouthNeighbors() const {
     if (rotationAngle == 0 || rotationAngle == 90) {
-       return NeighboredEnv::Neighbors {
-           std::make_unique<EnvBorderCorner>(primaryEnv, nullptr, 270),
-           std::make_unique<EnvBorderCorner>(primaryEnv, nullptr, 180),
-           primaryEnv,
-           std::make_unique<EnvBorderHorizontal>(primaryEnv, nullptr),
-       };
+        return NeighboredEnv::Neighbors{
+                std::make_unique<EnvBorderCorner>(primaryEnv, nullptr, 270),
+                std::make_unique<EnvBorderCorner>(primaryEnv, nullptr, 180),
+                primaryEnv,
+                std::make_unique<EnvBorderHorizontal>(primaryEnv, nullptr),
+        };
     }
     if (rotationAngle == 180) {
-        return NeighboredEnv::Neighbors {
-            std::make_unique<EnvBorderCorner>(primaryEnv, secondaryEnv, 90),
-            std::make_unique<EnvBorderCorner>(secondaryEnv, primaryEnv, 0),
-            std::make_unique<EnvBorderVertical>(primaryEnv, secondaryEnv),
+        return NeighboredEnv::Neighbors{
+                std::make_unique<EnvBorderCorner>(primaryEnv, secondaryEnv, 90),
+                std::make_unique<EnvBorderCorner>(secondaryEnv, primaryEnv, 0),
+                std::make_unique<EnvBorderVertical>(primaryEnv, secondaryEnv),
         };
     }
     if (rotationAngle == 270) {
-        return NeighboredEnv::Neighbors {
-            std::make_unique<EnvBorderCorner>(primaryEnv, secondaryEnv, 0),
-            std::make_unique<EnvBorderCorner>(secondaryEnv, primaryEnv, 90),
-            std::make_unique<EnvBorderVertical>(secondaryEnv, primaryEnv)
+        return NeighboredEnv::Neighbors{
+                std::make_unique<EnvBorderCorner>(primaryEnv, secondaryEnv, 0),
+                std::make_unique<EnvBorderCorner>(secondaryEnv, primaryEnv, 90),
+                std::make_unique<EnvBorderVertical>(secondaryEnv, primaryEnv)
         };
     }
     return {};
@@ -87,7 +88,7 @@ NeighboredEnv::Neighbors EnvBorderCorner::getSouthNeighbors() const {
 
 NeighboredEnv::Neighbors EnvBorderCorner::getWestNeighbors() const {
     if (rotationAngle == 90 || rotationAngle == 180) {
-        return NeighboredEnv::Neighbors {
+        return NeighboredEnv::Neighbors{
                 std::make_unique<EnvBorderCorner>(primaryEnv, nullptr, 270),
                 std::make_unique<EnvBorderCorner>(primaryEnv, nullptr, 0),
                 primaryEnv,
@@ -95,14 +96,14 @@ NeighboredEnv::Neighbors EnvBorderCorner::getWestNeighbors() const {
         };
     }
     if (rotationAngle == 0) {
-        return NeighboredEnv::Neighbors {
-            std::make_unique<EnvBorderCorner>(primaryEnv, secondaryEnv, 90),
-            std::make_unique<EnvBorderCorner>(secondaryEnv, primaryEnv, 180),
-            std::make_unique<EnvBorderHorizontal>(secondaryEnv, primaryEnv),
+        return NeighboredEnv::Neighbors{
+                std::make_unique<EnvBorderCorner>(primaryEnv, secondaryEnv, 90),
+                std::make_unique<EnvBorderCorner>(secondaryEnv, primaryEnv, 180),
+                std::make_unique<EnvBorderHorizontal>(secondaryEnv, primaryEnv),
         };
     }
     if (rotationAngle == 270) {
-        return NeighboredEnv::Neighbors {
+        return NeighboredEnv::Neighbors{
                 std::make_unique<EnvBorderCorner>(primaryEnv, secondaryEnv, 180),
                 std::make_unique<EnvBorderCorner>(secondaryEnv, primaryEnv, 90),
                 std::make_unique<EnvBorderHorizontal>(primaryEnv, secondaryEnv),
@@ -113,7 +114,7 @@ NeighboredEnv::Neighbors EnvBorderCorner::getWestNeighbors() const {
 
 NeighboredEnv::Neighbors EnvBorderCorner::getEastNeighbors() const {
     if (rotationAngle == 0 || rotationAngle == 270) {
-        return NeighboredEnv::Neighbors {
+        return NeighboredEnv::Neighbors{
                 std::make_unique<EnvBorderCorner>(primaryEnv, nullptr, 180),
                 std::make_unique<EnvBorderCorner>(primaryEnv, nullptr, 90),
                 primaryEnv,
@@ -121,14 +122,14 @@ NeighboredEnv::Neighbors EnvBorderCorner::getEastNeighbors() const {
         };
     }
     if (rotationAngle == 90) {
-        return NeighboredEnv::Neighbors {
+        return NeighboredEnv::Neighbors{
                 std::make_unique<EnvBorderCorner>(primaryEnv, secondaryEnv, 0),
                 std::make_unique<EnvBorderCorner>(secondaryEnv, primaryEnv, 270),
                 std::make_unique<EnvBorderHorizontal>(secondaryEnv, primaryEnv),
         };
     }
     if (rotationAngle == 180) {
-        return NeighboredEnv::Neighbors {
+        return NeighboredEnv::Neighbors{
                 std::make_unique<EnvBorderCorner>(primaryEnv, secondaryEnv, 270),
                 std::make_unique<EnvBorderCorner>(secondaryEnv, primaryEnv, 0),
                 std::make_unique<EnvBorderHorizontal>(primaryEnv, secondaryEnv),
@@ -161,7 +162,7 @@ float EnvBorderCorner::getExtraRotationAngle() const {
 }
 
 const SingleTileContainer *EnvBorderCorner::getTileContainer(const Env *primary, const Env *secondary) const {
-     return primary->getCornerTileContainer(secondary);
+    return primary->getCornerTileContainer(secondary);
 }
 
 

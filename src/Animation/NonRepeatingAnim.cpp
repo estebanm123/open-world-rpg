@@ -7,7 +7,7 @@ NonRepeatingAnim::NonRepeatingAnim(AnimationData data) : Animation(std::move(dat
 // Based on RepeatingAnim's implementation, but never skips frames, and
 // returns an EMPTY_FRAME, everytime the end of the anim cycle has been
 // reached
-const sf::IntRect &NonRepeatingAnim::getFrame() {
+const sf::IntRect &NonRepeatingAnim::getFrameAndAdvanceAnim() {
     if (framePointer >= frames.size() - 1) {
         resetAnimation();
         timer.restart();
@@ -24,3 +24,13 @@ const sf::IntRect &NonRepeatingAnim::getFrame() {
     }
     return frames[framePointer].bounds;
 }
+
+const sf::IntRect &NonRepeatingAnim::peekNextFrame() const {
+    if (framePointer >= frames.size() - 1) {
+        return animConstants::EMPTY_FRAME;
+    } else {
+        return frames[framePointer].bounds;
+    }
+
+}
+

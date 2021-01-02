@@ -1,10 +1,23 @@
 ﻿#include "AnimationPlayer.h"
 
-const sf::IntRect &AnimationPlayer::playAnim(const std::shared_ptr<Animation> &anim) {
-    curAnim = anim;
-    return playAnim();
+void AnimationPlayer::playAnim(const std::shared_ptr<Animation> &anim) {
+    if (!curAnim || curAnim->peekNextFrame() == animConstants::EMPTY_FRAME ||
+        curAnim->getPriority() <= anim->getPriority()) {
+        curAnim = anim;
+    }
+    return playCurrentAnim();
 }
 
-const sf::IntRect &AnimationPlayer::playAnim() {
-    return curAnim->getFrame();
+void AnimationPlayer::playCurrentAnim() {
+    const auto &nextFrame = curAnim->getFrameAndAdvanceAnim();
+    if (sprite.getTextureRect() != nextFrame) {
+        sprite.setTextureRect(curAnim->getFrameAndAdvanceAnim());
+    }
+}
+
+AnimationPlayer::AnimationPlayer(EntitySprite &sprite) : sprite(sprite) {
+}
+
+void AnimationPlayer::resetAnimation() {
+    if (curAnim) curAnim->resetAnimation();
 }

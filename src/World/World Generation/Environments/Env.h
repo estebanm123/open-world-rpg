@@ -25,15 +25,16 @@ public:
 
     const std::string &getSpriteSheetPath() const;
 
-    void setBorderTileContainers(const BorderTileContainers & splits, const BorderTileContainers & corners);
+    void setBorderTileContainers(const BorderTileContainers &splits, const BorderTileContainers &corners);
 
     // Could return null if there is no associated border tile container
-    SingleTileContainer * getSplitTileContainer(const Env *) const;
-    SingleTileContainer * getCornerTileContainer(const Env *) const;
+    SingleTileContainer *getSplitTileContainer(const Env *) const;
 
-    explicit Env(const TileContainer::TileContainers &completeTileContainers, struct Config config={});
+    SingleTileContainer *getCornerTileContainer(const Env *) const;
 
-    TileContainer * selectTileContainer(const sf::Vector2f &coords) const;
+    explicit Env(const TileContainer::TileContainers &completeTileContainers, struct Config config = {});
+
+    TileContainer *selectTileContainer(const sf::Vector2f &coords) const;
 
     std::shared_ptr<EnvWrapper> extractEnvWrapper() const;
 

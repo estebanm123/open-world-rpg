@@ -6,7 +6,8 @@
 #include "EnvWrapper.h"
 #include "EnvBorderCorner.h"
 
-EnvBorderVertical::EnvBorderVertical(const std::shared_ptr<EnvWrapper> & primary, const std::shared_ptr<EnvWrapper> & secondary) : EnvBorderData(
+EnvBorderVertical::EnvBorderVertical(const std::shared_ptr<EnvWrapper> &primary,
+                                     const std::shared_ptr<EnvWrapper> &secondary) : EnvBorderData(
         primary, secondary) {}
 
 NeighboredEnv::Neighbors EnvBorderVertical::getCompatibleNeighbors(const sf::Vector2i &direction) const {

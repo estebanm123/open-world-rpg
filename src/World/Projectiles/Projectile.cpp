@@ -3,7 +3,8 @@
 #include "Projectile.h"
 #include "../../Util/MathExtra.h"
 
-Projectile::Projectile(float damage, float velocity, const sf::Vector2f & direction, sf::Vector2f origin, sf::Vector2f size)
+Projectile::Projectile(float damage, float velocity, const sf::Vector2f &direction, sf::Vector2f origin,
+                       sf::Vector2f size)
         : damage(damage), velocity(velocity), direction(direction), sprite(size), curDistTravelled(0) {
     sprite.setPosition(origin);
     sprite.setOrigin(size / 2.f);

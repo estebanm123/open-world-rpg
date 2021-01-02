@@ -3,18 +3,23 @@
 #include <memory>
 
 #include "../../Animation/Animation.h"
+#include "../../World/Entities/EntitySprite.h"
 
 
 class AnimationPlayer : sf::NonCopyable {
 public:
+    explicit AnimationPlayer(EntitySprite &sprite);
+
     virtual ~AnimationPlayer() = default;
 
-    virtual sf::IntRect resetAnimation() = 0;
+    virtual void resetAnimation();
+
+    void playCurrentAnim();
 
 protected:
-    std::shared_ptr<Animation> curAnim; // are there shared owners?
+    std::shared_ptr<Animation> curAnim; // Possible shared owners in subclasses
 
-    virtual const sf::IntRect &playAnim(const std::shared_ptr<Animation> &anim);
+    EntitySprite &sprite;
 
-    virtual const sf::IntRect &playAnim();
+    virtual void playAnim(const std::shared_ptr<Animation> &anim);
 };
