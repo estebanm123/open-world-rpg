@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include "../Util/Random/Random.h"
 
 namespace animConstants {
     constexpr unsigned BASE_FRAME_WIDTH = 32;
@@ -12,8 +13,9 @@ namespace animConstants {
     constexpr unsigned REVOLVER_BODY_FRAME_DELAY = 80;
     constexpr unsigned REVOLVER_FIRE_FRAME_DELAY = 1200;
     constexpr unsigned HEAD_FRAME_DELAY = 100;
-    constexpr unsigned WATER_TILE_DELAY = 160;
+    constexpr unsigned WATER_TILE_DELAY = 220;
     constexpr unsigned WATER_NUM_FRAMES = 3;
+    constexpr unsigned WATER_DELAY_VARIANCE = 0;
     constexpr unsigned BEAST_FRAME_DELAY = 150;
     const static sf::IntRect EMPTY_FRAME{0, 0, 0, 0};
 }
@@ -50,6 +52,8 @@ public:
 
     explicit Animation(AnimationData animationData);
 
+    void applyVariance(int variance);
+
     void addFrame(int col, int row);
 
     void removeFrame(int index);
@@ -61,6 +65,7 @@ public:
     virtual const sf::IntRect &getFrameAndAdvanceAnim() = 0;
 
     virtual const sf::IntRect &peekNextFrame() const = 0;
+
 
     virtual ~Animation() = default;
 
@@ -74,5 +79,6 @@ protected:
     sf::Time timeSinceLastFrameChange;      // Overlapped time from last getFrameAndAdvanceAnim() call
     std::vector<Frame> frames;
     unsigned framePointer = 0;    //index of the active frame
+    static Random<> rand;
 
 };

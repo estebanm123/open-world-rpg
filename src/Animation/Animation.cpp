@@ -7,6 +7,8 @@ Animation::Animation(AnimationData animationData)
     initializeAnims();
 }
 
+Random<> Animation::rand = {};
+
 void Animation::removeFrame(int index) {
     frames.erase(frames.begin() + index);
 }
@@ -17,11 +19,6 @@ void Animation::addFrame(int col, int row) {
     bounds.height = metadata.frameHeight;
     bounds.width = metadata.frameWidth;
     bounds.left = col * metadata.frameWidth;
-
-//    int delay = metadata.delay.asMilliseconds();
-//    Random<> rand;
-//    const auto variance = 500;
-//    delay =  rand.getIntInRange(delay, delay + variance);
 
     frames.emplace_back(bounds, metadata.delay);
 }
@@ -56,5 +53,16 @@ void Animation::initializeAnims() {
 
 int Animation::getPriority() const {
     return metadata.priority;
+}
+
+void Animation::applyVariance(int variance) {
+    for (auto& frame : frames) {
+        auto currentDelay = frame.delay.asMilliseconds();
+        int minVariance = currentDelay - variance;
+        if (minVariance < 0) minVariance = 0;
+        int newDelay = Animation::rand.getIntInRange(minVariance, variance + currentDelay);
+        frame.delay = sf::milliseconds(newDelay);
+    }
+
 }
 

@@ -20,8 +20,7 @@ namespace EnvTypes {
     // Assumes repeating by inversion, all animated tiles are on row 0
     inline std::unique_ptr<RepeatingAnim> initializeTileAnim(int start, int numFrames, int delay) {
         int lastFrame = start + numFrames - 1;
-        Animation::AnimationData data(TILE_SIZE_INT_X, TILE_SIZE_INT_Y, start, lastFrame, 0, 0, delay, {lastFrame},
-                                      true);
+        Animation::AnimationData data(TILE_SIZE_INT_X, TILE_SIZE_INT_Y, start, lastFrame, 0, 0, delay, {});
         return std::make_unique<RepeatingAnim>(data);
     }
 
