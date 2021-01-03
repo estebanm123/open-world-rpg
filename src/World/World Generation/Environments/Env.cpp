@@ -1,12 +1,11 @@
 
 #include "Temporary Environments/EnvWrapper.h"
 #include "Env.h"
-#include "../Tiles/SingleTileContainer.h"
 
 
 TileContainer *Env::selectTileContainer(const sf::Vector2f &coords) const {
     // todo: refactor to a separate class when tile fetching gets more complex
-    auto tileContainerIndex = hashWithSize(coords.x, coords.y, completeTileContainers.size());
+    auto tileContainerIndex = hashCoordsWithSize(coords.x, coords.y, completeTileContainers.size());
     auto tileContainer = completeTileContainers[tileContainerIndex].get();
     return tileContainer;
 }

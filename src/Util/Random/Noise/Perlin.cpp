@@ -1,4 +1,5 @@
 #include "Perlin.h"
+#include "../Hash.h"
 #include <array>
 
 const std::array lookup =
@@ -69,17 +70,9 @@ const std::array lookup =
                 0.38268343236509f, -0.38268343236509f, 0.923879532511287f,
         };
 
-// todo: look into replace hash function w/ this??
-int hash(int seed, int xPrimed, int yPrimed) {
-    int hash = seed ^xPrimed ^yPrimed;
-
-    hash *= 0x27d4eb2d;
-    return hash;
-}
-
 
 float gradCoord(int seed, int xPrimed, int yPrimed, float xd, float yd) {
-    int hashVal = hash(seed, xPrimed, yPrimed);
+    int hashVal = hashCoords(xPrimed, yPrimed,  seed);
     hashVal ^= hashVal >> 15;
     hashVal &= 127 << 1;
 
