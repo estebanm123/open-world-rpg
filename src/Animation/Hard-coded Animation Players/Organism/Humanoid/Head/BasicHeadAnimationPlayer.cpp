@@ -25,7 +25,7 @@ std::shared_ptr<Animation> BasicHeadAnimationPlayer::initializeMoveAnim() {
     auto priority = 0;
     std::vector<int> inversionFrames = {2, 4};
     Animation::AnimationData data(BASE_FRAME_WIDTH, BASE_FRAME_HEIGHT, frameStart, frameEnd, row, priority,
-                                  sf::milliseconds(HEAD_FRAME_DELAY), inversionFrames);
+                                  (HEAD_FRAME_DELAY), inversionFrames);
     return std::make_shared<RepeatingAnim>(data);
 }
 

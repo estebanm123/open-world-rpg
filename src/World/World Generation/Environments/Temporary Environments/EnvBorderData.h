@@ -31,7 +31,7 @@ struct EnvBorderData : public NeighboredEnv {
     ~EnvBorderData() override = default;
 
 protected:
-    virtual const SingleTileContainer *getTileContainer(const Env *primary, const Env *secondary) const;
+    virtual const TileContainer *getTileContainer(const Env *primary, const Env *secondary) const;
 };
 
 namespace std {

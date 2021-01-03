@@ -24,7 +24,7 @@ Env::Env(const TileContainer::TileContainers &completeTileContainers, struct Env
           spriteSheet(std::move(config.spriteSheet)), multiTileIndex(config.multiTileIndex) {};
 
 
-SingleTileContainer *
+TileContainer *
 getBorderTileContainerUtil(const Env *otherEnv, const Env::BorderTileContainers &borderTileContainers) {
     // todo: could there be a case where otherEnv == this?
     if (borderTileContainers.find(otherEnv) == borderTileContainers.end()) return nullptr;
@@ -33,12 +33,12 @@ getBorderTileContainerUtil(const Env *otherEnv, const Env::BorderTileContainers 
     return borderContainers[0].get();
 }
 
-SingleTileContainer *Env::getSplitTileContainer(const Env *otherEnv) const {
+TileContainer *Env::getSplitTileContainer(const Env *otherEnv) const {
     // check to see what in the maps
     return getBorderTileContainerUtil(otherEnv, splitBorderTileContainers);
 }
 
-SingleTileContainer *Env::getCornerTileContainer(const Env *otherEnv) const {
+TileContainer *Env::getCornerTileContainer(const Env *otherEnv) const {
     return getBorderTileContainerUtil(otherEnv, cornerBorderTileContainers);
 }
 

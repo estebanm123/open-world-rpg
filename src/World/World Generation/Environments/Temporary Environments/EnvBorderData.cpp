@@ -85,7 +85,7 @@ const NeighboredEnv::TileContainerWrapper EnvBorderData::extractTileMetadata(con
     return {metadata, tileContainer};
 }
 
-const SingleTileContainer *EnvBorderData::getTileContainer(const Env *primary, const Env *secondary) const {
+const TileContainer *EnvBorderData::getTileContainer(const Env *primary, const Env *secondary) const {
     return primary->getSplitTileContainer(secondary);
 }
 

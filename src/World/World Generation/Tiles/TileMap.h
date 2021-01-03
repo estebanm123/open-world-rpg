@@ -17,7 +17,7 @@ class TileMap {
 public:
     explicit TileMap(sf::Vector2f pos);
 
-    void renderBy(sf::RenderTarget &target) const;
+    void renderBy(sf::RenderTarget &target);
 
     constexpr static int SIZE_X = worldConstants::TILES_PER_CHUNK_X;
     constexpr static int SIZE_Y = worldConstants::TILES_PER_CHUNK_Y;

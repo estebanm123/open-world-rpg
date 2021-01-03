@@ -21,3 +21,8 @@ AnimationPlayer::AnimationPlayer(EntitySprite &sprite) : sprite(sprite) {
 void AnimationPlayer::resetAnimation() {
     if (curAnim) curAnim->resetAnimation();
 }
+
+void AnimationPlayer::setCurrentAnim(std::shared_ptr<Animation> anim) {
+    curAnim = std::move(anim);
+}
+

@@ -20,7 +20,7 @@ public:
 
     const sf::Vector2f &getCenter() const;
 
-    void renderBy(sf::RenderTarget &target) const;
+    void renderBy(sf::RenderTarget &target);
 
 private:
     RequestData reqData;

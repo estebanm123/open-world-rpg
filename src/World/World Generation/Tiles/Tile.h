@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics/Sprite.hpp>
 #include <memory>
+#include "../../Entities/RegSprite.h"
 
 class CompleteEnv;
 
@@ -24,12 +25,14 @@ public:
     };
 
     // spritesheet path is taken from Env
-    Tile(const sf::IntRect &spriteSheetCoords, const Metadata &metadata);
+    explicit Tile(const Metadata &metadata);
 
-    void renderBy(sf::RenderTarget &target) const;
+    virtual void renderBy(sf::RenderTarget &target);
 
-private:
-    sf::Sprite sprite;
+    virtual ~Tile() = default;
+
+protected:
+    RegSprite sprite;
     sf::Vector2f pos;
     const std::shared_ptr<CompleteEnv> environment;
 

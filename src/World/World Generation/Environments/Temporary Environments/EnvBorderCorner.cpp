@@ -161,7 +161,7 @@ float EnvBorderCorner::getExtraRotationAngle() const {
     return rotationAngle;
 }
 
-const SingleTileContainer *EnvBorderCorner::getTileContainer(const Env *primary, const Env *secondary) const {
+const TileContainer *EnvBorderCorner::getTileContainer(const Env *primary, const Env *secondary) const {
     return primary->getCornerTileContainer(secondary);
 }
 

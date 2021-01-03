@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../../RegSprite.h"
-#include "../../../../Animation/Hard-coded Animations/Organism/Humanoid/HumanoidAnimationPlayer.h"
+#include "../../../../Animation/Hard-coded Animation Players/Organism/Humanoid/HumanoidAnimationPlayer.h"
 
 class HumanoidSprite : public EntitySprite {
 public:

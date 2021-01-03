@@ -14,7 +14,7 @@ const sf::Vector2f &Chunk::getCenter() const {
     return center;
 }
 
-void Chunk::renderBy(sf::RenderTarget &target) const {
+void Chunk::renderBy(sf::RenderTarget &target) {
     tiles.renderBy(target);
 }
 

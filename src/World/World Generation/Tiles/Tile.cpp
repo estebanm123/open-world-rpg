@@ -5,18 +5,13 @@
 #include "Tile.h"
 #include "../../../Resource Managers/ResourceHolder.h"
 
-void Tile::renderBy(sf::RenderTarget &renderer) const {
-    renderer.draw(sprite);
+void Tile::renderBy(sf::RenderTarget &renderer) {
+    sprite.renderBy(renderer);
 }
 
-Tile::Tile(const sf::IntRect &spriteSheetCoords, const Metadata &metadata) : environment(metadata.completeEnv),
-                                                                             pos(metadata.globalCoords) {
+Tile::Tile(const Metadata &metadata) : environment(metadata.completeEnv), pos(metadata.globalCoords),
+                                       sprite(metadata.spriteSheetPath, metadata.globalCoords, worldConstants::TILE_SIZE / 2.f) {
     using namespace worldConstants;
-    sprite.setOrigin(TILE_SIZE / 2.f);
     sprite.setRotation(metadata.rotationAngle);
-    sprite.setTexture(ResourceHolder::get().textures.get(metadata.spriteSheetPath));
-    sprite.setTextureRect(spriteSheetCoords);
-
-    sprite.setPosition(pos.x, pos.y);
 }
 

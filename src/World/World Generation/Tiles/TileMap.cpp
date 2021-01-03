@@ -12,7 +12,7 @@ TileMap::TileMap(sf::Vector2f pos) : pos(pos - worldConstants::CHUNK_SIZE / 2.f)
     if (tiles.empty()) throw std::runtime_error("TileMap has no tiles.");
 }
 
-void TileMap::renderBy(sf::RenderTarget &target) const {
+void TileMap::renderBy(sf::RenderTarget &target) {
     for (const auto &tileRow : tiles) {
         for (const auto &tile : tileRow) {
             tile->renderBy(target);

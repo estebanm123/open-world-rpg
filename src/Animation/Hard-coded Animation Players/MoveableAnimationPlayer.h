@@ -1,6 +1,6 @@
 #pragma once
 
-#include "./AnimationPlayer.h"
+#include "../AnimationPlayer.h"
 
 class MoveableAnimationPlayer : public AnimationPlayer {
 public:

@@ -14,7 +14,7 @@ public:
 
     void update(float dt);
 
-    void renderChunks(sf::RenderTarget &target) const;
+    void renderChunks(sf::RenderTarget &target);
 
     std::shared_ptr<Chunk> getChunk(const sf::Vector2i &dir);
 

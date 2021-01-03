@@ -48,7 +48,7 @@ std::shared_ptr<Chunk> ChunkManager::getChunk(const sf::Vector2i &dir) {
     return chunkNeeded;
 }
 
-void ChunkManager::renderChunks(sf::RenderTarget &target) const {
+void ChunkManager::renderChunks(sf::RenderTarget &target) {
     for (auto i = 0; i < 3; ++i) {
         for (auto j = 0; j < 3; ++j) {
             if (cachedChunks[i][j]) cachedChunks[i][j]->renderBy(target);

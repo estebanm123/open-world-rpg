@@ -12,6 +12,8 @@ namespace animConstants {
     constexpr unsigned REVOLVER_BODY_FRAME_DELAY = 80;
     constexpr unsigned REVOLVER_FIRE_FRAME_DELAY = 1200;
     constexpr unsigned HEAD_FRAME_DELAY = 100;
+    constexpr unsigned WATER_TILE_DELAY = 160;
+    constexpr unsigned WATER_NUM_FRAMES = 3;
     constexpr unsigned BEAST_FRAME_DELAY = 150;
     const static sf::IntRect EMPTY_FRAME{0, 0, 0, 0};
 }
@@ -26,11 +28,14 @@ public:
         sf::Time delay;  //Time delay to next frame
     };
 
+    // Start/end frame is 0-indexed and corresponds to position in spritesheet
+    // Delay is in ms
     typedef struct AnimationData {
         AnimationData(int frameWidth, int frameHeight, int startFrame, int endFrame, int row, int priority,
-                      sf::Time delay, std::vector<int> inversionFrames)
+                      int delay, std::vector<int> inversionFrames, bool removeLast = false)
                 : frameWidth(frameWidth), frameHeight(frameHeight), startFrame(startFrame), endFrame(endFrame),
-                  row(row), priority(priority), delay(delay), inversionFrames(std::move(inversionFrames)) {}
+                  row(row), priority(priority), delay(sf::milliseconds(delay)),
+                  inversionFrames(std::move(inversionFrames)), removeLast(removeLast) {}
 
         int frameWidth;
         int frameHeight;
@@ -40,11 +45,14 @@ public:
         int priority;
         sf::Time delay;
         std::vector<int> inversionFrames;
+        bool removeLast;
     } AnimationData;
 
     explicit Animation(AnimationData animationData);
 
     void addFrame(int col, int row);
+
+    void removeFrame(int index);
 
     int getPriority() const;
 

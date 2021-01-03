@@ -2,8 +2,8 @@
 
 #include <memory>
 
-#include "../../Animation/Animation.h"
-#include "../../World/Entities/EntitySprite.h"
+#include "Animation.h"
+#include "../World/Entities/EntitySprite.h"
 
 
 class AnimationPlayer : sf::NonCopyable {
@@ -13,6 +13,8 @@ public:
     virtual ~AnimationPlayer() = default;
 
     virtual void resetAnimation();
+
+    void setCurrentAnim(std::shared_ptr<Animation> anim);
 
     void playCurrentAnim();
 

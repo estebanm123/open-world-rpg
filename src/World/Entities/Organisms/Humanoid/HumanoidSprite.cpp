@@ -2,8 +2,8 @@
 
 #include "HumanoidSprite.h"
 #include "../../../../Animation/Animation.h"
-#include "../../../../Animation/Hard-coded Animations/Organism/Humanoid/Head/BasicHeadAnimationPlayer.h"
-#include "../../../../Animation/Hard-coded Animations/Organism/Humanoid/Body/EmptyBodyAnimationPlayer.h"
+#include "../../../../Animation/Hard-coded Animation Players/Organism/Humanoid/Head/BasicHeadAnimationPlayer.h"
+#include "../../../../Animation/Hard-coded Animation Players/Organism/Humanoid/Body/EmptyBodyAnimationPlayer.h"
 
 using namespace animConstants;
 

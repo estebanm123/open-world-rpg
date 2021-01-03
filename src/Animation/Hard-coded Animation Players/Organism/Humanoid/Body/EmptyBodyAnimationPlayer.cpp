@@ -24,7 +24,7 @@ std::shared_ptr<Animation> EmptyBodyAnimationPlayer::initializeMoveAnim() {
     auto priority = 0;
     const std::vector<int> inversionFrames = {2, 5};
     Animation::AnimationData data(BASE_FRAME_WIDTH, BASE_FRAME_HEIGHT, frameStart, frameEnd, row, priority,
-                                  sf::milliseconds(BODY_MOVE_FRAME_DELAY), inversionFrames);
+                                  BODY_MOVE_FRAME_DELAY, inversionFrames);
     return std::make_shared<RepeatingAnim>(data);
 }
 
@@ -35,7 +35,7 @@ std::shared_ptr<Animation> EmptyBodyAnimationPlayer::initializeIdleAnim() {
     auto priority = 0;
     const std::vector<int> inversionFrames = {8};
     Animation::AnimationData data(BASE_FRAME_WIDTH, BASE_FRAME_HEIGHT, frameStart, frameEnd, row, priority,
-                                  sf::milliseconds(BODY_IDLE_FRAME_DELAY), inversionFrames);
+                                  (BODY_IDLE_FRAME_DELAY), inversionFrames);
     return std::make_shared<RepeatingAnim>(data);
 }
 
