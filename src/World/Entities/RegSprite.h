@@ -2,10 +2,12 @@
 
 #include <SFML/Graphics/Sprite.hpp>
 #include "./EntitySprite.h"
+#include "../../Animation/Animation.h"
 
 class RegSprite : public EntitySprite {
 public:
-    RegSprite(const std::string &spriteSheet, const sf::Vector2f &pos, const sf::Vector2f &origin);
+    RegSprite(const std::string &spriteSheet, const sf::Vector2f &pos, const sf::Vector2f &origin,
+              const sf::IntRect &defaultFrame = animConstants::EMPTY_FRAME);
 
     void renderBy(sf::RenderTarget &renderer) override;
 

@@ -9,12 +9,8 @@ Humanoid::Humanoid(const sf::Vector2f &globalPosition, const std::string &sprite
 
 
 sf::RectangleShape Humanoid::initializeHitbox(const sf::Vector2f &pos) {
-    sf::RectangleShape hitBox;
     sf::Vector2f hitBoxSize = {animConstants::BASE_FRAME_WIDTH / 2.f, animConstants::BASE_FRAME_HEIGHT / 3.f};
-    hitBox.setOrigin(hitBoxSize / 2.f);
-    hitBox.setSize(hitBoxSize);
-    hitBox.setPosition(pos.x, pos.y);
-    return hitBox;
+    return Collidable::initializeHitbox(hitBoxSize, pos);
 }
 
 EntitySprite &Humanoid::getSprite() {

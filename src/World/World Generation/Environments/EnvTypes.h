@@ -3,8 +3,8 @@
 
 #include "../../../Util/Constants.h"
 #include "Env.h"
-#include "../Tiles/SingleTileContainer.h"
-#include "../Tiles/AnimatedTileContainer.h"
+#include "../Tiles/TileContainers/SingleTileContainer.h"
+#include "../Tiles/TileContainers/AnimatedTileContainer.h"
 #include "../../../Animation/RepeatingAnim.h"
 
 

@@ -2,7 +2,7 @@
 
 #include <memory>
 #include "SingleTileContainer.h"
-#include "NonAnimatedTile.h"
+#include "../NonAnimatedTile.h"
 
 SingleTileContainer::SingleTileContainer(const sf::IntRect &spriteSheetCoords) : spriteSheetCoords(spriteSheetCoords),
                                                                                  TileContainer(1) {

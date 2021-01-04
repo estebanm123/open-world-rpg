@@ -1,8 +1,8 @@
 
 
 #include "AnimatedTileContainer.h"
-#include "AnimatedTile.h"
-#include "../../../Animation/RepeatingAnim.h"
+#include "../AnimatedTile.h"
+#include "../../../../Animation/RepeatingAnim.h"
 
 
 AnimatedTileContainer::AnimatedTileContainer(std::unique_ptr<RepeatingAnim> animation) : animation(std::move(animation)), TileContainer(1) {

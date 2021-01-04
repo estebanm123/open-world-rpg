@@ -16,6 +16,8 @@ public:
 
     void setCurrentAnim(std::shared_ptr<Animation> anim);
 
+    bool hasCurrentAnim() const;
+
     void playCurrentAnim();
 
 protected:

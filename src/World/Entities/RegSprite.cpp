@@ -3,10 +3,13 @@
 #include "RegSprite.h"
 #include "../../Resource Managers/ResourceHolder.h"
 
-RegSprite::RegSprite(const std::string &spriteSheet, const sf::Vector2f &pos, const sf::Vector2f &origin) {
+RegSprite::RegSprite(const std::string &spriteSheet, const sf::Vector2f &pos, const sf::Vector2f &origin, const sf::IntRect &defaultFrame) {
     sprite.setTexture(ResourceHolder::get().textures.get(spriteSheet));
     sprite.setPosition(pos);
     sprite.setOrigin(origin);
+    if (defaultFrame != animConstants::EMPTY_FRAME) {
+        sprite.setTextureRect(defaultFrame);
+    }
 }
 
 void RegSprite::setTexture(const sf::Texture &texture) {
