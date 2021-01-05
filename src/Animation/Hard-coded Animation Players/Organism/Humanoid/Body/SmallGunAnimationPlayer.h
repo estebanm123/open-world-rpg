@@ -4,7 +4,7 @@
 
 class SmallGunAnimationPlayer : public HumanoidAnimationPlayer {
 public:
-    SmallGunAnimationPlayer(EntitySprite &sprite);
+    SmallGunAnimationPlayer(EntitySprite *sprite);
 
     void resetAnimation() override;
 

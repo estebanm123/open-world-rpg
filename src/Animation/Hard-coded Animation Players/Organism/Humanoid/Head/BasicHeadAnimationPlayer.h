@@ -1,10 +1,11 @@
 #pragma once
 
 #include "../HumanoidAnimationPlayer.h"
+#include "../../../../../World/Entities/RegSprite.h"
 
 class BasicHeadAnimationPlayer : public HumanoidAnimationPlayer {
 public:
-    BasicHeadAnimationPlayer(EntitySprite &sprite);
+    explicit BasicHeadAnimationPlayer(RegSprite *sprite);
 
     void resetAnimation() override;
 

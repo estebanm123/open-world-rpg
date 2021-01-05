@@ -4,6 +4,8 @@
 #include <SFML/Graphics.hpp>
 
 class Prop;
+class InteractiveProp;
+class DecorProp;
 
 class PropFactory {
 public:

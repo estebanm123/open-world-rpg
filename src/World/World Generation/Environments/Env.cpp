@@ -2,6 +2,9 @@
 #include "Temporary Environments/EnvWrapper.h"
 #include "Env.h"
 
+#include "../Props/Interactive/InteractiveProp.h"
+#include "../Props/Decor/DecorProp.h"
+
 #include <utility>
 
 Env::Env(TileContainer::TileContainers completeTileContainers, struct Env::Config config)

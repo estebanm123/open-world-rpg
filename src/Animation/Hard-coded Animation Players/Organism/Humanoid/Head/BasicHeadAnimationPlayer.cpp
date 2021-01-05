@@ -5,10 +5,10 @@
 
 using namespace animConstants;
 
-BasicHeadAnimationPlayer::BasicHeadAnimationPlayer(EntitySprite &sprite) : HumanoidAnimationPlayer(sprite,
-                                                                                                   BasicHeadAnimationPlayer::initializeMoveAnim(),
-                                                                                                   BasicHeadAnimationPlayer::initializeIdleAnim(),
-                                                                                                   BasicHeadAnimationPlayer::initializeUseAnim()) {
+BasicHeadAnimationPlayer::BasicHeadAnimationPlayer(RegSprite *sprite) : HumanoidAnimationPlayer(sprite,
+                                                                                               BasicHeadAnimationPlayer::initializeMoveAnim(),
+                                                                                               BasicHeadAnimationPlayer::initializeIdleAnim(),
+                                                                                               BasicHeadAnimationPlayer::initializeUseAnim()) {
 
 }
 

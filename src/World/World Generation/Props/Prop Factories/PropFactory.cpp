@@ -4,9 +4,9 @@
 #include "../Prop.h"
 #include "../Interactive/InteractiveProp.h"
 #include "../../../../Util/Random/Hash.h"
-#include "../../../../Animation/AnimationPlayer.h"
+#include "../Decor/DecorProp.h"
 
-std::unique_ptr<Prop> PropFactory::generateRocks(int hashVal, const sf::Vector2f &propCoords) {
+std::unique_ptr<InteractiveProp> PropFactory::generateRocks(int hashVal, const sf::Vector2f &propCoords) {
     int selectedIndex = getPropIndex(hashVal, 4);
     switch (selectedIndex) {
         case 0:
@@ -21,11 +21,6 @@ std::unique_ptr<Prop> PropFactory::generateRocks(int hashVal, const sf::Vector2f
     }
 }
 
-std::unique_ptr<Prop> PropFactory::generate(const sf::Vector2f &propCoords) {
-    int hashVal = hashCoordsWithSize(propCoords.x, propCoords.y, HASH_LIM);
-    return generate(hashVal, propCoords);
-}
-
 int PropFactory::normalizeHashValue(int hashVal, int minimum) {
     int relativeUpperBound = HASH_LIM - minimum;
     int relativeHashVal = hashVal - minimum;
@@ -37,7 +32,7 @@ int PropFactory::getPropIndex(int hashVal, int numProps) {
     return hashVal % numProps;
 }
 
-std::unique_ptr<Prop> PropFactory::generateRock(const sf::Vector2f &pos, const sf::IntRect &spriteSheetCoords) {
+std::unique_ptr<InteractiveProp> PropFactory::generateRock(const sf::Vector2f &pos, const sf::IntRect &spriteSheetCoords) {
     const sf::Vector2f size = {static_cast<float>(spriteSheetCoords.width),
                                static_cast<float>(spriteSheetCoords.height)};
     return std::make_unique<InteractiveProp>("Foliage/Rocks", pos, size,

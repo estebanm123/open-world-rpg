@@ -16,8 +16,8 @@ HumanoidSprite::HumanoidSprite(const std::string &spriteSheetBody, const std::st
                                                                {BASE_FRAME_WIDTH / 2.f,
                                                                 BASE_FRAME_HEIGHT /
                                                                 3.f}),
-                                                          headAnimation(std::make_unique<BasicHeadAnimationPlayer>(head)),
-                                                          bodyAnimation(std::make_unique<EmptyBodyAnimationPlayer>(body))
+                                                          headAnimation(std::make_unique<BasicHeadAnimationPlayer>(&head)),
+                                                          bodyAnimation(std::make_unique<EmptyBodyAnimationPlayer>(&body))
                                                           {
 
     head.setTextureRect({0,0, BASE_FRAME_WIDTH, BASE_FRAME_HEIGHT});

@@ -5,7 +5,7 @@
 class OrganismAnimationPlayer : public MoveableAnimationPlayer {
 
 public:
-    OrganismAnimationPlayer(EntitySprite &sprite, std::shared_ptr<Animation> moveAnim,
+    OrganismAnimationPlayer(EntitySprite *sprite, std::shared_ptr<Animation> moveAnim,
                             std::shared_ptr<Animation> idleAnim);
 };
 

@@ -4,7 +4,7 @@
 
 class MoveableAnimationPlayer : public AnimationPlayer {
 public:
-    MoveableAnimationPlayer(EntitySprite &sprite, std::shared_ptr<Animation> moveAnim,
+    MoveableAnimationPlayer(EntitySprite *sprite, std::shared_ptr<Animation> moveAnim,
                             std::shared_ptr<Animation> idleAnim);
 
     virtual void playMoveAnim();

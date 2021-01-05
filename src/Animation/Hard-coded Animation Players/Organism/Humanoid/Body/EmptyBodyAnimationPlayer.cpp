@@ -5,10 +5,10 @@
 
 using namespace animConstants;
 
-EmptyBodyAnimationPlayer::EmptyBodyAnimationPlayer(EntitySprite &sprite) : HumanoidAnimationPlayer(sprite,
-                                                                                                   EmptyBodyAnimationPlayer::initializeMoveAnim(),
-                                                                                                   EmptyBodyAnimationPlayer::initializeIdleAnim(),
-                                                                                                   EmptyBodyAnimationPlayer::initializeUseAnim()) {
+EmptyBodyAnimationPlayer::EmptyBodyAnimationPlayer(RegSprite *sprite) : HumanoidAnimationPlayer(sprite,
+                                                                                               EmptyBodyAnimationPlayer::initializeMoveAnim(),
+                                                                                               EmptyBodyAnimationPlayer::initializeIdleAnim(),
+                                                                                               EmptyBodyAnimationPlayer::initializeUseAnim()) {
 
 }
 

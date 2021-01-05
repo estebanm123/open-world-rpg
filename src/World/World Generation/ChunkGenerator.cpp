@@ -8,6 +8,8 @@
 #include "Tiles/Tile.h"
 #include "Chunk.h"
 #include "Props/ChunkPropGenerator.h"
+#include "Props/Interactive/InteractiveProp.h"
+#include "Props/Decor/DecorProp.h"
 
 ChunkGenerator::ChunkGenerator(int seed) : rand(seed), setUp(true), generating(false) {
 }
@@ -72,7 +74,7 @@ void ChunkGenerator::generateChunk(const Chunk::RequestData &data) {
     std::vector<std::unique_ptr<InteractiveProp>> interactiveProps = ChunkPropGenerator::generateInteractiveProps(tileMap);
     std::vector<std::unique_ptr<DecorProp>> decorProps;
 
-    enqueueNewChunk(std::make_shared<Chunk>(data, std::move(tileMap), center, interactiveProps, decorProps));
+    enqueueNewChunk(std::make_shared<Chunk>(data, std::move(tileMap), center, std::move(interactiveProps), std::move(decorProps)));
 }
 
 bool ChunkGenerator::chunksGeneratedIsEmpty() {

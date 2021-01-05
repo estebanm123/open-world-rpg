@@ -1,6 +1,8 @@
 
 
 #include "EnvBorder.h"
+#include "../Props/Interactive/InteractiveProp.h"
+#include "../Props/Decor/DecorProp.h"
 
 bool EnvBorder::isBorder() const {
     return true;
