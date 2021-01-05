@@ -15,7 +15,7 @@ inline int hashCoords(T a, T b, int seed = RAND_MIXER_1) {
 
     int hash = seed ^ inta ^ intb;
 
-    hash *= 0x27d4eb2d;
+    hash *= RAND_MIXER_2;
     return hash;
 }
 

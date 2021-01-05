@@ -6,6 +6,8 @@
 
 #include "../../Debug/DebugLog.h"
 #include "Tiles/Tile.h"
+#include "Chunk.h"
+#include "Props/ChunkPropGenerator.h"
 
 ChunkGenerator::ChunkGenerator(int seed) : rand(seed), setUp(true), generating(false) {
 }
@@ -67,7 +69,10 @@ void ChunkGenerator::generateChunk(const Chunk::RequestData &data) {
     using namespace worldConstants;
     auto center = Chunk::getCenterFromReqData(data);
     TileMap tileMap(center);
-    enqueueNewChunk(std::make_shared<Chunk>(data, std::move(tileMap), center));
+    std::vector<std::unique_ptr<InteractiveProp>> interactiveProps = ChunkPropGenerator::generateInteractiveProps(tileMap);
+    std::vector<std::unique_ptr<DecorProp>> decorProps;
+
+    enqueueNewChunk(std::make_shared<Chunk>(data, std::move(tileMap), center, interactiveProps, decorProps));
 }
 
 bool ChunkGenerator::chunksGeneratedIsEmpty() {

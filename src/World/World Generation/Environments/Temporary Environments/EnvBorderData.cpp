@@ -80,7 +80,7 @@ const NeighboredEnv::TileContainerWrapper EnvBorderData::extractTileMetadata(con
     const auto &spriteSheetPath = selectedEnv->getSpriteSheetPath();
     EnvBorder placeholder;
     const auto simplifiedAngle = static_cast<float>(static_cast<int>(rotationAngle) % 360);
-    Tile::Metadata metadata{std::make_shared<CompleteEnv>(placeholder), globalCoords, spriteSheetPath,
+    Tile::Metadata metadata{std::make_shared<EnvBorder>(placeholder), globalCoords, spriteSheetPath,
                             simplifiedAngle}; // EnvBorder is placeholder
     return {metadata, tileContainer};
 }

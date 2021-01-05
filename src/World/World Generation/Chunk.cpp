@@ -1,9 +1,15 @@
 ﻿#include "Chunk.h"
 
-#include "Tiles/Tile.h"
+#include <utility>
 
-Chunk::Chunk(const RequestData &reqData, TileMap tiles, const sf::Vector2f &center)
-        : reqData(reqData), tiles(std::move(tiles)), center(center) {
+#include "Tiles/Tile.h"
+#include "Props/Interactive/InteractiveProp.h"
+#include "Props/Decor/DecorProp.h"
+
+Chunk::Chunk(const RequestData &reqData, TileMap tiles, const sf::Vector2f &center,
+             std::vector<std::unique_ptr<InteractiveProp>> interactiveProps, std::vector<std::unique_ptr<DecorProp>> decorProps)
+        : reqData(reqData), tiles(std::move(tiles)), center(center), interactiveProps(std::move(interactiveProps)),
+          decorProps(std::move(decorProps)) {
 }
 
 const Chunk::RequestData &Chunk::getReqData() const {
@@ -15,6 +21,12 @@ const sf::Vector2f &Chunk::getCenter() const {
 }
 
 void Chunk::renderBy(sf::RenderTarget &target) {
+    for (auto & prop  : interactiveProps) {
+        prop->renderBy(target);
+    }
+    for (auto & prop : decorProps) {
+        prop->renderBy(target);
+    }
     tiles.renderBy(target);
 }
 

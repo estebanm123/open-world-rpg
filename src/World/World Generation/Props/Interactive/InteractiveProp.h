@@ -13,7 +13,7 @@ public:
 
     void update(float dt) override;
 
-    const sf::Vector2f& getSize() const override;
+    const sf::Vector2f &getSize() const override;
 
     // void explode, catchFire, physicallyDamage etc...
 

@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD 17)
 link_libraries(stdc++fs) #link the filesystem
 file(GLOB_RECURSE SCRF "src/*.cpp" "src/*.hpp")
 file(COPY "res" DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-add_executable(${PROJECT_NAME} ${SCRF} Main.cpp "src/World/World Generation/Environments/InteractivePropFactory.cpp" "src/World/World Generation/Environments/InteractivePropFactory.h")
+add_executable(${PROJECT_NAME} ${SCRF} Main.cpp "src/World/World Generation/Props/Prop Factories/PropFactory.cpp" "src/World/World Generation/Props/Prop Factories/PropFactory.h" "src/World/World Generation/Props/Prop Factories/DirtPropFactory.cpp" "src/World/World Generation/Props/Prop Factories/DirtPropFactory.h" "src/World/World Generation/Props/ChunkPropGenerator.cpp" "src/World/World Generation/Props/ChunkPropGenerator.h")
 find_package(SFML 2.5.1 COMPONENTS system window graphics network audio REQUIRED)
 target_link_libraries(${PROJECT_NAME} sfml-audio sfml-graphics sfml-window sfml-system)
 set(GCC_COVERAGE_COMPILE_FLAGS "-Wa,-mbig-obj")

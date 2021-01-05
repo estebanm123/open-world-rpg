@@ -29,5 +29,5 @@ public:
 private:
     Tiles tiles;
     sf::Vector2f pos;
-
+    friend class ChunkPropGenerator;
 };

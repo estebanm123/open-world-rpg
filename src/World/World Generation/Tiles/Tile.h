@@ -31,11 +31,14 @@ public:
 
     virtual ~Tile() = default;
 
+    const sf::Vector2f& getPosition();
+
+    std::shared_ptr<CompleteEnv> getEnvironment() const;
+
 protected:
     RegSprite sprite;
     sf::Vector2f pos;
     const std::shared_ptr<CompleteEnv> environment;
-
 };
 
 

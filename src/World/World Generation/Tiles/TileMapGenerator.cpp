@@ -1,6 +1,7 @@
 #include "TileMapGenerator.h"
 #include "../Environments/EnvSelector.h"
 #include "../Environments/Temporary Environments/EnvAllocator.h"
+#include "../Environments/Temporary Environments/EnvWrapper.h"
 #include "../Environments/Env.h"
 #include "../Environments/Temporary Environments/NeighboredEnv.h"
 
@@ -18,8 +19,8 @@ void generateInitialEnvs(EnvAllocator::EnvMap &initialEnvs, const sf::Vector2f &
         for (int y = 0; y < initialEnvs[0].size(); y++) {
             sf::Vector2i localCoords{x, y};
             auto globalCoords = TileMap::convertLocalToGlobalCoords(localCoords, pos);
-            const auto &environment = EnvSelector::getEnvironment(globalCoords);
-            initialEnvs[x][y] = environment->extractEnvWrapper();
+            const auto environment = EnvSelector::getEnvironment(globalCoords);
+            initialEnvs[x][y] = std::make_unique<EnvWrapper>(environment);
         }
     }
 }

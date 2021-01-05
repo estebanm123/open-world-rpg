@@ -47,7 +47,7 @@ NeighboredEnv::Neighbors EnvWrapper::getCompatibleNeighbors(const sf::Vector2i &
     return {};
 }
 
-EnvWrapper::EnvWrapper(const Env &env) : env(env) {}
+EnvWrapper::EnvWrapper(const std::shared_ptr<Env> &env) : env(env) {}
 
 bool EnvWrapper::operator==(const NeighboredEnv &other) const {
     try {
@@ -77,13 +77,13 @@ bool EnvWrapper::fillWildcardIfExists(const std::shared_ptr<EnvWrapper> &filler)
 }
 
 const NeighboredEnv::TileContainerWrapper EnvWrapper::extractTileMetadata(const sf::Vector2f &globalCoords) const {
-    const auto &tileContainer = env.selectTileContainer(globalCoords);
-    Tile::Metadata metadata{std::make_shared<CompleteEnv>(env), globalCoords, env.getSpriteSheetPath()};
-    return {metadata, tileContainer};
+    const auto &tileContainer = env->selectTileContainer(globalCoords);
+    Tile::Metadata metadata{env, globalCoords,
+env->getSpriteSheetPath()};
+return {metadata, tileContainer};
 }
-
 const Env *EnvWrapper::getEnv() const {
-    return &env;
+    return env.get();
 }
 
 

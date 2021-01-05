@@ -6,24 +6,36 @@
 #include <SFML/System/NonCopyable.hpp>
 #include "../Tiles/TileContainers/TileContainer.h"
 #include "../../../Util/NonMoveable.h"
+#include "../Props/Prop Factories/PropFactory.h"
 
 class SingleTileContainer;
+
+class DecorProp;
+class InteractiveProp;
 
 class EnvWrapper;
 
 class Env : public CompleteEnv, sf::NonCopyable, NonMoveable {
 public:
-    static inline std::string TILE_SHEET_PATH = "Levels/tiles";
+    static inline std::string TILE_SHEET_PATH = "Tiles/tiles";
 
     typedef std::unordered_map<const Env *, std::vector<std::shared_ptr<TileContainer>>> BorderTileContainers;
 
     struct Config {
+        explicit Config(PropFactory * propFactory) : propFactory(propFactory) {};
         Config() {};
         std::string spriteSheet = TILE_SHEET_PATH;
         int multiTileIndex = -1;
+        PropFactory * propFactory = nullptr;
     };
 
+    explicit Env(TileContainer::TileContainers completeTileContainers, struct Config config = {});
+
     const std::string &getSpriteSheetPath() const;
+
+    bool isBorder() const override;
+
+    bool operator==(const CompleteEnv& other) const override;
 
     void setBorderTileContainers(const BorderTileContainers &splits, const BorderTileContainers &corners);
 
@@ -32,17 +44,18 @@ public:
 
     TileContainer *getCornerTileContainer(const Env *) const;
 
-    explicit Env(const TileContainer::TileContainers &completeTileContainers, struct Config config = {});
-
     TileContainer *selectTileContainer(const sf::Vector2f &coords) const;
 
-    std::shared_ptr<EnvWrapper> extractEnvWrapper() const;
+    std::unique_ptr<InteractiveProp> generateInteractiveProp(const sf::Vector2f& propCoords) const override;
+
+    std::unique_ptr<DecorProp> generateDecorProp(const sf::Vector2f& propCoords) const override;
 
 private:
     const int multiTileIndex;
     TileContainer::TileContainers completeTileContainers;
     BorderTileContainers splitBorderTileContainers;
     BorderTileContainers cornerBorderTileContainers;
+    PropFactory *propFactory; // owner should be global
     const std::string spriteSheet;
 };
 

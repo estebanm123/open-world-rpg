@@ -6,7 +6,7 @@
 class Env;
 
 struct EnvWrapper : public NeighboredEnv {
-    EnvWrapper(const Env &env);
+    EnvWrapper(const std::shared_ptr<Env> &env);
 
     NeighboredEnv::Neighbors getCompatibleNeighbors(const sf::Vector2i &direction) const override;
 
@@ -22,7 +22,7 @@ struct EnvWrapper : public NeighboredEnv {
 
     std::string toString() const override;
 
-    const Env &env;
+    const std::shared_ptr<Env> env;
 };
 
 namespace std {

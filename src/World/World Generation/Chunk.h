@@ -4,6 +4,10 @@
 
 #include "Tiles/TileMap.h"
 
+class InteractiveProp;
+
+class DecorProp;
+
 class Chunk {
 public:
     struct RequestData {
@@ -12,7 +16,8 @@ public:
         // neighbors
     };
 
-    Chunk(const RequestData &reqData, TileMap tiles, const sf::Vector2f &center);
+    Chunk(const RequestData &reqData, TileMap tiles, const sf::Vector2f &center,
+          std::vector<std::unique_ptr<InteractiveProp>> interactiveProps, std::vector<std::unique_ptr<DecorProp>> decorProps);
 
     static sf::Vector2f getCenterFromReqData(const Chunk::RequestData &data);
 
@@ -26,5 +31,7 @@ private:
     RequestData reqData;
     TileMap tiles;
     sf::Vector2f center; // position? origin?
+    std::vector<std::unique_ptr<InteractiveProp>> interactiveProps;
+    std::vector<std::unique_ptr<DecorProp>> decorProps;
     // neighbors
 };

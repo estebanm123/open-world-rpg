@@ -6,6 +6,7 @@
 #include "../Tiles/TileContainers/SingleTileContainer.h"
 #include "../Tiles/TileContainers/AnimatedTileContainer.h"
 #include "../../../Animation/RepeatingAnim.h"
+#include "../Props/Prop Factories/DirtPropFactory.h"
 
 
 namespace EnvTypes {
@@ -56,7 +57,6 @@ namespace EnvTypes {
         return tileContainers;
     }
 
-    // edit indices + use new initializer
     const inline int DIRT_START_TILE = 0;
     const inline int DIRT_NUM_FULL_TILES = 6;
     const inline int DIRT_CORNER_END = 9;
@@ -64,27 +64,34 @@ namespace EnvTypes {
 
     const inline int WATER_START_TILE = 12;
     const inline int WATER_NUM_FULL_TILES = 1;
-//    const inline int WATER_CORNER_END = ;
 
-    inline Env Dirt{initializeCompleteTiles(DIRT_START_TILE, DIRT_NUM_FULL_TILES)};
-    inline Env Water{initializeCompleteAnimatedTiles(WATER_START_TILE, WATER_NUM_FULL_TILES, WATER_NUM_FRAMES,
-                                                     WATER_TILE_DELAY)};
+
+    const inline auto dirtPropFactory = std::make_unique<DirtPropFactory>();
+    inline auto Dirt = std::make_shared<Env>(initializeCompleteTiles(DIRT_START_TILE, DIRT_NUM_FULL_TILES),
+                                             Env::Config{dirtPropFactory.get()});
+    inline auto Water = std::make_shared<Env>(
+            initializeCompleteAnimatedTiles(WATER_START_TILE, WATER_NUM_FULL_TILES, WATER_NUM_FRAMES,
+                                            WATER_TILE_DELAY));
+
 
     inline void initializeBorderTiles() {
         Env::BorderTileContainers waterCorners;
         waterCorners.insert(
-                {&Dirt, {makeWaterTileContainer(WATER_START_TILE + WATER_NUM_FULL_TILES * WATER_NUM_FRAMES)}});
+                {Dirt.get(), {makeWaterTileContainer(WATER_START_TILE + WATER_NUM_FULL_TILES * WATER_NUM_FRAMES)}});
         Env::BorderTileContainers dirtCorners;
-        dirtCorners.insert({&Water, {makeWaterTileContainer(DIRT_START_TILE + DIRT_NUM_FULL_TILES)}});
+        dirtCorners.insert({Water.get(), {makeWaterTileContainer(DIRT_START_TILE + DIRT_NUM_FULL_TILES)}});
 
         Env::BorderTileContainers dirtSplits;
-        dirtSplits.insert({&Water, {makeWaterTileContainer(DIRT_CORNER_END)}});
+        dirtSplits.insert({Water.get(), {makeWaterTileContainer(DIRT_CORNER_END)}});
         Env::BorderTileContainers waterSplits;
 
-        Dirt.setBorderTileContainers(dirtSplits, dirtCorners);
-        Water.setBorderTileContainers(waterSplits, waterCorners);
+        Dirt->setBorderTileContainers(dirtSplits, dirtCorners);
+        Water->setBorderTileContainers(waterSplits, waterCorners);
     }
 
+    // -----------------
+    // CompleteEnvs - don't use these helpers for borders!
+    // -----------------
 
     inline void initialize() {
         initializeBorderTiles();

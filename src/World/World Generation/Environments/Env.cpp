@@ -2,6 +2,12 @@
 #include "Temporary Environments/EnvWrapper.h"
 #include "Env.h"
 
+#include <utility>
+
+Env::Env(TileContainer::TileContainers completeTileContainers, struct Env::Config config)
+        : completeTileContainers(std::move(completeTileContainers)),
+          spriteSheet(std::move(config.spriteSheet)), multiTileIndex(config.multiTileIndex),
+          propFactory(config.propFactory) {};
 
 TileContainer *Env::selectTileContainer(const sf::Vector2f &coords) const {
     // todo: refactor to a separate class when tile fetching gets more complex
@@ -13,15 +19,6 @@ TileContainer *Env::selectTileContainer(const sf::Vector2f &coords) const {
 const std::string &Env::getSpriteSheetPath() const {
     return spriteSheet;
 }
-
-std::shared_ptr<EnvWrapper> Env::extractEnvWrapper() const {
-    return std::make_shared<EnvWrapper>(*this);
-}
-
-Env::Env(const TileContainer::TileContainers &completeTileContainers, struct Env::Config config)
-        : completeTileContainers(completeTileContainers),
-          spriteSheet(std::move(config.spriteSheet)), multiTileIndex(config.multiTileIndex) {};
-
 
 TileContainer *
 getBorderTileContainerUtil(const Env *otherEnv, const Env::BorderTileContainers &borderTileContainers) {
@@ -44,4 +41,22 @@ TileContainer *Env::getCornerTileContainer(const Env *otherEnv) const {
 void Env::setBorderTileContainers(const BorderTileContainers &splits, const BorderTileContainers &corners) {
     splitBorderTileContainers = splits;
     cornerBorderTileContainers = corners;
+}
+
+std::unique_ptr<InteractiveProp> Env::generateInteractiveProp(const sf::Vector2f &propCoords) const {
+    if (!propFactory) return nullptr;
+    return propFactory->generateInteractiveProp(propCoords);
+}
+
+std::unique_ptr<DecorProp> Env::generateDecorProp(const sf::Vector2f &propCoords) const {
+    if (!propFactory) return nullptr;
+    return propFactory->generateDecorProp(propCoords);
+}
+
+bool Env::isBorder() const {
+    return false;
+}
+
+bool Env::operator==(const CompleteEnv &other) const {
+    return &other == this;
 };

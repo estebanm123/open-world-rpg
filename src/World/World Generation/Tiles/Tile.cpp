@@ -15,3 +15,11 @@ Tile::Tile(const Metadata &metadata) : environment(metadata.completeEnv), pos(me
     sprite.setRotation(metadata.rotationAngle);
 }
 
+const sf::Vector2f &Tile::getPosition() {
+    return pos;
+}
+
+std::shared_ptr<CompleteEnv> Tile::getEnvironment() const {
+    return environment;
+}
+
