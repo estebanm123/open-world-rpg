@@ -10,13 +10,13 @@ public:
 
     void update(float dt) override;
 
+    void move(float dt) override;
+
     void handleInput(sf::RenderWindow &window);
 
     const sf::Vector2i &getMoveDirection() const;
 
     void setMoveDirection(const sf::Vector2i &direction);
-
-    void move(float dt) override;
 
     ~Player() override = default;
 

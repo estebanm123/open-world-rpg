@@ -4,7 +4,6 @@
 #include <vector>
 
 struct TransformableExtra {
-    static void setPositions(std::vector<sf::Sprite> &sprites, std::vector<sf::Sprite> &positions);
 
 };
 

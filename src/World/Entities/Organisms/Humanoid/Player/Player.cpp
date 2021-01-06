@@ -20,10 +20,18 @@ void Player::handleInput(sf::RenderWindow& window) {
     inputManager.handleInput(window);
 }
 
+// refactor to some lib class
+bool isDiagonal(const sf::Vector2i & v) {
+    return abs(v.x) == 1 && abs(v.y) == 1;
+}
+
 sf::Vector2f Player::getMoveOffset() {
-    int PLACEHOLDER = 500;
+    int PLACEHOLDER = 200;
     const auto newOffset = moveDirection * PLACEHOLDER;
-    const sf::Vector2f castedOffset = {static_cast<float>(newOffset.x), static_cast<float>(newOffset.y)};
+    sf::Vector2f castedOffset = {static_cast<float>(newOffset.x), static_cast<float>(newOffset.y)};
+    if (isDiagonal(moveDirection)) {
+        castedOffset *= 0.707f;
+    }
     return castedOffset;
 }
 
