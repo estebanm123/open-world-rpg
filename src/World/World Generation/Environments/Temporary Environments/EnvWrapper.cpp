@@ -52,7 +52,7 @@ EnvWrapper::EnvWrapper(const std::shared_ptr<Env> &env) : env(env) {}
 bool EnvWrapper::operator==(const NeighboredEnv &other) const {
     try {
         const auto &o = dynamic_cast<const EnvWrapper &>(other);
-        return &o.env == &env;
+        return o.env.get() == env.get();
     } catch (const std::bad_cast &e) {
         return false;
     }
@@ -62,7 +62,7 @@ bool EnvWrapper::handleEquality(const std::shared_ptr<NeighboredEnv> &other) {
     try {
         const auto &otherSameType = dynamic_cast<const EnvWrapper *>(other.get());
         if (otherSameType == nullptr) return false;
-        return &otherSameType->env == &this->env;
+        return otherSameType->env.get() == this->env.get();
     } catch (const std::bad_cast &e) {
         return false;
     }

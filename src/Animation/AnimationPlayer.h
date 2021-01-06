@@ -10,6 +10,8 @@ class AnimationPlayer : sf::NonCopyable {
 public:
     explicit AnimationPlayer(EntitySprite *sprite);
 
+    AnimationPlayer();
+
     virtual ~AnimationPlayer() = default;
 
     virtual void resetAnimation();

@@ -6,8 +6,8 @@ InteractiveProp::InteractiveProp(const std::string &spriteSheet, const sf::Vecto
                                  std::unique_ptr<AnimationPlayer> animPlayer, const sf::IntRect &defaultFrame)
         : animPlayer(std::move(animPlayer)), Collidable(Collidable::initializeHitbox(size, pos)),
           Prop(spriteSheet, pos, size, defaultFrame) {
-    hasDefaultAnim = animPlayer->hasCurrentAnim();
-    animPlayer->setSprite(&sprite);
+    hasDefaultAnim = this->animPlayer->hasCurrentAnim();
+    this->animPlayer->setSprite(&sprite);
 }
 
 void InteractiveProp::update(float dt) {

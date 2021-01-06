@@ -30,8 +30,6 @@ public:
 private:
     void generateChunk(const Chunk::RequestData &data);
 
-    std::vector<char> generateTiles(const sf::Vector2f &center);
-
     Random<> rand;
     volatile bool setUp;
     volatile bool generating;
@@ -39,6 +37,4 @@ private:
     std::queue<std::shared_ptr<Chunk>> generated;
     std::mutex toGenerateMutex;
     std::condition_variable chunkRequest;
-
-
 };

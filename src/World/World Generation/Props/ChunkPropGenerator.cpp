@@ -17,13 +17,13 @@ ChunkPropGenerator::TilesSeen ChunkPropGenerator::initializeTilesSeen() {
 }
 
 
-sf::Vector2f generatePropCoords(float propGenChance, int hashVal1) {
+sf::Vector2f generatePropCoords(float propGenChance, int hashVal1, const sf::Vector2f & tileGlobalCoords) {
     using namespace worldConstants;
     auto hashVal2 = hashCoords(hashVal1, static_cast<int>(propGenChance));
     int limit = static_cast<int>(propGenChance);
     auto x = static_cast<float>((limit * hashVal2) % TILE_SIZE_INT_X);
     auto y = static_cast<float>((limit * hashVal1) % TILE_SIZE_INT_Y);
-    return {x, y};
+    return {x + tileGlobalCoords.x, y + tileGlobalCoords.y};
 }
 
 
@@ -40,9 +40,11 @@ std::vector<std::unique_ptr<InteractiveProp>> ChunkPropGenerator::generateIntera
             auto curEnv = curTile->getEnvironment();
             auto tileCoordHash = hashTileCoords(*curTile);
             if (tileCoordHash > currentPropChance) {
-                auto propCoords = generatePropCoords(currentPropChance, tileCoordHash);
+                auto propCoords = generatePropCoords(currentPropChance, tileCoordHash, curTile->getPosition());
                 auto prop = curEnv->generateInteractiveProp(propCoords);
-                validateProp(prop.get(), tileMap, tilesSeen, {x, y});
+                if (!validateProp(prop.get(), tileMap, tilesSeen, {x, y})) {
+                    continue;
+                }
                 updateCurrentPropChanceOnSuccess(currentPropChance);
                 props.push_back(std::move(prop));
             } else {

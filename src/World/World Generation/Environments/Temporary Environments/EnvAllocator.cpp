@@ -33,13 +33,6 @@ selectCandidate(const std::shared_ptr<EnvWrapper> &initialEnv, NeighboredEnv::Ne
     std::sort(candidates.begin(), candidates.end(), EnvAllocator::candidateCompare);
     // can also add these candidates to the selected candidate?
 
-//    for (auto &candidate : candidates) {
-//        if (candidate->fillWildcardIfExists(initialEnv)) {
-//            return candidate;
-//        }
-//    }
-
-
     return candidates[0];
 }
 

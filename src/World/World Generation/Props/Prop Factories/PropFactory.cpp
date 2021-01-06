@@ -10,7 +10,6 @@ std::unique_ptr<InteractiveProp> PropFactory::generateRocks(int hashVal, const s
     int selectedIndex = getPropIndex(hashVal, 4);
     switch (selectedIndex) {
         case 0:
-            // generate animplayer, new anim?, defaultframe?
             return generateRock(propCoords, {0, 0, 29, 28});
         case 1:
             return generateRock(propCoords, {29, 0, 52, 52});
@@ -22,10 +21,10 @@ std::unique_ptr<InteractiveProp> PropFactory::generateRocks(int hashVal, const s
 }
 
 int PropFactory::normalizeHashValue(int hashVal, int minimum) {
-    int relativeUpperBound = HASH_LIM - minimum;
-    int relativeHashVal = hashVal - minimum;
-    int proportionOfRelativeZone = relativeHashVal / relativeUpperBound;
-    return proportionOfRelativeZone * HASH_LIM; // reset as proportion to HASH_LIM
+    auto relativeUpperBound = static_cast<float>(HASH_LIM - minimum);
+    auto relativeHashVal = static_cast<float>(hashVal - minimum);
+    float proportionOfRelativeZone = relativeHashVal / relativeUpperBound;
+    return static_cast<int>(proportionOfRelativeZone * HASH_LIM); // reset as proportion to HASH_LIM
 }
 
 int PropFactory::getPropIndex(int hashVal, int numProps) {
@@ -36,7 +35,7 @@ std::unique_ptr<InteractiveProp> PropFactory::generateRock(const sf::Vector2f &p
     const sf::Vector2f size = {static_cast<float>(spriteSheetCoords.width),
                                static_cast<float>(spriteSheetCoords.height)};
     return std::make_unique<InteractiveProp>("Foliage/Rocks", pos, size,
-                                             std::make_unique<AnimationPlayer>(nullptr), spriteSheetCoords);
+                                             std::make_unique<AnimationPlayer>(), spriteSheetCoords);
 
 }
 

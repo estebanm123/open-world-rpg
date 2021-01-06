@@ -21,13 +21,13 @@ const sf::Vector2f &Chunk::getCenter() const {
 }
 
 void Chunk::renderBy(sf::RenderTarget &target) {
+    tiles.renderBy(target);
     for (auto & prop  : interactiveProps) {
         prop->renderBy(target);
     }
     for (auto & prop : decorProps) {
         prop->renderBy(target);
     }
-    tiles.renderBy(target);
 }
 
 sf::Vector2f Chunk::getCenterFromReqData(const Chunk::RequestData &data) {

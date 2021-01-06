@@ -1,6 +1,10 @@
 ﻿#include "AnimationPlayer.h"
 
-AnimationPlayer::AnimationPlayer(EntitySprite *sprite) : sprite(sprite) {}
+AnimationPlayer::AnimationPlayer(EntitySprite *sprite) : sprite(sprite), curAnim(nullptr) {}
+
+AnimationPlayer::AnimationPlayer() : sprite(nullptr), curAnim(nullptr) {
+
+}
 
 void AnimationPlayer::playAnim(const std::shared_ptr<Animation> &anim) {
     if (!curAnim || curAnim->peekNextFrame() == animConstants::EMPTY_FRAME ||
@@ -26,10 +30,11 @@ void AnimationPlayer::setCurrentAnim(std::shared_ptr<Animation> anim) {
 }
 
 bool AnimationPlayer::hasCurrentAnim() const {
-    return curAnim != nullptr;
+    return !(curAnim == nullptr);
 }
 
 void AnimationPlayer::setSprite(EntitySprite* newSprite) {
     sprite = newSprite;
 }
+
 

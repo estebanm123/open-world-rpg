@@ -6,7 +6,7 @@
 
 std::unique_ptr<InteractiveProp>DirtPropFactory::generateInteractiveProp(int hashVal, const sf::Vector2f &propCoords) {
     if (hashVal > ROCK_MIN) {
-        generateRocks(normalizeHashValue(hashVal, ROCK_MIN), propCoords);
+        return generateRocks(normalizeHashValue(hashVal, ROCK_MIN), propCoords);
     }
 }
 
