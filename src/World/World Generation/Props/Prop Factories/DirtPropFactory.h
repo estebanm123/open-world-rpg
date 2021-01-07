@@ -9,7 +9,7 @@ public:
     std::unique_ptr<DecorProp> generateDecorProp(int hashVal, const sf::Vector2f &propCoords) override;
 
 private:
-    static constexpr auto ROCK_MIN = HASH_LIM * -1;
+    static constexpr auto ROCK_MIN = HASH_LIM * .94;
 };
 
 

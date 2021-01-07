@@ -37,7 +37,7 @@ private:
 
 
     static constexpr float PROP_CHANCE_MAX = 100;
-    static constexpr float PROP_CHANCE = 20;
+    static constexpr float PROP_CHANCE = 80;
     static constexpr float PROP_CHANCE_CHANGE = 3;
 };
 

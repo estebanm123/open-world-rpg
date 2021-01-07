@@ -25,12 +25,14 @@ bool isDiagonal(const sf::Vector2i & v) {
     return abs(v.x) == 1 && abs(v.y) == 1;
 }
 
+constexpr float DIAGONAL_SPEED_MULTIPLIER = 0.707f;
+
 sf::Vector2f Player::getMoveOffset() {
-    int PLACEHOLDER = 200;
+    int PLACEHOLDER = 500;
     const auto newOffset = moveDirection * PLACEHOLDER;
     sf::Vector2f castedOffset = {static_cast<float>(newOffset.x), static_cast<float>(newOffset.y)};
     if (isDiagonal(moveDirection)) {
-        castedOffset *= 0.707f;
+        castedOffset *= DIAGONAL_SPEED_MULTIPLIER;
     }
     return castedOffset;
 }

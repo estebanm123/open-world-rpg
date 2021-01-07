@@ -21,7 +21,7 @@ sf::Vector2f generatePropCoords(float propGenChance, int hashVal1, const sf::Vec
     using namespace worldConstants;
     auto hashVal2 = hashCoords(hashVal1, static_cast<int>(propGenChance));
     int limit = static_cast<int>(propGenChance);
-    auto x = static_cast<float>((limit * hashVal2) % TILE_SIZE_INT_X);
+    auto x = static_cast<float>(hashVal2 % TILE_SIZE_INT_X);
     auto y = static_cast<float>((limit * hashVal1) % TILE_SIZE_INT_Y);
     return {x + tileGlobalCoords.x, y + tileGlobalCoords.y};
 }
@@ -38,7 +38,7 @@ std::vector<std::unique_ptr<InteractiveProp>> ChunkPropGenerator::generateIntera
         for (int y = 0; y < TileMap::SIZE_Y; y++) {
             auto &curTile = tileMap.tiles[x][y];
             auto curEnv = curTile->getEnvironment();
-            auto tileCoordHash = hashTileCoords(*curTile);
+            auto tileCoordHash = hashTileCoords(*curTile) ^ static_cast<int>(currentPropChance);
             if (tileCoordHash > currentPropChance) {
                 auto propCoords = generatePropCoords(currentPropChance, tileCoordHash, curTile->getPosition());
                 auto prop = curEnv->generateInteractiveProp(propCoords);
