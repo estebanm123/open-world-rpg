@@ -12,7 +12,9 @@ Very basic item/enemy gameplay interactions from old May 2020 demo: https://www.
 
 **Details**
 
-Notable engine features include a world generation system that creates a near-infinite open world and an extensible animation system supporting a variety of animation types. World chunks are generated around the player using a worker thread (and mostly wait-free synchronization) to offload world generation/loading-related computation from the main thread that handles everything else. 
+Notable engine features include a world generation system that creates a near-infinite open world and an extensible animation system supporting a variety of animation types. 
+
+World chunks are generated around the player using a worker thread (and mostly wait-free synchronization) to offload world generation/loading-related computation from the main thread that handles everything else. 
 
 The world gen handled by this worker thread is multi-layered: 
 1. A matrix of temporary environmental cells (eg. dirt, water) is filled using the improved perlin noise algo [+ extra hashing for tile variety within environments]
