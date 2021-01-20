@@ -36,3 +36,11 @@ const sf::Vector2f &MoveableEntity::getLookDirection() const {
     return lookDirection;
 }
 
+bool MoveableEntity::hasMoved() const {
+    return lastMoveOffset.x != 0 || lastMoveOffset.y != 0;
+}
+
+void MoveableEntity::cancelLastMove(const sf::Vector2f & offsetToRevert) {
+
+}
+

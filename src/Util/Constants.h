@@ -33,8 +33,8 @@ const inline std::array<sf::Vector2i, 9> directions{
 
 namespace worldConstants {
 
-    constexpr inline int TILES_PER_CHUNK_X = 32;
-    constexpr inline int TILES_PER_CHUNK_Y = 32;
+    constexpr inline int TILES_PER_CHUNK_X = 16;
+    constexpr inline int TILES_PER_CHUNK_Y = 16;
 
     const inline sf::Vector2f TILE_SIZE = {48, 48}; // (all sizes in pixels)
     const inline int TILE_SIZE_INT_X = static_cast<int>(TILE_SIZE.x);

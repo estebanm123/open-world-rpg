@@ -22,12 +22,18 @@ public:
 
     const sf::Vector2f& getLookDirection() const;
 
+    void cancelLastMove(const sf::Vector2f & offsetToRevert);
+
+    bool hasMoved() const;
+
     ~MoveableEntity() override = default;
 
 protected:
     virtual sf::Vector2f getMoveOffset();
 
     sf::Vector2f lookDirection;
+
+    sf::Vector2f lastMoveOffset; // offset in dir of last move
 };
 
 
