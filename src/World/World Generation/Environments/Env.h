@@ -6,12 +6,11 @@
 #include <SFML/System/NonCopyable.hpp>
 #include "../Tiles/TileContainers/TileContainer.h"
 #include "../../../Util/NonMoveable.h"
-#include "../Props/Prop Factories/PropFactory.h"
+#include "../../Entities/Collidables/Props/Prop Factories/PropFactory.h"
 
 class SingleTileContainer;
 
-class DecorProp;
-class InteractiveProp;
+class Prop;
 
 class EnvWrapper;
 
@@ -46,9 +45,7 @@ public:
 
     TileContainer *selectTileContainer(const sf::Vector2f &coords) const;
 
-    std::unique_ptr<InteractiveProp> generateInteractiveProp(const sf::Vector2f& propCoords) const override;
-
-    std::unique_ptr<DecorProp> generateDecorProp(const sf::Vector2f& propCoords) const override;
+    std::unique_ptr<Prop> generateProp(const sf::Vector2f& propCoords) const override;
 
 private:
     const int multiTileIndex;

@@ -6,17 +6,13 @@
 #include "../Tiles/TileContainers/SingleTileContainer.h"
 #include "../Tiles/TileContainers/AnimatedTileContainer.h"
 #include "../../../Animation/RepeatingAnim.h"
-#include "../Props/Prop Factories/DirtPropFactory.h"
+#include "../../Entities/Collidables/Props/Prop Factories/DirtPropFactory.h"
 
 
 namespace EnvTypes {
 
     using namespace worldConstants;
     using namespace animConstants;
-
-    // -----------------
-    // CompleteEnvs - don't use these helpers for borders!
-    // -----------------
 
     // Assumes repeating by inversion, all animated tiles are on row 0
     inline std::unique_ptr<RepeatingAnim> initializeTileAnim(int start, int numFrames, int delay) {
@@ -88,10 +84,6 @@ namespace EnvTypes {
         Dirt->setBorderTileContainers(dirtSplits, dirtCorners);
         Water->setBorderTileContainers(waterSplits, waterCorners);
     }
-
-    // -----------------
-    // CompleteEnvs - don't use these helpers for borders!
-    // -----------------
 
     inline void initialize() {
         initializeBorderTiles();
