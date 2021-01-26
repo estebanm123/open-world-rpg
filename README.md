@@ -6,9 +6,9 @@ Written in C++ using the lightweight multimedia library SFML (provides simple ab
 
 **Demos**
 
-Most recent demo (Jan 2021) featuring world generation system w/ a couple of sample props and environments: https://www.youtube.com/watch?v=lamWDDJ_wLc&
+Jan 2021 demo featuring world generation system w/  sample props and environments: https://www.youtube.com/watch?v=lamWDDJ_wLc&
 
-Very basic item/enemy gameplay interactions from old May 2020 demo: https://www.youtube.com/watch?v=0c8xLTAbcqw
+Very basic item/enemy gameplay interactions from May 2020 demo: https://www.youtube.com/watch?v=0c8xLTAbcqw
 
 **Details**
 

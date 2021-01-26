@@ -1,11 +1,8 @@
 
 #include "Temporary Environments/EnvWrapper.h"
 #include "Env.h"
+#include "../../Entities/Collidables/Props/Prop.h"
 
-#include "../Props/Interactive/InteractiveProp.h"
-#include "../Props/Decor/DecorProp.h"
-
-#include <utility>
 
 Env::Env(TileContainer::TileContainers completeTileContainers, struct Env::Config config)
         : completeTileContainers(std::move(completeTileContainers)),
@@ -46,14 +43,9 @@ void Env::setBorderTileContainers(const BorderTileContainers &splits, const Bord
     cornerBorderTileContainers = corners;
 }
 
-std::unique_ptr<InteractiveProp> Env::generateInteractiveProp(const sf::Vector2f &propCoords) const {
+std::unique_ptr<Prop> Env::generateProp(const sf::Vector2f &propCoords) const {
     if (!propFactory) return nullptr;
-    return propFactory->generateInteractiveProp(propCoords);
-}
-
-std::unique_ptr<DecorProp> Env::generateDecorProp(const sf::Vector2f &propCoords) const {
-    if (!propFactory) return nullptr;
-    return propFactory->generateDecorProp(propCoords);
+    return propFactory->generateProp(propCoords);
 }
 
 bool Env::isBorder() const {

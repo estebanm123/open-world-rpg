@@ -1,8 +1,8 @@
 
 
 #include "EnvBorder.h"
-#include "../Props/Interactive/InteractiveProp.h"
-#include "../Props/Decor/DecorProp.h"
+
+#include "../../Entities/Collidables/Props/Prop.h"
 
 bool EnvBorder::isBorder() const {
     return true;
@@ -12,10 +12,6 @@ bool EnvBorder::operator==(const CompleteEnv &other) const {
     return false; // todo
 }
 
-std::unique_ptr<InteractiveProp> EnvBorder::generateInteractiveProp(const sf::Vector2f &propCoords) const {
+std::unique_ptr<Prop> EnvBorder::generateProp(const sf::Vector2f &propCoords) const {
     return nullptr; // todo
-}
-
-std::unique_ptr<DecorProp> EnvBorder::generateDecorProp(const sf::Vector2f &propCoords) const {
-    return nullptr;//todo
 }
