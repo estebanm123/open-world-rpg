@@ -29,9 +29,10 @@ int PropFactory::getPropIndex(int hashVal, int numProps) {
     return hashVal % numProps;
 }
 
+constexpr auto SIZE_FLEX = 5;
 std::unique_ptr<Prop> PropFactory::generateRock(const sf::Vector2f &pos, const sf::IntRect &spriteSheetCoords) {
-    const sf::Vector2f size = {static_cast<float>(spriteSheetCoords.width),
-                               static_cast<float>(spriteSheetCoords.height)};
+    const sf::Vector2f size = {static_cast<float>(spriteSheetCoords.width - SIZE_FLEX),
+                               static_cast<float>(spriteSheetCoords.height - SIZE_FLEX)};
     return std::make_unique<Prop>("Foliage/Rocks", pos, size, std::make_unique<BlockingPhysics>(),
                                              std::make_unique<AnimationPlayer>(), spriteSheetCoords);
 }

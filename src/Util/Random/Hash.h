@@ -25,7 +25,7 @@ inline int hashCoords2(T a, T b, int seed = RAND_MIXER_1) {
     auto intb = static_cast<int>(b);
 
     int h = seed + inta*374761393 + intb*668265263;
-    h = (h^(h >> 13))e1274126177;
+    h = (h^(h >> 13))*1274126177;
     return h^(h >> 16);
 }
 

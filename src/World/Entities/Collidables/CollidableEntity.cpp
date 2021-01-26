@@ -7,7 +7,7 @@
 #include "MoveableEntity.h"
 
 #ifdef DEBUG
-#define RENDER_HITBOX_X(renderTargetRef, hitbox) \
+#define RENDER_HITBOX(renderTargetRef, hitbox)
 do {                                        \
     debugRenderHitbox(renderer, hitbox);                                            \
 } while (0)
@@ -53,5 +53,6 @@ void CollidableEntity::handleCollision(MoveableEntity *other) {
 
 void CollidableEntity::renderBy(sf::RenderTarget &renderer) {
     Entity::renderBy(renderer);
-    RENDER_HITBOX_X(renderer, hitbox);
+    RENDER_HITBOX(renderer, hitbox);
+    debugRenderHitbox(renderer, hitbox); // to comment out
 }
