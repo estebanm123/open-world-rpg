@@ -48,11 +48,13 @@ void MoveableEntity::revertLastMove() {
     lastMoveOffset = {0, 0};
 }
 
-sf::Vector2i MoveableEntity::getDirectionOfLastMove() const {
-    sf::Vector2i cardinalDir;
-    cardinalDir.x = lastMoveOffset.x > 0? 1 : lastMoveOffset.x < 0? -1 : 0;
-    cardinalDir.y = lastMoveOffset.y > 0? -1 : lastMoveOffset.y < 0? 1 : 0;
-    return cardinalDir;
+sf::Vector2f & MoveableEntity::getLastMoveOffset() {
+    return lastMoveOffset;
+}
+
+void MoveableEntity::resetLastMove(bool x, bool y) {
+    if (x) lastMoveOffset.x = 0;
+    if (y) lastMoveOffset.y = 0;
 }
 
 

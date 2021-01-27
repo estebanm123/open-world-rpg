@@ -66,5 +66,5 @@ static int fastFloor(T f) { return f >= 0 ? (int) f : (int) f - 1; }
 
 template<typename T>
 bool isDiagonal(const sf::Vector2<T> & v) {
-    return v.x != 0 && v.y != 0;
+    return abs(v.x) == abs(v.y);
 }

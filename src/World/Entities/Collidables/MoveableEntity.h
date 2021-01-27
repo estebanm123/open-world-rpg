@@ -22,10 +22,12 @@ public:
 
     const sf::Vector2f& getLookDirection() const;
 
+    void resetLastMove(bool x, bool y);
+
     virtual void revertLastMove();
 
     // approximates cardinal direction of last move (for players, this isn't an approximation)
-    sf::Vector2i getDirectionOfLastMove() const;
+    sf::Vector2f & getLastMoveOffset();
 
     bool hasMoved() const;
 
