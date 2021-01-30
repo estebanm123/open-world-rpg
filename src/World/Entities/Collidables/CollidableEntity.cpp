@@ -7,7 +7,7 @@
 #include "MoveableEntity.h"
 
 #ifdef DEBUG
-#define RENDER_HITBOX(renderTargetRef, hitbox)
+#define RENDER_HITBOX(renderTargetRef, hitbox) \
 do {                                        \
     debugRenderHitbox(renderer, hitbox);                                            \
 } while (0)

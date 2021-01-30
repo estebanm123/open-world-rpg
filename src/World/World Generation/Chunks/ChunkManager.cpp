@@ -2,36 +2,17 @@
 #include "../Tiles/Tile.h"
 #include "../../Entities/Collidables/Organisms/Humanoid/Player/Player.h"
 #include "../../Entities/Collidables/Props/Prop.h"
+#include "ChunkDebug.h"
 
 #ifdef DEBUG
 #define RENDER_CHUNK_OUTLINE(renderTargetRef, chunks) \
 do {                                                        \
-    debugRenderChunkOutlines(renderTargetRef, chunks); \
+    ChunkDebug::drawChunkOutlines(renderTargetRef, chunks); \
 } while (0)
 #else
 #define RENDER_CHUNK_OUTLINE
 #endif
 
-// refactor to a separate class (static)
-void drawChunkOutlines(sf::RenderTarget &renderTargetRef, sf::Vector2f center, sf::Vector2f size) {
-    using namespace worldConstants;
-    sf::RectangleShape outline{{size.x, size.y}};
-    outline.setPosition({center.x - CHUNK_SIZE.x / 2.f, center.y + CHUNK_SIZE.y / 2.f});
-    outline.setOutlineColor(sf::Color::Magenta);
-    outline.setFillColor(sf::Color{0, 0, 0, 0});
-    outline.setOutlineThickness(1);
-    renderTargetRef.draw(outline);
-}
-
-void debugRenderChunkOutlines(
-        sf::RenderTarget &renderTargetRef,
-        const std::array<std::array<std::unique_ptr<Chunk>, 3>, 3> &chunks) {
-    for (auto i = 0; i < 3; ++i) {
-        for (auto j = 0; j < 3; ++j) {
-            if (chunks[i][j]) drawChunkOutlines(renderTargetRef, chunks[i][j]->getCenter(), worldConstants::CHUNK_SIZE);
-        }
-    }
-}
 
 ChunkManager::ChunkManager(int seed, Player * player, const sf::Vector2f &pos)
         : generator(seed), generatorThread(std::ref(generator)), player(player) {
