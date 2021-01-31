@@ -6,9 +6,10 @@ class Player;
 
 class PlayerInputManager {
 public:
-    PlayerInputManager(Player & player);
+    PlayerInputManager(Player &player);
 
     void handleInput(sf::RenderWindow &window);
+
 private:
     void handleKeyPresses();
 
@@ -26,7 +27,7 @@ private:
 
     void handleMovement();
 
-    Player & player;
+    Player &player;
 };
 
 

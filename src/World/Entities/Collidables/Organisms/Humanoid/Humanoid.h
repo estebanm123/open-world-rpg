@@ -23,6 +23,7 @@ public:
     bool pickingUp() const;
 
     ~Humanoid() override = default;
+
 protected:
     EntitySprite &getSprite() override;
 

@@ -6,8 +6,6 @@
 #include "../Tiles/TileMap.h"
 #include "ChunkCollisionHandler.h"
 
-class ChunkCollisionHandler;
-
 class Player;
 
 class MoveableEntity;
@@ -23,6 +21,22 @@ public:
         // neighbors
     };
 
+    struct Neighbors {
+//        Neighbors(
+//                std::unique_ptr<Chunk> *north,
+//                std::unique_ptr<Chunk> *south,
+//                std::unique_ptr<Chunk> *west,
+//                std::unique_ptr<Chunk> *east
+//        ) : north(north), south(south), west(west), east(east) {
+//
+//        }
+
+        std::unique_ptr<Chunk> *north;
+        std::unique_ptr<Chunk> *south;
+        std::unique_ptr<Chunk> *west;
+        std::unique_ptr<Chunk> *east;
+    };
+
     Chunk(const RequestData &reqData, TileMap tiles, const sf::Vector2f &center,
           std::unordered_set<std::unique_ptr<Prop>> props);
 
@@ -36,11 +50,15 @@ public:
 
     void renderBy(sf::RenderTarget &target);
 
-    void addMoveable(MoveableEntity *moveable);
+    void setNeighbors(const Neighbors & newNeighbors);
 
-    void removeMoveable(MoveableEntity *moveable);
+    void addMoveable(MoveableEntity *moveable, bool checkCollision = false);
 
 private:
+    typedef std::unordered_set<MoveableEntity *>::iterator MoveableIter;
+
+    void removeMoveable(MoveableIter & it);
+
     friend class ChunkCollisionHandler;
 
     RequestData reqData;
@@ -48,8 +66,9 @@ private:
     sf::Vector2f center; // position? origin?
     std::unordered_set<std::unique_ptr<Prop>> props;
     std::unordered_set<MoveableEntity *> moveableEntities;
-    // neighbors ??
+    Neighbors neighbors;
     ChunkCollisionHandler collisionHandler;
+
 
     void updateEntities(float dt);
 

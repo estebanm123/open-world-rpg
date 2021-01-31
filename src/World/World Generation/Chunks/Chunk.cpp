@@ -1,6 +1,7 @@
 ﻿
 #include <utility>
 #include <unordered_set>
+#include <iostream>
 
 #include "Chunk.h"
 #include "../Tiles/Tile.h"
@@ -10,7 +11,8 @@
 Chunk::Chunk(const RequestData &reqData, TileMap tiles, const sf::Vector2f &center,
              std::unordered_set<std::unique_ptr<Prop>> Props)
         : reqData(reqData), tiles(std::move(tiles)), center(center), props(std::move(Props)),
-           collisionHandler(this) {
+          collisionHandler(this)
+{
 }
 
 const Chunk::RequestData &Chunk::getReqData() const {
@@ -23,7 +25,7 @@ const sf::Vector2f &Chunk::getCenter() const {
 
 void Chunk::renderBy(sf::RenderTarget &target) {
     tiles.renderBy(target);
-    for (auto & prop  : props) {
+    for (auto &prop  : props) {
         prop->renderBy(target);
     }
 }
@@ -47,18 +49,28 @@ void Chunk::update(float dt) {
 }
 
 void Chunk::updateEntities(float dt) {
-    for (auto & moveable : moveableEntities) {
+    for (auto &moveable : moveableEntities) {
         moveable->update(dt);
     }
-    for (auto & Prop : props) {
+    for (auto &Prop : props) {
         Prop->update(dt);
     }
 }
 
-void Chunk::addMoveable(MoveableEntity *moveable) {
+void Chunk::addMoveable(MoveableEntity *moveable, bool checkCollision) {
+    // eventually call some overloaded helpers to add to humanoids, items, etc...
     moveableEntities.insert(moveable);
+    if (checkCollision) {
+        collisionHandler.handleCollisionsWithOtherEntities(moveable); // add true
+    }
 }
 
-void Chunk::removeMoveable(MoveableEntity *moveable) {
-    moveableEntities.erase(moveable);
+void Chunk::removeMoveable(MoveableIter & it) {
+    it = moveableEntities.erase(it);
 }
+
+void Chunk::setNeighbors(const Chunk::Neighbors &newNeighbors) {
+    neighbors = newNeighbors;
+}
+
+

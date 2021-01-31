@@ -1,4 +1,5 @@
-﻿#include "ChunkManager.h"
+﻿#include <iostream>
+#include "ChunkManager.h"
 #include "../Tiles/Tile.h"
 #include "../../Entities/Collidables/Organisms/Humanoid/Player/Player.h"
 #include "../../Entities/Collidables/Props/Prop.h"
@@ -14,7 +15,7 @@ do {                                                        \
 #endif
 
 
-ChunkManager::ChunkManager(int seed, Player * player, const sf::Vector2f &pos)
+ChunkManager::ChunkManager(int seed, Player *player, const sf::Vector2f &pos)
         : generator(seed), generatorThread(std::ref(generator)), player(player) {
     allocateInitialChunks(pos);
     chunks[1][1]->addMoveable(player);
@@ -24,9 +25,7 @@ ChunkManager::ChunkManager(int seed, Player * player, const sf::Vector2f &pos)
 // If player dir relative to center chunk is not center, we generate new chunks
 void ChunkManager::recalibrateChunks(const sf::Vector2i &dir) {
     if (dir == constants::CENTER) return;
-    chunks[1][1]->removeMoveable(player); // this is placeholder!!!!!!!!!!!!!!!!!!!!should happen automatically
     shiftChunksFromDirection(dir);
-    chunks[1][1]->addMoveable(player); // add to new center
 }
 
 // Determines if a chunk recalibration/shift needs to occur (if the player has crossed to a new chunk)
@@ -57,7 +56,7 @@ void ChunkManager::handleChunkChange() {
     } else if (left) {
         recalibrateChunks(constants::WEST);
     }
-
+    chunkGenerationTimer.restart();
 }
 
 void ChunkManager::renderChunks(sf::RenderTarget &target) {
@@ -152,13 +151,14 @@ void ChunkManager::handleVerticalShift(const sf::Vector2i &dir) {
 // 
 // Similar to allocateChunkFromDirection, except it performs a transformation on an existing chunk's pos
 // in matrix, rather than mapping the direction directly to a slot; sets the prev pos to nullptr and
-// sends requests a chunk generation. 
+// requests a chunk generation.
 // Overrides destination chunk if in bounds.
 void ChunkManager::attemptShiftAllocation(const sf::Vector2i &pos, const sf::Vector2i &dir) {
     sf::Vector2i trans = {dir.x, dir.y * -1};
     auto newPos = trans + pos;
     if (inMatrixBounds(newPos)) {
         chunks[newPos.y][newPos.x] = std::move(chunks[pos.y][pos.x]);
+        allocateChunkNeighbors(newPos, chunks[newPos.y][newPos.x].get());
     }
     chunks[pos.y][pos.x] = nullptr;
     sf::Vector2i dirRelativeToNewCenter = {newPos.x - 1, newPos.y - 1};
@@ -173,9 +173,9 @@ bool ChunkManager::inMatrixBounds(const sf::Vector2i &pos) {
 }
 
 void ChunkManager::updateChunks(float dt) {
-    for (const auto & chunkRow : chunks) {
-        for (const auto & chunk : chunkRow) {
-            chunk->update(dt);
+    for (const auto &chunkRow : chunks) {
+        for (const auto &chunk : chunkRow) {
+            if (chunk) chunk->update(dt);
         }
     }
 }
@@ -217,11 +217,37 @@ void ChunkManager::allocateInitialChunks(const sf::Vector2f &pos) {
 // Allocates chunk to matrix by mapping dir to slot
 void ChunkManager::allocateChunkFromDirection(std::unique_ptr<Chunk> &chunk, const sf::Vector2i &dir) {
     auto y = dir.y * -1;
-    chunks[y + 1][dir.x + 1] = std::move(chunk);
+    sf::Vector2i newPos = {dir.x + 1, y + 1};
+    allocateChunkNeighbors(newPos, chunk.get());
+    chunks[newPos.y][newPos.x] = std::move(chunk);
 }
 
-Chunk * ChunkManager::getChunkFromDirection(const sf::Vector2i &dir) {
+void ChunkManager::allocateChunkNeighbors(const sf::Vector2i &matrixPos, Chunk *target) {
+    if (target == nullptr) return;
+    using namespace constants;
+    Chunk::Neighbors neighbors{};
+    sf::Vector2i westNeighborPos = matrixPos + WEST;
+    if (westNeighborPos.x >= 0) {
+       neighbors.west = &chunks[westNeighborPos.y][westNeighborPos.x];
+    }
+    sf::Vector2i eastNeighborPos = matrixPos + EAST;
+    if (eastNeighborPos.x <= MATRIX_LEN) {
+        neighbors.east = &chunks[eastNeighborPos.y][eastNeighborPos.x];
+    }
+    sf::Vector2i northNeighborPos = matrixPos - NORTH;
+    if (northNeighborPos.y >= 0) {
+        neighbors.north = &chunks[northNeighborPos.y][northNeighborPos.x];
+    }
+    sf::Vector2i southNeighborPos = matrixPos - SOUTH;
+    if (southNeighborPos.y <= MATRIX_LEN) {
+        neighbors.south = &chunks[southNeighborPos.y][southNeighborPos.x];
+    }
+    target->setNeighbors(neighbors);
+}
+
+Chunk *ChunkManager::getChunkFromDirection(const sf::Vector2i &dir) {
     auto y = dir.y * -1;
     return chunks[y + 1][dir.x + 1].get();
 }
+
 

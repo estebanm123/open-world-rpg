@@ -54,5 +54,4 @@ void CollidableEntity::handleCollision(MoveableEntity *other) {
 void CollidableEntity::renderBy(sf::RenderTarget &renderer) {
     Entity::renderBy(renderer);
     RENDER_HITBOX(renderer, hitbox);
-    debugRenderHitbox(renderer, hitbox); // to comment out
 }

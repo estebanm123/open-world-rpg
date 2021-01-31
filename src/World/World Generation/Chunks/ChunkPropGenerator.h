@@ -25,10 +25,10 @@ private:
 
     static void updateCurrentPropChanceOnSuccess(float &currentChance);
 
-    static bool validateProp(Prop * generatedProp, const TileMap &tiles, TilesSeen &tilesSeen,
+    static bool validateProp(Prop *generatedProp, const TileMap &tiles, TilesSeen &tilesSeen,
                              const sf::Vector2i &localCoords);
 
-    static int hashTileCoords(Tile& tile);
+    static int hashTileCoords(Tile &tile);
 
 
     static constexpr float PROP_CHANCE_MAX = 100;

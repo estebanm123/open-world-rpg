@@ -13,16 +13,16 @@ public:
 
     CollidableEntity(Hitbox hitbox, std::unique_ptr<CollisionPhysics> CollisionPhysics);
 
-    void handleCollision(MoveableEntity * other);
+    void handleCollision(MoveableEntity *other);
 
-    const sf::Vector2f& getSize() const;
+    const sf::Vector2f &getSize() const;
 
     void renderBy(sf::RenderTarget &renderer);
 
 protected:
     bool intersect(const CollidableEntity *other) const;
 
-    static sf::RectangleShape initializeHitbox(const sf::Vector2f & size, const sf::Vector2f& pos);
+    static sf::RectangleShape initializeHitbox(const sf::Vector2f &size, const sf::Vector2f &pos);
 
     Hitbox hitbox;
 private:

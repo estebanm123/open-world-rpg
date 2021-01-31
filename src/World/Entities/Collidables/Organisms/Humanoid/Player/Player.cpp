@@ -3,21 +3,23 @@
 #include "Player.h"
 #include "../../../../../../Util/MathExtra.h"
 
-Player::Player(const sf::Vector2f &globalPosition) : Humanoid(globalPosition, "Player/body32", "Player/head32"), inputManager(*this) {}
+Player::Player(const sf::Vector2f &globalPosition) : Humanoid(globalPosition, "Player/body32", "Player/head32"),
+                                                     inputManager(*this) {}
 
-const sf::Vector2i & Player::getMoveDirection() const {
+const sf::Vector2i &Player::getMoveDirection() const {
     return moveDirection;
 }
 
-void Player::setMoveDirection(const sf::Vector2i& direction) {
+void Player::setMoveDirection(const sf::Vector2i &direction) {
     moveDirection = direction;
 }
 
 void Player::update(float dt) {
+    Humanoid::update(dt);
     move(dt);
 }
 
-void Player::handleInput(sf::RenderWindow& window) {
+void Player::handleInput(sf::RenderWindow &window) {
     inputManager.handleInput(window);
 }
 

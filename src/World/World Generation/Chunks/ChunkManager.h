@@ -10,7 +10,7 @@
 
 class ChunkManager : sf::NonCopyable, NonMoveable {
 public:
-    ChunkManager(int seed, Player * player, const sf::Vector2f &pos);
+    ChunkManager(int seed, Player *player, const sf::Vector2f &pos);
 
     void update(float dt);
 
@@ -19,13 +19,14 @@ public:
     ~ChunkManager();
 
 private:
-    std::array<std::array<std::unique_ptr<Chunk>, 3>, 3> chunks;
+    static constexpr auto MATRIX_LEN = 3;
+    std::array<std::array<std::unique_ptr<Chunk>, MATRIX_LEN>, MATRIX_LEN> chunks;
     static constexpr auto CHUNK_GENERATION_TIMER = 1;
 
     ChunkGenerator generator;
     std::thread generatorThread;
     sf::Clock chunkGenerationTimer;
-    Player * player;
+    Player *player;
 
     void updateChunks(float dt);
 
@@ -49,5 +50,7 @@ private:
 
     bool inMatrixBounds(const sf::Vector2i &pos);
 
-    Chunk * getChunkFromDirection(const sf::Vector2i &dir);
+    void allocateChunkNeighbors(const sf::Vector2i &matrixPos, Chunk * target);
+
+    Chunk *getChunkFromDirection(const sf::Vector2i &dir);
 };

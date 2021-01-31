@@ -9,7 +9,7 @@ using Key = sf::Keyboard::Key;
 
 PlayerInputManager::PlayerInputManager(Player &player) : player(player) {}
 
-void PlayerInputManager::handleInput(sf::RenderWindow & window) {
+void PlayerInputManager::handleInput(sf::RenderWindow &window) {
     handleKeyPresses();
     handleMouseMovement(window);
     handleMouseClicks();

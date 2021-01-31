@@ -79,9 +79,10 @@ bool EnvWrapper::fillWildcardIfExists(const std::shared_ptr<EnvWrapper> &filler)
 const NeighboredEnv::TileContainerWrapper EnvWrapper::extractTileMetadata(const sf::Vector2f &globalCoords) const {
     const auto &tileContainer = env->selectTileContainer(globalCoords);
     Tile::Metadata metadata{env, globalCoords,
-env->getSpriteSheetPath()};
-return {metadata, tileContainer};
+                            env->getSpriteSheetPath()};
+    return {metadata, tileContainer};
 }
+
 const Env *EnvWrapper::getEnv() const {
     return env.get();
 }

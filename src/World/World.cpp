@@ -8,7 +8,7 @@ World::World(std::shared_ptr<sf::View> worldView) :
         seed(generateSeed()),
         player(worldConstants::INITIAL_PLAYER_POS),
         chunkManager(seed, &player, worldConstants::INITIAL_PLAYER_POS) {
-        // testing various objects
+    // testing various objects
 }
 
 

@@ -10,6 +10,9 @@ public:
     // optional delta is intended to be from time since last frame, for purposes of smooth movement
     virtual void move(float dt);
 
+    // for subclasses this needs to be called first
+    void update(float dt) override;
+
     virtual void idle() = 0;
 
     void setRotation(float angle) override;
@@ -18,16 +21,16 @@ public:
 
     void setPosition(const sf::Vector2f &pos) override;
 
-    void setLookDirection(const sf::Vector2f& direction);
+    void setLookDirection(const sf::Vector2f &direction);
 
-    const sf::Vector2f& getLookDirection() const;
+    const sf::Vector2f &getLookDirection() const;
 
     void resetLastMove(bool x, bool y);
 
     virtual void revertLastMove();
 
     // approximates cardinal direction of last move (for players, this isn't an approximation)
-    sf::Vector2f & getLastMoveOffset();
+    sf::Vector2f &getLastMoveOffset();
 
     bool hasMoved() const;
 

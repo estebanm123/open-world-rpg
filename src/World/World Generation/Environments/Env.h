@@ -21,11 +21,12 @@ public:
     typedef std::unordered_map<const Env *, std::vector<std::shared_ptr<TileContainer>>> BorderTileContainers;
 
     struct Config {
-        explicit Config(PropFactory * propFactory) : propFactory(propFactory) {};
+        explicit Config(PropFactory *propFactory) : propFactory(propFactory) {};
+
         Config() {};
         std::string spriteSheet = TILE_SHEET_PATH;
         int multiTileIndex = -1;
-        PropFactory * propFactory = nullptr;
+        PropFactory *propFactory = nullptr;
     };
 
     explicit Env(TileContainer::TileContainers completeTileContainers, struct Config config = {});
@@ -34,7 +35,7 @@ public:
 
     bool isBorder() const override;
 
-    bool operator==(const CompleteEnv& other) const override;
+    bool operator==(const CompleteEnv &other) const override;
 
     void setBorderTileContainers(const BorderTileContainers &splits, const BorderTileContainers &corners);
 
@@ -45,7 +46,7 @@ public:
 
     TileContainer *selectTileContainer(const sf::Vector2f &coords) const;
 
-    std::unique_ptr<Prop> generateProp(const sf::Vector2f& propCoords) const override;
+    std::unique_ptr<Prop> generateProp(const sf::Vector2f &propCoords) const override;
 
 private:
     const int multiTileIndex;

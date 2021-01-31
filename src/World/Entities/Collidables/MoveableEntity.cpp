@@ -48,13 +48,17 @@ void MoveableEntity::revertLastMove() {
     lastMoveOffset = {0, 0};
 }
 
-sf::Vector2f & MoveableEntity::getLastMoveOffset() {
+sf::Vector2f &MoveableEntity::getLastMoveOffset() {
     return lastMoveOffset;
 }
 
 void MoveableEntity::resetLastMove(bool x, bool y) {
     if (x) lastMoveOffset.x = 0;
     if (y) lastMoveOffset.y = 0;
+}
+
+void MoveableEntity::update(float dt) {
+    lastMoveOffset = {0,0};
 }
 
 

@@ -4,13 +4,14 @@
 
 class BlockingPhysics : public CollisionPhysics {
 public:
-    explicit BlockingPhysics(CollidableEntity * entity);
+    explicit BlockingPhysics(CollidableEntity *entity);
 
     BlockingPhysics();
 
-    void applyCollisionPhysics(MoveableEntity * other) override;
+    void applyCollisionPhysics(MoveableEntity *other) override;
+
 private:
-    bool isMovingAway(MoveableEntity * other);
+    bool isMovingAway(MoveableEntity *other);
 };
 
 

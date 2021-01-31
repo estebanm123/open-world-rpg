@@ -15,7 +15,7 @@ ChunkPropGenerator::TilesSeen ChunkPropGenerator::initializeTilesSeen() {
 }
 
 
-sf::Vector2f generatePropCoords(float propGenChance, int hashVal1, const sf::Vector2f & tileGlobalCoords) {
+sf::Vector2f generatePropCoords(float propGenChance, int hashVal1, const sf::Vector2f &tileGlobalCoords) {
     using namespace worldConstants;
     auto hashVal2 = hashCoords(hashVal1, static_cast<int>(propGenChance));
     int limit = static_cast<int>(propGenChance);
@@ -34,7 +34,7 @@ std::unordered_set<std::unique_ptr<Prop>> ChunkPropGenerator::generateProps(cons
         for (int y = 0; y < TileMap::SIZE_Y; y++) {
             auto &curTile = tileMap.tiles[x][y];
             auto curEnv = curTile->getEnvironment();
-            auto tileCoordHash = hashTileCoords(*curTile) ^ static_cast<int>(currentPropChance);
+            auto tileCoordHash = hashTileCoords(*curTile) ^static_cast<int>(currentPropChance);
             if (tileCoordHash > currentPropChance) {
                 auto propCoords = generatePropCoords(currentPropChance, tileCoordHash, curTile->getPosition());
                 auto prop = curEnv->generateProp(propCoords);

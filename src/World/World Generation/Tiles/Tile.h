@@ -31,7 +31,7 @@ public:
 
     virtual ~Tile() = default;
 
-    const sf::Vector2f& getPosition();
+    const sf::Vector2f &getPosition();
 
     std::shared_ptr<CompleteEnv> getEnvironment() const;
 

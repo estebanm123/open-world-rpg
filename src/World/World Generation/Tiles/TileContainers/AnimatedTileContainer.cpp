@@ -5,7 +5,8 @@
 #include "../../../../Animation/RepeatingAnim.h"
 
 
-AnimatedTileContainer::AnimatedTileContainer(std::unique_ptr<RepeatingAnim> animation) : animation(std::move(animation)), TileContainer(1) {
+AnimatedTileContainer::AnimatedTileContainer(std::unique_ptr<RepeatingAnim> animation) : animation(
+        std::move(animation)), TileContainer(1) {
 
 }
 
