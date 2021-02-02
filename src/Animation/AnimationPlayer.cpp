@@ -22,7 +22,10 @@ void AnimationPlayer::playCurrentAnim() {
 }
 
 void AnimationPlayer::resetAnimation() {
-    if (curAnim) curAnim->resetAnimation();
+    if (curAnim) {
+        curAnim->resetAnimation();
+        sprite->setTextureRect(curAnim->getFrameAndAdvanceAnim());
+    }
 }
 
 void AnimationPlayer::setCurrentAnim(std::shared_ptr<Animation> anim) {

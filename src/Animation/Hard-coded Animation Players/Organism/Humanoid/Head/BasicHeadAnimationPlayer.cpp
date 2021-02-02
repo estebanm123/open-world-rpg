@@ -14,7 +14,7 @@ BasicHeadAnimationPlayer::BasicHeadAnimationPlayer(RegSprite *sprite) : Humanoid
 
 void BasicHeadAnimationPlayer::resetAnimation() {
     curAnim = moveAnim;
-    curAnim->resetAnimation();
+    HumanoidAnimationPlayer::resetAnimation();
 }
 
 std::shared_ptr<Animation> BasicHeadAnimationPlayer::initializeMoveAnim() {

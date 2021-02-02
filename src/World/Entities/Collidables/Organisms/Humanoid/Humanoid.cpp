@@ -18,8 +18,8 @@ EntitySprite &Humanoid::getSprite() {
 }
 
 void Humanoid::move(float dt) {
-    sprite.playMoveAnim();
     MoveableEntity::move(dt);
+    sprite.playMoveAnim();
 }
 
 void Humanoid::idle() {
