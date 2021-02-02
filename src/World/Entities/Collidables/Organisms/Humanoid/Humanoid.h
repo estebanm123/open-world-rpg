@@ -18,7 +18,7 @@ public:
 
     void setPickingUp(bool pickingUp);
 
-    void revertLastMove() override;
+    void revertLastMove(bool x, bool y) override;
 
     bool pickingUp() const;
 

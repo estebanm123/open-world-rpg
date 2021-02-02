@@ -43,7 +43,9 @@ bool Humanoid::pickingUp() const {
     return isPickingUp;
 }
 
-void Humanoid::revertLastMove() {
-    MoveableEntity::revertLastMove();
-    sprite.playIdleAnim();
+void Humanoid::revertLastMove(bool x, bool y) {
+    MoveableEntity::revertLastMove(x, y);
+    if (!hasMoved()) {
+        sprite.playIdleAnim();
+    }
 }

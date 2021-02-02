@@ -2,7 +2,7 @@
 #include "../EntitySprite.h"
 
 MoveableEntity::MoveableEntity(const Hitbox &hitbox, std::unique_ptr<CollisionPhysics> collisionPhysics)
-        : CollidableEntity(hitbox, std::move(collisionPhysics)) {}
+        : CollidableEntity(hitbox, std::move(collisionPhysics))  {}
 
 void MoveableEntity::setRotation(float angle) {
     Entity::setRotation(angle);
@@ -42,19 +42,19 @@ bool MoveableEntity::hasMoved() const {
     return lastMoveOffset.x != 0 || lastMoveOffset.y != 0;
 }
 
-void MoveableEntity::revertLastMove() {
-    getSprite().move(-lastMoveOffset);
-    hitbox.move(-lastMoveOffset);
-    lastMoveOffset = {0, 0};
+void MoveableEntity::revertLastMove(bool x, bool y) {
+    sf::Vector2f moveToReset = lastMoveOffset;
+
+    if (!x) moveToReset.x = 0;
+    if (!y) moveToReset.y = 0;
+
+    getSprite().move(-moveToReset);
+    hitbox.move(-moveToReset);
+    lastMoveOffset = {!x? lastMoveOffset.x : 0, !y? lastMoveOffset.y : 0};
 }
 
 sf::Vector2f &MoveableEntity::getLastMoveOffset() {
     return lastMoveOffset;
-}
-
-void MoveableEntity::resetLastMove(bool x, bool y) {
-    if (x) lastMoveOffset.x = 0;
-    if (y) lastMoveOffset.y = 0;
 }
 
 void MoveableEntity::update(float dt) {

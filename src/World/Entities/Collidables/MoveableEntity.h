@@ -25,9 +25,8 @@ public:
 
     const sf::Vector2f &getLookDirection() const;
 
-    void resetLastMove(bool x, bool y);
-
-    virtual void revertLastMove();
+    // x indicates revert movement in x dir, and y indicates revert movement in y dir
+    virtual void revertLastMove(bool x, bool y);
 
     // approximates cardinal direction of last move (for players, this isn't an approximation)
     sf::Vector2f &getLastMoveOffset();
