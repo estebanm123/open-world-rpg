@@ -74,7 +74,7 @@ bool ChunkPropGenerator::validateProp(Prop *generatedProp, const TileMap &tiles,
 
 int ChunkPropGenerator::hashTileCoords(Tile &tile) {
     auto pos = tile.getPosition();
-    auto tileCoordHash = hashCoordsWithSize(pos.x, pos.y, static_cast<int>(PROP_CHANCE_MAX)); // never more than 1000
+    auto tileCoordHash = hash2ValuesModSize(pos.x, pos.y, static_cast<int>(PROP_CHANCE_MAX)); // never more than 1000
     return tileCoordHash;
 }
 

@@ -11,7 +11,7 @@ Env::Env(TileContainer::TileContainers completeTileContainers, struct Env::Confi
 
 TileContainer *Env::selectTileContainer(const sf::Vector2f &coords) const {
     // todo: refactor to a separate class when tile fetching gets more complex
-    auto tileContainerIndex = hashCoordsWithSize(coords.x, coords.y, completeTileContainers.size());
+    auto tileContainerIndex = hash2ValuesModSize(coords.x, coords.y, completeTileContainers.size());
     auto tileContainer = completeTileContainers[tileContainerIndex].get();
     return tileContainer;
 }

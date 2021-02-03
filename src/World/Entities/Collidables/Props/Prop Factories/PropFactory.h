@@ -25,9 +25,9 @@ protected:
     // hashVal must be between 0 - HASH_LIM
     virtual std::unique_ptr<Prop> generateRocks(int hashVal, const sf::Vector2f &propCoords);
 
-    // todo: make more abstract for others (make a callable helper for helpers)
-    // todo: update for destructible environment
     std::unique_ptr<Prop> generateRock(const sf::Vector2f &pos, const sf::IntRect &spriteSheetCoords);
+
+//    virtual std::unique_ptr<Prop> generateBushes(int hashVal, const sf::Vector2f &propCoords);
 };
 
 
