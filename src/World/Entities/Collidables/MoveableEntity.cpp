@@ -2,7 +2,7 @@
 #include "../EntitySprite.h"
 
 MoveableEntity::MoveableEntity(const Hitbox &hitbox, std::unique_ptr<CollisionPhysics> collisionPhysics)
-        : CollidableEntity(hitbox, std::move(collisionPhysics))  {}
+        : CollidableEntity(hitbox, std::move(collisionPhysics)), lastMoveOffset({0,0}) {}
 
 void MoveableEntity::setRotation(float angle) {
     Entity::setRotation(angle);

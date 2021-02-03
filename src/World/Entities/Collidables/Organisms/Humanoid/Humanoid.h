@@ -22,6 +22,8 @@ public:
 
     bool pickingUp() const;
 
+    void renderBy(sf::RenderTarget & renderer) override;
+
     ~Humanoid() override = default;
 
 protected:

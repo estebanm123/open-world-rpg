@@ -6,9 +6,14 @@ AnimationPlayer::AnimationPlayer() : sprite(nullptr), curAnim(nullptr) {
 
 }
 
+
 void AnimationPlayer::playAnim(const std::shared_ptr<Animation> &anim) {
-    if (!curAnim || curAnim->peekNextFrame() == animConstants::EMPTY_FRAME ||
-        curAnim->getPriority() <= anim->getPriority()) {
+    if (anim == nullptr) {
+        return;
+    }
+
+    if ((!curAnim || curAnim->peekNextFrame() == animConstants::EMPTY_FRAME ||
+        curAnim->getPriority() <= anim->getPriority())) {
         curAnim = anim;
     }
     return playCurrentAnim();
@@ -24,7 +29,6 @@ void AnimationPlayer::playCurrentAnim() {
 void AnimationPlayer::resetAnimation() {
     if (curAnim) {
         curAnim->resetAnimation();
-        sprite->setTextureRect(curAnim->getFrameAndAdvanceAnim());
     }
 }
 

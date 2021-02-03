@@ -36,10 +36,5 @@ sf::Vector2f Player::getMoveOffset() {
 }
 
 void Player::move(float dt) {
-    if (moveDirection.x == 0 & moveDirection.y == 0) {
-        sprite.playIdleAnim();
-    } else {
-        Humanoid::move(dt);
-    }
-
+    Humanoid::move(dt);
 }

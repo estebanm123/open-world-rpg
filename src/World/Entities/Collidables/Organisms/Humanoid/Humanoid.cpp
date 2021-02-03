@@ -19,7 +19,6 @@ EntitySprite &Humanoid::getSprite() {
 
 void Humanoid::move(float dt) {
     MoveableEntity::move(dt);
-    sprite.playMoveAnim();
 }
 
 void Humanoid::idle() {
@@ -45,7 +44,13 @@ bool Humanoid::pickingUp() const {
 
 void Humanoid::revertLastMove(bool x, bool y) {
     MoveableEntity::revertLastMove(x, y);
-    if (!hasMoved()) {
+}
+
+void Humanoid::renderBy(sf::RenderTarget & renderer) {
+    if (hasMoved()) {
+        sprite.playMoveAnim();
+    } else {
         sprite.playIdleAnim();
     }
+    CollidableEntity::renderBy(renderer);
 }

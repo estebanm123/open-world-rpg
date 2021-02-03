@@ -68,7 +68,7 @@ void HumanoidSprite::move(const sf::Vector2f &offset) {
 
 void HumanoidSprite::playIdleAnim() {
     bodyAnimation->playIdleAnim();
-    headAnimation->resetAnimation();
+//    headAnimation->playIdleAnim();
 }
 
 void HumanoidSprite::playMoveAnim() {

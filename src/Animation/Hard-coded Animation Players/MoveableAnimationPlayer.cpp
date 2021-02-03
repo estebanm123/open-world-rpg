@@ -6,6 +6,7 @@ MoveableAnimationPlayer::MoveableAnimationPlayer(EntitySprite *sprite, std::shar
                                                  std::shared_ptr<Animation> idleAnim) : AnimationPlayer(sprite),
                                                                                         moveAnim(std::move(moveAnim)),
                                                                                         idleAnim(std::move(idleAnim)) {
+    curAnim = this->moveAnim;
 }
 
 void MoveableAnimationPlayer::playMoveAnim() {
