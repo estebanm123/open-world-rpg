@@ -18,7 +18,9 @@ Prop::Prop(const std::string &spriteSheet,
           CollidableEntity(CollidableEntity::initializeHitbox(size, config.pos), std::move(config.collisionPhysics)),
           animPlayer(std::move(config.animPlayer)) {
     hasDefaultAnim = this->animPlayer->hasCurrentAnim();
+    // todo: decouple
     sprite.rotate(config.rotationAngle);
+    hitbox.rotate(config.rotationAngle);
     this->animPlayer->setSprite(&sprite);
 }
 

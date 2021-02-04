@@ -27,7 +27,6 @@ void Humanoid::idle() {
 }
 
 void Humanoid::dropCurrentItem() {
-
 }
 
 void Humanoid::useCurrentItem() {
@@ -47,6 +46,7 @@ void Humanoid::revertLastMove(bool x, bool y) {
 }
 
 void Humanoid::renderBy(sf::RenderTarget & renderer) {
+    // move/group this animation handling to organism and take a AnimPlayer proxy?
     if (hasMoved()) {
         sprite.playMoveAnim();
     } else {
