@@ -13,7 +13,7 @@ public:
 
 protected:
     static constexpr auto HASH_LIM = 100;
-
+    static const sf::IntRect ROCK_SPRITESHEETS[];
 
     // Normalizes hashVal relative to minimum, and recomputes this as a fraction of HASH_LIM
     // It's important to standardize the bounds of the hashVal, so super classes know what to expect

@@ -6,24 +6,24 @@
 
 constexpr auto SIZE_FLEX = 5; // temp
 
+const sf::IntRect PropFactory::ROCK_SPRITESHEETS[] = {
+        {0,   0, 29, 28},
+        {29,  0, 52, 52},
+        {81,  0, 25, 29},
+        {106, 0, 29, 29}
+};
+
+
 std::unique_ptr<Prop> PropFactory::generateRock(const sf::Vector2f &pos, const sf::IntRect &spriteSheetCoords) {
     const sf::Vector2f size = {static_cast<float>(spriteSheetCoords.width - SIZE_FLEX),
                                static_cast<float>(spriteSheetCoords.height - SIZE_FLEX)};
-    return std::make_unique<Prop>("Foliage/Rocks", size, spriteSheetCoords, Prop::PropOptions {pos, std::make_unique<BlockingPhysics>()});
+    return std::make_unique<Prop>("Foliage/Rocks", size, spriteSheetCoords,
+                                  Prop::PropOptions{pos, std::make_unique<BlockingPhysics>()});
 }
 
 std::unique_ptr<Prop> PropFactory::generateRocks(int hashVal, const sf::Vector2f &propCoords) {
     int selectedIndex = getPropIndex(hashVal, 4);
-    switch (selectedIndex) {
-        case 0:
-            return generateRock(propCoords, {0, 0, 29, 28});
-        case 1:
-            return generateRock(propCoords, {29, 0, 52, 52});
-        case 2:
-            return generateRock(propCoords, {81, 0, 25, 29});
-        default:
-            return generateRock(propCoords, {106, 0, 29, 29});
-    }
+    return generateRock(propCoords, ROCK_SPRITESHEETS[selectedIndex]);
 }
 
 //std::unique_ptr<Prop> PropFactory::generateRock(const sf::Vector2f &pos, const sf::IntRect &spriteSheetCoords) {
