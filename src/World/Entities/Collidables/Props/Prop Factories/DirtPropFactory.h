@@ -8,7 +8,7 @@ public:
 
 private:
     static constexpr auto ROCK_MIN = HASH_LIM * .98;
-    static constexpr auto BUSH_MIN = HASH_LIM * .92;
+    static constexpr auto BUSH_MIN = HASH_LIM * .93;
 };
 
 

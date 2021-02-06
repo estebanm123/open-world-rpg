@@ -24,7 +24,7 @@ std::unique_ptr<Prop> PropFactory::generateRock(int hashVal, const sf::Vector2f 
 }
 
 const std::array<sf::IntRect, 1> BUSH_SPRITESHEETS {{
-                                                           {0, 0, 37, 32}
+                                                           {0, 0, 36, 32}
                                                    }};
 
 
