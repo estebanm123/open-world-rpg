@@ -9,7 +9,7 @@ constexpr auto SIZE_FLEX = 5; // temp
 std::unique_ptr<Prop> PropFactory::generateRock(const sf::Vector2f &pos, const sf::IntRect &spriteSheetCoords) {
     const sf::Vector2f size = {static_cast<float>(spriteSheetCoords.width - SIZE_FLEX),
                                static_cast<float>(spriteSheetCoords.height - SIZE_FLEX)};
-    return std::make_unique<Prop>("Foliage/Rocks", size, spriteSheetCoords, Prop::PropOptions {pos});
+    return std::make_unique<Prop>("Foliage/Rocks", size, spriteSheetCoords, Prop::PropOptions {pos, std::make_unique<BlockingPhysics>()});
 }
 
 std::unique_ptr<Prop> PropFactory::generateRocks(int hashVal, const sf::Vector2f &propCoords) {

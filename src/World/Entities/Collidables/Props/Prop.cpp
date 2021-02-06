@@ -14,7 +14,7 @@ void Prop::update(float dt) {
 
 Prop::Prop(const std::string &spriteSheet,
            const sf::Vector2f &size, const sf::IntRect &defaultFrame, PropOptions config)
-        : sprite(spriteSheet, config.pos, size / 2.f, defaultFrame),
+       : sprite(spriteSheet, config.pos, size / 2.f, defaultFrame),
           CollidableEntity(CollidableEntity::initializeHitbox(size, config.pos), std::move(config.collisionPhysics)),
           animPlayer(std::move(config.animPlayer)) {
     hasDefaultAnim = this->animPlayer->hasCurrentAnim();
