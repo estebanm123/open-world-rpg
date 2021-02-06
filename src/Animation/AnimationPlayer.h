@@ -8,7 +8,7 @@
 
 class AnimationPlayer : sf::NonCopyable {
 public:
-    explicit AnimationPlayer(EntitySprite *sprite);
+    explicit AnimationPlayer(EntitySprite *sprite, std::shared_ptr<Animation> anim = nullptr);
 
     AnimationPlayer();
 

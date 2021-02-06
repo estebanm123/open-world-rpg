@@ -1,6 +1,8 @@
 ﻿#include "AnimationPlayer.h"
 
-AnimationPlayer::AnimationPlayer(EntitySprite *sprite) : sprite(sprite), curAnim(nullptr) {}
+#include <utility>
+
+AnimationPlayer::AnimationPlayer(EntitySprite *sprite, std::shared_ptr<Animation> anim) : sprite(sprite), curAnim(std::move(anim)) {}
 
 AnimationPlayer::AnimationPlayer() : sprite(nullptr), curAnim(nullptr) {
 
