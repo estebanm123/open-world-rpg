@@ -36,7 +36,7 @@ inline int hash2ValuesModSize(T a, T b, X size, int seed = RAND_MIXER_1) {
     if (size == 0) throw std::runtime_error("Trying to hash w/ size 0!");
     //todo: add assertion to confirm types and sizes (size != 0)]
     int hash = hashCoords2(a, b, seed);
-    return hash % size;
+    return abs(hash % size);
 }
 
 

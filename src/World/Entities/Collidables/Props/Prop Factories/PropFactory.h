@@ -13,7 +13,6 @@ public:
 
 protected:
     static constexpr auto HASH_LIM = 100;
-    static const sf::IntRect ROCK_SPRITESHEETS[];
 
     // Normalizes hashVal relative to minimum, and recomputes this as a fraction of HASH_LIM
     // It's important to standardize the bounds of the hashVal, so super classes know what to expect
@@ -23,11 +22,10 @@ protected:
     static int getPropIndex(int hashVal, int numProps);
 
     // hashVal must be between 0 - HASH_LIM
-    virtual std::unique_ptr<Prop> generateRocks(int hashVal, const sf::Vector2f &propCoords);
+    std::unique_ptr<Prop> generateRock(int hashVal, const sf::Vector2f &pos);
 
-    std::unique_ptr<Prop> generateRock(const sf::Vector2f &pos, const sf::IntRect &spriteSheetCoords);
+    std::unique_ptr<Prop> generateBush(int hashVal, const sf::Vector2f &pos);
 
-//    virtual std::unique_ptr<Prop> generateBushes(int hashVal, const sf::Vector2f &propCoords);
 };
 
 
