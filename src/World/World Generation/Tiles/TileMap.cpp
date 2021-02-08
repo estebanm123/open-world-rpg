@@ -28,3 +28,11 @@ sf::Vector2f TileMap::convertLocalToGlobalCoords(sf::Vector2i localCoords, sf::V
     return globalPos + relativePosition;
 }
 
+const sf::Vector2f &TileMap::getPosition() const {
+    return pos;
+}
+
+Tile* TileMap::getTile(int x, int y) {
+    return tiles[x][y].get();
+}
+

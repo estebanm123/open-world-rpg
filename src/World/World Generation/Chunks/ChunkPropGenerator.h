@@ -14,7 +14,7 @@ class Prop;
 
 class ChunkPropGenerator {
 public:
-    static std::unordered_set<std::unique_ptr<Prop>> generateProps(const TileMap &tileMap, bool isDecor);
+    static std::unordered_set<std::unique_ptr<Prop>> generateProps(TileMap &tileMap, bool isDecor);
 
 private:
     typedef std::array<std::array<bool, TileMap::SIZE_X>, TileMap::SIZE_Y> TilesSeen;
@@ -30,6 +30,7 @@ private:
 
     static int hashTileCoords(Tile &tile);
 
+    static bool isInChunkRightBottomBounds(Prop *prop, const TileMap & tiles);
 
     static constexpr float PROP_CHANCE_MAX = 100;
     static constexpr float PROP_CHANCE = 80;

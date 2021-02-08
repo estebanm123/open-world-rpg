@@ -25,14 +25,14 @@ sf::Vector2f generatePropCoords(float propGenChance, int hashVal1, const sf::Vec
 }
 
 
-std::unordered_set<std::unique_ptr<Prop>> ChunkPropGenerator::generateProps(const TileMap &tileMap, bool isDecor) {
+std::unordered_set<std::unique_ptr<Prop>> ChunkPropGenerator::generateProps(TileMap &tileMap, bool isDecor) {
     std::unordered_set<std::unique_ptr<Prop>> props;
     auto currentPropChance = PROP_CHANCE;
     TilesSeen tilesSeen = initializeTilesSeen();
 
     for (int x = 0; x < TileMap::SIZE_X; x++) {
         for (int y = 0; y < TileMap::SIZE_Y; y++) {
-            auto &curTile = tileMap.tiles[x][y];
+            auto curTile = tileMap.getTile(x,y);
             auto curEnv = curTile->getEnvironment();
             auto tileCoordHash = hashTileCoords(*curTile) ^static_cast<int>(currentPropChance);
             if (tileCoordHash > currentPropChance) {
@@ -62,13 +62,26 @@ void ChunkPropGenerator::updateCurrentPropChanceOnSuccess(float &currentChance) 
     }
 }
 
-bool ChunkPropGenerator::validateProp(Prop *generatedProp, const TileMap &tiles, TilesSeen &tilesSeen,
+bool ChunkPropGenerator::isInChunkRightBottomBounds(Prop *prop, const TileMap & tiles) {
+    using namespace worldConstants;
+    auto & tilesPos = tiles.getPosition();
+    auto yChunkLim = CHUNK_SIZE.y + tilesPos.y;
+    auto xChunkLim = CHUNK_SIZE.x + tilesPos.x;
+
+    auto & propSize = prop->getSize();
+    auto & propPos = prop->getPosition();
+    auto yPropLim = propSize.y + propPos.y;
+    auto xPropLim = propSize.x + propPos.x;
+
+    return yPropLim < yChunkLim && xPropLim < xChunkLim;
+}
+
+bool ChunkPropGenerator::validateProp(Prop *prop, const TileMap &tiles, TilesSeen &tilesSeen,
                                       const sf::Vector2i &localCoords) {
-    if (generatedProp == nullptr) {
-        // water/border tile or chance to generate was too low
-        // todo: more validation eg. size
-        return false;
-    }
+    if (!prop) return false;
+
+    return isInChunkRightBottomBounds(prop, tiles);
+
     return true;
 }
 

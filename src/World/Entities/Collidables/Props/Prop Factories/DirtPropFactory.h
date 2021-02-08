@@ -13,7 +13,7 @@ private:
     static constexpr auto ROCK_MIN = HASH_LIM * .98;
     static constexpr auto BUSH_MIN = HASH_LIM * .93;
     //Decor
-    static constexpr auto GRASS_COVER_MIN = HASH_LIM * .8;
+    static constexpr auto GRASS_COVER_MIN = HASH_LIM * .3;
 };
 
 
