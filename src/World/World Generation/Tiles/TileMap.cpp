@@ -3,6 +3,8 @@
 #include "../../../Resource Managers/ResourceHolder.h"
 #include "TileMapGenerator.h"
 #include "Tile.h"
+#include "../../Entities/Collidables/CollidableEntity.h"
+#include <math.h>
 
 // Creates a tile map for rendering and collision detection purposes.
 // ctor used primarily for chunks - where pos is based on chunk center
@@ -28,11 +30,29 @@ sf::Vector2f TileMap::convertLocalToGlobalCoords(sf::Vector2i localCoords, sf::V
     return globalPos + relativePosition;
 }
 
-const sf::Vector2f &TileMap::getPosition() const {
+const sf::Vector2f &TileMap::getTopLeftPos() const {
     return pos;
 }
 
-Tile* TileMap::getTile(int x, int y) {
+Tile *TileMap::getTile(int x, int y) {
     return tiles[x][y].get();
+}
+
+// This is extra safe - entity pos should refer to center
+bool TileMap::isEntityCrossingBounds(CollidableEntity *entity) const {
+    using namespace worldConstants;
+    auto yChunkLim = CHUNK_SIZE.y + pos.y;
+    auto xChunkLim = CHUNK_SIZE.x + pos.x;
+
+    auto &entitySize = entity->getSize();
+    auto &entityPos = entity->getPosition();
+    auto entityMaxLen = std::max(entitySize.y, entitySize.x); // take max to be safe; entity could be rotated
+
+    auto southEntityLim = entityPos.y + entityMaxLen;
+    auto eastEntityLim = entityPos.x + entityMaxLen;
+    auto northEntityLim = entityPos.y - entityMaxLen;
+    auto westEntityLim = entityPos.x - entityMaxLen;
+
+    return southEntityLim > yChunkLim || eastEntityLim > xChunkLim || northEntityLim < pos.y || westEntityLim < pos.x;
 }
 

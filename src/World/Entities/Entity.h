@@ -16,6 +16,8 @@ public:
 
     virtual void setRotation(float angle);
 
+    virtual float getRotationAngle();
+
     virtual void rotate(float angle);
 
     virtual ~Entity() = default;

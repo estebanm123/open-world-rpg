@@ -26,11 +26,9 @@ private:
     static void updateCurrentPropChanceOnSuccess(float &currentChance);
 
     static bool validateProp(Prop *generatedProp, const TileMap &tiles, TilesSeen &tilesSeen,
-                             const sf::Vector2i &localCoords);
+                             const sf::Vector2i &localCoords, bool isDecor);
 
     static int hashTileCoords(Tile &tile);
-
-    static bool isInChunkRightBottomBounds(Prop *prop, const TileMap & tiles);
 
     static constexpr float PROP_CHANCE_MAX = 100;
     static constexpr float PROP_CHANCE = 80;

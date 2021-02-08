@@ -21,3 +21,7 @@ void Entity::rotate(float angle) {
 void Entity::renderBy(sf::RenderTarget &renderer) {
     getSprite().renderBy(renderer);
 }
+
+float Entity::getRotationAngle() {
+    return getSprite().getRotation();
+}

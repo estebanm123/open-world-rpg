@@ -13,6 +13,8 @@
 
 class Tile;
 
+class CollidableEntity;
+
 class TileMap {
 public:
     explicit TileMap(sf::Vector2f pos);
@@ -24,13 +26,14 @@ public:
 
     typedef std::array<std::array<std::unique_ptr<Tile>, TileMap::SIZE_Y>, TileMap::SIZE_X> Tiles;
 
-    const sf::Vector2f & getPosition() const;
+    const sf::Vector2f & getTopLeftPos() const;
 
     Tile * getTile(int x, int y);
 
-    static sf::Vector2f convertLocalToGlobalCoords(sf::Vector2i localCoords, sf::Vector2f globalPos);
+    bool isEntityCrossingBounds(CollidableEntity * entity) const;
 
+    static sf::Vector2f convertLocalToGlobalCoords(sf::Vector2i localCoords, sf::Vector2f globalPos);
 private:
     Tiles tiles;
-    sf::Vector2f pos;
+    sf::Vector2f pos; // NOTE: this is top left pos!
 };
