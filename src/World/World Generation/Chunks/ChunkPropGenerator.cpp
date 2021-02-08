@@ -25,7 +25,7 @@ sf::Vector2f generatePropCoords(float propGenChance, int hashVal1, const sf::Vec
 }
 
 
-std::unordered_set<std::unique_ptr<Prop>> ChunkPropGenerator::generateProps(const TileMap &tileMap) {
+std::unordered_set<std::unique_ptr<Prop>> ChunkPropGenerator::generateProps(const TileMap &tileMap, bool isDecor) {
     std::unordered_set<std::unique_ptr<Prop>> props;
     auto currentPropChance = PROP_CHANCE;
     TilesSeen tilesSeen = initializeTilesSeen();
@@ -37,7 +37,7 @@ std::unordered_set<std::unique_ptr<Prop>> ChunkPropGenerator::generateProps(cons
             auto tileCoordHash = hashTileCoords(*curTile) ^static_cast<int>(currentPropChance);
             if (tileCoordHash > currentPropChance) {
                 auto propCoords = generatePropCoords(currentPropChance, tileCoordHash, curTile->getPosition());
-                auto prop = curEnv->generateProp(propCoords);
+                auto prop = curEnv->generateProp(propCoords, isDecor);
                 if (!validateProp(prop.get(), tileMap, tilesSeen, {x, y})) {
                     continue;
                 }
@@ -65,7 +65,7 @@ void ChunkPropGenerator::updateCurrentPropChanceOnSuccess(float &currentChance) 
 bool ChunkPropGenerator::validateProp(Prop *generatedProp, const TileMap &tiles, TilesSeen &tilesSeen,
                                       const sf::Vector2i &localCoords) {
     if (generatedProp == nullptr) {
-        // water or border tile
+        // water/border tile or chance to generate was too low
         // todo: more validation eg. size
         return false;
     }

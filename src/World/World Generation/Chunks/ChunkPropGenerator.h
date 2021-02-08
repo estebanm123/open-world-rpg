@@ -14,7 +14,7 @@ class Prop;
 
 class ChunkPropGenerator {
 public:
-    static std::unordered_set<std::unique_ptr<Prop>> generateProps(const TileMap &tileMap);
+    static std::unordered_set<std::unique_ptr<Prop>> generateProps(const TileMap &tileMap, bool isDecor);
 
 private:
     typedef std::array<std::array<bool, TileMap::SIZE_X>, TileMap::SIZE_Y> TilesSeen;

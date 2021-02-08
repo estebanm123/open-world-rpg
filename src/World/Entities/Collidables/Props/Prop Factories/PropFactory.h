@@ -7,9 +7,11 @@ class Prop;
 
 class PropFactory {
 public:
-    std::unique_ptr<Prop> generateProp(const sf::Vector2f &propCoords);
+    std::unique_ptr<Prop> generateProp(const sf::Vector2f &propCoords, bool isDecor);
 
-    virtual std::unique_ptr<Prop> generateProp(int hashVal, const sf::Vector2f &propCoords) = 0;
+    virtual std::unique_ptr<Prop> generateMainProp(int hashVal, const sf::Vector2f &propCoords) = 0;
+
+    virtual std::unique_ptr<Prop> generateDecorProp(int hashVal, const sf::Vector2f &propCoords) = 0;
 
 protected:
     static constexpr auto HASH_LIM = 100;
@@ -25,6 +27,8 @@ protected:
     std::unique_ptr<Prop> generateRock(int hashVal, const sf::Vector2f &pos);
 
     std::unique_ptr<Prop> generateBush(int hashVal, const sf::Vector2f &pos);
+
+    std::unique_ptr<Prop> generateGrassCover(int hashVal, const sf::Vector2f &pos);
 
 };
 

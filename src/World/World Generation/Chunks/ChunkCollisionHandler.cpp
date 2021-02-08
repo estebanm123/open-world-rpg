@@ -32,7 +32,7 @@ void ChunkCollisionHandler::handleCollisionsWithOtherEntities(MoveableEntity *mo
         otherMoveable->handleCollision(moveable);
     }
 
-    for (auto &prop : chunk->props) {
+    for (auto &prop : chunk->mainProps) {
         prop->handleCollision(moveable);
     }
 }

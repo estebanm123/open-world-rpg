@@ -8,7 +8,7 @@ public:
 
     bool operator==(const CompleteEnv &other) const override;
 
-    std::unique_ptr<Prop> generateProp(const sf::Vector2f &propCoords) const override;
+    std::unique_ptr<Prop> generateProp(const sf::Vector2f &propCoords, bool isDecor) const override;
 
 };
 

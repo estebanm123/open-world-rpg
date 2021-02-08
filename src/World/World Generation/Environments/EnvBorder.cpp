@@ -12,6 +12,6 @@ bool EnvBorder::operator==(const CompleteEnv &other) const {
     return false; // todo
 }
 
-std::unique_ptr<Prop> EnvBorder::generateProp(const sf::Vector2f &propCoords) const {
+std::unique_ptr<Prop> EnvBorder::generateProp(const sf::Vector2f &propCoords, bool isDecor) const {
     return nullptr; // todo
 }

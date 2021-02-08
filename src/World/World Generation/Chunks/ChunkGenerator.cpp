@@ -70,9 +70,11 @@ void ChunkGenerator::generateChunk(const Chunk::RequestData &data) {
     using namespace worldConstants;
     auto center = Chunk::getCenterFromReqData(data);
     TileMap tileMap(center);
-    std::unordered_set<std::unique_ptr<Prop>> Props = ChunkPropGenerator::generateProps(tileMap);
+    std::unordered_set<std::unique_ptr<Prop>> mainProps = ChunkPropGenerator::generateProps(tileMap, false);
+    std::unordered_set<std::unique_ptr<Prop>> decorProps = ChunkPropGenerator::generateProps(tileMap, true);
 
-    enqueueNewChunk(std::make_unique<Chunk>(data, std::move(tileMap), center, std::move(Props)));
+    enqueueNewChunk(
+            std::make_unique<Chunk>(data, std::move(tileMap), center, std::move(mainProps), std::move(decorProps)));
 }
 
 bool ChunkGenerator::chunksGeneratedIsEmpty() {

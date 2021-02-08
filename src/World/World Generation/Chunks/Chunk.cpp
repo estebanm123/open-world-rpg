@@ -6,13 +6,12 @@
 #include "Chunk.h"
 #include "../Tiles/Tile.h"
 #include "../../Entities/Collidables/Props/Prop.h"
-#include "../../Entities/Collidables/MoveableEntity.h"
 
 Chunk::Chunk(const RequestData &reqData, TileMap tiles, const sf::Vector2f &center,
-             std::unordered_set<std::unique_ptr<Prop>> Props)
-        : reqData(reqData), tiles(std::move(tiles)), center(center), props(std::move(Props)),
-          collisionHandler(this)
-{
+             std::unordered_set<std::unique_ptr<Prop>> mainProps, std::unordered_set<std::unique_ptr<Prop>> decorProps)
+        : reqData(reqData), tiles(std::move(tiles)), center(center), mainProps(std::move(mainProps)),
+          decorProps(std::move(decorProps)),
+          collisionHandler(this) {
 }
 
 const Chunk::RequestData &Chunk::getReqData() const {
@@ -25,7 +24,10 @@ const sf::Vector2f &Chunk::getCenter() const {
 
 void Chunk::renderBy(sf::RenderTarget &target) {
     tiles.renderBy(target);
-    for (auto &prop  : props) {
+    for (auto &prop : decorProps) {
+        prop->renderBy(target);
+    }
+    for (auto &prop  : mainProps) {
         prop->renderBy(target);
     }
 }
@@ -52,9 +54,10 @@ void Chunk::updateEntities(float dt) {
     for (auto &moveable : moveableEntities) {
         moveable->update(dt);
     }
-    for (auto &Prop : props) {
+    for (auto &Prop : mainProps) {
         Prop->update(dt);
     }
+    // update decor props??
 }
 
 void Chunk::addMoveable(MoveableEntity *moveable, bool checkCollision) {
@@ -65,7 +68,7 @@ void Chunk::addMoveable(MoveableEntity *moveable, bool checkCollision) {
     }
 }
 
-void Chunk::removeMoveable(MoveableIter & it) {
+void Chunk::removeMoveable(MoveableIter &it) {
     it = moveableEntities.erase(it);
 }
 

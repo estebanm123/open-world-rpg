@@ -46,7 +46,7 @@ public:
 
     TileContainer *selectTileContainer(const sf::Vector2f &coords) const;
 
-    std::unique_ptr<Prop> generateProp(const sf::Vector2f &propCoords) const override;
+    std::unique_ptr<Prop> generateProp(const sf::Vector2f &propCoords, bool isDecor) const override;
 
 private:
     const int multiTileIndex;
