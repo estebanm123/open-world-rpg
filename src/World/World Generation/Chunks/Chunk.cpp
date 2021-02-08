@@ -22,14 +22,17 @@ const sf::Vector2f &Chunk::getCenter() const {
     return center;
 }
 
-void Chunk::renderBy(sf::RenderTarget &target) {
-    tiles.renderBy(target);
+void Chunk::renderProps(sf::RenderTarget &target) {
     for (auto &prop : decorProps) {
         prop->renderBy(target);
     }
     for (auto &prop  : mainProps) {
         prop->renderBy(target);
     }
+}
+
+void Chunk::renderTiles(sf::RenderTarget &target) {
+    tiles.renderBy(target);
 }
 
 sf::Vector2f Chunk::getCenterFromReqData(const Chunk::RequestData &data) {

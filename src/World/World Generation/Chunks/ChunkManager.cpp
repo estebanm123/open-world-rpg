@@ -62,7 +62,12 @@ void ChunkManager::handleChunkChange() {
 void ChunkManager::renderChunks(sf::RenderTarget &target) {
     for (auto i = 0; i < 3; ++i) {
         for (auto j = 0; j < 3; ++j) {
-            if (chunks[i][j]) chunks[i][j]->renderBy(target);
+            if (chunks[i][j]) chunks[i][j]->renderTiles(target);
+        }
+    }
+    for (auto i = 0; i < 3; ++i) {
+        for (auto j = 0; j < 3; ++j) {
+            if (chunks[i][j]) chunks[i][j]->renderProps(target);
         }
     }
     RENDER_CHUNK_OUTLINE(target, chunks);

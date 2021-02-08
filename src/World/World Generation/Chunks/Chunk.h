@@ -39,7 +39,9 @@ public:
 
     void update(float dt);
 
-    void renderBy(sf::RenderTarget &target);
+    void renderTiles(sf::RenderTarget &target);
+
+    void renderProps(sf::RenderTarget &target);
 
     void setNeighbors(const Neighbors &newNeighbors);
 
