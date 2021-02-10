@@ -30,6 +30,7 @@ protected:
 
     std::unique_ptr<Prop> generateGrassCover(int hashVal, const sf::Vector2f &pos);
 
+    std::unique_ptr<Prop> generateMushrooms(int hashVal, const sf::Vector2f &pos);
 };
 
 

@@ -26,7 +26,7 @@ void Player::handleInput(sf::RenderWindow &window) {
 constexpr float DIAGONAL_SPEED_MULTIPLIER = 0.707f;
 
 sf::Vector2f Player::getMoveOffset() {
-    int PLACEHOLDER = 400;
+    int PLACEHOLDER = 200;
     const auto newOffset = moveDirection * PLACEHOLDER;
     sf::Vector2f castedOffset = {static_cast<float>(newOffset.x), static_cast<float>(newOffset.y)};
     if (isDiagonal(moveDirection)) {

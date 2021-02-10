@@ -61,6 +61,8 @@ namespace EnvTypes {
     const inline int WATER_START_TILE = 12;
     const inline int WATER_NUM_FULL_TILES = 1;
 
+    const inline int SAND_START_TILE = 14;
+
 
     const inline auto dirtPropFactory = std::make_unique<DirtPropFactory>();
     inline auto Dirt = std::make_shared<Env>(initializeCompleteTiles(DIRT_START_TILE, DIRT_NUM_FULL_TILES),

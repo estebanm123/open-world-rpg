@@ -81,4 +81,16 @@ std::unique_ptr<Prop> PropFactory::generateGrassCover(int hashVal, const sf::Vec
                                   Prop::PropOptions{pos});
 }
 
+const std::array<sf::IntRect, 1> MUSHROOM_SHEETS {{
+                                                             {0, 0, 22, 20},
+                                                     }};
+
+std::unique_ptr<Prop> PropFactory::generateMushrooms(int hashVal, const sf::Vector2f &pos) {
+    int selectedIndex = getPropIndex(hashVal, MUSHROOM_SHEETS.size());
+    const auto &spriteSheetCoords = MUSHROOM_SHEETS[selectedIndex];
+    const sf::Vector2f size = {static_cast<float>(spriteSheetCoords.width),
+                               static_cast<float>(spriteSheetCoords.height)};
+    return std::make_unique<Prop>("Foliage/Mushroom", size, spriteSheetCoords,
+                                  Prop::PropOptions{pos});
+}
 

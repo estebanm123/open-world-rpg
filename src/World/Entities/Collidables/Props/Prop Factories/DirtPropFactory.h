@@ -10,8 +10,9 @@ public:
 private:
     // GENERATION THRESHOLDS - lower value = higher chance
     //Main
-    static constexpr auto ROCK_MIN = HASH_LIM * .98;
-    static constexpr auto BUSH_MIN = HASH_LIM * .93;
+    static constexpr auto ROCK_MIN = HASH_LIM * .93;
+    static constexpr auto BUSH_MIN = HASH_LIM * .91;
+    static constexpr auto MUSHROOM_MIN = HASH_LIM * .88;
     //Decor
     static constexpr auto GRASS_COVER_MIN = HASH_LIM * .3;
 };
