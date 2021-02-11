@@ -5,7 +5,9 @@
 
 #include "Chunk.h"
 #include "../Tiles/Tile.h"
+#include "../Environments/CompleteEnv.h"
 #include "../../Entities/Collidables/Props/Prop.h"
+
 
 Chunk::Chunk(const RequestData &reqData, TileMap tiles, const sf::Vector2f &center,
              std::unordered_set<std::unique_ptr<Prop>> mainProps, std::unordered_set<std::unique_ptr<Prop>> decorProps)

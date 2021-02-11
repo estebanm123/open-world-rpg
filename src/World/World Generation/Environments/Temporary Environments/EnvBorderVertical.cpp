@@ -2,8 +2,8 @@
 #include <iostream>
 #include "EnvBorderVertical.h"
 
-#include "../../../../Util/Constants.h"
 #include "EnvWrapper.h"
+#include "../CompleteEnv.h"
 #include "EnvBorderCorner.h"
 
 EnvBorderVertical::EnvBorderVertical(const std::shared_ptr<EnvWrapper> &primary,

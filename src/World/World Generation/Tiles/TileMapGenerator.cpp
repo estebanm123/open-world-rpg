@@ -26,13 +26,13 @@ void generateInitialEnvs(EnvAllocator::EnvMap &initialEnvs, const sf::Vector2f &
 }
 
 void
-assignContainer(const NeighboredEnv::TileContainerWrapper &tileContainerWrapper, const sf::Vector2i coords,
+assignContainer(NeighboredEnv::TileContainerWrapper tileContainerWrapper, const sf::Vector2i coords,
                 TileMap::Tiles &tiles) {
     int x = coords.x;
     int y = coords.y;
     if (tileContainerWrapper.tileContainer->getNumTiles() == 1) {
         tiles[x][y] = tileContainerWrapper.tileContainer->extractFirstTile(
-                tileContainerWrapper.metadata);
+                std::move(tileContainerWrapper.metadata));
     } else {
 // Todo: refactor to use array of standardized coordinates
 //        auto generatedTiles = container->extractTiles();
@@ -47,8 +47,8 @@ void allocateTiles(TileMap::Tiles &tiles, const EnvAllocator::FinalNeighboredEnv
     for (int x = 0; x < currentEnvs.size(); x++) {
         for (int y = 0; y < currentEnvs[0].size(); y++) {
             const auto tilePos = TileMap::convertLocalToGlobalCoords({x, y}, globalPos);
-            const auto tileContainerWrapper = currentEnvs[x][y]->extractTileMetadata(tilePos);
-            assignContainer(tileContainerWrapper, {x, y}, tiles);
+            auto tileContainerWrapper = currentEnvs[x][y]->extractTileMetadata(tilePos);
+            assignContainer(std::move(tileContainerWrapper), {x, y}, tiles);
         }
     }
 }

@@ -3,6 +3,7 @@
 #include "EnvBorderHorizontal.h"
 #include "EnvBorderCorner.h"
 #include "EnvWrapper.h"
+#include "../CompleteEnv.h"
 
 
 EnvBorderHorizontal::EnvBorderHorizontal(const std::shared_ptr<EnvWrapper> &primary,

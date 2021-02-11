@@ -3,19 +3,20 @@
 #include <memory>
 #include "SingleTileContainer.h"
 #include "../NonAnimatedTile.h"
+#include "../../Environments/CompleteEnv.h"
 
 SingleTileContainer::SingleTileContainer(const sf::IntRect &spriteSheetCoords) : spriteSheetCoords(spriteSheetCoords),
                                                                                  TileContainer(1) {
 
 }
 
-std::unique_ptr<Tile> SingleTileContainer::extractFirstTile(const Tile::Metadata &metadata) const {
-    return std::make_unique<NonAnimatedTile>(spriteSheetCoords, metadata);
+std::unique_ptr<Tile> SingleTileContainer::extractFirstTile(Tile::Metadata metadata) const {
+    return std::make_unique<NonAnimatedTile>(spriteSheetCoords, std::move(metadata));
 }
 
-std::vector<std::unique_ptr<Tile>> SingleTileContainer::extractTiles(const Tile::Metadata &metadata) const {
+std::vector<std::unique_ptr<Tile>> SingleTileContainer::extractTiles(Tile::Metadata metadata) const {
     std::vector<std::unique_ptr<Tile>> result;
-    result.push_back(std::make_unique<NonAnimatedTile>(spriteSheetCoords, metadata));
+    result.push_back(std::make_unique<NonAnimatedTile>(spriteSheetCoords, std::move(metadata)));
     return result;
 }
 

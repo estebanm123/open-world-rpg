@@ -33,9 +33,7 @@ public:
 
     const std::string &getSpriteSheetPath() const;
 
-    bool isBorder() const override;
-
-    bool operator==(const CompleteEnv &other) const override;
+    bool operator==(const CompleteEnv &other) const;
 
     void setBorderTileContainers(const BorderTileContainers &splits, const BorderTileContainers &corners);
 

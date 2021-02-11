@@ -3,7 +3,7 @@
 #include "../Tiles/Tile.h"
 #include "../../Entities/Collidables/Organisms/Humanoid/Player/Player.h"
 #include "../../Entities/Collidables/Props/Prop.h"
-#include "ChunkDebug.h"
+#include "../Environments/CompleteEnv.h"
 
 #ifdef DEBUG
 #define RENDER_CHUNK_OUTLINE(renderTargetRef, chunks) \

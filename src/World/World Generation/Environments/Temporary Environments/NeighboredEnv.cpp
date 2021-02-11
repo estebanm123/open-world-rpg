@@ -1,4 +1,5 @@
 #include "NeighboredEnv.h"
+#include "../CompleteEnv.h"
 
 
 bool NeighboredEnv::isPriorityEnv() const {

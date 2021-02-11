@@ -16,8 +16,8 @@ public:
     typedef std::vector<std::shared_ptr<NeighboredEnv>> Neighbors;
 
     struct TileContainerWrapper {
-        TileContainerWrapper(const struct Tile::Metadata &metadata, const TileContainer *tileContainer) : metadata(
-                metadata), tileContainer(tileContainer) {};
+        TileContainerWrapper(struct Tile::Metadata metadata, const TileContainer *tileContainer) : metadata(
+                std::move(metadata)), tileContainer(tileContainer) {};
         struct Tile::Metadata metadata;
         const TileContainer *tileContainer;
     };

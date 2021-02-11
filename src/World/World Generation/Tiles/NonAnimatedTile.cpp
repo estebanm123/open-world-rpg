@@ -1,8 +1,9 @@
 
 
+#include "../Environments/CompleteEnv.h"
 #include "NonAnimatedTile.h"
 
-NonAnimatedTile::NonAnimatedTile(const sf::IntRect &spriteSheetCoords, const Metadata &metadata) : Tile(metadata) {
+NonAnimatedTile::NonAnimatedTile(const sf::IntRect &spriteSheetCoords, Metadata metadata) : Tile(std::move(metadata)) {
     sprite.setTextureRect(spriteSheetCoords);
 }
 

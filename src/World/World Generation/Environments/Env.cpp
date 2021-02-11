@@ -48,10 +48,6 @@ std::unique_ptr<Prop> Env::generateProp(const sf::Vector2f &propCoords, bool isD
     return propFactory->generateProp(propCoords, isDecor);
 }
 
-bool Env::isBorder() const {
-    return false;
-}
-
 bool Env::operator==(const CompleteEnv &other) const {
     return &other == this;
 };

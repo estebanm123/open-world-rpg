@@ -4,6 +4,7 @@
 #include "TileMapGenerator.h"
 #include "Tile.h"
 #include "../../Entities/Collidables/CollidableEntity.h"
+#include "../Environments/CompleteEnv.h"
 #include <math.h>
 
 // Creates a tile map for rendering and collision detection purposes.

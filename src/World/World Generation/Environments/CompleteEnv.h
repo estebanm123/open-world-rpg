@@ -12,10 +12,6 @@ class CompleteEnv {
 public:
     virtual ~CompleteEnv() = default;
 
-    virtual bool isBorder() const = 0;
-
-    virtual bool operator==(const CompleteEnv &other) const = 0;
-
     virtual std::unique_ptr<Prop> generateProp(const sf::Vector2f &propCoords, bool isDecor) const = 0;
 
 protected:

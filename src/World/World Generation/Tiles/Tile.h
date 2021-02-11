@@ -11,21 +11,22 @@ class Tile {
 public:
     struct Metadata {
         // All the data needed to extract tile(s)
-        Metadata(std::shared_ptr<CompleteEnv> completeEnv,
+        Metadata(std::unique_ptr<const CompleteEnv> completeEnv,
                  const sf::Vector2f &globalCoords, const std::string &spriteSheetPath, float rotationAngle = 0)
                 : rotationAngle(rotationAngle),
                   spriteSheetPath(spriteSheetPath),
                   completeEnv(std::move(completeEnv)),
-                  globalCoords(globalCoords) {}
+                  globalCoords(globalCoords)
+        {}
 
         float rotationAngle;
         const std::string &spriteSheetPath;
-        const std::shared_ptr<CompleteEnv> completeEnv; // Could be initialized by temp NeighboredEnv
+        std::unique_ptr<const CompleteEnv> completeEnv; // Could be initialized by temp NeighboredEnv
         sf::Vector2f globalCoords;
     };
 
     // spritesheet path is taken from Env
-    explicit Tile(const Metadata &metadata);
+    explicit Tile(Metadata metadata);
 
     virtual void renderBy(sf::RenderTarget &target);
 
@@ -33,12 +34,12 @@ public:
 
     const sf::Vector2f &getPosition();
 
-    std::shared_ptr<CompleteEnv> getEnvironment() const;
+    const CompleteEnv * getEnvironment() const;
 
 protected:
     RegSprite sprite;
     sf::Vector2f pos;
-    const std::shared_ptr<CompleteEnv> environment;
+    std::unique_ptr<const CompleteEnv> env;
 };
 
 

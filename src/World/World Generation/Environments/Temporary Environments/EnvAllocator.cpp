@@ -2,6 +2,7 @@
 
 #include "EnvAllocator.h"
 #include "EnvWrapper.h"
+#include "../CompleteEnv.h"
 
 
 // Places possibleCandidate in tempCandidates if it is found in candidates

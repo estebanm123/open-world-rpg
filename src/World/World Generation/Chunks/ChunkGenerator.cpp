@@ -6,7 +6,7 @@
 
 #include "../../../Debug/DebugLog.h"
 #include "../Tiles/Tile.h"
-#include "Chunk.h"
+#include "../Environments/CompleteEnv.h"
 #include "ChunkPropGenerator.h"
 #include "../../Entities/Collidables/Props/Prop.h"
 

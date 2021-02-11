@@ -4,6 +4,7 @@
 #include "EnvBorderHorizontal.h"
 #include "EnvBorderCorner.h"
 #include "../Env.h"
+#include "../EnvRegularProxy.h"
 
 NeighboredEnv::Neighbors EnvWrapper::getCompatibleNeighbors(const sf::Vector2i &direction) const {
     const auto currentEnv = std::make_shared<EnvWrapper>(*this);
@@ -47,12 +48,12 @@ NeighboredEnv::Neighbors EnvWrapper::getCompatibleNeighbors(const sf::Vector2i &
     return {};
 }
 
-EnvWrapper::EnvWrapper(const std::shared_ptr<Env> &env) : env(env) {}
+EnvWrapper::EnvWrapper(const Env *env) : env(env) {}
 
 bool EnvWrapper::operator==(const NeighboredEnv &other) const {
     try {
         const auto &o = dynamic_cast<const EnvWrapper &>(other);
-        return o.env.get() == env.get();
+        return o.env == env;
     } catch (const std::bad_cast &e) {
         return false;
     }
@@ -62,7 +63,7 @@ bool EnvWrapper::handleEquality(const std::shared_ptr<NeighboredEnv> &other) {
     try {
         const auto &otherSameType = dynamic_cast<const EnvWrapper *>(other.get());
         if (otherSameType == nullptr) return false;
-        return otherSameType->env.get() == this->env.get();
+        return otherSameType->env == this->env;
     } catch (const std::bad_cast &e) {
         return false;
     }
@@ -78,13 +79,13 @@ bool EnvWrapper::fillWildcardIfExists(const std::shared_ptr<EnvWrapper> &filler)
 
 const NeighboredEnv::TileContainerWrapper EnvWrapper::extractTileMetadata(const sf::Vector2f &globalCoords) const {
     const auto &tileContainer = env->selectTileContainer(globalCoords);
-    Tile::Metadata metadata{env, globalCoords,
+    Tile::Metadata metadata{std::make_unique<const EnvRegularProxy>(env), globalCoords,
                             env->getSpriteSheetPath()};
-    return {metadata, tileContainer};
+    return {std::move(metadata), tileContainer};
 }
 
 const Env *EnvWrapper::getEnv() const {
-    return env.get();
+    return env;
 }
 
 
