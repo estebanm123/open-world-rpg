@@ -1,6 +1,6 @@
 ﻿#include "RepeatingAnim.h"
 
-RepeatingAnim::RepeatingAnim(AnimationData data) : Animation(std::move(data)) {
+RepeatingAnim::RepeatingAnim(Metadata data) : Animation(std::move(data)) {
 
 }
 

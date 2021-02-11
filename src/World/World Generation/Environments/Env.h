@@ -14,22 +14,30 @@ class Prop;
 
 class EnvWrapper;
 
+class EnvNeighborInfo;
+
 class Env : public CompleteEnv, sf::NonCopyable, NonMoveable {
 public:
-    static inline std::string TILE_SHEET_PATH = "Tiles/tiles";
+    typedef std::unordered_map<const Env *, TileContainer::TileContainers> BorderTileContainers;
 
-    typedef std::unordered_map<const Env *, std::vector<std::shared_ptr<TileContainer>>> BorderTileContainers;
+    typedef int EnvId;
 
     struct Config {
-        explicit Config(PropFactory *propFactory) : propFactory(propFactory) {};
+        Config(EnvId id, std::string spriteSheet, int numFullTiles, std::vector<EnvNeighborInfo> borderData,
+               std::unique_ptr<PropFactory> propFactory = nullptr,
+               std::unique_ptr<Animation::BaseMetadata> animMetadata = nullptr
+        );
 
-        Config() {};
-        std::string spriteSheet = TILE_SHEET_PATH;
-        int multiTileIndex = -1;
-        PropFactory *propFactory = nullptr;
+        EnvId id;
+        std::string spriteSheet;
+        int numFullTiles;
+        std::vector<EnvNeighborInfo> borderDataCollection;
+        //        int multiTileIndex = -1;
+        std::unique_ptr<PropFactory> propFactory;
+        std::unique_ptr<Animation::BaseMetadata> animMetadata;
     };
 
-    explicit Env(TileContainer::TileContainers completeTileContainers, struct Config config = {});
+    explicit Env(std::unique_ptr<Config> config);
 
     const std::string &getSpriteSheetPath() const;
 
@@ -46,12 +54,22 @@ public:
 
     std::unique_ptr<Prop> generateProp(const sf::Vector2f &propCoords, bool isDecor) const override;
 
+    void setPropFactory(std::unique_ptr<PropFactory> propFactory);
+
+    void setSpriteSheet(std::string spriteSheet);
+
+    void setCompleteTileContainers(const TileContainer::TileContainers & completeTileContainers);
+
+    Config * getConfig();
+
+
 private:
-    const int multiTileIndex;
+//    const int multiTileIndex;
     TileContainer::TileContainers completeTileContainers;
     BorderTileContainers splitBorderTileContainers;
     BorderTileContainers cornerBorderTileContainers;
-    PropFactory *propFactory; // owner should be global
-    const std::string spriteSheet;
+    std::unique_ptr<PropFactory> propFactory;
+    std::string spriteSheet;
+    std::unique_ptr<Config> tempConfig;
 };
 

@@ -1,6 +1,6 @@
 ﻿#include "NonRepeatingAnim.h"
 
-NonRepeatingAnim::NonRepeatingAnim(AnimationData data) : Animation(std::move(data)) {
+NonRepeatingAnim::NonRepeatingAnim(Metadata data) : Animation(std::move(data)) {
 
 }
 

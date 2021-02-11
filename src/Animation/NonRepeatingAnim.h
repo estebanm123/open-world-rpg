@@ -4,7 +4,7 @@
 
 class NonRepeatingAnim : public Animation {
 public:
-    explicit NonRepeatingAnim(AnimationData data);
+    explicit NonRepeatingAnim(Metadata data);
 
     const sf::IntRect &getFrameAndAdvanceAnim() override;
 

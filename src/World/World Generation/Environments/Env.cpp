@@ -2,12 +2,11 @@
 #include "Temporary Environments/EnvWrapper.h"
 #include "Env.h"
 #include "../../Entities/Collidables/Props/Prop.h"
+#include "EnvNeighborInfo.h"
 
 
-Env::Env(TileContainer::TileContainers completeTileContainers, struct Env::Config config)
-        : completeTileContainers(std::move(completeTileContainers)),
-          spriteSheet(std::move(config.spriteSheet)), multiTileIndex(config.multiTileIndex),
-          propFactory(config.propFactory) {};
+Env::Env(std::unique_ptr<Env::Config> config)
+        : tempConfig(std::move(config)) {};
 
 TileContainer *Env::selectTileContainer(const sf::Vector2f &coords) const {
     // todo: refactor to a separate class when tile fetching gets more complex
@@ -50,4 +49,29 @@ std::unique_ptr<Prop> Env::generateProp(const sf::Vector2f &propCoords, bool isD
 
 bool Env::operator==(const CompleteEnv &other) const {
     return &other == this;
+}
+
+void Env::setPropFactory(std::unique_ptr<PropFactory> inputPropFactory) {
+    propFactory = std::move(inputPropFactory);
+}
+
+Env::Config *Env::getConfig() {
+    return tempConfig.get();
+}
+
+void Env::setSpriteSheet(std::string inputSpriteSheet) {
+    spriteSheet = std::move(inputSpriteSheet);
+}
+
+void Env::setCompleteTileContainers(const TileContainer::TileContainers &tileContainers) {
+    completeTileContainers = tileContainers;
 };
+
+Env::Config::Config(Env::EnvId id, std::string spriteSheet, int numFullTiles, std::vector<EnvNeighborInfo> borderData,
+                    std::unique_ptr<PropFactory> propFactory, std::unique_ptr<Animation::BaseMetadata> animMetadata)
+        : id(id), spriteSheet(std::move(spriteSheet)), numFullTiles(numFullTiles),
+          borderDataCollection(std::move(borderData)),
+          propFactory(std::move(propFactory)), animMetadata(std::move(animMetadata))
+{
+
+}

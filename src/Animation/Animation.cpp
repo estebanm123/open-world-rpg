@@ -2,7 +2,7 @@
 #include "../Util/Random/Random.h"
 
 
-Animation::Animation(AnimationData animationData)
+Animation::Animation(Metadata animationData)
         : metadata(std::move(animationData)) {
     initializeAnims();
 }

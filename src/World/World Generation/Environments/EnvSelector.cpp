@@ -11,8 +11,11 @@ const Env * EnvSelector::getEnvironment(sf::Vector2f coords) {
     //   std::cout << noise << std::endl;
 
     if (noise > 0.2) {
-        return EnvTypes::Water.get();
+        return EnvManager::getEnv(EnvTypes::WATER);
+    } else if (noise > -0.4) {
+       return EnvManager::getEnv(EnvTypes::DIRT);
     } else {
-        return EnvTypes::Dirt.get();
+        return EnvManager::getEnv(EnvTypes::SAND);
     }
+
 }

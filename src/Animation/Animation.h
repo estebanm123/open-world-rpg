@@ -32,25 +32,38 @@ public:
 
     // Start/end frame is 0-indexed and corresponds to position in spritesheet
     // Delay is in ms
-    typedef struct AnimationData {
-        AnimationData(int frameWidth, int frameHeight, int startFrame, int endFrame, int row, int priority,
-                      int delay, std::vector<int> inversionFrames, bool removeLast = false)
-                : frameWidth(frameWidth), frameHeight(frameHeight), startFrame(startFrame), endFrame(endFrame),
-                  row(row), priority(priority), delay(sf::milliseconds(delay)),
-                  inversionFrames(std::move(inversionFrames)), removeLast(removeLast) {}
+    struct BaseMetadata {
+        BaseMetadata(
+                int startFrame,
+                int endFrame,
+                int delay,
+                std::vector<int> inversionFrames = {},
+                bool removeLast = false
+        ) : startFrame(startFrame), endFrame(endFrame), delay(sf::milliseconds(delay)),
+            inversionFrames(std::move(inversionFrames)), removeLast(removeLast) {}
 
-        int frameWidth;
-        int frameHeight;
         int startFrame;
         int endFrame;
-        int row;
-        int priority;
         sf::Time delay;
         std::vector<int> inversionFrames;
         bool removeLast;
-    } AnimationData;
 
-    explicit Animation(AnimationData animationData);
+    };
+
+    struct Metadata : public BaseMetadata {
+        Metadata(int frameWidth, int frameHeight, int startFrame, int endFrame, int row, int priority,
+                 int delay, std::vector<int> inversionFrames = {}, bool removeLast = false)
+                : frameWidth(frameWidth), frameHeight(frameHeight),
+                  row(row), priority(priority),
+                  BaseMetadata(startFrame, endFrame, delay, std::move(inversionFrames), removeLast) {}
+
+        int frameWidth;
+        int frameHeight;
+        int row;
+        int priority;
+    };
+
+    explicit Animation(Metadata animationData);
 
     void applyVariance(int variance);
 
@@ -73,7 +86,7 @@ private:
     void initializeAnims();
 
 protected:
-    AnimationData metadata;           // animation meta-metadata, customizable from outside
+    Metadata metadata;           // animation meta-metadata, customizable from outside
 
     sf::Clock timer;              //Timer for progressing the animation
     sf::Time timeSinceLastFrameChange;      // Overlapped time from last getFrameAndAdvanceAnim() call

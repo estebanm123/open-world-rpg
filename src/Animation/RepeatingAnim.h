@@ -4,7 +4,7 @@
 
 class RepeatingAnim : public Animation {
 public:
-    explicit RepeatingAnim(AnimationData data);
+    explicit RepeatingAnim(Metadata data);
 
     const sf::IntRect &getFrameAndAdvanceAnim() override;
 
