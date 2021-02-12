@@ -32,6 +32,9 @@ public:
 
     bool isEntityCrossingBounds(CollidableEntity * entity) const;
 
+    sf::Vector2i convertGlobalToLocalCoords(const sf::Vector2f & globalCoords) const;
+
+    // Global position should be the global origin of the TileMap
     static sf::Vector2f convertLocalToGlobalCoords(sf::Vector2i localCoords, sf::Vector2f globalPos);
 private:
     Tiles tiles;

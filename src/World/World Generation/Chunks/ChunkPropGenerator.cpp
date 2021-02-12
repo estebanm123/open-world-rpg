@@ -24,7 +24,8 @@ sf::Vector2f generatePropCoords(float propGenChance, int hashVal1, const sf::Vec
     return {x + tileGlobalCoords.x, y + tileGlobalCoords.y};
 }
 
-std::unordered_set<std::unique_ptr<Prop>> ChunkPropGenerator::generateEnvironmentalProps(TileMap &tileMap, bool isDecor) {
+std::unordered_set<std::unique_ptr<Prop>>
+ChunkPropGenerator::generateEnvironmentalProps(TileMap &tileMap, bool isDecor) {
     std::unordered_set<std::unique_ptr<Prop>> props;
     auto currentPropChance = PROP_CHANCE;
     TilesSeen tilesSeen = initializeTilesSeen();
@@ -38,7 +39,7 @@ std::unordered_set<std::unique_ptr<Prop>> ChunkPropGenerator::generateEnvironmen
             if (tileCoordHash > currentPropChance) {
                 auto propCoords = generatePropCoords(currentPropChance, tileCoordHash, curTile->getPosition());
                 auto prop = curEnv->generateEnvironmentalProp(propCoords, isDecor);
-                if (!validateProp(prop.get(), tileMap, tilesSeen, {x, y}, isDecor)) {
+                if (!isPropValid(prop.get(), tileMap, tilesSeen, {x, y}, isDecor)) {
                     continue;
                 }
                 updateCurrentPropChanceOnSuccess(currentPropChance);
@@ -62,11 +63,43 @@ void ChunkPropGenerator::updateCurrentPropChanceOnSuccess(float &currentChance) 
     }
 }
 
-bool ChunkPropGenerator::validateProp(Prop *prop, const TileMap &tiles, TilesSeen &tilesSeen,
-                                      const sf::Vector2i &localCoords, bool isDecor) {
+// Divisor used against prop's max length (width/height) - a larger value = less safe but more natural results
+constexpr auto PROP_COLLISION_LENIENCY_FACTOR = 3;
+
+// Marks prop as seen
+// Extra safe (a little inaccurate)
+bool
+ChunkPropGenerator::isPropOverlappingOthersAndMarkAsSeen(Prop *prop, const sf::Vector2i &localCoords,
+                                                         TilesSeen &tilesSeen,
+                                                         const TileMap &tiles) {
+    auto &entitySize = prop->getSize();
+    auto &entityPos = prop->getPosition();
+    auto entityMaxLen = std::max(entitySize.y, entitySize.x) / PROP_COLLISION_LENIENCY_FACTOR; // take max to be safe; entity could be rotated
+
+    auto southEntityLim = tiles.convertGlobalToLocalCoords({entityPos.x, entityPos.y + entityMaxLen}).y;
+    auto eastEntityLim = tiles.convertGlobalToLocalCoords({entityPos.x + entityMaxLen, entityPos.y}).x;
+    auto northEntityLim = tiles.convertGlobalToLocalCoords({entityPos.x, entityPos.y - entityMaxLen}).y;
+    auto westEntityLim = tiles.convertGlobalToLocalCoords({entityPos.x - entityMaxLen, entityPos.y}).x;
+
+    bool isOverlapping = tilesSeen[localCoords.x][localCoords.y] || tilesSeen[localCoords.x][southEntityLim] ||
+                         tilesSeen[localCoords.x][northEntityLim] || tilesSeen[westEntityLim][localCoords.y] ||
+                         tilesSeen[eastEntityLim][localCoords.y];
+    if (isOverlapping) return true;
+    tilesSeen[localCoords.x][localCoords.y] = true;
+    tilesSeen[localCoords.x][southEntityLim] = true;
+    tilesSeen[localCoords.x][northEntityLim] = true;
+    tilesSeen[westEntityLim][localCoords.y] = true;
+    tilesSeen[eastEntityLim][localCoords.y] = true;
+    return false;
+}
+
+bool ChunkPropGenerator::isPropValid(Prop *prop, const TileMap &tiles, TilesSeen &tilesSeen,
+                                     const sf::Vector2i &localCoords, bool isDecor) {
     if (!prop) return false;
     if (isDecor) return true;
-    return !tiles.isEntityCrossingBounds(prop);
+
+    return !tiles.isEntityCrossingBounds(prop) &&
+           !isPropOverlappingOthersAndMarkAsSeen(prop, localCoords, tilesSeen, tiles);
 }
 
 int ChunkPropGenerator::hashTileCoords(Tile &tile) {
@@ -74,6 +107,7 @@ int ChunkPropGenerator::hashTileCoords(Tile &tile) {
     auto tileCoordHash = hash2ValuesModSize(pos.x, pos.y, static_cast<int>(PROP_CHANCE_MAX)); // never more than 1000
     return tileCoordHash;
 }
+
 
 
 

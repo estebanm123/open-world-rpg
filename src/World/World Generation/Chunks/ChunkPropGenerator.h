@@ -25,8 +25,11 @@ private:
 
     static void updateCurrentPropChanceOnSuccess(float &currentChance);
 
-    static bool validateProp(Prop *generatedProp, const TileMap &tiles, TilesSeen &tilesSeen,
-                             const sf::Vector2i &localCoords, bool isDecor);
+    static bool isPropValid(Prop *prop, const TileMap &tiles, TilesSeen &tilesSeen,
+                            const sf::Vector2i &localCoords, bool isDecor);
+
+    static bool isPropOverlappingOthersAndMarkAsSeen(Prop *prop, const sf::Vector2i &localCoords, TilesSeen &tilesSeen,
+                                                     const TileMap &tiles);
 
     static int hashTileCoords(Tile &tile);
 
