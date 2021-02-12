@@ -42,7 +42,7 @@ void Env::setBorderTileContainers(const BorderTileContainers &splits, const Bord
     cornerBorderTileContainers = corners;
 }
 
-std::unique_ptr<Prop> Env::generateProp(const sf::Vector2f &propCoords, bool isDecor) const {
+std::unique_ptr<Prop> Env::generateEnvironmentalProp(const sf::Vector2f &propCoords, bool isDecor) const {
     if (!propFactory) return nullptr;
     return propFactory->generateProp(propCoords, isDecor);
 }

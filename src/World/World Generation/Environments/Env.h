@@ -52,7 +52,7 @@ public:
 
     TileContainer *selectTileContainer(const sf::Vector2f &coords) const;
 
-    std::unique_ptr<Prop> generateProp(const sf::Vector2f &propCoords, bool isDecor) const override;
+    std::unique_ptr<Prop> generateEnvironmentalProp(const sf::Vector2f &propCoords, bool isDecor) const override;
 
     void setPropFactory(std::unique_ptr<PropFactory> propFactory);
 

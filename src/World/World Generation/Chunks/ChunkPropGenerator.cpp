@@ -24,11 +24,12 @@ sf::Vector2f generatePropCoords(float propGenChance, int hashVal1, const sf::Vec
     return {x + tileGlobalCoords.x, y + tileGlobalCoords.y};
 }
 
-std::unordered_set<std::unique_ptr<Prop>> ChunkPropGenerator::generateProps(TileMap &tileMap, bool isDecor) {
+std::unordered_set<std::unique_ptr<Prop>> ChunkPropGenerator::generateEnvironmentalProps(TileMap &tileMap, bool isDecor) {
     std::unordered_set<std::unique_ptr<Prop>> props;
     auto currentPropChance = PROP_CHANCE;
     TilesSeen tilesSeen = initializeTilesSeen();
 
+    //
     for (int x = 0; x < TileMap::SIZE_X; x++) {
         for (int y = 0; y < TileMap::SIZE_Y; y++) {
             auto curTile = tileMap.getTile(x, y);
@@ -36,7 +37,7 @@ std::unordered_set<std::unique_ptr<Prop>> ChunkPropGenerator::generateProps(Tile
             auto tileCoordHash = hashTileCoords(*curTile) ^static_cast<int>(currentPropChance);
             if (tileCoordHash > currentPropChance) {
                 auto propCoords = generatePropCoords(currentPropChance, tileCoordHash, curTile->getPosition());
-                auto prop = curEnv->generateProp(propCoords, isDecor);
+                auto prop = curEnv->generateEnvironmentalProp(propCoords, isDecor);
                 if (!validateProp(prop.get(), tileMap, tilesSeen, {x, y}, isDecor)) {
                     continue;
                 }

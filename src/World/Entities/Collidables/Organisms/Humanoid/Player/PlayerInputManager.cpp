@@ -71,9 +71,11 @@ void PlayerInputManager::handleMouseMovement(sf::RenderWindow &window) {
     player.setRotation(-mouseAngle);
 
     // for debugging
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
-        std::cout << "Mouse: " << mousePos.x << ", " << mousePos.y << std::endl;
-        std::cout << "Player: " << playerPos.x << ", " << playerPos.y << std::endl;
+    static sf::Clock timer;
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && timer.getElapsedTime().asMilliseconds() > 500) {
+        timer.restart();
+        std::cout << "\nMouse:  " << std::round(mousePos.x) << "," << std::round(mousePos.y) << std::endl;
+        std::cout << "Player: " << std::round(playerPos.x) << "," << std::round(playerPos.y) << std::endl;
     }
 }
 

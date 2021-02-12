@@ -7,7 +7,7 @@ class EnvRegularProxy : public CompleteEnv {
 public:
     EnvRegularProxy(const Env * env);
 
-    std::unique_ptr<Prop> generateProp(const sf::Vector2f &propCoords, bool isDecor) const override;
+    std::unique_ptr<Prop> generateEnvironmentalProp(const sf::Vector2f &propCoords, bool isDecor) const override;
 private:
     const Env * env;
 };
