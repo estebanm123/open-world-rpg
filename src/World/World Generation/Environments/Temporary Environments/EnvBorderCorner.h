@@ -12,7 +12,7 @@ struct EnvBorderCorner : public EnvBorderData {
 
     float getExtraRotationAngle() const override;
 
-    const TileContainer *getTileContainer(const Env *primary, const Env *secondary) const override;
+    const TileContainer *getTileContainer(const Env *primary, const Env *secondary, const sf::Vector2f & globalCoords) const override;
 
     bool operator==(const NeighboredEnv &other) const override;
 

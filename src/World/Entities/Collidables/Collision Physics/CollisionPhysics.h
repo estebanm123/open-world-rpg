@@ -7,7 +7,7 @@ class MoveableEntity;
 
 class CollisionPhysics {
 public:
-    CollisionPhysics(CollidableEntity *entity);
+    explicit CollisionPhysics(CollidableEntity *entity);
 
     CollisionPhysics();
 

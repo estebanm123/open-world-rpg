@@ -20,21 +20,22 @@ const std::string &Env::getSpriteSheetPath() const {
 }
 
 TileContainer *
-getBorderTileContainerUtil(const Env *otherEnv, const Env::BorderTileContainers &borderTileContainers) {
+getBorderTileContainerUtil(const Env *otherEnv, const Env::BorderTileContainers &borderTileContainers, const sf::Vector2f & globalCoords) {
     // todo: could there be a case where otherEnv == this?
     if (borderTileContainers.find(otherEnv) == borderTileContainers.end()) return nullptr;
     const auto &borderContainers = borderTileContainers.at(otherEnv);
     if (borderContainers.empty()) return nullptr;
-    return borderContainers[0].get();
+    int hashVal = hash2ValuesModSize(globalCoords.x, globalCoords.y, borderTileContainers.size());
+    return borderContainers[hashVal].get();
 }
 
-TileContainer *Env::getSplitTileContainer(const Env *otherEnv) const {
+TileContainer *Env::getSplitTileContainer(const Env *otherEnv, const sf::Vector2f & globalCoords) const {
     // check to see what in the maps
-    return getBorderTileContainerUtil(otherEnv, splitBorderTileContainers);
+    return getBorderTileContainerUtil(otherEnv, splitBorderTileContainers, globalCoords);
 }
 
-TileContainer *Env::getCornerTileContainer(const Env *otherEnv) const {
-    return getBorderTileContainerUtil(otherEnv, cornerBorderTileContainers);
+TileContainer *Env::getCornerTileContainer(const Env *otherEnv, const sf::Vector2f & globalCoords) const {
+    return getBorderTileContainerUtil(otherEnv, cornerBorderTileContainers, globalCoords);
 }
 
 void Env::setBorderTileContainers(const BorderTileContainers &splits, const BorderTileContainers &corners) {

@@ -46,9 +46,9 @@ public:
     void setBorderTileContainers(const BorderTileContainers &splits, const BorderTileContainers &corners);
 
     // Could return null if there is no associated border tile container
-    TileContainer *getSplitTileContainer(const Env *) const;
+    TileContainer *getSplitTileContainer(const Env *, const sf::Vector2f & globalCoords) const;
 
-    TileContainer *getCornerTileContainer(const Env *) const;
+    TileContainer *getCornerTileContainer(const Env *, const sf::Vector2f & globalCoords) const;
 
     TileContainer *selectTileContainer(const sf::Vector2f &coords) const;
 

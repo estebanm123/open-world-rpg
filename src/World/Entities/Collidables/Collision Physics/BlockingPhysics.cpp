@@ -3,7 +3,6 @@
 #include <iostream>
 #include "BlockingPhysics.h"
 #include "../MoveableEntity.h"
-#include "../../../../Util/MathExtra.h"
 
 BlockingPhysics::BlockingPhysics(CollidableEntity *entity) : CollisionPhysics(entity) {
 

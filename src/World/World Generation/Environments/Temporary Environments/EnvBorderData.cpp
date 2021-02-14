@@ -66,11 +66,11 @@ float EnvBorderData::getExtraRotationAngle() const {
 const NeighboredEnv::TileContainerWrapper EnvBorderData::extractTileMetadata(const sf::Vector2f &globalCoords) const {
     auto firstEnv = primaryEnv->getEnv();
     auto secondEnv = secondaryEnv->getEnv();
-    const TileContainer *tileContainer = getTileContainer(firstEnv, secondEnv);
+    const TileContainer *tileContainer = getTileContainer(firstEnv, secondEnv, globalCoords);
     auto selectedEnv = firstEnv;
     auto rotationAngle = getExtraRotationAngle();
     if (!tileContainer) {
-        tileContainer = getTileContainer(secondEnv, firstEnv);
+        tileContainer = getTileContainer(secondEnv, firstEnv, globalCoords);
         selectedEnv = secondEnv;
         if (!tileContainer)
             throw std::runtime_error(
@@ -84,9 +84,8 @@ const NeighboredEnv::TileContainerWrapper EnvBorderData::extractTileMetadata(con
                             simplifiedAngle}; // EnvBorder is placeholder - todo: make a borderTile class
     return {std::move(metadata), tileContainer};
 }
-
-const TileContainer *EnvBorderData::getTileContainer(const Env *primary, const Env *secondary) const {
-    return primary->getSplitTileContainer(secondary);
+const TileContainer *EnvBorderData::getTileContainer(const Env *primary, const Env *secondary, const sf::Vector2f & globalCoords) const {
+    return primary->getSplitTileContainer(secondary, globalCoords);
 }
 
 

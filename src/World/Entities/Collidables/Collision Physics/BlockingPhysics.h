@@ -11,7 +11,6 @@ public:
     void applyCollisionPhysics(MoveableEntity *other) override;
 
 private:
-    bool isMovingAway(MoveableEntity *other);
 };
 
 

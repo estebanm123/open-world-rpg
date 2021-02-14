@@ -21,6 +21,7 @@ struct EnvBorderData : public NeighboredEnv {
 
     bool handleEquality(const std::shared_ptr<NeighboredEnv> &other) override;
 
+    // Selects TileContainer (using hashing)
     const NeighboredEnv::TileContainerWrapper extractTileMetadata(const sf::Vector2f &globalCoords) const override;
 
     // Rotation angle of the border
@@ -31,7 +32,7 @@ struct EnvBorderData : public NeighboredEnv {
     ~EnvBorderData() override = default;
 
 protected:
-    virtual const TileContainer *getTileContainer(const Env *primary, const Env *secondary) const;
+    virtual const TileContainer *getTileContainer(const Env *primary, const Env *secondary, const sf::Vector2f & globalCoords) const;
 };
 
 namespace std {
