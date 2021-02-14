@@ -19,14 +19,15 @@ const std::string &Env::getSpriteSheetPath() const {
     return spriteSheet;
 }
 
+
 TileContainer *
 getBorderTileContainerUtil(const Env *otherEnv, const Env::BorderTileContainers &borderTileContainers, const sf::Vector2f & globalCoords) {
     // todo: could there be a case where otherEnv == this?
     if (borderTileContainers.find(otherEnv) == borderTileContainers.end()) return nullptr;
     const auto &borderContainers = borderTileContainers.at(otherEnv);
     if (borderContainers.empty()) return nullptr;
-    int hashVal = hash2ValuesModSize(globalCoords.x, globalCoords.y, borderTileContainers.size());
-    return borderContainers[hashVal].get();
+    int hashVal = hash2ValuesModSize(globalCoords.x, globalCoords.y, borderContainers.size());
+    return borderContainers.at(hashVal).get();
 }
 
 TileContainer *Env::getSplitTileContainer(const Env *otherEnv, const sf::Vector2f & globalCoords) const {
