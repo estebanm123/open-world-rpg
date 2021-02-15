@@ -7,7 +7,7 @@
 Game::Game()
         : window({1280, 720}, "Test") {
 
-//    SpriteShadowGenerator::generateMissingShadowSprites();
+    SpriteShadowGenerator::generateMissingShadowSprites();
     window.setPosition({window.getPosition().x, 0});
     window.setFramerateLimit(120);
     EnvTypes::initialize();
