@@ -1,5 +1,5 @@
 
-#include "./EntitySprite.h"
+#include "Sprites/EntitySprite.h"
 #include "Entity.h"
 
 const sf::Vector2f &Entity::getPosition() {

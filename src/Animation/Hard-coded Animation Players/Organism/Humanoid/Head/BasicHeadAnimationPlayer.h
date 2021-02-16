@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../HumanoidAnimationPlayer.h"
-#include "../../../../../World/Entities/RegSprite.h"
+#include "../../../../../World/Entities/Sprites/RegSprite.h"
 
 class BasicHeadAnimationPlayer : public HumanoidAnimationPlayer {
 public:

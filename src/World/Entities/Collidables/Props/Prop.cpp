@@ -1,9 +1,10 @@
 
 
 #include "Prop.h"
+#include "../../Sprites/ShadowedRegSprite.h"
 
 EntitySprite &Prop::getSprite() {
-    return sprite;
+    return *sprite; // todo: to refactor
 }
 
 void Prop::update(float dt) {
@@ -14,13 +15,14 @@ void Prop::update(float dt) {
 
 Prop::Prop(const std::string &spriteSheet,
            const sf::Vector2f &size, const sf::IntRect &defaultFrame, PropOptions config)
-       : sprite(spriteSheet, config.pos, size / 2.f, defaultFrame),
-          CollidableEntity(CollidableEntity::initializeHitbox(size, config.pos), std::move(config.collisionPhysics)),
+        : CollidableEntity(CollidableEntity::initializeHitbox(size, config.pos), std::move(config.collisionPhysics)),
           animPlayer(std::move(config.animPlayer)) {
     hasDefaultAnim = this->animPlayer->hasCurrentAnim();
     // todo: decouple
-    sprite.rotate(config.rotationAngle);
+    sprite = config.hasShadow ? std::make_unique<ShadowedRegSprite>(spriteSheet, config.pos, size / 2.f, defaultFrame)
+                              : std::make_unique<RegSprite>(spriteSheet, config.pos, size / 2.f, defaultFrame);
+    sprite->rotate(config.rotationAngle);
     hitbox.rotate(config.rotationAngle);
-    this->animPlayer->setSprite(&sprite);
+    this->animPlayer->setSprite(sprite.get());
 }
 

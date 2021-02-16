@@ -3,7 +3,7 @@
 #include <memory>
 
 #include "Animation.h"
-#include "../World/Entities/EntitySprite.h"
+#include "../World/Entities/Sprites/EntitySprite.h"
 
 
 class AnimationPlayer : sf::NonCopyable {

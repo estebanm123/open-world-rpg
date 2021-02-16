@@ -12,6 +12,8 @@ bool spriteSheetShadowExists(const std::string & spriteSheetPath) {
     return ResourceHolder::get().textures.exists(spriteSheetPath + SpriteShadowGenerator::SHADOW_SUFFIX);
 }
 
+const inline auto SHADOW_OPACITY = 50;
+
 void createShadow(sf::Image & sheet) {
    auto size = sheet.getSize();
    for (unsigned int x = 0; x  < size.x; x++) {
@@ -19,7 +21,7 @@ void createShadow(sf::Image & sheet) {
            auto pixel = sheet.getPixel(x, y);
            if (pixel.a != 0) {
                sf::Color shadow {sf::Color::Black};
-               shadow.a = 100;
+               shadow.a = pixel.a >= SHADOW_OPACITY? SHADOW_OPACITY : pixel.a;
                sheet.setPixel(x,y, shadow);
            }
        }
@@ -38,7 +40,7 @@ void SpriteShadowGenerator::generateMissingShadowSprites() {
     for (auto & spriteSheetDir : DIRECTORIES) {
         auto sheetPaths = ResourceHolder::get().textures.fetchAllResourcesInFolder(spriteSheetDir);
         for (auto & sheetPath : sheetPaths) {
-            if (spriteSheetShadowExists(sheetPath)) continue;
+            //if (spriteSheetShadowExists(sheetPath)) continue;
             createSpriteSheetShadow(sheetPath);
         }
     }

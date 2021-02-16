@@ -1,7 +1,7 @@
 
 
 #include "RegSprite.h"
-#include "../../Resource Managers/ResourceHolder.h"
+#include "../../../Resource Managers/ResourceHolder.h"
 
 RegSprite::RegSprite(const std::string &spriteSheet, const sf::Vector2f &pos, const sf::Vector2f &origin,
                      const sf::IntRect &defaultFrame) {

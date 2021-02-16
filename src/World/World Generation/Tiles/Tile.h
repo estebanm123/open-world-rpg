@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics/Sprite.hpp>
 #include <memory>
-#include "../../Entities/RegSprite.h"
+#include "../../Entities/Sprites/RegSprite.h"
 
 class CompleteEnv;
 

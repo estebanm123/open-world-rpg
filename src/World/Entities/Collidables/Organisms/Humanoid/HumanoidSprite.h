@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../RegSprite.h"
+#include "../../../Sprites/RegSprite.h"
 #include "../../../../../Animation/Hard-coded Animation Players/Organism/Humanoid/HumanoidAnimationPlayer.h"
 
 class HumanoidSprite : public EntitySprite {

@@ -1,5 +1,5 @@
 #include "./MoveableEntity.h"
-#include "../EntitySprite.h"
+#include "../Sprites/EntitySprite.h"
 
 MoveableEntity::MoveableEntity(const Hitbox &hitbox, std::unique_ptr<CollisionPhysics> collisionPhysics)
         : CollidableEntity(hitbox, std::move(collisionPhysics)), lastMoveOffset({0,0}) {}
