@@ -1,7 +1,6 @@
 
 
 #include "HumanoidSprite.h"
-#include "../../../../../Animation/Animation.h"
 #include "../../../../../Animation/Hard-coded Animation Players/Organism/Humanoid/Head/BasicHeadAnimationPlayer.h"
 #include "../../../../../Animation/Hard-coded Animation Players/Organism/Humanoid/Body/EmptyBodyAnimationPlayer.h"
 
@@ -68,7 +67,6 @@ void HumanoidSprite::move(const sf::Vector2f &offset) {
 
 void HumanoidSprite::playIdleAnim() {
     bodyAnimation->playIdleAnim();
-//    headAnimation->playIdleAnim();
 }
 
 void HumanoidSprite::playMoveAnim() {

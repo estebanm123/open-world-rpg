@@ -2,6 +2,7 @@
 
 #include "../../../Sprites/RegSprite.h"
 #include "../../../../../Animation/Hard-coded Animation Players/Organism/Humanoid/HumanoidAnimationPlayer.h"
+#include "../../../Sprites/ShadowedRegSprite.h"
 
 class HumanoidSprite : public EntitySprite {
 public:
@@ -37,7 +38,7 @@ public:
 
 private:
     RegSprite head;
-    RegSprite body;
+    ShadowedRegSprite body;
     std::unique_ptr<HumanoidAnimationPlayer> bodyAnimation;
     std::unique_ptr<HumanoidAnimationPlayer> headAnimation;
 

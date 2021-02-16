@@ -2,7 +2,7 @@
 #include "../../../Util/SpriteShadowGenerator.h"
 
 
-const inline auto DEFAULT_SHADOW_OFFSET = 15;
+const inline auto DEFAULT_SHADOW_OFFSET = 5;
 const inline float OFFSET_HEIGHT_PROPORTION = 0.15;
 
 ShadowedRegSprite::ShadowedRegSprite(const std::string &spriteSheet, const sf::Vector2f &pos,
