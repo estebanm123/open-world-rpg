@@ -90,7 +90,7 @@ std::unique_ptr<Prop> PropFactory::generateMushrooms(int hashVal, const sf::Vect
     const auto &spriteSheetCoords = MUSHROOM_SHEETS[selectedIndex];
     const sf::Vector2f size = {static_cast<float>(spriteSheetCoords.width),
                                static_cast<float>(spriteSheetCoords.height)};
-    return std::make_unique<Prop>("Foliage/Mushroom", size, spriteSheetCoords,
-                                  Prop::PropOptions{pos});
+    return std::make_unique<Prop>("Foliage/Shadow/Mushroom", size, spriteSheetCoords,
+                                  Prop::PropOptions{pos, true});
 }
 
