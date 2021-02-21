@@ -30,7 +30,6 @@ ChunkPropGenerator::generateEnvironmentalProps(TileMap &tileMap, bool isDecor) {
     auto currentPropChance = PROP_CHANCE;
     TilesSeen tilesSeen = initializeTilesSeen();
 
-    //
     for (int x = 0; x < TileMap::SIZE_X; x++) {
         for (int y = 0; y < TileMap::SIZE_Y; y++) {
             auto curTile = tileMap.getTile(x, y);

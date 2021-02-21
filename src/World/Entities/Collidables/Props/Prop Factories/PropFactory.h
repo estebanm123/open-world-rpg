@@ -24,6 +24,7 @@ protected:
     static int getPropIndex(int hashVal, int numProps);
 
     // hashVal must be between 0 - HASH_LIM
+    // todo: refactor to a single method
     std::unique_ptr<Prop> generateRock(int hashVal, const sf::Vector2f &pos);
 
     std::unique_ptr<Prop> generateBush(int hashVal, const sf::Vector2f &pos);
@@ -31,6 +32,8 @@ protected:
     std::unique_ptr<Prop> generateGrassCover(int hashVal, const sf::Vector2f &pos);
 
     std::unique_ptr<Prop> generateMushrooms(int hashVal, const sf::Vector2f &pos);
+
+    std::unique_ptr<Prop> generateCactus(int hashVal, const sf::Vector2f & pos);
 };
 
 
