@@ -61,4 +61,8 @@ void MoveableEntity::update(float dt) {
     lastMoveOffset = {0,0};
 }
 
+void MoveableEntity::idle() {
+    getSprite().playAnim(&MoveableActions::Idle);
+}
+
 

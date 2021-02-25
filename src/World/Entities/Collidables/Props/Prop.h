@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../../Entity.h"
-#include "../../Sprites/RegSprite.h"
+#include "../../Sprites/SpriteReg.h"
 #include "../CollidableEntity.h"
 #include "../../../../Animation/AnimationPlayer.h"
 #include "../../../../Util/Random/Hash.h"
@@ -15,7 +15,7 @@ public:
         explicit PropOptions(const sf::Vector2f &pos,
                              bool hasShadow = false,
                              std::unique_ptr<CollisionPhysics> collisionPhysics = std::make_unique<CollisionPhysics>(),
-                             std::unique_ptr<AnimationPlayer> animPlayer = std::make_unique<AnimationPlayer>())
+                             std::unique_ptr<AnimationPlayer> animPlayer = nullptr)
                 : hasShadow(hasShadow), pos(pos), collisionPhysics(std::move(collisionPhysics)),
                   animPlayer(std::move(animPlayer)) {
         };
@@ -33,8 +33,7 @@ public:
 protected:
     EntitySprite &getSprite() override;
 
-    std::unique_ptr<RegSprite> sprite;
-    std::unique_ptr<AnimationPlayer> animPlayer;
+    std::unique_ptr<EntitySprite> sprite;
     bool hasDefaultAnim;
 };
 

@@ -1,0 +1,33 @@
+#pragma once
+
+#include "EntitySprite.h"
+#include "SpriteReg.h"
+
+// composite part of composite pattern
+class SpriteContainer : public EntitySprite {
+public:
+    // Order of sprites is render order
+    explicit SpriteContainer(std::vector<std::unique_ptr<EntitySprite>> sprites);
+
+    void renderBy(sf::RenderTarget &renderer) override;
+
+    void playAnim(Action const *action) override;
+
+    bool isAnimated() override;
+
+    void playDefaultAnim() override;
+
+    // TODO: set animPlayers?
+
+    const sf::Vector2f &getPosition() const override;
+
+    void setPosition(const sf::Vector2f &pos) override;
+
+    float getRotation() const override;
+
+    void setRotation(float angle) override;
+
+    void move(const sf::Vector2f &offset) override;
+private:
+    std::vector<std::unique_ptr<EntitySprite>> sprites;
+};

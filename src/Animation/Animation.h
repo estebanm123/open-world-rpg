@@ -5,18 +5,6 @@
 #include "../Util/Random/Random.h"
 
 namespace animConstants {
-    constexpr unsigned BASE_FRAME_WIDTH = 32;
-    constexpr unsigned BASE_FRAME_HEIGHT = 32;
-    constexpr unsigned LEG_FRAME_DELAY = 40;
-    constexpr unsigned BODY_MOVE_FRAME_DELAY = 80;
-    constexpr unsigned BODY_IDLE_FRAME_DELAY = 200;
-    constexpr unsigned REVOLVER_BODY_FRAME_DELAY = 80;
-    constexpr unsigned REVOLVER_FIRE_FRAME_DELAY = 1200;
-    constexpr unsigned HEAD_FRAME_DELAY = 100;
-    constexpr unsigned WATER_TILE_DELAY = 220;
-    constexpr unsigned WATER_NUM_FRAMES = 3;
-    constexpr unsigned WATER_DELAY_VARIANCE = 0;
-    constexpr unsigned BEAST_FRAME_DELAY = 150;
     const static sf::IntRect EMPTY_FRAME{0, 0, 0, 0};
 }
 

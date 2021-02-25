@@ -23,7 +23,7 @@ namespace EnvTypes {
     inline void initialize() {
         EnvManager::createEnv(std::make_unique<Env::Config>(
                 WATER, "Tiles/Water", 1, std::vector<EnvNeighborInfo>{EnvNeighborInfo{DIRT, 0, 1}}, nullptr,
-                std::make_unique<Animation::BaseMetadata>(0, 2, WATER_TILE_DELAY)
+                std::make_unique<Animation::BaseMetadata>(0, 2, 220)
         ));
 
         EnvManager::createEnv(std::make_unique<Env::Config>(

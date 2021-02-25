@@ -11,8 +11,6 @@ public:
 
     void renderBy(sf::RenderTarget &target) override;
 
-private:
-    AnimationPlayer animationPlayer;
 };
 
 

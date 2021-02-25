@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics/Sprite.hpp>
 #include <memory>
-#include "../../Entities/Sprites/RegSprite.h"
+#include "../../Entities/Sprites/SpriteReg.h"
 
 class CompleteEnv;
 
@@ -37,7 +37,7 @@ public:
     const CompleteEnv * getEnvironment() const;
 
 protected:
-    RegSprite sprite;
+    SpriteReg sprite;
     sf::Vector2f pos;
     std::unique_ptr<const CompleteEnv> env;
 };

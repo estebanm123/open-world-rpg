@@ -1,33 +1,34 @@
 ﻿#pragma once
 
 #include <memory>
+#include <unordered_map>
 
 #include "Animation.h"
 #include "../World/Entities/Sprites/EntitySprite.h"
+#include "Action.h"
 
 
 class AnimationPlayer : sf::NonCopyable {
 public:
-    explicit AnimationPlayer(EntitySprite *sprite, std::shared_ptr<Animation> anim = nullptr);
+    explicit AnimationPlayer(std::unordered_map<Action const *, std::unique_ptr<Animation>> anims, Action const * initialAction = nullptr);
 
-    AnimationPlayer();
+    explicit AnimationPlayer(std::unique_ptr<Animation> defaultAnim);
 
     virtual ~AnimationPlayer() = default;
 
     virtual void resetAnimation();
 
-    void setCurrentAnim(std::shared_ptr<Animation> anim);
+    void setDefaultAnim(std::unique_ptr<Animation> anim);
 
-    void setSprite(EntitySprite * newSprite);
+    const sf::IntRect & playAnim(Action const * action);
 
     bool hasCurrentAnim() const;
 
-    void playCurrentAnim();
+    const sf::IntRect & playCurrentAnim();
 
 protected:
-    std::shared_ptr<Animation> curAnim; // Possible shared owners in subclasses
+    std::unordered_map<Action const *, std::unique_ptr<Animation>> anims;
+    Animation * curAnim;
 
-    EntitySprite * sprite;
-
-    virtual void playAnim(const std::shared_ptr<Animation> &anim);
+    Animation * getAnim(Action const * action);
 };

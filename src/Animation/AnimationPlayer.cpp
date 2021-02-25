@@ -1,31 +1,36 @@
 ﻿#include "AnimationPlayer.h"
+#include "Actions.h"
 
-#include <utility>
+using namespace animConstants;
 
-AnimationPlayer::AnimationPlayer(EntitySprite *sprite, std::shared_ptr<Animation> anim) : sprite(sprite), curAnim(std::move(anim)) {}
-
-AnimationPlayer::AnimationPlayer() : sprite(nullptr), curAnim(nullptr) {
-
+AnimationPlayer::AnimationPlayer(std::unordered_map<Action const *, std::unique_ptr<Animation>> anims,
+                                 Action const *initialAction) : anims(std::move(anims)), curAnim(nullptr) {
+    if (initialAction != nullptr) {
+        curAnim = getAnim(initialAction);
+    }
 }
 
+AnimationPlayer::AnimationPlayer(std::unique_ptr<Animation> defaultAnim) {
+    curAnim = defaultAnim.get();
+    setDefaultAnim(std::move(defaultAnim));
+}
 
-void AnimationPlayer::playAnim(const std::shared_ptr<Animation> &anim) {
-    if (anim == nullptr) {
-        return;
-    }
+const sf::IntRect &AnimationPlayer::playAnim(Action const *action) {
+    auto anim = getAnim(action);
+    if (!anim) return EMPTY_FRAME;
 
-    if ((!curAnim || curAnim->peekNextFrame() == animConstants::EMPTY_FRAME ||
-        curAnim->getPriority() <= anim->getPriority())) {
+    if (!curAnim || curAnim->peekNextFrame() == animConstants::EMPTY_FRAME ||
+                 curAnim->getPriority() <= anim->getPriority()) {
         curAnim = anim;
     }
+
     return playCurrentAnim();
 }
 
-void AnimationPlayer::playCurrentAnim() {
+const sf::IntRect &AnimationPlayer::playCurrentAnim() {
+    if (!curAnim) return EMPTY_FRAME;
     const auto &nextFrame = curAnim->getFrameAndAdvanceAnim();
-    if (sprite->getTextureRect() != nextFrame) {
-        sprite->setTextureRect(curAnim->getFrameAndAdvanceAnim());
-    }
+    return nextFrame;
 }
 
 void AnimationPlayer::resetAnimation() {
@@ -34,16 +39,18 @@ void AnimationPlayer::resetAnimation() {
     }
 }
 
-void AnimationPlayer::setCurrentAnim(std::shared_ptr<Animation> anim) {
-    curAnim = std::move(anim);
-}
-
 bool AnimationPlayer::hasCurrentAnim() const {
-    return !(curAnim == nullptr);
+    return curAnim != nullptr;
 }
 
-void AnimationPlayer::setSprite(EntitySprite* newSprite) {
-    sprite = newSprite;
+Animation *AnimationPlayer::getAnim(Action const *action) {
+    if (anims.find(action) == anims.end()) return nullptr;
+    return anims.at(action).get();
 }
 
+void AnimationPlayer::setDefaultAnim(std::unique_ptr<Animation> anim) {
+    // todo: verify safety
+    curAnim = anim.get();
+    anims.insert({&Actions::Default, std::move(anim)});
+}
 

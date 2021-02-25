@@ -2,6 +2,12 @@
 
 #include "../Entity.h"
 #include "CollidableEntity.h"
+#include "../../../Animation/Actions.h"
+
+struct MoveableActions : public Actions {
+    static constexpr Action Idle {};
+    static constexpr Action Move {};
+};
 
 class MoveableEntity : public CollidableEntity {
 public:
@@ -13,7 +19,7 @@ public:
     // for subclasses this needs to be called first
     void update(float dt) override;
 
-    virtual void idle() = 0;
+    void idle();
 
     void setRotation(float angle) override;
 
