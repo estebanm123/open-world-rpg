@@ -24,7 +24,6 @@ void debugRenderHitbox(sf::RenderTarget &renderer, CollidableEntity::Hitbox &hit
 
 CollidableEntity::CollidableEntity(Hitbox hitbox, std::unique_ptr<CollisionPhysics> collisionPhysics) : hitbox(
         std::move(hitbox)), collisionPhysics(std::move(collisionPhysics)) {
-    this->collisionPhysics->setEntity(this);
 }
 
 bool CollidableEntity::intersect(const CollidableEntity *other) const {
@@ -45,7 +44,7 @@ const sf::Vector2f &CollidableEntity::getSize() const {
 
 void CollidableEntity::handleCollision(MoveableEntity *other) {
     if (intersect(other)) {
-        collisionPhysics->applyCollisionPhysics(other);
+        collisionPhysics->applyCollisionPhysics(this, other);
         // todo: trigger StatEffect?
     }
 

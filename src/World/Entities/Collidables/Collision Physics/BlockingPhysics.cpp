@@ -4,10 +4,6 @@
 #include "BlockingPhysics.h"
 #include "../MoveableEntity.h"
 
-BlockingPhysics::BlockingPhysics(CollidableEntity *entity) : CollisionPhysics(entity) {
-
-}
-
 BlockingPhysics::BlockingPhysics() : CollisionPhysics() {
 
 }
@@ -20,8 +16,8 @@ bool areVectorsInASharedQuadrant(const sf::Vector2f &a, const sf::Vector2f &b) {
     return (a.x > 0 && b.x > 0) || (a.x < 0 && b.x < 0) || (a.y > 0 && b.y > 0) || (a.y < 0 && b.y < 0);
 }
 
-void BlockingPhysics::applyCollisionPhysics(MoveableEntity *other) {
-    const auto &entityPos = entity->getPosition();
+void BlockingPhysics::applyCollisionPhysics(CollidableEntity * receivingEntity, MoveableEntity *other) {
+    const auto &entityPos = receivingEntity->getPosition();
     const auto &otherPos = other->getPosition();
 
     auto &lastMoveOffset = other->getLastMoveOffset();

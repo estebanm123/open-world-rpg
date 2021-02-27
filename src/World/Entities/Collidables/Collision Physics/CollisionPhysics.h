@@ -7,16 +7,8 @@ class MoveableEntity;
 
 class CollisionPhysics {
 public:
-    explicit CollisionPhysics(CollidableEntity *entity);
-
-    CollisionPhysics();
-
-    virtual void applyCollisionPhysics(MoveableEntity *other);
-
-    void setEntity(CollidableEntity *newEntity);
-
-protected:
-    CollidableEntity *entity;
+    virtual void applyCollisionPhysics(CollidableEntity * receivingEntity, MoveableEntity *movingEntity);
+    virtual ~CollisionPhysics() = default;
 };
 
 
