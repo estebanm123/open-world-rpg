@@ -16,7 +16,7 @@ struct ChunkCollisionHandler {
 
     void handleCollisions();
 
-    void handleCollisionsWithOtherEntities(MoveableEntity * moveable);
+    void handleCollisionsWithOtherEntities(MoveableEntity * moveable) const;
 
 private:
     typedef std::unordered_set<MoveableEntity *>::iterator MoveableIter;

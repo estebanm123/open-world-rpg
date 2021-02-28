@@ -13,6 +13,7 @@ public:
 
     CollidableEntity(Hitbox hitbox, std::unique_ptr<CollisionPhysics> CollisionPhysics);
 
+    // only called once per Entity a -> Entity b pair
     void handleCollision(MoveableEntity *other);
 
     const sf::Vector2f &getSize() const;

@@ -48,8 +48,14 @@ void Humanoid::revertLastMove(bool x, bool y) {
 
 void Humanoid::renderBy(sf::RenderTarget &renderer) {
     // move/group this animation handling to organism and take a AnimPlayer proxy?
+
+    // could be eating, sleeping, using etc.. -> maybe we have a current action field?
+    // at least not for the movement cause it can be manipulated after player update
+
+
     if (hasMoved()) {
         sprite.playAnim(&MoveableActions::Move);
+        //
     } else {
         sprite.playAnim(&MoveableActions::Idle);
     }
