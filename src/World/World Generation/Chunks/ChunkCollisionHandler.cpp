@@ -1,6 +1,5 @@
 
 #include "Chunk.h"
-#include "ChunkCollisionHandler.h"
 #include "../../Entities/Collidables/Props/Prop.h"
 
 ChunkCollisionHandler::ChunkCollisionHandler(Chunk *chunk) : chunk(chunk) {}
@@ -21,7 +20,7 @@ void ChunkCollisionHandler::handleCollisions() {
 //    }
 }
 
-void ChunkCollisionHandler::handleCollisionsWithOtherEntities(MoveableEntity *moveable) {
+void ChunkCollisionHandler::handleCollisionsWithOtherEntities(MoveableEntity *moveable) const {
     if (!moveable->hasMoved()) return;
     for (auto &otherMoveable : chunk->moveableEntities) {
         // todo: some way to cache pairs seen, so we avoid double counting

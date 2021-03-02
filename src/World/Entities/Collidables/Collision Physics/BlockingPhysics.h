@@ -4,13 +4,9 @@
 
 class BlockingPhysics : public CollisionPhysics {
 public:
-    explicit BlockingPhysics(CollidableEntity *entity);
-
     BlockingPhysics();
 
-    void applyCollisionPhysics(MoveableEntity *other) override;
-
-private:
+    void applyCollisionPhysics(CollidableEntity * receivingEntity, MoveableEntity *other) override;
 };
 
 
