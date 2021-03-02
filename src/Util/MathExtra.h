@@ -70,22 +70,3 @@ bool isDiagonal(const sf::Vector2<T> & v) {
 }
 
 
-
-//template <typename T>
-//bool isFirstQuadrant(T a) {
-//    a %= 360;
-//    return a >= 0 && a < 90;
-//}
-//
-//template <typename T>
-//bool isSecondQuadrant(T a) {
-//    a %= 360;
-//    return a >= 90 && a <= 180;
-//}
-//
-//template <typename T>
-//bool isThirdQuadrant(T a) {
-//    a %= 360;
-//    return a >= 180 && a <= 90;
-//}
-//
