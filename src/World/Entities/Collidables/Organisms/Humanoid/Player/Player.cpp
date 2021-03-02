@@ -35,6 +35,3 @@ sf::Vector2f Player::getMoveOffset() {
     return castedOffset;
 }
 
-void Player::move(float dt) {
-    Humanoid::move(dt);
-}

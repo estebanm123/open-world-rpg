@@ -42,10 +42,10 @@ public:
     ~MoveableEntity() override = default;
 
 protected:
-    virtual sf::Vector2f getMoveOffset();
-
+    virtual sf::Vector2f getMoveOffset() = 0;
     sf::Vector2f lookDirection;
 
+private:
     sf::Vector2f lastMoveOffset; // offset in dir of last move
 };
 

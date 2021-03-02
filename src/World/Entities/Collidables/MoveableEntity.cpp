@@ -26,10 +26,6 @@ void MoveableEntity::move(float dt) {
     hitbox.move(offset);
 }
 
-sf::Vector2f MoveableEntity::getMoveOffset() {
-    return sf::Vector2f();
-}
-
 void MoveableEntity::setLookDirection(const sf::Vector2f &direction) {
     lookDirection = direction;
 }
