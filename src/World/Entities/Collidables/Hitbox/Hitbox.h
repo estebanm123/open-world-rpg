@@ -31,7 +31,6 @@ public:
     virtual SingleHitbox * getIntersectingSingleHitbox(SingleHitbox * otherHitbox) = 0;
 
     virtual const sf::Vector2f & getSize() = 0;
-
 };
 
 

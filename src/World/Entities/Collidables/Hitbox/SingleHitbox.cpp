@@ -2,7 +2,7 @@
 #include "../../../../Util/CollisionChecker.h"
 #include "../MoveableEntity.h"
 
-void SingleHitbox::move(const sf::Vector2f & offset) {
+void SingleHitbox::move(const sf::Vector2f &offset) {
     bounds.move(offset);
 }
 
@@ -28,19 +28,21 @@ void SingleHitbox::setPosition(const sf::Vector2f &pos) {
 }
 
 
-SingleHitbox::SingleHitbox(const sf::FloatRect &rect, float rotAngle, std::unique_ptr<CollisionPhysics> physics) : physics(std::move(physics)) {
+SingleHitbox::SingleHitbox(const sf::FloatRect &rect, float rotAngle, std::unique_ptr<CollisionPhysics> physics) : size(
+        {rect.width, rect.height}), physics(std::move(physics)) {
     bounds.setPointCount(4);
-    bounds.setPoint(0, {rect.top,  rect.left});
-    bounds.setPoint(1, {rect.top + rect.height,  rect.left});
-    bounds.setPoint(2, {rect.top + rect.height,  rect.left + rect.width});
-    bounds.setPoint(3, {rect.top,  rect.left + rect.width});
-    bounds.rotate(rotAngle);
-    // bounds.setPosition({rect.top, rect.left}); // unecessary?
+    bounds.setPoint(0, {0, 0});
+    bounds.setPoint(1, {rect.width, 0});
+    bounds.setPoint(2, {rect.width, rect.height});
+    bounds.setPoint(3, {0, rect.height});
     bounds.setOrigin(size / 2.f);
+    bounds.setPosition({rect.left, rect.top});
+    bounds.rotate(rotAngle);
 }
 
-SingleHitbox::SingleHitbox(const sf::ConvexShape & bounds, const sf::Vector2f &size,
-                           std::unique_ptr<CollisionPhysics> physics) : bounds(bounds), size(size), physics(std::move(physics)){
+SingleHitbox::SingleHitbox(const sf::ConvexShape &bounds, const sf::Vector2f &size,
+                           std::unique_ptr<CollisionPhysics> physics) : bounds(bounds), size(size),
+                                                                        physics(std::move(physics)) {
 }
 
 std::pair<SingleHitbox *, SingleHitbox *> SingleHitbox::getIntersectingSingleHitboxes(Hitbox *otherHitbox) {
@@ -54,7 +56,7 @@ std::pair<SingleHitbox *, SingleHitbox *> SingleHitbox::getIntersectingSingleHit
 }
 
 SingleHitbox *SingleHitbox::getIntersectingSingleHitbox(SingleHitbox *otherHitbox) {
-    return CollisionChecker::intersect(otherHitbox->bounds, bounds)? this : nullptr;
+    return CollisionChecker::intersect(otherHitbox->bounds, bounds) ? this : nullptr;
 }
 
 void SingleHitbox::renderBy(sf::RenderTarget &renderer) {
