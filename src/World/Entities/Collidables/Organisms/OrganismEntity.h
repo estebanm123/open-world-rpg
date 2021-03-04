@@ -4,9 +4,11 @@
 
 class OrganismEntity : public MoveableEntity {
 public:
-    explicit OrganismEntity(const Hitbox &hitbox);
-//    virtual void sleep() = 0;
-//    virtual void die() = 0;
+
+    explicit OrganismEntity(std::unique_ptr<Hitbox> hitbox);
+
+//    virtual void sleep();
+//    virtual void die();
 
     ~OrganismEntity() override = default;
 

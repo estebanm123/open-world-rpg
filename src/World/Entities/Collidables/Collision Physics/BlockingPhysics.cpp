@@ -16,7 +16,7 @@ bool areVectorsInASharedQuadrant(const sf::Vector2f &a, const sf::Vector2f &b) {
     return (a.x > 0 && b.x > 0) || (a.x < 0 && b.x < 0) || (a.y > 0 && b.y > 0) || (a.y < 0 && b.y < 0);
 }
 
-void BlockingPhysics::applyCollisionPhysics(CollidableEntity * receivingEntity, MoveableEntity *other) {
+void BlockingPhysics::applyPhysics(CollidableEntity * receivingEntity, MoveableEntity *other) {
     const auto &entityPos = receivingEntity->getPosition();
     const auto &otherPos = other->getPosition();
 
@@ -31,4 +31,6 @@ void BlockingPhysics::applyCollisionPhysics(CollidableEntity * receivingEntity, 
         // what about the case where x + y are equal (ie. we're moving in a pure diagonal way)
     }
 }
+
+void BlockingPhysics::applyPhysics(CollidableEntity *receivingEntity, Prop *other) {}
 

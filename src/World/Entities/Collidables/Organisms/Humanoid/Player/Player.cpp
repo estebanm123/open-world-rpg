@@ -2,6 +2,7 @@
 
 #include "Player.h"
 #include "../../../../../../Util/MathExtra.h"
+#include "../../../Hitbox/Hitbox.h"
 
 Player::Player(const sf::Vector2f &globalPosition) : Humanoid(globalPosition, "Player/Shadow/body32", "Player/head32"),
                                                      inputManager(*this) {}

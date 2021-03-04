@@ -22,7 +22,7 @@ namespace gui {
 
         class Rectangle : public sf::RectangleShape {
         public:
-            bool isRolledOn(const sf::RenderWindow &window) const;
+            bool isHovered(const sf::RenderWindow &window) const;
 
             bool isClicked(sf::Event, const sf::RenderWindow &window);
         };

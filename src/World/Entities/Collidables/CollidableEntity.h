@@ -7,27 +7,28 @@
 
 class MoveableEntity;
 
+class Hitbox;
+
 class CollidableEntity : public Entity {
 public:
-    typedef sf::RectangleShape Hitbox; // todo: refactor to a more complex separate type
-
-    CollidableEntity(Hitbox hitbox, std::unique_ptr<CollisionPhysics> CollisionPhysics);
-
-    // only called once per Entity a -> Entity b pair
-    void handleCollision(MoveableEntity *other);
+    CollidableEntity(std::unique_ptr<Hitbox> hitbox);
 
     const sf::Vector2f &getSize() const;
 
+    void setRotation(float angle) override;
+
+    void rotate(float angle) override;
+
+    void setPosition(const sf::Vector2f &pos) override;
+
     void renderBy(sf::RenderTarget &renderer) override;
 
-protected:
-    bool intersect(const CollidableEntity *other) const;
+    Hitbox * getHitbox() const;
 
+protected:
     static sf::RectangleShape initializeHitbox(const sf::Vector2f &size, const sf::Vector2f &pos);
 
-    Hitbox hitbox;
-private:
-    std::unique_ptr<CollisionPhysics> collisionPhysics;
+    std::unique_ptr<Hitbox> hitbox;
 };
 
 

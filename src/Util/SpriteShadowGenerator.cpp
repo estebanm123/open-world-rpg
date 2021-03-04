@@ -9,7 +9,7 @@ const std::unordered_set<std::string> SpriteShadowGenerator::DIRECTORIES = {"Fol
 const std::string SpriteShadowGenerator::SHADOW_SUFFIX = "-shadow";
 
 bool spriteSheetShadowExists(const std::string & spriteSheetPath) {
-    return ResourceHolder::get().textures.exists(spriteSheetPath + SpriteShadowGenerator::SHADOW_SUFFIX);
+//    return ResourceHolder::get().textures.exists(spriteSheetPath + SpriteShadowGenerator::SHADOW_SUFFIX);
 }
 
 const inline auto SHADOW_OPACITY = 50;
@@ -40,7 +40,7 @@ void SpriteShadowGenerator::generateMissingShadowSprites() {
     for (auto & spriteSheetDir : DIRECTORIES) {
         auto sheetPaths = ResourceHolder::get().textures.fetchAllResourcesInFolder(spriteSheetDir);
         for (auto & sheetPath : sheetPaths) {
-            //if (spriteSheetShadowExists(sheetPath)) continue;
+            if (spriteSheetShadowExists(sheetPath)) continue;
             createSpriteSheetShadow(sheetPath);
         }
     }

@@ -10,13 +10,13 @@ namespace gui {
         setFont(ResourceHolder::get().fonts.get("arial"));
     }
 
-    bool Widget::Rectangle::isRolledOn(const sf::RenderWindow &window) const {
+    bool Widget::Rectangle::isHovered(const sf::RenderWindow &window) const {
         auto pos = sf::Mouse::getPosition(window);
         return getGlobalBounds().contains(static_cast<float>(pos.x), static_cast<float>(pos.y));
     }
 
     bool Widget::Rectangle::isClicked(sf::Event e, const sf::RenderWindow &window) {
-        if (isRolledOn(window)) {
+        if (isHovered(window)) {
             if (e.type == sf::Event::MouseButtonPressed) {
                 return e.mouseButton.button == sf::Mouse::Left;
             }

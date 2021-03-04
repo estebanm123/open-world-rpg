@@ -4,19 +4,15 @@
 #include "../../../../../Animation/Hard-coded Animations/HumanoidAnimInitializer.h"
 #include "../../../Sprites/ShadowedSpriteReg.h"
 #include "../../../../../Animation/AnimationPlayer.h"
+#include "../../Hitbox/SingleHitbox.h"
 
 Humanoid::Humanoid(const sf::Vector2f &globalPosition, const std::string &spriteSheetBody,
-                   const std::string &spriteSheetHead) : OrganismEntity(initializeHitbox(globalPosition)),
+                   const std::string &spriteSheetHead) : OrganismEntity(std::make_unique<SingleHitbox>(sf::FloatRect {globalPosition.x, globalPosition.y, BASE_FRAME_WIDTH / 2.f, BASE_FRAME_HEIGHT / 2.f})),
                                                          sprite(initializeSprites(globalPosition, spriteSheetBody,
                                                                                   spriteSheetHead)),
                                                          isPickingUp(false) {
 }
 
-
-sf::RectangleShape Humanoid::initializeHitbox(const sf::Vector2f &pos) {
-    sf::Vector2f hitBoxSize = {BASE_FRAME_WIDTH / 2.f,BASE_FRAME_HEIGHT / 3.f};
-    return CollidableEntity::initializeHitbox(hitBoxSize, pos);
-}
 
 EntitySprite &Humanoid::getSprite() {
     return sprite;
