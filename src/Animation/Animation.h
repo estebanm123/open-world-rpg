@@ -81,5 +81,4 @@ protected:
     std::vector<Frame> frames;
     unsigned framePointer = 0;    //index of the active frame
     static Random<> rand;
-
 };

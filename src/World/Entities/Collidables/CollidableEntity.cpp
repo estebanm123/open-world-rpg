@@ -16,8 +16,8 @@ do {                                        \
 #define RENDER_HITBOX
 #endif
 
-void debugRenderHitbox(sf::RenderTarget &renderer, Hitbox &hitbox) {
-    hitbox.renderBy(renderer);
+void debugRenderHitbox(sf::RenderTarget &renderer, Hitbox *hitbox) {
+    hitbox->renderBy(renderer);
 }
 
 CollidableEntity::CollidableEntity(std::unique_ptr<Hitbox> hitbox) : hitbox(std::move(hitbox)) {
@@ -37,8 +37,8 @@ const sf::Vector2f &CollidableEntity::getSize() const {
 
 void CollidableEntity::renderBy(sf::RenderTarget &renderer) {
     Entity::renderBy(renderer);
-    hitbox->renderBy(renderer); // TODO: remove this temp line
-    RENDER_HITBOX(renderer, hitbox);
+//    hitbox->renderBy(renderer); // TODO: remove this temp line
+    RENDER_HITBOX(renderer, hitbox.get());
 }
 
 Hitbox *CollidableEntity::getHitbox() const {
@@ -46,13 +46,16 @@ Hitbox *CollidableEntity::getHitbox() const {
 }
 
 void CollidableEntity::setRotation(float angle) {
+    Entity::setRotation(angle);
     hitbox->setRotation(angle);
 }
 
 void CollidableEntity::rotate(float angle) {
+    Entity::rotate(angle);
     hitbox->rotate(angle);
 }
 
 void CollidableEntity::setPosition(const sf::Vector2f &pos) {
+    Entity::setPosition(pos);
     hitbox->setPosition(pos);
 }

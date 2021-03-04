@@ -18,10 +18,6 @@ EntitySprite &Humanoid::getSprite() {
     return sprite;
 }
 
-void Humanoid::move(float dt) {
-    MoveableEntity::move(dt);
-}
-
 void Humanoid::dropCurrentItem() {
 
 }

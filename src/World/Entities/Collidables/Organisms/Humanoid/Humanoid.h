@@ -12,8 +12,6 @@ public:
     Humanoid(const sf::Vector2f &globalPosition, const std::string &spriteSheetBody,
              const std::string &spriteSheetHead);
 
-    void move(float dt) override;
-
     void dropCurrentItem();
 
     void useCurrentItem();

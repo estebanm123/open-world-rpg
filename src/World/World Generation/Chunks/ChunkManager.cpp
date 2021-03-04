@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include "ChunkManager.h"
+#include "ChunkDebug.h"
 #include "../Tiles/Tile.h"
 #include "../../Entities/Collidables/Organisms/Humanoid/Player/Player.h"
 #include "../../Entities/Collidables/Props/Prop.h"
