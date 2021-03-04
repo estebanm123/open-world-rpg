@@ -6,7 +6,8 @@ class BlockingPhysics : public CollisionPhysics {
 public:
     BlockingPhysics();
 
-    void applyCollisionPhysics(CollidableEntity * receivingEntity, MoveableEntity *other) override;
+    void applyPhysics(CollidableEntity * receivingEntity, MoveableEntity *other) override;
+    void applyPhysics(CollidableEntity * receivingEntity, Prop *other) override;
 };
 
 

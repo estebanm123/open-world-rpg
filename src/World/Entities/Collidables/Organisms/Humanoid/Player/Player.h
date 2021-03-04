@@ -1,5 +1,3 @@
-#pragma once
-
 #include "../Humanoid.h"
 #include "./PlayerInputManager.h"
 
@@ -9,8 +7,6 @@ public:
     explicit Player(const sf::Vector2f &globalPosition);
 
     void update(float dt) override;
-
-    void move(float dt) override;
 
     void handleInput(sf::RenderWindow &window);
 

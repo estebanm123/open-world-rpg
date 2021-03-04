@@ -1,7 +1,8 @@
 
 
 #include "OrganismEntity.h"
+#include "../Hitbox/Hitbox.h"
 
-OrganismEntity::OrganismEntity(const Hitbox &hitbox)
-        : MoveableEntity(hitbox, std::make_unique<CollisionPhysics>()) {
+OrganismEntity::OrganismEntity(std::unique_ptr<Hitbox> hitbox)
+        : MoveableEntity(std::move(hitbox)) {
 }

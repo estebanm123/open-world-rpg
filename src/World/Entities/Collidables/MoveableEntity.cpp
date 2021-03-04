@@ -1,33 +1,15 @@
 #include "./MoveableEntity.h"
 #include "../Sprites/EntitySprite.h"
+#include "Hitbox/Hitbox.h"
 
-MoveableEntity::MoveableEntity(const Hitbox &hitbox, std::unique_ptr<CollisionPhysics> collisionPhysics)
-        : CollidableEntity(hitbox, std::move(collisionPhysics)), lastMoveOffset({0,0}) {}
-
-void MoveableEntity::setRotation(float angle) {
-    Entity::setRotation(angle);
-    hitbox.setRotation(angle);
-}
-
-void MoveableEntity::rotate(float angle) {
-    Entity::rotate(angle);
-    hitbox.rotate(angle);
-}
-
-void MoveableEntity::setPosition(const sf::Vector2f &pos) {
-    Entity::setPosition(pos);
-    hitbox.setPosition(pos);
-}
+MoveableEntity::MoveableEntity(std::unique_ptr<Hitbox> hitbox)
+        : CollidableEntity(std::move(hitbox)), lastMoveOffset({0,0}) {}
 
 void MoveableEntity::move(float dt) {
     const auto offset = getMoveOffset() * dt;
     lastMoveOffset = offset;
     getSprite().move(offset);
-    hitbox.move(offset);
-}
-
-sf::Vector2f MoveableEntity::getMoveOffset() {
-    return sf::Vector2f();
+    hitbox->move(offset);
 }
 
 void MoveableEntity::setLookDirection(const sf::Vector2f &direction) {
@@ -49,7 +31,7 @@ void MoveableEntity::revertLastMove(bool x, bool y) {
     if (!y) moveToReset.y = 0;
 
     getSprite().move(-moveToReset);
-    hitbox.move(-moveToReset);
+    hitbox->move(-moveToReset);
     lastMoveOffset = {!x? lastMoveOffset.x : 0, !y? lastMoveOffset.y : 0};
 }
 
@@ -64,5 +46,4 @@ void MoveableEntity::update(float dt) {
 void MoveableEntity::idle() {
     getSprite().playAnim(&MoveableActions::Idle);
 }
-
 

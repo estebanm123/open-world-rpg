@@ -47,3 +47,38 @@ sf::FloatRect CollisionChecker::convertToFloatRect(const sf::RectangleShape &rec
     auto pos = rect.getPosition();
     return {pos.x, pos.y, size.x, size.y};
 }
+
+bool CollisionChecker::intersect(const sf::ConvexShape &a, const sf::ConvexShape &b) {
+    const auto aNumVertices = a.getPointCount();
+    const auto bNumVertices = b.getPointCount();
+
+    // is it ok to just use 1 edge instead of all ?
+    for (auto i = 0; i < aNumVertices; i++) {
+        auto cur = a.getPoint(i);
+        auto next = a.getPoint((i + 1) % aNumVertices);
+        auto edge = next - cur;
+        sf::Vector2f axis {-edge.y, edge.x}; // normal
+
+        auto aMaxProj = -std::numeric_limits<float>::infinity();
+        auto aMinProj = std::numeric_limits<float>::infinity();
+        auto bMaxProj = -std::numeric_limits<float>::infinity();
+        auto bMinProj = std::numeric_limits<float>::infinity();
+
+        for (auto v = a.getPoint(0); i < aNumVertices; v = a.getPoint(++i)) {
+            auto proj = dotProduct(axis, v);
+            if (proj < aMinProj) aMinProj = proj;
+            if (proj > aMaxProj) aMaxProj = proj;
+        }
+        for (auto v = b.getPoint(0); i < bNumVertices; v = b.getPoint(++i)) {
+            auto proj = dotProduct(axis, v);
+            if (proj < bMinProj) bMinProj = proj;
+            if (proj > bMaxProj) bMaxProj = proj;
+        }
+
+        if(aMaxProj < bMinProj || aMinProj > bMaxProj) {
+            return true;
+        }
+
+    }
+    return false;
+}

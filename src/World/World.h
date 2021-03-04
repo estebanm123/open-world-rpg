@@ -10,6 +10,7 @@
 #include "Weapons/ProjectileWeapon.h"
 #include "../Util/Observer/Observable.h"
 #include "Entities/Collidables/Organisms/Humanoid/Player/Player.h"
+#include "Entities/Collidables/Hitbox/Hitbox.h"
 
 class World : Observable {
 public:

@@ -1,6 +1,8 @@
 
 #include "Chunk.h"
 #include "../../Entities/Collidables/Props/Prop.h"
+#include "../../Entities/Collidables/Hitbox/Hitbox.h"
+#include "../../Entities/Collidables/Hitbox/SingleHitbox.h"
 
 ChunkCollisionHandler::ChunkCollisionHandler(Chunk *chunk) : chunk(chunk) {}
 
@@ -12,13 +14,16 @@ void ChunkCollisionHandler::handleCollisions() {
         if (!handleNeighborChunkCrossing(moveable, it)) {
             it++;
         }
-
-
     }
+
 //    for (auto &moveable : chunk->moveableEntities) {
 //        handleCollisionsForMoveable(moveable);
 //    }
+
 }
+
+
+
 
 void ChunkCollisionHandler::handleCollisionsWithOtherEntities(MoveableEntity *moveable) const {
     if (!moveable->hasMoved()) return;
@@ -28,11 +33,18 @@ void ChunkCollisionHandler::handleCollisionsWithOtherEntities(MoveableEntity *mo
         //              + then verified in handleCollision + reset on next update call
         //         - could also load them into a vector, so we can use indexing - would take up n space instead of n^2
         if (moveable == otherMoveable) continue;
-        otherMoveable->handleCollision(moveable);
+
+        const auto hitboxes = moveable->getHitbox()->getIntersectingSingleHitboxes(otherMoveable->getHitbox());
+        if (hitboxes.first == nullptr || hitboxes.second == nullptr) continue; // no collision
+        hitboxes.first->handleCollision(moveable, otherMoveable);
+        hitboxes.second->handleCollision(otherMoveable, moveable);
     }
 
     for (auto &prop : chunk->mainProps) {
-        prop->handleCollision(moveable);
+        const auto hitboxes = moveable->getHitbox()->getIntersectingSingleHitboxes(prop->getHitbox());
+        if (hitboxes.first == nullptr || hitboxes.second == nullptr) continue; // no collision
+        hitboxes.first->handleCollision(moveable, prop.get());
+        hitboxes.second->handleCollision(prop.get(), moveable);
     }
 }
 

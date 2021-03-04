@@ -11,7 +11,7 @@ struct MoveableActions : public Actions {
 
 class MoveableEntity : public CollidableEntity {
 public:
-    explicit MoveableEntity(const Hitbox &hitbox, std::unique_ptr<CollisionPhysics> collisionPhysics);
+    explicit MoveableEntity(std::unique_ptr<Hitbox> hitbox);
 
     // optional delta is intended to be from time since last frame, for purposes of smooth movement
     virtual void move(float dt);
@@ -21,11 +21,6 @@ public:
 
     void idle();
 
-    void setRotation(float angle) override;
-
-    void rotate(float angle) override;
-
-    void setPosition(const sf::Vector2f &pos) override;
 
     void setLookDirection(const sf::Vector2f &direction);
 
@@ -42,10 +37,10 @@ public:
     ~MoveableEntity() override = default;
 
 protected:
-    virtual sf::Vector2f getMoveOffset();
-
+    virtual sf::Vector2f getMoveOffset() = 0;
     sf::Vector2f lookDirection;
 
+private:
     sf::Vector2f lastMoveOffset; // offset in dir of last move
 };
 

@@ -6,6 +6,7 @@
 #include "../../../../Animation/AnimationPlayer.h"
 #include "../../../../Util/Random/Hash.h"
 #include "../Collision Physics/BlockingPhysics.h"
+#include "../Hitbox/Hitbox.h"
 
 class Prop : public CollidableEntity {
 public:
