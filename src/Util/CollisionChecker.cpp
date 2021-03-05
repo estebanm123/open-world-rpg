@@ -8,6 +8,7 @@
 
 #include "MathExtra.h"
 #include "ConvexShapeExtra.h"
+#include "Debug/DebugPrint.h"
 
 
 bool CollisionChecker::intersect(const sf::CircleShape &circle, const sf::FloatRect &rect) {
@@ -52,8 +53,12 @@ sf::FloatRect CollisionChecker::convertToFloatRect(const sf::RectangleShape &rec
 bool CollisionChecker::intersect(const sf::ConvexShape &a, const sf::ConvexShape &b) {
     const auto aGlobalPoints = ConvexShapeExtra::getGlobalPoints(a);
     const auto bGlobalPoints = ConvexShapeExtra::getGlobalPoints(b);
+//    DebugPrint::separator();
+//    DebugPrint::print(a);
+//    DebugPrint::print(aGlobalPoints);
+////    DebugPrint::print(b);
+//    DebugPrint::print(bGlobalPoints);
 
-    // is it ok to just use 1 edge instead of all ?
     for (auto i = 0; i < aGlobalPoints.size(); i++) {
         auto cur = aGlobalPoints[i];
         auto next = aGlobalPoints[(i + 1) % aGlobalPoints.size()];
@@ -62,24 +67,24 @@ bool CollisionChecker::intersect(const sf::ConvexShape &a, const sf::ConvexShape
 
         auto aMaxProj = -std::numeric_limits<float>::infinity();
         auto aMinProj = std::numeric_limits<float>::infinity();
+        for (auto & point : aGlobalPoints) {
+            auto proj = dotProduct(axis, point);
+            aMinProj = std::min(proj, aMinProj);
+            aMaxProj = std::max(proj, aMaxProj);
+        }
+
         auto bMaxProj = -std::numeric_limits<float>::infinity();
         auto bMinProj = std::numeric_limits<float>::infinity();
-
-        for (auto v = aGlobalPoints[0]; i < aGlobalPoints.size(); v = aGlobalPoints[++i]) {
-            auto proj = dotProduct(axis, v);
-            if (proj < aMinProj) aMinProj = proj;
-            if (proj > aMaxProj) aMaxProj = proj;
-        }
-        for (auto v = bGlobalPoints[0]; i < bGlobalPoints.size(); v = bGlobalPoints[++i]) {
-            auto proj = dotProduct(axis, v);
-            if (proj < bMinProj) bMinProj = proj;
-            if (proj > bMaxProj) bMaxProj = proj;
+        for (auto & point : bGlobalPoints) {
+            auto proj = dotProduct(axis, point);
+            bMinProj = std::min(proj, bMinProj);
+            bMaxProj = std::max(proj, bMaxProj);
         }
 
         if(aMaxProj < bMinProj || aMinProj > bMaxProj) {
-            return true;
+            return false;
         }
 
     }
-    return false;
+    return true;
 }
