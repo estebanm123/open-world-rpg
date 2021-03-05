@@ -1,7 +1,6 @@
 
 #include "Chunk.h"
 #include "../../Entities/Collidables/Props/Prop.h"
-#include "../../Entities/Collidables/Hitbox/Hitbox.h"
 #include "../../Entities/Collidables/Hitbox/SingleHitbox.h"
 
 ChunkCollisionHandler::ChunkCollisionHandler(Chunk *chunk) : chunk(chunk) {}
@@ -21,9 +20,6 @@ void ChunkCollisionHandler::handleCollisions() {
 //    }
 
 }
-
-
-
 
 void ChunkCollisionHandler::handleCollisionsWithOtherEntities(MoveableEntity *moveable) const {
     if (!moveable->hasMoved()) return;

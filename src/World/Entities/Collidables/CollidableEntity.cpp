@@ -37,8 +37,8 @@ const sf::Vector2f &CollidableEntity::getSize() const {
 
 void CollidableEntity::renderBy(sf::RenderTarget &renderer) {
     Entity::renderBy(renderer);
-    hitbox->renderBy(renderer); // TODO: remove this temp line
-//    RENDER_HITBOX(renderer, hitbox.get());
+//    hitbox->renderBy(renderer); // TODO: remove this temp line
+    RENDER_HITBOX(renderer, hitbox.get());
 }
 
 Hitbox *CollidableEntity::getHitbox() const {

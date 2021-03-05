@@ -7,6 +7,7 @@
 
 
 #include "MathExtra.h"
+#include "ConvexShapeExtra.h"
 
 
 bool CollisionChecker::intersect(const sf::CircleShape &circle, const sf::FloatRect &rect) {
@@ -49,13 +50,13 @@ sf::FloatRect CollisionChecker::convertToFloatRect(const sf::RectangleShape &rec
 }
 
 bool CollisionChecker::intersect(const sf::ConvexShape &a, const sf::ConvexShape &b) {
-    const auto aNumVertices = a.getPointCount();
-    const auto bNumVertices = b.getPointCount();
+    const auto aGlobalPoints = ConvexShapeExtra::getGlobalPoints(a);
+    const auto bGlobalPoints = ConvexShapeExtra::getGlobalPoints(b);
 
     // is it ok to just use 1 edge instead of all ?
-    for (auto i = 0; i < aNumVertices; i++) {
-        auto cur = a.getPoint(i);
-        auto next = a.getPoint((i + 1) % aNumVertices);
+    for (auto i = 0; i < aGlobalPoints.size(); i++) {
+        auto cur = aGlobalPoints[i];
+        auto next = aGlobalPoints[(i + 1) % aGlobalPoints.size()];
         auto edge = next - cur;
         sf::Vector2f axis {-edge.y, edge.x}; // normal
 
@@ -64,12 +65,12 @@ bool CollisionChecker::intersect(const sf::ConvexShape &a, const sf::ConvexShape
         auto bMaxProj = -std::numeric_limits<float>::infinity();
         auto bMinProj = std::numeric_limits<float>::infinity();
 
-        for (auto v = a.getPoint(0); i < aNumVertices; v = a.getPoint(++i)) {
+        for (auto v = aGlobalPoints[0]; i < aGlobalPoints.size(); v = aGlobalPoints[++i]) {
             auto proj = dotProduct(axis, v);
             if (proj < aMinProj) aMinProj = proj;
             if (proj > aMaxProj) aMaxProj = proj;
         }
-        for (auto v = b.getPoint(0); i < bNumVertices; v = b.getPoint(++i)) {
+        for (auto v = bGlobalPoints[0]; i < bGlobalPoints.size(); v = bGlobalPoints[++i]) {
             auto proj = dotProduct(axis, v);
             if (proj < bMinProj) bMinProj = proj;
             if (proj > bMaxProj) bMaxProj = proj;
