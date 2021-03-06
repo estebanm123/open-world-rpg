@@ -45,7 +45,7 @@ void PlayerInputManager::handleMovement() {
     const auto sPressed = sf::Keyboard::isKeyPressed(Key::S);
     const auto wPressed = sf::Keyboard::isKeyPressed(Key::W);
 
-    sf::Vector2i newMoveDir;
+    sf::Vector2f newMoveDir;
 
     if (wPressed) {
         newMoveDir.y = -1;

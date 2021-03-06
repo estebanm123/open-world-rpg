@@ -10,17 +10,11 @@ public:
 
     void handleInput(sf::RenderWindow &window);
 
-    const sf::Vector2i &getMoveDirection() const;
-
-    void setMoveDirection(const sf::Vector2i &direction);
-
     ~Player() override = default;
 
 protected:
-    sf::Vector2f getMoveOffset() override;
 
 private:
-    sf::Vector2i moveDirection;
     PlayerInputManager inputManager;
 };
 

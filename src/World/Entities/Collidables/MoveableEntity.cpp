@@ -1,16 +1,10 @@
 #include "./MoveableEntity.h"
 #include "../Sprites/EntitySprite.h"
 #include "Hitbox/Hitbox.h"
+#include "../../../Util/MathExtra.h"
 
 MoveableEntity::MoveableEntity(std::unique_ptr<Hitbox> hitbox)
-        : CollidableEntity(std::move(hitbox)), lastMoveOffset({0,0}) {}
-
-void MoveableEntity::move(float dt) {
-    const auto offset = getMoveOffset() * dt;
-    lastMoveOffset = offset;
-    getSprite().move(offset);
-    hitbox->move(offset);
-}
+        : CollidableEntity(std::move(hitbox)), lastMoveOffset({0, 0}) {}
 
 void MoveableEntity::setLookDirection(const sf::Vector2f &direction) {
     lookDirection = direction;
@@ -32,7 +26,7 @@ void MoveableEntity::revertLastMove(bool x, bool y) {
 
     getSprite().move(-moveToReset);
     hitbox->move(-moveToReset);
-    lastMoveOffset = {!x? lastMoveOffset.x : 0, !y? lastMoveOffset.y : 0};
+    lastMoveOffset = {!x ? lastMoveOffset.x : 0, !y ? lastMoveOffset.y : 0};
 }
 
 sf::Vector2f &MoveableEntity::getLastMoveOffset() {
@@ -40,7 +34,8 @@ sf::Vector2f &MoveableEntity::getLastMoveOffset() {
 }
 
 void MoveableEntity::update(float dt) {
-    lastMoveOffset = {0,0};
+    lastMoveOffset = {0, 0};
+    move(dt);
 }
 
 void MoveableEntity::idle() {
@@ -49,10 +44,28 @@ void MoveableEntity::idle() {
 
 void MoveableEntity::renderBy(sf::RenderTarget &renderer) {
     if (getCurrentAction() == nullptr) {
-        auto moveAction = hasMoved()? &MoveableActions::Move : &MoveableActions::Idle;
+        auto moveAction = hasMoved() ? &MoveableActions::Move : &MoveableActions::Idle;
         setCurrentAction(moveAction);
     }
 
     CollidableEntity::renderBy(renderer);
+}
+
+void MoveableEntity::move(float dt) {
+    const auto offset = getMoveOffset() * dt;
+    lastMoveOffset = offset;
+    getSprite().move(offset);
+    hitbox->move(offset);
+}
+
+sf::Vector2f MoveableEntity::getMoveOffset() {
+    float PLACEHOLDER = 200;
+    const auto newOffset = moveDirection * PLACEHOLDER;
+    return newOffset;
+}
+
+void MoveableEntity::setMoveDirection(const sf::Vector2f &direction) {
+    moveDirection = direction;
+    if (direction.x != 0 && direction.y != 0) normalize(moveDirection);
 }
 

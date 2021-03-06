@@ -37,7 +37,7 @@ T dotProduct(sf::Vector2<T> v1, sf::Vector2<T> v2) {
 }
 
 template<typename T>
-T length(sf::Vector2<T> v) {
+T length(const sf::Vector2<T>& v) {
     return sqrt(v.x * v.x + v.y * v.y);
 }
 
@@ -49,7 +49,7 @@ sf::Vector2<T> rotateVec(const sf::Vector2<T> vec, float angle) {
 }
 
 template<typename T>
-void calcUnitVec(sf::Vector2<T> &v) {
+void normalize(sf::Vector2<T> &v) {
     v /= length(v);
 }
 

@@ -25,6 +25,8 @@ public:
 
     void setLookDirection(const sf::Vector2f &direction);
 
+    void setMoveDirection(const sf::Vector2f & direction);
+
     const sf::Vector2f &getLookDirection() const;
 
     // x indicates revert movement in x dir, and y indicates revert movement in y dir
@@ -38,8 +40,9 @@ public:
     ~MoveableEntity() override = default;
 
 protected:
-    virtual sf::Vector2f getMoveOffset() = 0;
+    virtual sf::Vector2f getMoveOffset();
     sf::Vector2f lookDirection;
+    sf::Vector2f moveDirection;
 
 private:
     sf::Vector2f lastMoveOffset; // offset in dir of last move
