@@ -23,21 +23,12 @@ void debugRenderHitbox(sf::RenderTarget &renderer, Hitbox *hitbox) {
 CollidableEntity::CollidableEntity(std::unique_ptr<Hitbox> hitbox) : hitbox(std::move(hitbox)) {
 }
 
-//sf::RectangleShape CollidableEntity::initializeHitbox(const sf::FloatRect& rect, float rotAngle) {
-//    sf::RectangleShape hitBox;
-//    hitBox.setSize(size); // todo: double check this
-//    hitBox.setPosition(pos.x, pos.y);
-//    hitBox.setOrigin(size / 2.f);
-//    return hitBox;
-//}
-
 const sf::Vector2f &CollidableEntity::getSize() const {
     return hitbox->getSize();
 }
 
 void CollidableEntity::renderBy(sf::RenderTarget &renderer) {
     Entity::renderBy(renderer);
-//    hitbox->renderBy(renderer); // TODO: remove this temp line
     RENDER_HITBOX(renderer, hitbox.get());
 }
 
