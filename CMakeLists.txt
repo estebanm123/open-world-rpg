@@ -14,5 +14,5 @@ target_link_libraries(${PROJECT_NAME} sfml-audio sfml-graphics sfml-window sfml-
 set(GCC_COVERAGE_COMPILE_FLAGS "-Wa,-mbig-obj")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}" )
 if (DEBUG)
-    add_definitions(-DDEBUG=1)
+#    add_definitions(-DDEBUG=1)
 endif (DEBUG)

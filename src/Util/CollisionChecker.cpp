@@ -43,14 +43,14 @@ bool CollisionChecker::intersect(const sf::RectangleShape &rectShape1, const sf:
 
 }
 
-
 sf::FloatRect CollisionChecker::convertToFloatRect(const sf::RectangleShape &rect) {
     auto size = rect.getSize();
     auto pos = rect.getPosition();
     return {pos.x, pos.y, size.x, size.y};
 }
 
-bool CollisionChecker::intersect(const sf::ConvexShape &a, const sf::ConvexShape &b) {
+
+bool intersectUtil(const sf::ConvexShape &a, const sf::ConvexShape &b) {
     const auto aGlobalPoints = ConvexShapeExtra::getGlobalPoints(a);
     const auto bGlobalPoints = ConvexShapeExtra::getGlobalPoints(b);
 //    DebugPrint::separator();
@@ -87,4 +87,8 @@ bool CollisionChecker::intersect(const sf::ConvexShape &a, const sf::ConvexShape
 
     }
     return true;
+}
+
+bool CollisionChecker::intersect(const sf::ConvexShape &a, const sf::ConvexShape &b) {
+    return intersectUtil(a, b) && intersectUtil(b, a);
 }
