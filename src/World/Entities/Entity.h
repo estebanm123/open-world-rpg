@@ -4,6 +4,9 @@
 
 class EntitySprite;
 
+class Action;
+
+
 class Entity {
 public:
     virtual void renderBy(sf::RenderTarget &renderer);
@@ -25,8 +28,13 @@ public:
 protected:
     virtual EntitySprite &getSprite() = 0;
 
+    void setCurrentAction(Action const * currentAction);
+
+    Action const * getCurrentAction() const;
+
+    void resetCurrentAction();
+
+private:
+    Action const * currentAction = nullptr;
+
 };
-
-
-
-

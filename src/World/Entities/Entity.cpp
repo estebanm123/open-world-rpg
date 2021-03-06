@@ -1,6 +1,7 @@
 
 #include "Sprites/EntitySprite.h"
 #include "Entity.h"
+#include "../../Animation/Action.h"
 
 const sf::Vector2f &Entity::getPosition() {
     return getSprite().getPosition();
@@ -19,9 +20,25 @@ void Entity::rotate(float angle) {
 }
 
 void Entity::renderBy(sf::RenderTarget &renderer) {
+    if (currentAction) {
+        getSprite().playAnim(currentAction);
+    }
     getSprite().renderBy(renderer);
+    resetCurrentAction();
 }
 
 float Entity::getRotationAngle() {
     return getSprite().getRotation();
+}
+
+Action const *Entity::getCurrentAction() const {
+    return currentAction;
+}
+
+void Entity::setCurrentAction(Action const *newAction) {
+    currentAction = newAction;
+}
+
+void Entity::resetCurrentAction() {
+    currentAction = nullptr;
 }

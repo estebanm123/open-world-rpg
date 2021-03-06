@@ -21,6 +21,7 @@ public:
 
     void idle();
 
+    void renderBy(sf::RenderTarget & renderer) override;
 
     void setLookDirection(const sf::Vector2f &direction);
 

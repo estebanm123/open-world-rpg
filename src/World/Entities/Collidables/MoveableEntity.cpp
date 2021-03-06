@@ -47,3 +47,12 @@ void MoveableEntity::idle() {
     getSprite().playAnim(&MoveableActions::Idle);
 }
 
+void MoveableEntity::renderBy(sf::RenderTarget &renderer) {
+    if (getCurrentAction() == nullptr) {
+        auto moveAction = hasMoved()? &MoveableActions::Move : &MoveableActions::Idle;
+        setCurrentAction(moveAction);
+    }
+
+    CollidableEntity::renderBy(renderer);
+}
+
