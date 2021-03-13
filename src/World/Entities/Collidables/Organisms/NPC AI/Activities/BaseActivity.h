@@ -11,9 +11,14 @@ public:
 
     virtual void update(float dt) = 0;
 
+    virtual bool hasFinished() const = 0;
+
+    virtual bool isRecurring() const;
+
     virtual ~BaseActivity() = default;
 
 private:
     NpcAi<Organism> *const ai;
+    bool recurring;
 };
 

@@ -1,7 +1,9 @@
 #pragma once
 
+#include "../BaseActivity.h"
 
-class SingleActivity {
+template<typename Organism>
+class SingleActivity : public BaseActivity<Organism> {
 
 };
 
