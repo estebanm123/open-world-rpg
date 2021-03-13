@@ -6,6 +6,8 @@ class EntitySprite;
 
 class Action;
 
+class EntityVisitor;
+
 
 class Entity {
 public:
@@ -24,6 +26,8 @@ public:
     virtual void rotate(float angle);
 
     virtual ~Entity() = default;
+
+    virtual void accept(EntityVisitor * visitor) = 0;
 
 protected:
     virtual EntitySprite &getSprite() = 0;

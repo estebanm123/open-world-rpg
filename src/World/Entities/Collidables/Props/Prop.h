@@ -31,6 +31,8 @@ public:
 
     void update(float dt) override;
 
+    void accept(EntityVisitor *visitor) override;
+
 protected:
     EntitySprite &getSprite() override;
 

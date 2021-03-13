@@ -24,6 +24,8 @@ public:
 
     ~Humanoid() override = default;
 
+    void accept(EntityVisitor * visitor) override;
+
 protected:
     EntitySprite &getSprite() override;
 

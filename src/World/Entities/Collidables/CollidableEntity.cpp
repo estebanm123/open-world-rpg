@@ -50,3 +50,5 @@ void CollidableEntity::setPosition(const sf::Vector2f &pos) {
     Entity::setPosition(pos);
     hitbox->setPosition(pos);
 }
+
+void CollidableEntity::analyzeCollision(CollidableEntity &otherEntity) {}

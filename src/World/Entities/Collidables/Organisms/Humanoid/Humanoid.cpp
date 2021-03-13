@@ -1,10 +1,9 @@
-
-
 #include "Humanoid.h"
 #include "../../../../../Animation/Hard-coded Animations/HumanoidAnimInitializer.h"
 #include "../../../Sprites/ShadowedSpriteReg.h"
-#include "../../../../../Animation/AnimationPlayer.h"
 #include "../../Hitbox/SingleHitbox.h"
+#include "../../../EntityVisitor/EntityVisitor.h"
+
 
 Humanoid::Humanoid(const sf::Vector2f &globalPosition, const std::string &spriteSheetBody,
                    const std::string &spriteSheetHead) : OrganismEntity(std::make_unique<SingleHitbox>(sf::FloatRect {globalPosition.x, globalPosition.y, BASE_FRAME_WIDTH / 2.f, BASE_FRAME_HEIGHT / 2.f})),
@@ -56,4 +55,8 @@ Humanoid::initializeSprites(const sf::Vector2f &pos, const std::string &spriteSh
                                                                             HumanoidAnimInitializer::initializeEmptyHead()),
                                                                     {0, 0, BASE_FRAME_WIDTH, BASE_FRAME_HEIGHT}}));
     return sprites;
+}
+
+void Humanoid::accept(EntityVisitor *visitor) {
+    visitor->visit(this);
 }

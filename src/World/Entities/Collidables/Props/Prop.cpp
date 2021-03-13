@@ -3,6 +3,7 @@
 #include "Prop.h"
 #include "../../Sprites/ShadowedSpriteReg.h"
 #include "../Hitbox/SingleHitbox.h"
+#include "../../EntityVisitor/EntityVisitor.h"
 
 EntitySprite &Prop::getSprite() {
     return *sprite; // todo: to refactor
@@ -26,5 +27,9 @@ Prop::Prop(const std::string &spriteSheet,
                                                                               defaultFrame});
     hasDefaultAnim = sprite->isAnimated();
     sprite->rotate(config.rotationAngle);
+}
+
+void Prop::accept(EntityVisitor *visitor) {
+    visitor->visit(this);
 }
 

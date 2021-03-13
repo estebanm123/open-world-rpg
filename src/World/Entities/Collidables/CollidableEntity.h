@@ -4,6 +4,7 @@
 #include <memory>
 #include "Collision Physics/CollisionPhysics.h"
 #include "../Entity.h"
+#include "Hitbox/Hitbox.h"
 
 class MoveableEntity;
 
@@ -11,7 +12,7 @@ class Hitbox;
 
 class CollidableEntity : public Entity {
 public:
-    CollidableEntity(std::unique_ptr<Hitbox> hitbox);
+    explicit CollidableEntity(std::unique_ptr<Hitbox> hitbox);
 
     const sf::Vector2f &getSize() const;
 
@@ -25,9 +26,9 @@ public:
 
     Hitbox * getHitbox() const;
 
-protected:
-    static sf::RectangleShape initializeHitbox(const sf::Vector2f &size, const sf::Vector2f &pos);
+    virtual void analyzeCollision(CollidableEntity & otherEntity);
 
+protected:
     std::unique_ptr<Hitbox> hitbox;
 };
 

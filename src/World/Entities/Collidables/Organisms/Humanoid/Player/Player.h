@@ -10,6 +10,8 @@ public:
 
     void handleInput(sf::RenderWindow &window);
 
+    void accept(EntityVisitor * visitor) override;
+
     ~Player() override = default;
 
 protected:
