@@ -7,3 +7,4 @@ template<class Organism>
 bool BaseActivity<Organism>::isRecurring() const {
     return recurring;
 }
+

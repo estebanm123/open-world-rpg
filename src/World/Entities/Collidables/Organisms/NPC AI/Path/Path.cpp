@@ -1,14 +1,21 @@
 
 
+#include <vector>
 #include "Path.h"
 
-Path::Path(PathManager *manager, int capacity) : manager(manager), capacity(capacity) {
-    if (capacity < 2) {
-        throw std::runtime_error("Path capacity not less than 2");
-    }
-}
+const sf::Vector2f Path::EMPTY_POINT = {0,0};
+const Path::Edge Path::EMPTY_EDGE = {EMPTY_POINT, EMPTY_POINT};
+
+Path::Path(const std::vector<Point> &points) : points(points.begin(), points.end()) {}
 
 Path::Edge Path::getCurrentEdge() const {
+    auto pointsSize = points.size();
+    if (pointsSize == 0) {
+        return EMPTY_EDGE;
+    }
+    if (pointsSize == 1) {
+        return makeEdge(points.front(), EMPTY_POINT);
+    }
     return makeEdge(points.front(), points.at(1));
 }
 
@@ -16,6 +23,23 @@ Path::Edge Path::makeEdge(const sf::Vector2f &first, const sf::Vector2f &second)
     return std::make_pair(first, second);
 }
 
-Path::Point Path::peek() const {
+void Path::push(Path::Point point) {
+    points.push_back(point);
+}
+
+void Path::replaceCurrentPoint(Path::Point point) {
+    points.erase(points.begin());
+    points.push_front(point);
+}
+
+void Path::reset() {
+    points.clear();
+}
+
+Path::Point Path::peekCurrentPoint() const {
     return points.front();
+}
+
+void Path::eraseCurrentPoint() {
+    points.erase(points.begin());
 }
