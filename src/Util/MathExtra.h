@@ -37,7 +37,7 @@ T dotProduct(sf::Vector2<T> v1, sf::Vector2<T> v2) {
 }
 
 template<typename T>
-T length(const sf::Vector2<T>& v) {
+T length(const sf::Vector2<T> &v) {
     return sqrt(v.x * v.x + v.y * v.y);
 }
 
@@ -77,5 +77,4 @@ template<typename T>
 bool isDiagonal(const sf::Vector2<T> &v) {
     return abs(v.x) == abs(v.y);
 }
-
 

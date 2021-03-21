@@ -79,6 +79,9 @@ ChunkManager::~ChunkManager() {
     generatorThread.detach();
 }
 
+std::vector<Chunk *> ChunkManager::getIntersectingChunks(Path::Edge edge) {
+}
+
 // Moves all chunks in the opposite direction to dir. Chunks that are out of bounds are evicted
 void ChunkManager::shiftChunksFromDirection(const sf::Vector2i &dir) {
     if (dir.x && dir.y) {

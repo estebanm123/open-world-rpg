@@ -7,6 +7,7 @@
 #include <thread>
 #include "../../../Util/NonMoveable.h"
 #include "ChunkGenerator.h"
+#include "../../Entities/Collidables/Organisms/NPC AI/Path/Path.h"
 
 class ChunkManager : sf::NonCopyable, NonMoveable {
 public:
@@ -15,6 +16,8 @@ public:
     void update(float dt);
 
     void renderChunks(sf::RenderTarget &target);
+
+    std::vector<Chunk *> getIntersectingChunks(Path::Edge edge);
 
     ~ChunkManager();
 
