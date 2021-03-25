@@ -33,9 +33,7 @@ void PlayerInputManager::handleDropItem() {
 
 void PlayerInputManager::handlePickUpItem() {
     bool isPickingUp = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E);
-    if (player.pickingUp() != isPickingUp) {
-        player.setPickingUp(isPickingUp);
-    }
+    player.setPickingUp(isPickingUp);
 
 }
 
@@ -70,7 +68,6 @@ void PlayerInputManager::handleMouseMovement(sf::RenderWindow &window) {
     const auto mouseAngle = toDegrees(atan2(mouseDirRelativeToPlayer.x, mouseDirRelativeToPlayer.y));
     player.setRotation(-mouseAngle);
 
-    // for debugging
     static sf::Clock timer;
     if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && timer.getElapsedTime().asMilliseconds() > 500) {
         timer.restart();

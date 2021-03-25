@@ -2,8 +2,10 @@
 
 #include <deque>
 #include <SFML/System.hpp>
+#include <vector>
 
-// Dequeue of points. Front is current point, back is last.
+// Dequeue of points.
+// Useful for containing Npc points to travel to.
 class Path {
 public:
     typedef std::pair<sf::Vector2f, sf::Vector2f> Edge;
@@ -14,13 +16,13 @@ public:
 
     Path(const std::vector<Point> & points);
 
-    Point peekCurrentPoint() const;
+    Point getCurrentPoint() const;
 
     Edge getCurrentEdge() const;
 
-    void push(Point point);
+    void enqueue(Point point);
 
-    void eraseCurrentPoint();
+    Point removeCurrentPoint();
 
     void replaceCurrentPoint(Point point);
 

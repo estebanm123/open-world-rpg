@@ -15,8 +15,12 @@ public:
     // Only updates first activity (front of q)
     void update(float dt) override;
 
+    bool hasFinished() const override;
+
     virtual ~ActivityManager() = default;
 private:
+    void handleActivityCompletion(BaseActivity<Organism> * currentActivity);
+
     Activities activities; // Invariant: size > 1
 };
 

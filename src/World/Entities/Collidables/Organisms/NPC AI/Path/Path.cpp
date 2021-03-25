@@ -23,7 +23,7 @@ Path::Edge Path::makeEdge(const sf::Vector2f &first, const sf::Vector2f &second)
     return std::make_pair(first, second);
 }
 
-void Path::push(Path::Point point) {
+void Path::enqueue(Path::Point point) {
     points.push_back(point);
 }
 
@@ -36,10 +36,12 @@ void Path::reset() {
     points.clear();
 }
 
-Path::Point Path::peekCurrentPoint() const {
+Path::Point Path::getCurrentPoint() const {
     return points.front();
 }
 
-void Path::eraseCurrentPoint() {
+Path::Point Path::removeCurrentPoint() {
+    auto predecessor = points.front();
     points.erase(points.begin());
+    return predecessor;
 }

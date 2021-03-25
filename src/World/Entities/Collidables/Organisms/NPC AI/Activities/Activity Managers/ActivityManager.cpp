@@ -4,22 +4,29 @@
 
 template<class Organism>
 void ActivityManager<Organism>::update(float dt) {
-    auto &currentActivity = activities.front();
-    if (currentActivity->hasFinished()) {
-        if (currentActivity->isRecurring()) {
-            activities.push_back(std::move(currentActivity));
-        }
-        activities.pop_front();
-        currentActivity = activities.front();
+    if (activities.empty()) {
+        this->finished = true;
+        return;
     }
 
-    activities.front().update(dt);
+    auto currentActivity = activities.front().get();
+    currentActivity.update(dt);
+    handleActivityCompletion(currentActivity);
 }
 
 template<class Organism>
 ActivityManager<Organism>::ActivityManager(ActivityManager::Activities activities) : activities(
         std::move(activities)) {}
 
+template<class Organism>
+void ActivityManager<Organism>::handleActivityCompletion(BaseActivity<Organism> *currentActivity) {
+    if (currentActivity->hasFinished()) {
+        if (currentActivity->isRecurring()) {
+            activities.push_back(std::move(currentActivity));
+        }
+        activities.pop_front();
+    }
+}
 
 
 
