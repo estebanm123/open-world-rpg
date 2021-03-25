@@ -104,6 +104,7 @@ std::unique_ptr<Prop> PropFactory::generateCactus(int hashVal, const sf::Vector2
                                static_cast<float>(spriteSheetCoords.height)};
     return std::make_unique<Prop>("Foliage/Shadow/Cactus", size, spriteSheetCoords,
                                   Prop::PropOptions{pos, true, std::make_unique<BlockingPhysics>()});
+
 }
 
 const std::array<sf::IntRect, 1> SMALL_BUSH1_SHEET{{
