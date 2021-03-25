@@ -62,9 +62,6 @@ void Chunk::updateEntities(float dt) {
     for (auto &Prop : mainProps) {
         Prop->update(dt);
     }
-    for (auto &Prop : decorProps) {
-        Prop->update(dt);
-    }
     // update decor props??
 }
 

@@ -105,18 +105,3 @@ std::unique_ptr<Prop> PropFactory::generateCactus(int hashVal, const sf::Vector2
     return std::make_unique<Prop>("Foliage/Shadow/Cactus", size, spriteSheetCoords,
                                   Prop::PropOptions{pos, true, std::make_unique<BlockingPhysics>()});
 }
-
-const std::array<sf::IntRect, 1> SMALL_BUSH1_SHEET{{
-                                                           {0, 0, 18, 16},
-                                                   }};
-
-std::unique_ptr<Prop> PropFactory::generateSmallBush1(int hashVal, const sf::Vector2f &pos) {
-    int selectedIndex = getPropIndex(hashVal, CACTUS_SHEET.size());
-    const auto &spriteSheetCoords = SMALL_BUSH1_SHEET[selectedIndex];
-    const sf::Vector2f size = {static_cast<float>(spriteSheetCoords.width),
-                               static_cast<float>(spriteSheetCoords.height)};
-    Animation::Metadata data(spriteSheetCoords.width, spriteSheetCoords.height, 0, 2, 0, 0, 250, {});
-    return std::make_unique<Prop>("Foliage/Shadow/SmallBush1", size, spriteSheetCoords,
-                                  Prop::PropOptions{pos, true, std::make_unique<CollisionPhysics>(), std::make_unique<AnimationPlayer>(
-                                          std::make_unique<RepeatingAnim>(data))});
-}

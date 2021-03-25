@@ -9,9 +9,6 @@ std::unique_ptr<Prop> DirtPropFactory::generateMainProp(int hashVal, const sf::V
     if (hashVal > BUSH_MIN) {
         return generateBush(normalizeHashValue(hashVal, BUSH_MIN), propCoords);
     }
-    if (hashVal > SMALL_BUSH1_MIN) {
-        return generateSmallBush1(normalizeHashValue(hashVal, SMALL_BUSH1_MIN), propCoords);
-    }
     if (hashVal > MUSHROOM_MIN) {
         return generateMushrooms(normalizeHashValue(hashVal, MUSHROOM_MIN), propCoords);
     }
@@ -22,5 +19,6 @@ std::unique_ptr<Prop> DirtPropFactory::generateDecorProp(int hashVal, const sf::
     if (hashVal > GRASS_COVER_MIN) {
         return generateGrassCover(normalizeHashValue(hashVal, GRASS_COVER_MIN), propCoords);
     }
+    return std::unique_ptr<Prop>();
 }
 

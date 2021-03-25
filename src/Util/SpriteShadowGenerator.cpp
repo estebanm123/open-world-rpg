@@ -9,7 +9,6 @@ const std::unordered_set<std::string> SpriteShadowGenerator::DIRECTORIES = {"Fol
 const std::string SpriteShadowGenerator::SHADOW_SUFFIX = "-shadow";
 
 bool spriteSheetShadowExists(const std::string & spriteSheetPath) {
-    return false;
 //    return ResourceHolder::get().textures.exists(spriteSheetPath + SpriteShadowGenerator::SHADOW_SUFFIX);
 }
 
