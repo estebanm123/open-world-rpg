@@ -34,6 +34,8 @@ protected:
     std::unique_ptr<Prop> generateMushrooms(int hashVal, const sf::Vector2f &pos);
 
     std::unique_ptr<Prop> generateCactus(int hashVal, const sf::Vector2f & pos);
+
+    std::unique_ptr<Prop> generateSmallBush1(int hashVal, const sf::Vector2f & pos);
 };
 
 
