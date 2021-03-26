@@ -2,13 +2,11 @@
 
 #include "CollisionChecker.h"
 
-#include <iostream>
 #include <SFML/Graphics/RectangleShape.hpp>
 
 
 #include "MathExtra.h"
-#include "ConvexShapeExtra.h"
-#include "Debug/DebugPrint.h"
+#include "Shapes/ConvexShapeExtra.h"
 
 
 bool CollisionChecker::intersect(const sf::CircleShape &circle, const sf::FloatRect &rect) {
@@ -92,3 +90,10 @@ bool intersectUtil(const sf::ConvexShape &a, const sf::ConvexShape &b) {
 bool CollisionChecker::intersect(const sf::ConvexShape &a, const sf::ConvexShape &b) {
     return intersectUtil(a, b) && intersectUtil(b, a);
 }
+
+bool CollisionChecker::intersect(const SimpleCircle &circle, sf::Vector2f point) {
+    auto xDist = std::abs(point.x - circle.center.x);
+    auto yDist = std::abs(point.y - circle.center.y);
+    return sqrtf(powf(xDist, 2) + powf(yDist, 2)) < circle.radius;
+}
+

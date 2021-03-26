@@ -11,17 +11,19 @@ public:
 
     virtual void update(float dt) = 0;
 
-    virtual bool hasFinished() const;
+    virtual bool isFinished() const;
 
     virtual bool isRecurring() const;
+
+    void setFinished(bool finished);
 
     virtual ~BaseActivity() = default;
 
 protected:
-    bool finished;
+    NpcAi<Organism> *ai;
 
 private:
-    NpcAi<Organism> *ai;
     bool recurring;
+    bool finished;
 };
 

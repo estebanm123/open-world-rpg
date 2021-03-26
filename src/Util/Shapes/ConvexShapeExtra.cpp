@@ -1,7 +1,7 @@
 
 
 #include "ConvexShapeExtra.h"
-#include "MathExtra.h"
+#include "../MathExtra.h"
 
 // How to get points w/ transformation?
 std::vector<sf::Vector2f> ConvexShapeExtra::getGlobalPoints(const sf::ConvexShape &a) {

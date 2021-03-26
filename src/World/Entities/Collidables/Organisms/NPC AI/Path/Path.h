@@ -4,8 +4,6 @@
 #include <SFML/System.hpp>
 #include <vector>
 
-// Dequeue of points.
-// Useful for containing Npc points to travel to.
 class Path {
 public:
     typedef std::pair<sf::Vector2f, sf::Vector2f> Edge;
@@ -16,21 +14,18 @@ public:
 
     Path(const std::vector<Point> & points);
 
-    Point getCurrentPoint() const;
-
     Edge getCurrentEdge() const;
 
     void enqueue(Point point);
 
-    Point removeCurrentPoint();
-
-    void replaceCurrentPoint(Point point);
+    void advanceToNextPoint();
 
     void reset();
 
     static Edge makeEdge(const sf::Vector2f & first, const sf::Vector2f & second);
 
 private:
+    // Invariant: points.front() is first point of 'current edge'; points.back() is last point in path
     std::deque<Point> points;
 };
 

@@ -9,8 +9,13 @@ bool BaseActivity<Organism>::isRecurring() const {
 }
 
 template<class Organism>
-bool BaseActivity<Organism>::hasFinished() const {
+bool BaseActivity<Organism>::isFinished() const {
     return finished;
+}
+
+template<class Organism>
+void BaseActivity<Organism>::setFinished(bool activityFinished) {
+    finished = activityFinished;
 }
 
 

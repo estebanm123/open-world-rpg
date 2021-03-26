@@ -27,21 +27,10 @@ void Path::enqueue(Path::Point point) {
     points.push_back(point);
 }
 
-void Path::replaceCurrentPoint(Path::Point point) {
-    points.erase(points.begin());
-    points.push_front(point);
-}
-
 void Path::reset() {
     points.clear();
 }
 
-Path::Point Path::getCurrentPoint() const {
-    return points.front();
-}
-
-Path::Point Path::removeCurrentPoint() {
-    auto predecessor = points.front();
-    points.erase(points.begin());
-    return predecessor;
+void Path::advanceToNextPoint() {
+    points.pop_front();
 }

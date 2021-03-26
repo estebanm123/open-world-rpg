@@ -10,11 +10,12 @@ class Path;
 template<class Organism>
 class RandomTravel : public BaseActivity<Organism> {
 public:
+    // maxRadius is radius from next point in NPC's path
     RandomTravel(float maxRadius);
     void update(float dt) override;
-private:
 
-    bool isCurrentPointReached(Path * path, sf::Vector2f EntityPos) const;
+private:
+    bool isNextPointReached(Path * path, sf::Vector2f EntityPos) const;
     float maxRadius;
 };
 

@@ -20,7 +20,7 @@ ActivityManager<Organism>::ActivityManager(ActivityManager::Activities activitie
 
 template<class Organism>
 void ActivityManager<Organism>::handleActivityCompletion(BaseActivity<Organism> *currentActivity) {
-    if (currentActivity->hasFinished()) {
+    if (currentActivity->isFinished()) {
         if (currentActivity->isRecurring()) {
             activities.push_back(std::move(currentActivity));
         }

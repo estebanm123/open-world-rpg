@@ -4,8 +4,8 @@
 
 
 template<class Organism>
-bool RandomTravel<Organism>::isCurrentPointReached(Path * path, sf::Vector2f EntityPos) const {
-
+bool RandomTravel<Organism>::isNextPointReached(Path * path, sf::Vector2f EntityPos) const {
+    //
 }
 
 template<class Organism>
@@ -14,7 +14,7 @@ void RandomTravel<Organism>::update(float dt) {
     auto npcPath = npc->getPath();
     auto npcPos = npc->getPosition();
 
-    if (isCurrentPointReached(npcPath, npcPos)) {
+    if (isNextPointReached(npcPath, npcPos)) {
 
     }
 }
