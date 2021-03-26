@@ -7,7 +7,7 @@
 
 using Key = sf::Keyboard::Key;
 
-PlayerInputManager::PlayerInputManager(Player &player) : player(player) {}
+PlayerInputManager::PlayerInputManager(Player *player) : player(player) {}
 
 void PlayerInputManager::handleInput(sf::RenderWindow &window) {
     handleKeyPresses();
@@ -21,20 +21,13 @@ void PlayerInputManager::handleKeyPresses() {
 }
 
 void PlayerInputManager::handleItemKeyPresses() {
-    handleDropItem();
     handlePickUpItem();
 }
 
-void PlayerInputManager::handleDropItem() {
-    if (sf::Keyboard::isKeyPressed(Key::X)) {
-        player.dropCurrentItem();
-    }
-}
-
 void PlayerInputManager::handlePickUpItem() {
-    bool isPickingUp = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E);
-    player.setPickingUp(isPickingUp);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E)) {
 
+    };
 }
 
 void PlayerInputManager::handleMovement() {
@@ -57,16 +50,16 @@ void PlayerInputManager::handleMovement() {
     if (dPressed) {
         newMoveDir.x = 1;
     }
-    player.setMoveDirection(newMoveDir);
+    player->setMoveDirection(newMoveDir);
 }
 
 void PlayerInputManager::handleMouseMovement(sf::RenderWindow &window) {
-    auto playerPos = player.getPosition();
+    auto playerPos = player->getPosition();
     auto mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
     auto mouseDirRelativeToPlayer = mousePos - playerPos;
-    player.setLookDirection(mouseDirRelativeToPlayer);
+    player->setLookDirection(mouseDirRelativeToPlayer);
     const auto mouseAngle = toDegrees(atan2(mouseDirRelativeToPlayer.x, mouseDirRelativeToPlayer.y));
-    player.setRotation(-mouseAngle);
+    player->setRotation(-mouseAngle);
 
     static sf::Clock timer;
     if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && timer.getElapsedTime().asMilliseconds() > 500) {
@@ -77,12 +70,6 @@ void PlayerInputManager::handleMouseMovement(sf::RenderWindow &window) {
 }
 
 void PlayerInputManager::handleMouseClicks() {
-    handleUseCurrentItem();
 }
 
-void PlayerInputManager::handleUseCurrentItem() {
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-        player.useCurrentItem();
-    }
-}
 

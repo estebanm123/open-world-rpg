@@ -6,7 +6,7 @@ class Player;
 
 class PlayerInputManager {
 public:
-    PlayerInputManager(Player &player);
+    PlayerInputManager(Player *player);
 
     void handleInput(sf::RenderWindow &window);
 
@@ -17,17 +17,13 @@ private:
 
     void handleMouseClicks();
 
-    void handleUseCurrentItem();
-
     void handleItemKeyPresses();
-
-    void handleDropItem();
 
     void handlePickUpItem();
 
     void handleMovement();
 
-    Player &player;
+    Player * player;
 };
 
 
