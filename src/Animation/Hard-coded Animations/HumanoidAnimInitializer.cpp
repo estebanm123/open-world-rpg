@@ -24,9 +24,10 @@ std::unique_ptr<AnimationPlayer> HumanoidAnimInitializer::initializeEmptyBody() 
     anims.insert({&MoveableActions::Move, std::make_unique<RepeatingAnim>(
             Animation::Metadata{BASE_FRAME_WIDTH, BASE_FRAME_HEIGHT, 0, 2, 0, BODY_MOVE_DELAY, {2, 5}})});
     anims.insert({&HumanoidActions::Touch, std::make_unique<NonRepeatingAnim>(
-            Animation::Metadata{BASE_FRAME_WIDTH, BASE_FRAME_HEIGHT, 8, 11, 0, BODY_TOUCH_DELAY, {11}, Animation::AnimPriority::HIGH})});
+            Animation::Metadata{BASE_FRAME_WIDTH, BASE_FRAME_HEIGHT, 8, 12, 0, BODY_TOUCH_DELAY, {12}, Animation::AnimPriority::HIGH})});
     return std::make_unique<AnimationPlayer>(std::move(anims));
 }
+
 
 std::unique_ptr<AnimationPlayer> HumanoidAnimInitializer::initializeEmptyHead() {
     std::unordered_map<Action const *, std::unique_ptr<Animation>> anims;
