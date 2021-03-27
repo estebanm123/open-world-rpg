@@ -3,6 +3,10 @@
 #include "../OrganismEntity.h"
 #include "../../../Sprites/SpriteContainer.h"
 
+struct HumanoidActions : public Actions {
+    static constexpr Action Touch{};
+};
+
 class Humanoid : public OrganismEntity {
 public:
     static constexpr int BASE_FRAME_WIDTH = 32;
@@ -12,19 +16,13 @@ public:
     Humanoid(const sf::Vector2f &globalPosition, const std::string &spriteSheetBody,
              const std::string &spriteSheetHead);
 
-    void dropCurrentItem();
-
-    void useCurrentItem();
-
-    void setPickingUp(bool pickingUp);
-
     void revertLastMove(bool x, bool y) override;
-
-    bool pickingUp() const;
 
     ~Humanoid() override = default;
 
     void accept(EntityVisitor * visitor) override;
+
+    void attemptPickup();
 
 protected:
     EntitySprite &getSprite() override;

@@ -57,7 +57,7 @@ std::unique_ptr<Prop> PropFactory::generateBush(int hashVal, const sf::Vector2f 
     int delay = 200;
     int start = 0;
     int end = 2;
-    Animation::Metadata data(spriteSheetCoords.width, spriteSheetCoords.height, start, end, 0, 0, delay, {});
+    Animation::Metadata data(spriteSheetCoords.width, spriteSheetCoords.height, start, end, 0, delay, {});
     return std::make_unique<Prop>("Foliage/Shadow/ForestFoliage", size, spriteSheetCoords,
                                   Prop::PropOptions{pos, true, std::make_unique<BlockingPhysics>(),
                                                     std::make_unique<AnimationPlayer>(

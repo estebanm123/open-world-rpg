@@ -34,3 +34,11 @@ void Path::reset() {
 void Path::advanceToNextPoint() {
     points.pop_front();
 }
+
+Path::Point Path::getNextPoint() const {
+    if (points.size() > 1) {
+        return points.at(1);
+    } else {
+        return EMPTY_POINT;
+    }
+}

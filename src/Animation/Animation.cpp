@@ -50,7 +50,7 @@ void Animation::initializeAnims() {
     if (metadata.removeLast) frames.pop_back();
 }
 
-int Animation::getPriority() const {
+Animation::AnimPriority Animation::getPriority() const {
     return metadata.priority;
 }
 

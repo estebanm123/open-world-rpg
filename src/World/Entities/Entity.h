@@ -8,7 +8,6 @@ class Action;
 
 class EntityVisitor;
 
-
 class Entity {
 public:
     virtual void renderBy(sf::RenderTarget &renderer);

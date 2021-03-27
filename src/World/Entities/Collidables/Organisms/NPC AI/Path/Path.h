@@ -18,6 +18,8 @@ public:
 
     void enqueue(Point point);
 
+    Point getNextPoint() const;
+
     void advanceToNextPoint();
 
     void reset();

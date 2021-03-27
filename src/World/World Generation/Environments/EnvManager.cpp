@@ -14,7 +14,7 @@ std::unordered_map<Env::EnvId, std::unique_ptr<Env>> EnvManager::envs {};
 
 std::unique_ptr<RepeatingAnim> initializeTileAnim(int start, int numFrames, sf::Time delay) {
     int lastFrame = start + numFrames - 1;
-    Animation::Metadata data(TILE_SIZE_INT_X, TILE_SIZE_INT_Y, start, lastFrame, 0, 0, delay.asMilliseconds(), {});
+    Animation::Metadata data(TILE_SIZE_INT_X, TILE_SIZE_INT_Y, start, lastFrame, 0, delay.asMilliseconds(), {});
     return std::make_unique<RepeatingAnim>(data);
 }
 

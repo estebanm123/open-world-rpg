@@ -15,7 +15,7 @@ public:
     void update(float dt) override;
 
 private:
-    bool isNextPointReached(Path * path, sf::Vector2f EntityPos) const;
+    bool isNextPointReached(Path * path, sf::Vector2f entityPos) const;
     float maxRadius;
 };
 

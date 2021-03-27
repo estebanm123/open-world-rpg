@@ -1,11 +1,12 @@
 
 #include "RandomTravel.h"
 #include "../../Path/Path.h"
+#include "../../../../../../../Util/CollisionChecker.h"
 
 
 template<class Organism>
-bool RandomTravel<Organism>::isNextPointReached(Path * path, sf::Vector2f EntityPos) const {
-    //
+bool RandomTravel<Organism>::isNextPointReached(Path * path, sf::Vector2f entityPos) const {
+    return CollisionChecker::intersect(SimpleCircle{maxRadius, path->getNextPoint()}, entityPos);
 }
 
 template<class Organism>
@@ -15,7 +16,7 @@ void RandomTravel<Organism>::update(float dt) {
     auto npcPos = npc->getPosition();
 
     if (isNextPointReached(npcPath, npcPos)) {
-
+        
     }
 }
 

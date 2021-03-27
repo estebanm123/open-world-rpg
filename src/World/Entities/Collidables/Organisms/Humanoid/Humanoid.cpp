@@ -17,22 +17,6 @@ EntitySprite &Humanoid::getSprite() {
     return sprite;
 }
 
-void Humanoid::dropCurrentItem() {
-
-}
-
-void Humanoid::useCurrentItem() {
-
-}
-
-void Humanoid::setPickingUp(bool pickingUp) {
-    isPickingUp = pickingUp;
-}
-
-bool Humanoid::pickingUp() const {
-    return isPickingUp;
-}
-
 void Humanoid::revertLastMove(bool x, bool y) {
     MoveableEntity::revertLastMove(x, y);
 }
@@ -59,4 +43,9 @@ Humanoid::initializeSprites(const sf::Vector2f &pos, const std::string &spriteSh
 
 void Humanoid::accept(EntityVisitor *visitor) {
     visitor->visit(this);
+}
+
+void Humanoid::attemptPickup() {
+    this->setCurrentAction(&HumanoidActions::Touch);
+    // todo: Deploy a temporary hitbox for the hand/reach
 }

@@ -38,9 +38,14 @@ public:
 
     };
 
+    enum class AnimPriority {
+        HIGH = 2, MEDIUM = 1, LOW = 0
+    };
+
     struct Metadata : public BaseMetadata {
-        Metadata(int frameWidth, int frameHeight, int startFrame, int endFrame, int row, int priority,
-                 int delay, std::vector<int> inversionFrames = {}, bool removeLast = false)
+        Metadata(int frameWidth, int frameHeight, int startFrame, int endFrame, int row,
+                 int delay, std::vector<int> inversionFrames = {}, AnimPriority priority = AnimPriority::LOW,
+                 bool removeLast = false)
                 : frameWidth(frameWidth), frameHeight(frameHeight),
                   row(row), priority(priority),
                   BaseMetadata(startFrame, endFrame, delay, std::move(inversionFrames), removeLast) {}
@@ -48,7 +53,7 @@ public:
         int frameWidth;
         int frameHeight;
         int row;
-        int priority;
+        AnimPriority priority;
     };
 
     explicit Animation(Metadata animationData);
@@ -59,7 +64,7 @@ public:
 
     void removeFrame(int index);
 
-    int getPriority() const;
+    Animation::AnimPriority getPriority() const;
 
     void resetAnimation();
 

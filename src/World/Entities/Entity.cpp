@@ -19,6 +19,8 @@ void Entity::rotate(float angle) {
     getSprite().rotate(angle);
 }
 
+
+
 void Entity::renderBy(sf::RenderTarget &renderer) {
     if (currentAction) {
         getSprite().playAnim(currentAction);
