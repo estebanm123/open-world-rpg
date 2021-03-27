@@ -26,7 +26,7 @@ void PlayerInputManager::handleItemKeyPresses() {
 
 void PlayerInputManager::handlePickUpItem() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E)) {
-
+        player->attemptPickup();
     };
 }
 
