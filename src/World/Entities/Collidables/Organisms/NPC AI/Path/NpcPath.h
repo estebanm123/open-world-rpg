@@ -4,7 +4,7 @@
 #include <SFML/System.hpp>
 #include <vector>
 
-class Path {
+class NpcPath {
 public:
     typedef std::pair<sf::Vector2f, sf::Vector2f> Edge;
     typedef sf::Vector2f Point;
@@ -12,7 +12,7 @@ public:
     const static sf::Vector2f EMPTY_POINT;
     const static Edge EMPTY_EDGE;
 
-    Path(const std::vector<Point> & points);
+    NpcPath(const std::vector<Point> & points);
 
     Edge getCurrentEdge() const;
 
@@ -22,12 +22,17 @@ public:
 
     void advanceToNextPoint();
 
+    Point getLastPoint() const;
+
+    bool noNextPoint() const;
+
     void reset();
 
     static Edge makeEdge(const sf::Vector2f & first, const sf::Vector2f & second);
 
 private:
-    // Invariant: points.front() is first point of 'current edge'; points.back() is last point in path
+    // Invariant: points.front() is first point of 'current edge' ; the last point visited by npc
+    // points.back() is last point in path
     std::deque<Point> points;
 };
 

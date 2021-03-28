@@ -1,22 +1,25 @@
 #pragma once
 
-#include "../BaseActivity.h"
-#include <SFML/System/Clock.hpp>
-#include <SFML/System.hpp>
-#include <utility>
 
-class Path;
+#include "ContinuousTravel.h"
+#include "../../../../../../../Util/Random/Random.h"
+#include <SFML/System.hpp>
 
 template<class Organism>
-class RandomTravel : public BaseActivity<Organism> {
+class RandomTravel : public ContinuousTravel<Organism> {
+protected:
+    NpcPath::Point generateNextPoint() override;
+
 public:
-    // maxRadius is radius from next point in NPC's path
-    RandomTravel(float maxRadius);
-    void update(float dt) override;
+    RandomTravel(float targetDistFromDestination, const sf::Vector2f &initialPos, float maxRadiusOfTravel);
+
+public:
 
 private:
-    bool isNextPointReached(Path * path, sf::Vector2f entityPos) const;
-    float maxRadius;
+    const sf::Vector2f initialPos;
+    float maxRadiusOfTravel;
+    Random<float> rand;
+
 };
 
 
