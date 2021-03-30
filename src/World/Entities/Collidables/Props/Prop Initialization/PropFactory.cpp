@@ -26,7 +26,6 @@ int PropFactory::getPropIndex(int hashVal, int numProps) {
 // ------ ASSETS -------------
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-constexpr auto SIZE_FLEX = 5; // temp
 
 const std::array<sf::IntRect, 4> ROCK_SPRITESPRITES{{
                                                             {0, 0, 29, 28},
@@ -65,11 +64,6 @@ std::unique_ptr<Prop> PropFactory::generateBush(int hashVal, const sf::Vector2f 
 }
 
 
-const std::array<sf::IntRect, 3> GRASS_COVER_SPRITES{{
-                                                             {0, 0, 64, 64},
-                                                             {64, 0, 64, 64},
-                                                             {128, 0, 64, 64},
-                                                     }};
 
 std::unique_ptr<Prop> PropFactory::generateGrassCover(int hashVal, const sf::Vector2f &pos) {
     int selectedIndex = getPropIndex(hashVal, GRASS_COVER_SPRITES.size());

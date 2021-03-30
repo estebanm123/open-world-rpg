@@ -8,9 +8,9 @@ const inline int RAND_MIXER_2 = 0x27d4eb2d;
 //const inline int RAND_MIXER_2 = 24;
 
 
-// May not yield results as random-looking as hashCoords2 at the cost of performance.
+// May not yield results as random-looking as hashCoordsHeavy at the cost of performance.
 template<typename T, typename X = T>
-inline int hashCoords(T a, T b, int seed = RAND_MIXER_1) {
+inline int hashCoordsLight(T a, T b, int seed = RAND_MIXER_1) {
     auto inta = static_cast<int>(a); // we don't care about the decimal; integer precision will be handled later
     auto intb = static_cast<int>(b);
 
@@ -19,9 +19,9 @@ inline int hashCoords(T a, T b, int seed = RAND_MIXER_1) {
         return hash;
 }
 
-// Yields more random results than hashCoords, but is more performance heavy
+// Yields more random results than hashCoordsLight, but is more performance heavy
 template<typename T>
-inline int hashCoords2(T a, T b, int seed = RAND_MIXER_1) {
+inline int hashCoordsHeavy(T a, T b, int seed = RAND_MIXER_1) {
     auto inta = static_cast<int>(a); // we don't care about the decimal; integer precision will be handled later
     auto intb = static_cast<int>(b);
 
@@ -35,7 +35,7 @@ template<typename T, typename X = T>
 inline int hash2ValuesModSize(T a, T b, X size, int seed = RAND_MIXER_1) {
     if (size == 0) throw std::runtime_error("Trying to hash w/ size 0!");
     //todo: add assertion to confirm types and sizes (size != 0)]
-    int hash = hashCoords2(a, b, seed);
+    int hash = hashCoordsHeavy(a, b, seed);
     return abs(hash % size);
 }
 

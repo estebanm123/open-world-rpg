@@ -17,7 +17,7 @@ ChunkPropGenerator::TilesSeen ChunkPropGenerator::initializeTilesSeen() {
 
 sf::Vector2f generatePropCoords(float propGenChance, int hashVal1, const sf::Vector2f &tileGlobalCoords) {
     using namespace worldConstants;
-    auto hashVal2 = hashCoords(hashVal1, static_cast<int>(propGenChance));
+    auto hashVal2 = hashCoordsLight(hashVal1, static_cast<int>(propGenChance));
     int limit = static_cast<int>(propGenChance);
     auto x = static_cast<float>(hashVal2 % TILE_SIZE_INT_X);
     auto y = static_cast<float>((limit * hashVal1) % TILE_SIZE_INT_Y);

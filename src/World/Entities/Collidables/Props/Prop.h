@@ -1,5 +1,7 @@
 #pragma once
 
+#include <utility>
+
 #include "../../Entity.h"
 #include "../../Sprites/SpriteReg.h"
 #include "../CollidableEntity.h"
@@ -13,13 +15,18 @@ public:
     struct PropOptions {
         static constexpr auto PRIME = 73924247.f;
 
-        explicit PropOptions(const sf::Vector2f &pos,
-                             bool hasShadow = false,
+        explicit PropOptions(std::string spriteSheet, const sf::IntRect &defaultFrame,
+                             const sf::Vector2f &pos, bool hasShadow = false, sf::Vector2i hitboxSizeOffset = {0, 0},
                              std::unique_ptr<CollisionPhysics> collisionPhysics = std::make_unique<CollisionPhysics>(),
                              std::unique_ptr<AnimationPlayer> animPlayer = nullptr)
-                : hasShadow(hasShadow), pos(pos), collisionPhysics(std::move(collisionPhysics)),
+                : hasShadow(hasShadow), spriteSheet(std::move(spriteSheet)), defaultFrame(defaultFrame),
+                  size(hitboxSizeOffset + sf::Vector2i{defaultFrame.left, defaultFrame.top}), pos(pos),
+                  collisionPhysics(std::move(collisionPhysics)),
                   animPlayer(std::move(animPlayer)) {
         };
+        std::string spriteSheet;
+        sf::IntRect defaultFrame;
+        sf::Vector2f size;
         std::unique_ptr<CollisionPhysics> collisionPhysics;
         std::unique_ptr<AnimationPlayer> animPlayer;
         sf::Vector2f pos;
@@ -27,7 +34,7 @@ public:
         float rotationAngle = static_cast<float>(hash2ValuesModSize(pos.x, pos.y * PRIME, 360));
     };
 
-    Prop(const std::string &spriteSheet, const sf::Vector2f &size, const sf::IntRect &defaultFrame, PropOptions config);
+    Prop(PropOptions config);
 
     void update(float dt) override;
 

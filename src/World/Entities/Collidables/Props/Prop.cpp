@@ -15,16 +15,18 @@ void Prop::update(float dt) {
     }
 }
 
-Prop::Prop(const std::string &spriteSheet,
-           const sf::Vector2f &size, const sf::IntRect &defaultFrame, PropOptions config)
-        : CollidableEntity(std::make_unique<SingleHitbox>(sf::FloatRect {config.pos.x, config.pos.y, size.x, size.y}, config.rotationAngle,
-                                        std::move(config.collisionPhysics))) {
+Prop::Prop(PropOptions config)
+        : CollidableEntity(
+        std::make_unique<SingleHitbox>(sf::FloatRect{config.pos.x, config.pos.y, config.size.x, config.size.y},
+                                       config.rotationAngle,
+                                       std::move(config.collisionPhysics))) {
     // todo: decouple
-    sprite = config.hasShadow ? std::make_unique<ShadowedSpriteReg>(spriteSheet, config.pos, size / 2.f,
-                                                                    std::move(config.animPlayer), defaultFrame)
-                              : std::make_unique<SpriteReg>(SpriteReg::Config{spriteSheet, config.pos, size / 3.f,
-                                                                              std::move(config.animPlayer),
-                                                                              defaultFrame});
+    sprite = config.hasShadow ? std::make_unique<ShadowedSpriteReg>(config.spriteSheet, config.pos, config.size / 2.f,
+                                                                    std::move(config.animPlayer), config.defaultFrame)
+                              : std::make_unique<SpriteReg>(
+                    SpriteReg::Config{config.spriteSheet, config.pos, config.size / 2.f,
+                                      std::move(config.animPlayer),
+                                      config.defaultFrame});
     hasDefaultAnim = sprite->isAnimated();
     sprite->rotate(config.rotationAngle);
 }
@@ -32,4 +34,5 @@ Prop::Prop(const std::string &spriteSheet,
 void Prop::accept(EntityVisitor *visitor) {
     visitor->visit(this);
 }
+
 
