@@ -16,6 +16,9 @@ class EnvWrapper;
 
 class EnvNeighborInfo;
 
+
+// A mediator for Entity and Tile generation; anything drastically influenced
+// by an Env
 class Env : public CompleteEnv, sf::NonCopyable, NonMoveable {
 public:
     typedef std::unordered_map<const Env *, TileContainer::TileContainers> BorderTileContainers;

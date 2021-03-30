@@ -4,7 +4,7 @@
 #include "EnvBorderHorizontal.h"
 #include "EnvBorderCorner.h"
 #include "../Env.h"
-#include "../EnvRegularProxy.h"
+#include "../EnvProxy.h"
 
 NeighboredEnv::Neighbors EnvWrapper::getCompatibleNeighbors(const sf::Vector2i &direction) const {
     const auto currentEnv = std::make_shared<EnvWrapper>(*this);
@@ -79,7 +79,7 @@ bool EnvWrapper::fillWildcardIfExists(const std::shared_ptr<EnvWrapper> &filler)
 
 const NeighboredEnv::TileContainerWrapper EnvWrapper::extractTileMetadata(const sf::Vector2f &globalCoords) const {
     const auto &tileContainer = env->selectTileContainer(globalCoords);
-    Tile::Metadata metadata{std::make_unique<const EnvRegularProxy>(env), globalCoords,
+    Tile::Metadata metadata{std::make_unique<const EnvProxy>(env), globalCoords,
                             env->getSpriteSheetPath()};
     return {std::move(metadata), tileContainer};
 }
