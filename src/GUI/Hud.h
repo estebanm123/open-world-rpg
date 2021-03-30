@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include <SFML/Graphics/Text.hpp>
-#include "../Util/Observer/Observer.h"
+#include "../Util/Design patterns/Observer/Observer.h"
 
 
 class Hud : Observer {

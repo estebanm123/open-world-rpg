@@ -8,9 +8,9 @@
 #include "World Generation/Chunks/ChunkManager.h"
 #include "Projectiles/Projectile.h"
 #include "Weapons/ProjectileWeapon.h"
-#include "../Util/Observer/Observable.h"
 #include "Entities/Collidables/Organisms/Humanoid/Player/Player.h"
 #include "Entities/Collidables/Hitbox/Hitbox.h"
+#include "../Util/Design patterns/Observer/Observable.h"
 
 class World : Observable {
 public:

@@ -1,5 +1,5 @@
 ﻿#include "Hud.h"
-#include "../Util/Observer/Observable.h"
+#include "../Util/Design patterns/Observer/Observable.h"
 
 Hud::Hud() : kills(0), ammo(-1), health() {
 }
