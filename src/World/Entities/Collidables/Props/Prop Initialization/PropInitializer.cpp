@@ -5,7 +5,7 @@
 
 #include <utility>
 
-std::unique_ptr<Prop> PropInitializer::initialize(PositionBasedInitializer::Position pos) {
+std::unique_ptr<Prop> PropInitializer::initialize(Position pos) {
     auto index = hash2ValuesModSize(pos.y, pos.x, variants.size());
     auto selectedVariant = variants[index];
     return initializeProp(pos, selectedVariant);

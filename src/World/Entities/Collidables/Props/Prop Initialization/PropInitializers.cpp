@@ -11,14 +11,14 @@ constexpr auto SIZE_FLEX = 5; // temp
 MushroomInitializer::MushroomInitializer() : PropInitializer(std::vector<sf::IntRect>{{0, 0, 22, 20}}) {}
 
 std::unique_ptr<Prop>
-MushroomInitializer::initializeProp(PositionBasedInitializer::Position pos, sf::IntRect spriteSheetCoords) {
+MushroomInitializer::initializeProp(Position pos, sf::IntRect spriteSheetCoords) {
     return std::make_unique<Prop>(Prop::PropOptions{FOLIAGE_SHADOW + "Mushroom", spriteSheetCoords, pos, true});
 }
 
 CactusInitializer::CactusInitializer() : PropInitializer(std::vector<sf::IntRect>{{{0, 0, 22, 20}}}) {}
 
 std::unique_ptr<Prop>
-CactusInitializer::initializeProp(PositionBasedInitializer::Position pos, sf::IntRect spriteSheetCoords) {
+CactusInitializer::initializeProp(Position pos, sf::IntRect spriteSheetCoords) {
     return std::make_unique<Prop>(Prop::PropOptions{FOLIAGE_SHADOW + "Cactus", spriteSheetCoords, pos, true, {0, 0},
                                                     std::make_unique<BlockingPhysics>()});
 }
@@ -26,7 +26,7 @@ CactusInitializer::initializeProp(PositionBasedInitializer::Position pos, sf::In
 BushInitializer::BushInitializer() : PropInitializer(std::vector<sf::IntRect>{{0, 0, 36, 32}}) {}
 
 std::unique_ptr<Prop>
-BushInitializer::initializeProp(PositionBasedInitializer::Position pos, sf::IntRect spriteSheetCoords) {
+BushInitializer::initializeProp(Position pos, sf::IntRect spriteSheetCoords) {
     int delay = 200;
     int start = 0;
     int end = 2;
@@ -44,7 +44,7 @@ GrassCoverInitializer::GrassCoverInitializer() : PropInitializer(std::vector<sf:
 }) {}
 
 std::unique_ptr<Prop>
-GrassCoverInitializer::initializeProp(PositionBasedInitializer::Position pos, sf::IntRect spriteSheetCoords) {
+GrassCoverInitializer::initializeProp(Position pos, sf::IntRect spriteSheetCoords) {
     return std::make_unique<Prop>(Prop::PropOptions{FOLIAGE + "GrassOverlays", spriteSheetCoords, pos});
 }
 
@@ -56,7 +56,7 @@ RockInitializer::RockInitializer() : PropInitializer(std::vector<sf::IntRect>{{
                                                                               }}) {}
 
 std::unique_ptr<Prop>
-RockInitializer::initializeProp(PositionBasedInitializer::Position pos, sf::IntRect spriteSheetCoords) {
+RockInitializer::initializeProp(Position pos, sf::IntRect spriteSheetCoords) {
     return std::make_unique<Prop>(
             Prop::PropOptions{FOLIAGE_SHADOW + "Rocks", spriteSheetCoords, pos, true, {SIZE_FLEX, SIZE_FLEX},
                               std::make_unique<BlockingPhysics>()});
