@@ -6,7 +6,7 @@
 template<class Output, typename Arg>
 class ArgDependentInitializer {
 public:
-    virtual std::unique_ptr<Output> initialize(Arg pos) = 0;
+    virtual std::unique_ptr<Output> initialize(Arg arg) = 0;
 };
 
 
