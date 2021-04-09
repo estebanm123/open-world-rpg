@@ -9,9 +9,11 @@ class PositionBasedInitializerPool : public ScoredInitializerPool<T, sf::Vector2
 public:
     typedef sf::Vector2f Position;
 
-    PositionBasedInitializerPool(std::vector<std::unique_ptr<InitializerMetadata<T, Position>>> initializers)
+    PositionBasedInitializerPool(std::vector<std::unique_ptr<InitializerMetadata<T, Position>>> initializers,
+                                 int initializationThreshold = 42, int maxInitializationLim = 50)
             : ScoredInitializerPool<T, Position>(
-            std::move(initializers)) {}
+            std::move(initializers)), initializationThreshold(initializationThreshold),
+              maxInitializationLim(maxInitializationLim) {}
 
     std::unique_ptr<T> initialize(Position pos) {
         return ScoredInitializerPool<T, Position>::initializeFrom(pos);
@@ -19,8 +21,21 @@ public:
 
 protected:
     float computeScoreFrom(Position arg) override {
-        return hash2ValuesModSize(arg.x, arg.y, this->initializers.size()); // safe cast (score is small)
+        auto size = this->initializers.size();
+        auto hashVal = hash2ValuesModSize(arg.x, arg.y,
+                                          static_cast<int>(ScoredInitializerPool<T, sf::Vector2f>::MAX_SCORE)); // safe cast (score is small)
+        return hashVal;
     };
+
+    virtual bool shouldInitialize(Position arg) override {
+        auto hashVal = hash2ValuesModSize(arg.y, arg.x, maxInitializationLim, RAND_MIXER_2);
+        return hashVal > initializationThreshold;
+    }
+
+private:
+    int initializationThreshold;
+    int maxInitializationLim;
+
 };
 
 

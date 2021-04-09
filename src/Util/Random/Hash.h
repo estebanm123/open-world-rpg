@@ -14,10 +14,10 @@ inline int mixCoords(T a, T b, int seed = RAND_MIXER_1) {
     auto inta = static_cast<int>(a); // we don't care about the decimal; integer precision will be handled later
     auto intb = static_cast<int>(b);
 
-        int hash = seed ^ inta ^ intb;
-        hash *= RAND_MIXER_2;
-        hash ^= hash >> 15;
-        return hash;
+    int hash = seed ^inta ^intb;
+    hash *= RAND_MIXER_2;
+    hash ^= hash >> 15;
+    return hash;
 }
 
 // Todo: benchmark
@@ -26,9 +26,9 @@ inline int mixCoordsHeavy(T a, T b, int seed = RAND_MIXER_1) {
     auto inta = static_cast<int>(a); // we don't care about the decimal; integer precision will be handled later
     auto intb = static_cast<int>(b);
 
-    int h = seed + inta*374761393 + intb*668265263;
-    h = (h^(h >> 13))*1274126177;
-    return h^(h >> 16);
+    int h = seed + inta * 374761393 + intb * 668265263;
+    h = (h ^ (h >> 13)) * 1274126177;
+    return h ^ (h >> 16);
 }
 
 

@@ -29,11 +29,11 @@ public:
     // some score extracted from Arg.
     // Initializer is selected based on how much of the score distribution it occupies.
     std::unique_ptr<Output> initializeFrom(Arg arg) {
+        if (!shouldInitialize(arg)) return nullptr;
         float score = computeScoreFrom(std::move(arg));
         for (auto &metadata : initializers) {
             if (metadata->score <= score) {
-                auto x = metadata->initializer->initialize(arg);
-                return x;
+                return metadata->initializer->initialize(arg);
             }
         }
     }
@@ -41,6 +41,12 @@ public:
 protected:
     virtual float computeScoreFrom(Arg arg) = 0;
 
+    // Enables rate-limiting initialization depending on arg (for subclasses)
+    virtual bool shouldInitialize(Arg arg) {
+       return true;
+    }
+
+    float minInitializationLimit; // sets a minimum
     InitializerMetadataCollection initializers;
 
 private:
