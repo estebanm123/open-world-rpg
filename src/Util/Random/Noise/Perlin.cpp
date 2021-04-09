@@ -72,10 +72,8 @@ const std::array lookup =
 
 
 float gradCoord(int seed, int xPrimed, int yPrimed, float xd, float yd) {
-    int hashVal = hashCoordsLight(xPrimed, yPrimed, seed);
-    hashVal ^= hashVal >> 15;
+    int hashVal = mixCoords(xPrimed, yPrimed, seed);
     hashVal &= 127 << 1;
-
     float xg = lookup[hashVal];
     float yg = lookup[hashVal | 1];
 

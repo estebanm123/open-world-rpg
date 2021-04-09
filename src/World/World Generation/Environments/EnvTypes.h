@@ -4,10 +4,8 @@
 #include "../../../Animation/Animation.h"
 #include "EnvManager.h"
 #include "EnvNeighborInfo.h"
-#include "../../Entities/Collidables/Props/Prop Factories/PropFactory.h"
 #include "Env.h"
-#include "../../Entities/Collidables/Props/Prop Factories/DirtPropFactory.h"
-#include "../../Entities/Collidables/Props/Prop Factories/SandPropFactory.h"
+#include "../../Entities/Collidables/Props/Prop Initialization/PropFactories.h"
 
 
 namespace EnvTypes {

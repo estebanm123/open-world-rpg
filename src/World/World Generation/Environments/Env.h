@@ -6,6 +6,7 @@
 #include <SFML/System/NonCopyable.hpp>
 #include "../Tiles/TileContainers/TileContainer.h"
 #include "../../../Util/NonMoveable.h"
+#include "../../Entities/Collidables/Props/Prop Initialization/PropFactory.h"
 
 class SingleTileContainer;
 

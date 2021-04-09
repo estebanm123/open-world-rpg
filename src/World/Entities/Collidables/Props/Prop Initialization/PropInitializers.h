@@ -2,29 +2,41 @@
 
 #include "PropInitializer.h"
 
-class GrassCoverInitializer : public PropInitializer {
+struct GrassCoverInitializer : public PropInitializer {
     GrassCoverInitializer();
     std::unique_ptr<Prop> initializeProp(Position pos, sf::IntRect spriteSheetCoords) override;
 };
 
-class MushroomInitializer : public PropInitializer {
+struct RockCoverInitializer : public PropInitializer {
+    RockCoverInitializer();
+    std::unique_ptr<Prop> initializeProp(Position pos, sf::IntRect spriteSheetCoords) override;
+};
+
+struct MushroomInitializer : public PropInitializer {
     MushroomInitializer();
     std::unique_ptr<Prop> initializeProp(Position pos, sf::IntRect spriteSheetCoords) override;
 };
 
-class CactusInitializer : public PropInitializer {
+struct CactusInitializer : public PropInitializer {
     CactusInitializer();
     std::unique_ptr<Prop> initializeProp(Position pos, sf::IntRect spriteSheetCoords) override;
 };
 
-class BushInitializer : public PropInitializer {
+struct BushInitializer : public PropInitializer {
     BushInitializer();
     std::unique_ptr<Prop> initializeProp(Position pos, sf::IntRect spriteSheetCoords) override;
 };
 
-class RockInitializer : public PropInitializer {
+// todo: make a variant of bush?
+struct SmallBushInitializer : PropInitializer {
+    SmallBushInitializer();
+    std::unique_ptr<Prop> initializeProp(Position pos, sf::IntRect spriteSheetCoords) override;
+};
+
+struct RockInitializer : public PropInitializer {
     RockInitializer();
     std::unique_ptr<Prop> initializeProp(Position pos, sf::IntRect spriteSheetCoords) override;
 };
+
 
 

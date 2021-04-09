@@ -62,4 +62,26 @@ RockInitializer::initializeProp(Position pos, sf::IntRect spriteSheetCoords) {
                               std::make_unique<BlockingPhysics>()});
 }
 
+RockCoverInitializer::RockCoverInitializer() : PropInitializer(std::vector<sf::IntRect>{{
+                                                                                                {0, 0, 31, 34},
+                                                                                                {31, 0, 31, 34},
+                                                                                                {62, 0, 31, 34}
+                                                                                        }}) {}
 
+std::unique_ptr<Prop>
+RockCoverInitializer::initializeProp(PropInitializer::Position pos, sf::IntRect spriteSheetCoords) {
+    return std::make_unique<Prop>(Prop::PropOptions{FOLIAGE + "RocksOverlays", spriteSheetCoords, pos});
+}
+
+SmallBushInitializer::SmallBushInitializer() : PropInitializer(std::vector<sf::IntRect>{{
+                                                                                                {0, 0, 18, 16}
+                                                                                        }}) {}
+
+std::unique_ptr<Prop>
+SmallBushInitializer::initializeProp(PropInitializer::Position pos, sf::IntRect spriteSheetCoords) {
+    Animation::Metadata data(spriteSheetCoords.width, spriteSheetCoords.height, 0, 2, 0, 400);
+    return std::make_unique<Prop>(
+            Prop::PropOptions{FOLIAGE_SHADOW + "SmallBush1", spriteSheetCoords, pos, true, {SIZE_FLEX, SIZE_FLEX},
+                              std::make_unique<CollisionPhysics>(),
+                              std::make_unique<AnimationPlayer>(std::make_unique<RepeatingAnim>(data))});
+}

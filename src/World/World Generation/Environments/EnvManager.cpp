@@ -23,7 +23,6 @@ std::shared_ptr<SingleTileContainer> makeSingleTileContainer(int index) {
             {index * TILE_SIZE_INT_X, 0, TILE_SIZE_INT_X, TILE_SIZE_INT_Y}));
 }
 
-// todo: initialize animated tiles separately
 TileContainer::TileContainers initializeCompleteTiles(int startTile, int numTiles) {
     TileContainer::TileContainers tileContainers;
     for (int i = startTile; i < startTile + numTiles; i++) {
