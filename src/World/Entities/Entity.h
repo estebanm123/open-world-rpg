@@ -8,7 +8,7 @@ class Action;
 
 class EntityVisitor;
 
-class Entity {
+class Entity : sf::NonCopyable {
 public:
     virtual void renderBy(sf::RenderTarget &renderer);
 

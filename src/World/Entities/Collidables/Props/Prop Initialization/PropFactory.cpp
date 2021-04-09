@@ -10,6 +10,6 @@ std::unique_ptr<Prop> PropFactory::generateMainProp(const PropFactory::Position 
     return mainProps.initialize(pos);
 }
 
-PropFactory::PropFactory(std::vector<std::unique_ptr<InitializerMetadata<Prop, PropInitializer::Position>>> decorPropInitializers,
-                         std::vector<std::unique_ptr<InitializerMetadata<Prop, PropInitializer::Position>>> mainPropInitializers)
+PropFactory::PropFactory(std::vector<std::unique_ptr<InitializerMetadata<Prop, PropInitializer::Position>>> mainPropInitializers,
+                         std::vector<std::unique_ptr<InitializerMetadata<Prop, PropInitializer::Position>>> decorPropInitializers)
         : decorProps(std::move(decorPropInitializers)), mainProps(std::move(mainPropInitializers)) {}

@@ -6,7 +6,7 @@
 // TODO: refactor to an initialize function
 typedef std::vector<std::unique_ptr<InitializerMetadata<Prop, PropInitializer::Position>>> InitializerMetadataCollection;
 
-InitializerMetadataCollection initializeSandDecorProps() {
+InitializerMetadataCollection initializeSandMainProps() {
     auto props = InitializerMetadataCollection{};
     props.push_back(std::make_unique<InitializerMetadata<Prop, sf::Vector2f>>(
             std::make_unique<CactusInitializer>(), 150));
@@ -15,7 +15,7 @@ InitializerMetadataCollection initializeSandDecorProps() {
     return props;
 }
 
-InitializerMetadataCollection initializeSandMainProps() {
+InitializerMetadataCollection initializeSandDecorProps() {
     auto props = InitializerMetadataCollection{};
     props.push_back(std::make_unique<InitializerMetadata<Prop, sf::Vector2f>>(
             std::make_unique<RockCoverInitializer>(),
@@ -25,10 +25,10 @@ InitializerMetadataCollection initializeSandMainProps() {
 
 
 SandPropFactory::SandPropFactory() : PropFactory(
-        initializeSandDecorProps(),
-        initializeSandMainProps()) {}
+        initializeSandMainProps(),
+        initializeSandDecorProps()) {}
 
-InitializerMetadataCollection initializeDirtDecorProps() {
+InitializerMetadataCollection initializeDirtMainProps() {
     auto props = InitializerMetadataCollection{};
     props.push_back(
             std::make_unique<InitializerMetadata<Prop, sf::Vector2f>>(std::make_unique<RockInitializer>(), 50));
@@ -41,7 +41,7 @@ InitializerMetadataCollection initializeDirtDecorProps() {
     return props;
 }
 
-InitializerMetadataCollection initializeDirtMainProps() {
+InitializerMetadataCollection initializeDirtDecorProps() {
     auto props = InitializerMetadataCollection{};
     props.push_back(
             std::make_unique<InitializerMetadata<Prop, sf::Vector2f>>(std::make_unique<RockCoverInitializer>(), 50));
@@ -51,5 +51,5 @@ InitializerMetadataCollection initializeDirtMainProps() {
 }
 
 DirtPropFactory::DirtPropFactory() : PropFactory(
-        initializeDirtDecorProps(),
-        initializeDirtMainProps()) {}
+        initializeDirtMainProps(),
+        initializeDirtDecorProps()) {}

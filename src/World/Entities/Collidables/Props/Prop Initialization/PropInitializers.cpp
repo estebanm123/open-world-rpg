@@ -79,7 +79,7 @@ SmallBushInitializer::SmallBushInitializer() : PropInitializer(std::vector<sf::I
 
 std::unique_ptr<Prop>
 SmallBushInitializer::initializeProp(PropInitializer::Position pos, sf::IntRect spriteSheetCoords) {
-    Animation::Metadata data(spriteSheetCoords.width, spriteSheetCoords.height, 0, 2, 0, 400);
+    Animation::Metadata data(spriteSheetCoords.width, spriteSheetCoords.height, 0, 2, 0, 180);
     return std::make_unique<Prop>(
             Prop::PropOptions{FOLIAGE_SHADOW + "SmallBush1", spriteSheetCoords, pos, true, {SIZE_FLEX, SIZE_FLEX},
                               std::make_unique<CollisionPhysics>(),

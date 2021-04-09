@@ -20,7 +20,7 @@ public:
                              std::unique_ptr<CollisionPhysics> collisionPhysics = std::make_unique<CollisionPhysics>(),
                              std::unique_ptr<AnimationPlayer> animPlayer = nullptr)
                 : hasShadow(hasShadow), spriteSheet(std::move(spriteSheet)), defaultFrame(defaultFrame),
-                  size(hitboxSizeOffset + sf::Vector2i{defaultFrame.left, defaultFrame.top}), pos(pos),
+                  size(hitboxSizeOffset + sf::Vector2i{defaultFrame.width, defaultFrame.height}), pos(pos),
                   collisionPhysics(std::move(collisionPhysics)),
                   animPlayer(std::move(animPlayer)) {
         };
