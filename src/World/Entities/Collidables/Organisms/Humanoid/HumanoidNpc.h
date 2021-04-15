@@ -5,10 +5,16 @@
 #include "Humanoid.h"
 
 class HumanoidNpc : public Humanoid {
-    void accept(EntityVisitor * visitor) override;
+public:
+    HumanoidNpc(const sf::Vector2f &globalPosition, const std::string &spriteSheetBody,
+                const std::string &spriteSheetHead, NpcAi<HumanoidNpc> *ai);
 
 private:
-    NpcAi<Humanoid> * ai;
+
+    void accept(EntityVisitor *visitor) override;
+
+private:
+    NpcAi<HumanoidNpc> *ai;
 };
 
 

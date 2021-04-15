@@ -1,18 +1,53 @@
 #pragma once
 
 
-class CollidableEntity;
+#include <memory>
+#include "../../CollidableEntity.h"
+
+
+//template<typename Organism>
+//class ActivityManager<Organism>;
+
+#include "Activities/Activity Managers/ActivityManager.h"
 
 template<class Organism>
-class NpcAi {
+class NpcAi : EntityVisitor {
 public:
-    explicit NpcAi(Organism * organism);
+    explicit NpcAi(std::unique_ptr<BaseActivity<Organism>> activities) : activities(
+            std::move(activities)) {
+    }
 
-    void analyzeCollision(const CollidableEntity & other);
+    void init(Organism *organism) {
+        entity = organism;
+    }
 
-    Organism * getEntity();
+    void update(float dt) {
+        activities->update(dt);
+    }
+
+    void analyzeCollision(CollidableEntity &other) {
+        other.accept(this);
+    };
+
+    void visit(Beast *beast) {
+        activities->visit(beast);
+    }
+
+    void visit(Humanoid *humanoid) {
+        activities->visit(humanoid);
+    }
+
+    void visit(Prop *prop) {
+        activities->visit(prop);
+    }
+
+    Organism *getEntity() {
+        return entity;
+    }
+
 private:
-    Organism * entity;
+    Organism *entity;
+    std::unique_ptr<BaseActivity<Organism>> activities;
 };
 
 

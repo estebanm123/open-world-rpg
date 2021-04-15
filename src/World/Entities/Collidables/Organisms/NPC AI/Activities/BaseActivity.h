@@ -2,20 +2,33 @@
 
 
 #include "../../../../EntityVisitor/EntityVisitor.h"
-#include "../NpcAi.h"
+
+template<class Organism>
+class NpcAi;
+
 
 template<class Organism>
 class BaseActivity : public EntityVisitor {
 public:
-    explicit BaseActivity(NpcAi<Organism> *ai);
+    explicit BaseActivity() : ai(), finished(false), recurring(false) {};
+
+    virtual void initialize(NpcAi<Organism> *npcAi) {
+        ai = npcAi;
+    }
 
     virtual void update(float dt) = 0;
 
-    virtual bool isFinished() const;
+    virtual bool isFinished() const {
+        return finished;
+    };
 
-    virtual bool isRecurring() const;
+    virtual bool isRecurring() const {
+        return recurring;
+    };
 
-    void setFinished(bool finished);
+    void setFinished(bool activityFinished) {
+        finished = activityFinished;
+    };
 
     virtual ~BaseActivity() = default;
 

@@ -6,7 +6,8 @@
 
 
 Humanoid::Humanoid(const sf::Vector2f &globalPosition, const std::string &spriteSheetBody,
-                   const std::string &spriteSheetHead) : OrganismEntity(std::make_unique<SingleHitbox>(sf::FloatRect {globalPosition.x, globalPosition.y, BASE_FRAME_WIDTH / 2.f, BASE_FRAME_HEIGHT / 2.f})),
+                   const std::string &spriteSheetHead) : OrganismEntity(std::make_unique<SingleHitbox>(
+        sf::FloatRect{globalPosition.x, globalPosition.y, BASE_FRAME_WIDTH / 2.f, BASE_FRAME_HEIGHT / 3.f})),
                                                          sprite(initializeSprites(globalPosition, spriteSheetBody,
                                                                                   spriteSheetHead)),
                                                          isPickingUp(false) {
