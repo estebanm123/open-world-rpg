@@ -10,6 +10,11 @@ std::unique_ptr<Prop> PropFactory::generateMainProp(const PropFactory::Position 
     return mainProps.initialize(pos);
 }
 
-PropFactory::PropFactory(std::vector<std::unique_ptr<InitializerMetadata<Prop, PropInitializer::Position>>> mainPropInitializers,
-                         std::vector<std::unique_ptr<InitializerMetadata<Prop, PropInitializer::Position>>> decorPropInitializers)
-        : decorProps(std::move(decorPropInitializers)), mainProps(std::move(mainPropInitializers)) {}
+constexpr static float MAX_PROP_FREQ = 100;
+
+PropFactory::PropFactory(
+        std::vector<std::unique_ptr<InitializerMetadata<Prop, PropInitializer::Position>>> mainPropInitializers,
+        std::vector<std::unique_ptr<InitializerMetadata<Prop, PropInitializer::Position>>> decorPropInitializers,
+        float mainPropScore, float decorPropScore)
+        : decorProps(std::move(decorPropInitializers), decorPropScore, MAX_PROP_FREQ),
+          mainProps(std::move(mainPropInitializers), mainPropScore, MAX_PROP_FREQ) {}

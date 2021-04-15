@@ -10,8 +10,9 @@ public:
 
     typedef PropInitializer::Position Position;
 
-    explicit PropFactory(std::vector<std::unique_ptr<InitializerMetadata<Prop, Position>>> decorProps,
-                         std::vector<std::unique_ptr<InitializerMetadata<Prop, Position>>> mainProps);
+    explicit PropFactory(std::vector<std::unique_ptr<InitializerMetadata<Prop, Position>>> mainProps,
+                         std::vector<std::unique_ptr<InitializerMetadata<Prop, Position>>> decorProps,
+                         float mainPropScore, float decorPropScore);
 
     std::unique_ptr<Prop> generateDecorProp(const Position &pos);
 

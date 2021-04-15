@@ -10,7 +10,7 @@ public:
     typedef sf::Vector2f Position;
 
     PositionBasedInitializerPool(std::vector<std::unique_ptr<InitializerMetadata<T, Position>>> initializers,
-                                 int initializationThreshold = 42, int maxInitializationLim = 50)
+                                 int initializationThreshold = 400, int maxInitializationLim = 500)
             : ScoredInitializerPool<T, Position>(
             std::move(initializers)), initializationThreshold(initializationThreshold),
               maxInitializationLim(maxInitializationLim) {}

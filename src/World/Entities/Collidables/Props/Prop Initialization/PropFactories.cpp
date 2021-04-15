@@ -26,7 +26,8 @@ InitializerMetadataCollection initializeSandDecorProps() {
 
 SandPropFactory::SandPropFactory() : PropFactory(
         initializeSandMainProps(),
-        initializeSandDecorProps()) {}
+        initializeSandDecorProps(),
+        70, 50) {}
 
 InitializerMetadataCollection initializeDirtMainProps() {
     auto props = InitializerMetadataCollection{};
@@ -46,10 +47,11 @@ InitializerMetadataCollection initializeDirtDecorProps() {
     props.push_back(
             std::make_unique<InitializerMetadata<Prop, sf::Vector2f>>(std::make_unique<RockCoverInitializer>(), 50));
     props.push_back(
-            std::make_unique<InitializerMetadata<Prop, sf::Vector2f>>(std::make_unique<GrassCoverInitializer>(), 60));
+            std::make_unique<InitializerMetadata<Prop, sf::Vector2f>>(std::make_unique<GrassCoverInitializer>(), 100));
     return props;
 }
 
 DirtPropFactory::DirtPropFactory() : PropFactory(
         initializeDirtMainProps(),
-        initializeDirtDecorProps()) {}
+        initializeDirtDecorProps(),
+        70, 20) {}
