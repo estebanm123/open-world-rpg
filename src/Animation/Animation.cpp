@@ -19,7 +19,7 @@ void Animation::addFrame(int col, int row) {
     bounds.width = metadata.frameWidth;
     bounds.left = col * metadata.frameWidth;
 
-    frames.emplace_back(bounds, metadata.delay);
+    frames.emplace_back(bounds, metadata.initialDelay);
 }
 
 void Animation::resetAnimation() {
@@ -48,14 +48,15 @@ void Animation::initializeFrames() {
         }
     }
     if (metadata.removeLast) frames.pop_back();
+    applyDelayVariance(metadata.delayVariance);
 }
 
-Animation::AnimPriority Animation::getPriority() const {
+Animation::Priority Animation::getPriority() const {
     return metadata.priority;
 }
 
 void Animation::applyDelayVariance(int variance) {
-    if (variance < 0) {
+    if (variance == 0) {
         return;
     }
     for (auto &frame : frames) {

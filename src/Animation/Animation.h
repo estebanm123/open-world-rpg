@@ -27,33 +27,35 @@ public:
                 int delay,
                 std::vector<int> inversionFrames = {},
                 bool removeLast = false
-        ) : startFrame(startFrame), endFrame(endFrame), delay(sf::milliseconds(delay)),
+        ) : startFrame(startFrame), endFrame(endFrame), initialDelay(sf::milliseconds(delay)),
             inversionFrames(std::move(inversionFrames)), removeLast(removeLast) {}
 
         int startFrame;
         int endFrame;
-        sf::Time delay;
+        sf::Time initialDelay;
         std::vector<int> inversionFrames;
         bool removeLast;
 
     };
 
-    enum class AnimPriority {
+    enum class Priority {
         HIGH = 2, MEDIUM = 1, LOW = 0
     };
 
     struct Metadata : public BaseMetadata {
         Metadata(int frameWidth, int frameHeight, int startFrame, int endFrame, int row,
-                 int delay, std::vector<int> inversionFrames = {}, AnimPriority priority = AnimPriority::LOW,
+                 int delay, std::vector<int> inversionFrames = {}, Priority priority = Priority::LOW,
+                 int delayVariance = 0,
                  bool removeLast = false)
                 : frameWidth(frameWidth), frameHeight(frameHeight),
-                  row(row), priority(priority),
+                  row(row), priority(priority), delayVariance(delayVariance),
                   BaseMetadata(startFrame, endFrame, delay, std::move(inversionFrames), removeLast) {}
 
         int frameWidth;
         int frameHeight;
         int row;
-        AnimPriority priority;
+        Priority priority;
+        int delayVariance;
     };
 
     explicit Animation(Metadata animationData);
@@ -64,7 +66,7 @@ public:
 
     void removeFrame(int index);
 
-    Animation::AnimPriority getPriority() const;
+    Animation::Priority getPriority() const;
 
     void resetAnimation();
 

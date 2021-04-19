@@ -56,7 +56,7 @@ void EnvManager::initializeCompleteTileContainers(Env *env) {
     if (config->animMetadata) {
         auto &animMetadata = config->animMetadata;
         auto numFramesPerTile = animMetadata->endFrame - animMetadata->startFrame + 1;
-        auto delay = animMetadata->delay;
+        auto delay = animMetadata->initialDelay;
         env->setCompleteTileContainers(
                 initializeCompleteAnimatedTiles(0, config->numFullTiles, numFramesPerTile, delay));
     } else {
@@ -89,7 +89,7 @@ void EnvManager::initializeBorderTileContainers(Env *env) {
         for (; curTileIndex < splitsEnd; curTileIndex += numFramesPerTile) {
             if (animMetadata) {
                 splitTileContainers.push_back(
-                        makeAnimatedTileContainer(curTileIndex, numFramesPerTile, animMetadata->delay));
+                        makeAnimatedTileContainer(curTileIndex, numFramesPerTile, animMetadata->initialDelay));
             } else {
                 splitTileContainers.push_back(makeSingleTileContainer(curTileIndex));
             }
@@ -101,7 +101,7 @@ void EnvManager::initializeBorderTileContainers(Env *env) {
         for (; curTileIndex < cornersEnd; curTileIndex += numFramesPerTile) {
             if (animMetadata) {
                 cornerTileContainers.push_back(
-                        makeAnimatedTileContainer(curTileIndex, numFramesPerTile, animMetadata->delay));
+                        makeAnimatedTileContainer(curTileIndex, numFramesPerTile, animMetadata->initialDelay));
             } else {
                 cornerTileContainers.push_back(makeSingleTileContainer(curTileIndex));
             }
