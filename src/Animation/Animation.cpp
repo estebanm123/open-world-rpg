@@ -3,7 +3,7 @@
 
 Animation::Animation(Metadata animationData)
         : metadata(std::move(animationData)) {
-    initializeAnims();
+    initializeFrames();
 }
 
 Random<> Animation::rand = {};
@@ -30,7 +30,7 @@ void Animation::resetAnimation() {
 // assumes all anims span at most 1 row, and are contiguous
 // If there are inverting frame patterns, frames between 'inverting frames'
 // will be repeated in reverse order
-void Animation::initializeAnims() {
+void Animation::initializeFrames() {
     auto prevLimit = metadata.startFrame;
     for (auto inversionFrame : metadata.inversionFrames) {
         for (auto j = prevLimit; j <= inversionFrame; j++) {
@@ -54,8 +54,11 @@ Animation::AnimPriority Animation::getPriority() const {
     return metadata.priority;
 }
 
-void Animation::applyVariance(int variance) {
-    for (auto& frame : frames) {
+void Animation::applyDelayVariance(int variance) {
+    if (variance < 0) {
+        return;
+    }
+    for (auto &frame : frames) {
         auto currentDelay = frame.delay.asMilliseconds();
         int minVariance = currentDelay - variance;
         if (minVariance < 0) minVariance = 0;

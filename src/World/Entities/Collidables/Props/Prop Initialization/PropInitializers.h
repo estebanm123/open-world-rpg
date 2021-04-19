@@ -22,13 +22,18 @@ struct CactusInitializer : public PropInitializer {
     std::unique_ptr<Prop> initializeProp(Position pos, sf::IntRect spriteSheetCoords) override;
 };
 
+struct DesertGrassInitializer : public PropInitializer {
+    DesertGrassInitializer();
+    std::unique_ptr<Prop> initializeProp(Position pos, sf::IntRect spriteSheetCoords) override;
+};
+
 struct BushInitializer : public PropInitializer {
     BushInitializer();
     std::unique_ptr<Prop> initializeProp(Position pos, sf::IntRect spriteSheetCoords) override;
 };
 
 // todo: make a variant of bush?
-struct SmallBushInitializer : PropInitializer {
+struct SmallBushInitializer : public PropInitializer {
     SmallBushInitializer();
     std::unique_ptr<Prop> initializeProp(Position pos, sf::IntRect spriteSheetCoords) override;
 };

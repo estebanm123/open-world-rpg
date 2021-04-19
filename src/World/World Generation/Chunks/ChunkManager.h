@@ -17,8 +17,6 @@ public:
 
     void renderChunks(sf::RenderTarget &target);
 
-    std::vector<Chunk *> getIntersectingChunks(NpcPath::Edge edge);
-
     ~ChunkManager();
 
 private:
@@ -53,7 +51,7 @@ private:
 
     bool inMatrixBounds(const sf::Vector2i &pos);
 
-    void allocateChunkNeighbors(const sf::Vector2i &matrixPos, Chunk * target);
+    void allocateChunkNeighbors(const sf::Vector2i &matrixPos, Chunk *target);
 
     Chunk *getChunkFromDirection(const sf::Vector2i &dir);
 };

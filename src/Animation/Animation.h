@@ -58,7 +58,7 @@ public:
 
     explicit Animation(Metadata animationData);
 
-    void applyVariance(int variance);
+    void applyDelayVariance(int variance);
 
     void addFrame(int col, int row);
 
@@ -76,7 +76,7 @@ public:
     virtual ~Animation() = default;
 
 private:
-    void initializeAnims();
+    void initializeFrames();
 
 protected:
     Metadata metadata;           // animation meta-metadata, customizable from outside

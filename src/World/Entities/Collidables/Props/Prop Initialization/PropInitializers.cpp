@@ -8,7 +8,10 @@ const std::string FOLIAGE = "Foliage/";
 const std::string FOLIAGE_SHADOW = FOLIAGE + "Shadow/";
 constexpr auto SIZE_FLEX = 5; // temp
 
-MushroomInitializer::MushroomInitializer() : PropInitializer(std::vector<sf::IntRect>{{0, 0, 22, 20}}) {}
+// TODO: rename to something more generic or extract flowers into separate initializer
+MushroomInitializer::MushroomInitializer() : PropInitializer(std::vector<sf::IntRect>{{0,  0, 22, 20},
+                                                                                      {22, 0, 13, 15},
+                                                                                      {35, 0, 18, 16}}) {}
 
 std::unique_ptr<Prop>
 MushroomInitializer::initializeProp(Position pos, sf::IntRect spriteSheetCoords) {
@@ -52,7 +55,8 @@ RockInitializer::RockInitializer() : PropInitializer(std::vector<sf::IntRect>{{
                                                                                       {0, 0, 29, 28},
                                                                                       {29, 0, 52, 52},
                                                                                       {81, 0, 25, 29},
-                                                                                      {106, 0, 29, 29}
+                                                                                      {106, 0, 29, 29},
+                                                                                      {135, 0, 19, 18}
                                                                               }}) {}
 
 std::unique_ptr<Prop>
@@ -65,7 +69,7 @@ RockInitializer::initializeProp(Position pos, sf::IntRect spriteSheetCoords) {
 RockCoverInitializer::RockCoverInitializer() : PropInitializer(std::vector<sf::IntRect>{{
                                                                                                 {0, 0, 31, 34},
                                                                                                 {31, 0, 31, 34},
-                                                                                                {62, 0, 31, 34}
+                                                                                                {62, 0, 31, 34},
                                                                                         }}) {}
 
 std::unique_ptr<Prop>
@@ -85,3 +89,16 @@ SmallBushInitializer::initializeProp(PropInitializer::Position pos, sf::IntRect 
                               std::make_unique<CollisionPhysics>(),
                               std::make_unique<AnimationPlayer>(std::make_unique<RepeatingAnim>(data))});
 }
+
+std::unique_ptr<Prop>
+DesertGrassInitializer::initializeProp(PropInitializer::Position pos, sf::IntRect spriteSheetCoords) {
+    return std::make_unique<Prop>(Prop::PropOptions{FOLIAGE + "DesertGrassOverlays", spriteSheetCoords, pos});
+}
+
+DesertGrassInitializer::DesertGrassInitializer() : PropInitializer(std::vector<sf::IntRect>{{
+                                                                                                    {0, 0, 68, 41},
+                                                                                                    {68, 0, 68, 41},
+                                                                                                    {68 * 2, 0, 68, 41}
+
+                                                                                            }}) {}
+

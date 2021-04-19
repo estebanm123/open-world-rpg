@@ -20,6 +20,9 @@ InitializerMetadataCollection initializeSandDecorProps() {
     props.push_back(std::make_unique<InitializerMetadata<Prop, sf::Vector2f>>(
             std::make_unique<RockCoverInitializer>(),
             100));
+    props.push_back(std::make_unique<InitializerMetadata<Prop, sf::Vector2f>>(
+            std::make_unique<DesertGrassInitializer>(),
+            120));
     return props;
 }
 
@@ -36,9 +39,9 @@ InitializerMetadataCollection initializeDirtMainProps() {
     props.push_back(
             std::make_unique<InitializerMetadata<Prop, sf::Vector2f>>(std::make_unique<BushInitializer>(), 30));
     props.push_back(
-            std::make_unique<InitializerMetadata<Prop, sf::Vector2f>>(std::make_unique<MushroomInitializer>(), 10));
+            std::make_unique<InitializerMetadata<Prop, sf::Vector2f>>(std::make_unique<MushroomInitializer>(), 40));
     props.push_back(
-            std::make_unique<InitializerMetadata<Prop, sf::Vector2f>>(std::make_unique<SmallBushInitializer>(), 30));
+            std::make_unique<InitializerMetadata<Prop, sf::Vector2f>>(std::make_unique<SmallBushInitializer>(), 15));
     return props;
 }
 
