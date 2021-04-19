@@ -5,6 +5,7 @@
 
 #include "../Tiles/TileMap.h"
 #include "ChunkCollisionHandler.h"
+#include "../../Entities/Collidables/Organisms/Humanoid/Humanoid.h"
 
 class Player;
 
@@ -57,12 +58,13 @@ private:
     RequestData reqData;
     TileMap tiles;
     sf::Vector2f center; // position? origin?
-    std::unordered_set<std::unique_ptr<Prop>> mainProps;
-    std::unordered_set<std::unique_ptr<Prop>> decorProps;
-    std::unordered_set<MoveableEntity *> moveableEntities;
     Neighbors neighbors;
     ChunkCollisionHandler collisionHandler;
 
+    std::unordered_set<std::unique_ptr<Prop>> mainProps;
+    std::unordered_set<std::unique_ptr<Prop>> decorProps;
+    std::unordered_set<std::unique_ptr<Humanoid>> humanoids;
+    std::unordered_set<MoveableEntity *> moveableEntities;
 
     void updateEntities(float dt);
 
