@@ -6,7 +6,6 @@
 
 const std::string FOLIAGE = "Foliage/";
 const std::string FOLIAGE_SHADOW = FOLIAGE + "Shadow/";
-constexpr auto SIZE_FLEX = 5; // temp
 
 // TODO: rename to something more generic or extract flowers into separate initializer
 MushroomInitializer::MushroomInitializer() : PropInitializer(std::vector<sf::IntRect>{{0,  0, 22, 20},
@@ -35,7 +34,7 @@ BushInitializer::initializeProp(Position pos, sf::IntRect spriteSheetCoords) {
     int end = 2;
     Animation::Metadata data(spriteSheetCoords.width, spriteSheetCoords.height, start, end, 0, delay, {});
     return std::make_unique<Prop>(
-            Prop::PropOptions{FOLIAGE_SHADOW + "ForestFoliage", spriteSheetCoords, pos, true, {SIZE_FLEX, SIZE_FLEX},
+            Prop::PropOptions{FOLIAGE_SHADOW + "ForestFoliage", spriteSheetCoords, pos, true, {-5, -5},
                               std::make_unique<BlockingPhysics>(),
                               std::make_unique<AnimationPlayer>(std::make_unique<RepeatingAnim>(data))});
 }
@@ -62,8 +61,8 @@ RockInitializer::RockInitializer() : PropInitializer(std::vector<sf::IntRect>{{
 std::unique_ptr<Prop>
 RockInitializer::initializeProp(Position pos, sf::IntRect spriteSheetCoords) {
     return std::make_unique<Prop>(
-            Prop::PropOptions{FOLIAGE_SHADOW + "Rocks", spriteSheetCoords, pos, true, {SIZE_FLEX, SIZE_FLEX},
-                              std::make_unique<BlockingPhysics>()});
+            Prop::PropOptions{FOLIAGE_SHADOW + "Rocks", spriteSheetCoords, pos, true, {-5, -5},
+                          std::make_unique<BlockingPhysics>()});
 }
 
 RockCoverInitializer::RockCoverInitializer() : PropInitializer(std::vector<sf::IntRect>{{
@@ -85,7 +84,7 @@ std::unique_ptr<Prop>
 SmallBushInitializer::initializeProp(PropInitializer::Position pos, sf::IntRect spriteSheetCoords) {
     Animation::Metadata data(spriteSheetCoords.width, spriteSheetCoords.height, 0, 2, 0, 250, {}, Animation::Priority::LOW, 50);
     return std::make_unique<Prop>(
-            Prop::PropOptions{FOLIAGE_SHADOW + "SmallBush1", spriteSheetCoords, pos, true, {SIZE_FLEX, SIZE_FLEX},
+            Prop::PropOptions{FOLIAGE_SHADOW + "SmallBush1", spriteSheetCoords, pos, true, {-2, -2},
                               std::make_unique<CollisionPhysics>(),
                               std::make_unique<AnimationPlayer>(std::make_unique<RepeatingAnim>(data))});
 }
