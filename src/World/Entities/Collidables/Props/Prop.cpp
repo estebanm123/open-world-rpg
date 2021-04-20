@@ -36,3 +36,12 @@ void Prop::accept(EntityVisitor *visitor) {
 }
 
 
+void Prop::setIsDecor(bool isDecorProp) {
+    Prop::isDecor = isDecorProp;
+}
+
+bool Prop::isDecorProp() const {
+    return isDecor;
+}
+
+
