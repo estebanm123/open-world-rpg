@@ -35,7 +35,6 @@ public:
         sf::Time initialDelay;
         std::vector<int> inversionFrames;
         bool removeLast;
-
     };
 
     enum class Priority {
@@ -46,9 +45,11 @@ public:
         Metadata(int frameWidth, int frameHeight, int startFrame, int endFrame, int row,
                  int delay, std::vector<int> inversionFrames = {}, Priority priority = Priority::LOW,
                  int delayVariance = 0,
-                 bool removeLast = false)
+                 bool removeLast = false,
+                 sf::Vector2i startFrameRelativePos = {0, 0})
                 : frameWidth(frameWidth), frameHeight(frameHeight),
                   row(row), priority(priority), delayVariance(delayVariance),
+                  startFrameRelativePos(startFrameRelativePos),
                   BaseMetadata(startFrame, endFrame, delay, std::move(inversionFrames), removeLast) {}
 
         int frameWidth;
@@ -56,6 +57,7 @@ public:
         int row;
         Priority priority;
         int delayVariance;
+        sf::Vector2i startFrameRelativePos;
     };
 
     explicit Animation(Metadata animationData);

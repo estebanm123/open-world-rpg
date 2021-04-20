@@ -14,10 +14,10 @@ void Animation::removeFrame(int index) {
 
 void Animation::addFrame(int col, int row) {
     sf::IntRect bounds;
-    bounds.top = row * metadata.frameHeight;
+    bounds.top = metadata.startFrameRelativePos.y + row * metadata.frameHeight;
+    bounds.left = metadata.startFrameRelativePos.x + col * metadata.frameWidth;
     bounds.height = metadata.frameHeight;
     bounds.width = metadata.frameWidth;
-    bounds.left = col * metadata.frameWidth;
 
     frames.emplace_back(bounds, metadata.initialDelay);
 }

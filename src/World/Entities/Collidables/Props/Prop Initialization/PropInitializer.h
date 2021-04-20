@@ -7,15 +7,19 @@
 class Prop;
 
 // Wraps initialization process of a Prop, so it can be passed around/treated like an object
-class PropInitializer : public ArgDependentInitializer<Prop,sf::Vector2f> {
+class PropInitializer : public ArgDependentInitializer<Prop, sf::Vector2f> {
 public:
     typedef sf::Vector2f Position;
+
     explicit PropInitializer(std::vector<sf::IntRect> variants);
 
     std::unique_ptr<Prop> initialize(Position pos) override;
 
     virtual std::unique_ptr<Prop>
-    initializeProp(Position pos, sf::IntRect spriteSheetCoords) = 0;
+    initializeProp(Position pos, sf::IntRect spriteSheetCoords, int variantIndex) = 0;
+
+protected:
+    int computeAnimStartFrame(int variantIndex);
 
 private:
     std::vector<sf::IntRect> variants;
