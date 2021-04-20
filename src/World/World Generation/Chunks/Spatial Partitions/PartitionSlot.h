@@ -6,6 +6,7 @@
 #include "../../../Entities/Collidables/MoveableEntity.h"
 #include "../../../Entities/Collidables/Organisms/Humanoid/Humanoid.h"
 #include "../../../Entities/Collidables/Props/Prop.h"
+#include "SlotEntities.h"
 
 
 class SpatialPartition;
@@ -20,11 +21,9 @@ public:
 
     void handleExternalCollisions(SpatialPartition *owner);
 
-    void addEntity(std::unique_ptr<Entity> entity);
+    void addEntity(const std::shared_ptr<Entity>& entity);
 
+    void removeEntity(const std::shared_ptr<Entity> &entity);
 private:
-    std::unordered_set<std::unique_ptr<Prop>> mainProps;
-    std::unordered_set<std::unique_ptr<Prop>> decorProps;
-    std::unordered_set<std::unique_ptr<Humanoid>> humanoids;
-    std::unordered_set<MoveableEntity *> moveableEntities;
+    SlotEntities entityHolder;
 };
