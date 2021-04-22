@@ -21,8 +21,8 @@ public:
         sf::Vector2f pos; //  pos (center) of central chunk adjacent to it
     };
 
+    // Observes ChunkManager's 3x3 grid of Chunks
     struct Neighbors {
-
         std::unique_ptr<Chunk> *north;
         std::unique_ptr<Chunk> *south;
         std::unique_ptr<Chunk> *west;
@@ -57,7 +57,7 @@ private:
 
     RequestData reqData;
     TileMap tiles;
-    sf::Vector2f center; // position? origin?
+    sf::Vector2f center;
     Neighbors neighbors;
     ChunkCollisionHandler collisionHandler;
 

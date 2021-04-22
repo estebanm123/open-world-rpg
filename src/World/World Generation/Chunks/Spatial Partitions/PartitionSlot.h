@@ -17,13 +17,12 @@ public:
 
     void renderBy(sf::RenderTarget &renderer);
 
-    void handleInternalCollisions();
+    void handleCollisions(SpatialPartition *slots);
 
-    void handleExternalCollisions(SpatialPartition *owner);
-
-    void addEntity(const std::shared_ptr<Entity>& entity);
+    void addEntity(const std::shared_ptr<Entity> &entity);
 
     void removeEntity(const std::shared_ptr<Entity> &entity);
+
 private:
     SlotEntities entityHolder;
 };

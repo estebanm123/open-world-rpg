@@ -6,6 +6,7 @@
 #include <memory>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include "PartitionSlot.h"
+#include "../Chunk.h"
 
 class SpatialPartition {
 public:
@@ -18,13 +19,13 @@ public:
 
     SpatialPartition(const sf::Vector2i &renderZoneDimensions, const sf::Vector2i &collisionZoneDimensions);
 
-    void update(float dt);
+    void updateEntities(float dt, Chunk::Neighbors *chunkNeighbors);
 
-    void renderBy(sf::RenderTarget &renderer);
+    void renderEntities(sf::RenderTarget &renderer);
 
-    void addChunk(sf::Vector2i cardinalDir);
+    void addChunkEntities(sf::Vector2i cardinalDir);
 
-    void removeChunk(sf::Vector2i cardinalDir);
+    void removeChunkEntities(sf::Vector2i cardinalDir);
 
     void getSlotsInRange(sf::FloatRect rangeGlobal);
 

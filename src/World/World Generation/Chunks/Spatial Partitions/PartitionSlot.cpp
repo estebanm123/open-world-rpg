@@ -10,12 +10,11 @@ void PartitionSlot::renderBy(sf::RenderTarget &renderer) {
 
 }
 
-void PartitionSlot::handleInternalCollisions() {
-
-}
-
-void PartitionSlot::handleExternalCollisions(SpatialPartition *owner) {
-
+void PartitionSlot::handleCollisions(SpatialPartition * spatialPartition) {
+    // If hasMoved
+    // Check internal collisions
+    // If still hasMoved
+    // get slot(s) in range of hitbox size
 }
 
 void PartitionSlot::addEntity(const std::shared_ptr<Entity>& entity) {

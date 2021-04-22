@@ -17,7 +17,9 @@ do {                                                        \
 
 
 ChunkManager::ChunkManager(int seed, Player *player, const sf::Vector2f &pos)
-        : generator(seed), generatorThread(std::ref(generator)), player(player) {
+        : generator(seed), generatorThread(std::ref(generator)), player(player),
+          activeZones(player->getPosition(), {RENDER_ZONE_WIDTH, RENDER_ZONE_HEIGHT},
+                      {COLLISION_ZONE_WIDTH, COLLISION_ZONE_HEIGHT}) {
     allocateInitialChunks(pos);
     chunks[1][1]->addMoveable(player);
 }
@@ -186,22 +188,26 @@ void ChunkManager::updateChunks(float dt) {
     }
 }
 
-// Check if any new chunks have loaded and allocate them, and notifies generator to keep generating
-// Also updates every chunk.
-void ChunkManager::update(float dt) {
-    handleChunkChange();
 
-    // refactor to sensibly named helper
+void ChunkManager::allocateNewlyGeneratedChunks() {
     auto chunk = generator.getGeneratedChunk();
     while (chunk != nullptr) {
         allocateChunkFromDirection(chunk, chunk->getReqData().dir);
         chunk = generator.getGeneratedChunk();
     }
-
-    updateChunks(dt);
 }
 
-// initialize chunks around the relative position to player
+// Check if any new chunks have loaded and allocate them, and notifies generator to keep generating
+// Also updates every chunk.
+void ChunkManager::update(float dt) {
+    handleChunkChange();
+
+    allocateNewlyGeneratedChunks();
+    updateChunks(dt);
+    activeZones.updateZones(dt, player->getPosition());
+}
+
+// Blocks until completion of 9 fully generated chunks
 void ChunkManager::allocateInitialChunks(const sf::Vector2f &pos) {
     for (auto dir : directions) {
         generator.requestChunk({dir, pos});
@@ -234,7 +240,7 @@ void ChunkManager::allocateChunkNeighbors(const sf::Vector2i &matrixPos, Chunk *
     Chunk::Neighbors neighbors{};
     sf::Vector2i westNeighborPos = matrixPos + WEST;
     if (westNeighborPos.x >= 0) {
-       neighbors.west = &chunks[westNeighborPos.y][westNeighborPos.x];
+        neighbors.west = &chunks[westNeighborPos.y][westNeighborPos.x];
     }
     sf::Vector2i eastNeighborPos = matrixPos + EAST;
     if (eastNeighborPos.x <= MATRIX_LEN) {
