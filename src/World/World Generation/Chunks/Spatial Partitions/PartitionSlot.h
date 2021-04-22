@@ -19,6 +19,8 @@ public:
 
     void handleCollisions(SpatialPartition *slots);
 
+    void handleExternalCollision(MoveableEntity *externalEntity);
+
     void addEntity(const std::shared_ptr<Entity> &entity);
 
     void removeEntity(const std::shared_ptr<Entity> &entity);

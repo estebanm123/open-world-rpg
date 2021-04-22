@@ -8,6 +8,9 @@
 #include "PartitionSlot.h"
 #include "../Chunk.h"
 
+
+class ActiveZones;
+
 class SpatialPartition {
 public:
     constexpr static int HORIZONTAL_PARTITIONS_PER_CHUNK = 4;
@@ -17,11 +20,11 @@ public:
     constexpr static int NUM_VERTICAL_CHUNKS = 3;
     constexpr static int NUM_HORIZONTAL_CHUNKS = NUM_VERTICAL_CHUNKS;
 
-    SpatialPartition(const sf::Vector2i &renderZoneDimensions, const sf::Vector2i &collisionZoneDimensions);
+    SpatialPartition();
 
-    void updateEntities(float dt, Chunk::Neighbors *chunkNeighbors);
+    void updateEntities(float dt, Chunk::Neighbors *chunkNeighbors, const ActiveZones &activeZones);
 
-    void renderEntities(sf::RenderTarget &renderer);
+    void renderEntities(sf::RenderTarget &renderer, const ActiveZones &activeZones);
 
     void addChunkEntities(sf::Vector2i cardinalDir);
 
@@ -32,7 +35,5 @@ public:
 private:
     std::array<std::array<std::unique_ptr<PartitionSlot>, VERTICAL_PARTITIONS_PER_CHUNK * NUM_VERTICAL_CHUNKS>,
             HORIZONTAL_PARTITIONS_PER_CHUNK * NUM_HORIZONTAL_CHUNKS> slots;
-    sf::Vector2i renderZoneDimensions;
-    sf::Vector2i collisionZoneDimensions;
 };
 

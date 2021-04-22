@@ -1,7 +1,7 @@
 ﻿
 #include <utility>
 #include <unordered_set>
-#include <iostream>
+#include "Spatial Partitions/SpatialPartition.h"
 
 #include "Chunk.h"
 #include "../Tiles/Tile.h"
@@ -79,6 +79,11 @@ void Chunk::removeMoveable(MoveableIter &it) {
 
 void Chunk::setNeighbors(const Chunk::Neighbors &newNeighbors) {
     neighbors = newNeighbors;
+}
+
+void Chunk::render(sf::RenderTarget &renderer) {
+    renderTiles(renderer);
+    renderProps(renderer);
 }
 
 

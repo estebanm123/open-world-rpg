@@ -7,12 +7,13 @@
 #include "ChunkCollisionHandler.h"
 #include "../../Entities/Collidables/Organisms/Humanoid/Humanoid.h"
 
+class SpatialPartition;
+
 class Player;
 
 class MoveableEntity;
 
 class Prop;
-
 
 class Chunk {
 public:
@@ -40,18 +41,22 @@ public:
 
     void update(float dt);
 
-    void renderTiles(sf::RenderTarget &target);
-
-    void renderProps(sf::RenderTarget &target);
+    void render(sf::RenderTarget &renderer);
 
     void setNeighbors(const Neighbors &newNeighbors);
 
     void addMoveable(MoveableEntity *moveable, bool checkCollision = false);
 
 private:
+    void renderTiles(sf::RenderTarget &target);
+
+    void renderProps(sf::RenderTarget &target);
+
     typedef std::unordered_set<MoveableEntity *>::iterator MoveableIter;
 
     void removeMoveable(MoveableIter &it);
+
+    void updateEntities(float dt);
 
     friend class ChunkCollisionHandler;
 
@@ -59,13 +64,13 @@ private:
     TileMap tiles;
     sf::Vector2f center;
     Neighbors neighbors;
-    ChunkCollisionHandler collisionHandler;
+    std::unique_ptr<SpatialPartition> spatialPartition;
 
+    ChunkCollisionHandler collisionHandler;
     std::unordered_set<std::unique_ptr<Prop>> mainProps;
     std::unordered_set<std::unique_ptr<Prop>> decorProps;
     std::unordered_set<std::unique_ptr<Humanoid>> humanoids;
     std::unordered_set<MoveableEntity *> moveableEntities;
 
-    void updateEntities(float dt);
 
 };

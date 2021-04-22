@@ -1,5 +1,5 @@
 ﻿#include "ChunkGenerator.h"
-
+#include "Spatial Partitions/SpatialPartition.h"
 
 #include <iostream>
 #include <memory>
