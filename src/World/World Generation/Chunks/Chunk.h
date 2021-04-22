@@ -6,6 +6,7 @@
 #include "../Tiles/TileMap.h"
 #include "ChunkCollisionHandler.h"
 #include "../../Entities/Collidables/Organisms/Humanoid/Humanoid.h"
+#include "Spatial Partitions/ActiveZones.h"
 
 class SpatialPartition;
 
@@ -39,9 +40,9 @@ public:
 
     const sf::Vector2f &getCenter() const;
 
-    void update(float dt);
+    void update(float dt, const ActiveZones &activeZones);
 
-    void render(sf::RenderTarget &renderer);
+    void render(sf::RenderTarget &renderer, const ActiveZones &activeZones);
 
     void setNeighbors(const Neighbors &newNeighbors);
 
@@ -50,13 +51,9 @@ public:
 private:
     void renderTiles(sf::RenderTarget &target);
 
-    void renderProps(sf::RenderTarget &target);
-
     typedef std::unordered_set<MoveableEntity *>::iterator MoveableIter;
 
     void removeMoveable(MoveableIter &it);
-
-    void updateEntities(float dt);
 
     friend class ChunkCollisionHandler;
 
@@ -64,7 +61,7 @@ private:
     TileMap tiles;
     sf::Vector2f center;
     Neighbors neighbors;
-    std::unique_ptr<SpatialPartition> spatialPartition;
+    std::unique_ptr<SpatialPartition> entitySpatialPartition;
 
     ChunkCollisionHandler collisionHandler;
     std::unordered_set<std::unique_ptr<Prop>> mainProps;

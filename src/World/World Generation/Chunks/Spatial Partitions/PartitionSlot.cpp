@@ -3,11 +3,25 @@
 #include "PartitionSlot.h"
 
 void PartitionSlot::update(float dt) {
-
+    for (auto &moveable : entityHolder.moveableEntities) {
+        moveable->update(dt);
+    }
+    for (auto &prop : entityHolder.mainProps) {
+        prop->update(dt);
+    }
 }
 
 void PartitionSlot::renderBy(sf::RenderTarget &renderer) {
-
+    // todo: add debug render option
+    for (auto &prop : entityHolder.decorProps) {
+        prop->renderBy(renderer);
+    }
+    for (auto &prop  : entityHolder.mainProps) {
+        prop->renderBy(renderer);
+    }
+    for (auto &moveable : entityHolder.moveableEntities) {
+        moveable->renderBy(renderer);
+    }
 }
 
 void PartitionSlot::handleCollisions(SpatialPartition *spatialPartition) {
@@ -22,11 +36,10 @@ void PartitionSlot::handleExternalCollision(MoveableEntity *externalEntity) {
 }
 
 void PartitionSlot::addEntity(const std::shared_ptr<Entity> &entity) {
-
+    entityHolder.addEntity(entity);
 }
 
 void PartitionSlot::removeEntity(const std::shared_ptr<Entity> &entity) {
-
-
+    entityHolder.removeEntity(entity);
 }
 

@@ -66,7 +66,7 @@ void ChunkManager::renderChunks(sf::RenderTarget &target) {
     for (auto i = 0; i < 3; ++i) {
         for (auto j = 0; j < 3; ++j) {
             if (chunks[i][j]) {
-                chunks[i][j]->render(target);
+                chunks[i][j]->render(target, <#initializer#>);
            }
         }
    }
@@ -180,7 +180,7 @@ bool ChunkManager::inMatrixBounds(const sf::Vector2i &pos) {
 void ChunkManager::updateChunks(float dt) {
     for (const auto &chunkRow : chunks) {
         for (const auto &chunk : chunkRow) {
-            if (chunk) chunk->update(dt);
+            if (chunk) chunk->update(dt, <#initializer#>);
         }
     }
 }

@@ -21,7 +21,7 @@ public:
         }
 
         auto currentActivity = activities.front().get();
-        currentActivity.update(dt);
+        currentActivity.update(dt, <#initializer#>);
         handleActivityCompletion(currentActivity);
     }
 

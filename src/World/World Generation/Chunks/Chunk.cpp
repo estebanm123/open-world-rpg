@@ -24,15 +24,6 @@ const sf::Vector2f &Chunk::getCenter() const {
     return center;
 }
 
-void Chunk::renderProps(sf::RenderTarget &target) {
-    for (auto &prop : decorProps) {
-        prop->renderBy(target);
-    }
-    for (auto &prop  : mainProps) {
-        prop->renderBy(target);
-    }
-}
-
 void Chunk::renderTiles(sf::RenderTarget &target) {
     tiles.renderBy(target);
 }
@@ -40,8 +31,7 @@ void Chunk::renderTiles(sf::RenderTarget &target) {
 sf::Vector2f Chunk::getCenterFromReqData(const Chunk::RequestData &data) {
     using namespace worldConstants;
     sf::Vector2f dirFromPrevCenter = {data.dir.x * CHUNK_SIZE.x, data.dir.y * CHUNK_SIZE.y * -1};
-    if (data.dir.x && data.dir.y) // assumes chunks are squares
-    {
+    if (data.dir.x && data.dir.y) { // assumes chunks are square
         return data.pos + dirFromPrevCenter;
     }
     if (data.dir.x) {
@@ -50,20 +40,10 @@ sf::Vector2f Chunk::getCenterFromReqData(const Chunk::RequestData &data) {
     return {data.pos.x, data.pos.y + dirFromPrevCenter.y};
 }
 
-void Chunk::update(float dt) {
-    updateEntities(dt);
-    collisionHandler.handleCollisions();
+void Chunk::update(float dt, const ActiveZones &activeZones) {
+    entitySpatialPartition->updateEntities(dt, this, activeZones);
 }
 
-void Chunk::updateEntities(float dt) {
-    for (auto &moveable : moveableEntities) {
-        moveable->update(dt);
-    }
-    for (auto &Prop : mainProps) {
-        Prop->update(dt);
-    }
-    // update decor props??
-}
 
 void Chunk::addMoveable(MoveableEntity *moveable, bool checkCollision) {
     // eventually call some overloaded helpers to add to humanoids, items, etc...
@@ -81,9 +61,9 @@ void Chunk::setNeighbors(const Chunk::Neighbors &newNeighbors) {
     neighbors = newNeighbors;
 }
 
-void Chunk::render(sf::RenderTarget &renderer) {
+void Chunk::render(sf::RenderTarget &renderer, const ActiveZones &activeZones) {
     renderTiles(renderer);
-    renderProps(renderer);
+    entitySpatialPartition->renderEntities(renderer, activeZones);
 }
 
 
