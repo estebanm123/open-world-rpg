@@ -1,6 +1,7 @@
 
 
 #include "PartitionSlot.h"
+#include "../Chunk.h"
 
 void PartitionSlot::update(float dt) {
     for (auto &moveable : entityHolder.moveableEntities) {
@@ -24,7 +25,7 @@ void PartitionSlot::renderBy(sf::RenderTarget &renderer) {
     }
 }
 
-void PartitionSlot::handleCollisions(SpatialPartition *spatialPartition) {
+void PartitionSlot::handleCollisions(SpatialPartition *slots, Chunk *chunkOwner) {
     // If hasMoved
     // Check internal collisions - create reusable helper
     // If still hasMoved

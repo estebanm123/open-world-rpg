@@ -10,7 +10,7 @@ public:
 
     void update(float dt, sf::Vector2f playerPos);
 
-    bool containsSlot(const sf::IntRect &slotCoords) const;
+    bool containsSlot(sf::Vector2f slotTopLeftCoords, sf::Vector2i slotSize) const;
 
 private:
     sf::Vector2f centerPos;

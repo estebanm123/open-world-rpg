@@ -7,6 +7,7 @@
 #include "../../../Entities/Collidables/Organisms/Humanoid/Humanoid.h"
 #include "../../../Entities/Collidables/Props/Prop.h"
 #include "SlotEntities.h"
+#include "../Chunk.h"
 
 
 class SpatialPartition;
@@ -15,9 +16,9 @@ class PartitionSlot {
 public:
     void update(float dt);
 
-    void renderBy(sf::RenderTarget &renderer);
+    void handleCollisions(SpatialPartition *slots, Chunk *chunkOwner);
 
-    void handleCollisions(SpatialPartition *slots);
+    void renderBy(sf::RenderTarget &renderer);
 
     void handleExternalCollision(MoveableEntity *externalEntity);
 
@@ -27,4 +28,5 @@ public:
 
 private:
     SlotEntities entityHolder;
+
 };

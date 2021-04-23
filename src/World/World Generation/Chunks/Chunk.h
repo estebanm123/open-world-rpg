@@ -42,6 +42,8 @@ public:
 
     void update(float dt, const ActiveZones &activeZones);
 
+    SpatialPartition * getSpatialPartition();
+
     void render(sf::RenderTarget &renderer, const ActiveZones &activeZones);
 
     void setNeighbors(const Neighbors &newNeighbors);

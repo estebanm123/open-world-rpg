@@ -2,11 +2,9 @@
 #include <utility>
 #include <unordered_set>
 #include "Spatial Partitions/SpatialPartition.h"
-
-#include "Chunk.h"
 #include "../Tiles/Tile.h"
 #include "../Environments/CompleteEnv.h"
-#include "../../Entities/Collidables/Props/Prop.h"
+#include "Chunk.h"
 
 
 Chunk::Chunk(const RequestData &reqData, TileMap tiles, const sf::Vector2f &center,
@@ -44,7 +42,6 @@ void Chunk::update(float dt, const ActiveZones &activeZones) {
     entitySpatialPartition->updateEntities(dt, this, activeZones);
 }
 
-
 void Chunk::addMoveable(MoveableEntity *moveable, bool checkCollision) {
     // eventually call some overloaded helpers to add to humanoids, items, etc...
     moveableEntities.insert(moveable);
@@ -64,6 +61,10 @@ void Chunk::setNeighbors(const Chunk::Neighbors &newNeighbors) {
 void Chunk::render(sf::RenderTarget &renderer, const ActiveZones &activeZones) {
     renderTiles(renderer);
     entitySpatialPartition->renderEntities(renderer, activeZones);
+}
+
+SpatialPartition *Chunk::getSpatialPartition() {
+    return entitySpatialPartition.get();
 }
 
 

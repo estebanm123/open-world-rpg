@@ -9,7 +9,9 @@ void ActiveZone::update(float dt, sf::Vector2f playerPos) {
     centerPos = playerPos;
 }
 
-bool ActiveZone::containsSlot(const sf::IntRect &slotCoords) const {
-    return slotCoords.left > centerPos.x - (size.x / 2.f) && slotCoords.left < centerPos.x + (size.x / 2.f) ||
-           slotCoords.top > centerPos.y - (size.y / 2.f) || slotCoords.top < centerPos.y + (size.y / 2.f);
+bool ActiveZone::containsSlot(sf::Vector2f slotTopLeftCoords, sf::Vector2i slotSize) const {
+    return slotTopLeftCoords.x > centerPos.x - (size.x / 2.f) &&
+           slotTopLeftCoords.x + slotSize.x < centerPos.x + (size.x / 2.f) ||
+           slotTopLeftCoords.y > centerPos.y - (size.y / 2.f) ||
+           slotTopLeftCoords.y + slotSize.y < centerPos.y + (size.y / 2.f);
 }
