@@ -71,7 +71,7 @@ bool
 ChunkPropGenerator::isPropOverlappingOthersAndMarkAsSeen(Prop *prop, const sf::Vector2i &localCoords,
                                                          TilesSeen &tilesSeen,
                                                          const TileMap &tiles) {
-    auto &entitySize = prop->getSize();
+    auto entitySize = prop->getSize();
     auto &entityPos = prop->getPosition();
     auto entityMaxLen = std::max(entitySize.y, entitySize.x) / PROP_COLLISION_LENIENCY_FACTOR; // take max to be safe; entity could be rotated
 

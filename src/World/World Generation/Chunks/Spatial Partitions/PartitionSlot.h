@@ -16,7 +16,7 @@ class PartitionSlot {
 public:
     void update(float dt);
 
-    void handleCollisions(SpatialPartition *slots, Chunk *chunkOwner);
+    void handleCollisions(SpatialPartition *slots);
 
     void renderBy(sf::RenderTarget &renderer);
 

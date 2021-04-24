@@ -39,7 +39,7 @@ sf::Vector2f Chunk::getCenterFromReqData(const Chunk::RequestData &data) {
 }
 
 void Chunk::update(float dt, const ActiveZones &activeZones) {
-    entitySpatialPartition->updateEntities(dt, this, activeZones);
+    entitySpatialPartition->updateEntities(dt, activeZones);
 }
 
 void Chunk::addMoveable(MoveableEntity *moveable, bool checkCollision) {

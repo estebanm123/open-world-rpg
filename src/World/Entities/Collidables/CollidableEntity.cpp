@@ -23,7 +23,7 @@ void debugRenderHitbox(sf::RenderTarget &renderer, Hitbox *hitbox) {
 CollidableEntity::CollidableEntity(std::unique_ptr<Hitbox> hitbox) : hitbox(std::move(hitbox)) {
 }
 
-const sf::Vector2f &CollidableEntity::getSize() const {
+sf::Vector2f CollidableEntity::getSize() {
     return hitbox->getSize();
 }
 

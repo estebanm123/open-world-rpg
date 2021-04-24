@@ -44,7 +44,7 @@ bool TileMap::isEntityCrossingBounds(CollidableEntity *entity) const {
     auto yChunkLim = CHUNK_SIZE.y + pos.y;
     auto xChunkLim = CHUNK_SIZE.x + pos.x;
 
-    auto &entitySize = entity->getSize();
+    auto entitySize = entity->getSize();
     auto &entityPos = entity->getPosition();
     auto entityMaxLen = std::max(entitySize.y, entitySize.x); // take max to be safe; entity could be rotated
 

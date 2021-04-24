@@ -18,6 +18,8 @@ public:
 
     virtual void setPosition(const sf::Vector2f &pos);
 
+    virtual sf::Vector2f getSize();
+
     virtual void setRotation(float angle);
 
     virtual float getRotationAngle();
@@ -26,18 +28,18 @@ public:
 
     virtual ~Entity() = default;
 
-    virtual void accept(EntityVisitor * visitor) = 0;
+    virtual void accept(EntityVisitor *visitor) = 0;
 
 protected:
     virtual EntitySprite &getSprite() = 0;
 
-    void setCurrentAction(Action const * currentAction);
+    void setCurrentAction(Action const *currentAction);
 
-    Action const * getCurrentAction() const;
+    Action const *getCurrentAction() const;
 
     void resetCurrentAction();
 
 private:
-    Action const * currentAction = nullptr;
+    Action const *currentAction = nullptr;
 
 };

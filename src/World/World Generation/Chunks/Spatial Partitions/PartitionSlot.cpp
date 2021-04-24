@@ -25,7 +25,7 @@ void PartitionSlot::renderBy(sf::RenderTarget &renderer) {
     }
 }
 
-void PartitionSlot::handleCollisions(SpatialPartition *slots, Chunk *chunkOwner) {
+void PartitionSlot::handleCollisions(SpatialPartition *slots) {
     // If hasMoved
     // Check internal collisions - create reusable helper
     // If still hasMoved

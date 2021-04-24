@@ -13,15 +13,18 @@ public:
         Config(const std::string &spriteSheet, const sf::Vector2f &pos, const sf::Vector2f &origin,
                std::unique_ptr<AnimationPlayer> animPlayer = nullptr,
                const sf::IntRect &defaultFrame = animConstants::EMPTY_FRAME);
-        const std::string & spriteSheet;
-        const sf::Vector2f & pos;
+
+        const std::string &spriteSheet;
+        const sf::Vector2f &pos;
         const sf::Vector2f &origin;
         std::unique_ptr<AnimationPlayer> animPlayer;
-        const sf::IntRect & defaultFrame;
+        const sf::IntRect &defaultFrame;
     };
 
     // CONFIG IS NOT USEABLE AFTER
     explicit SpriteReg(Config config);
+
+    sf::Vector2f getSize() override;
 
     void renderBy(sf::RenderTarget &renderer) override;
 
@@ -53,7 +56,7 @@ protected:
     sf::Sprite sprite;
     std::unique_ptr<AnimationPlayer> animPlayer;
 
-    void setTextureRectUtil(const sf::IntRect & frame);
+    void setTextureRectUtil(const sf::IntRect &frame);
 };
 
 

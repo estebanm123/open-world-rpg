@@ -14,7 +14,7 @@ class CollidableEntity : public Entity {
 public:
     explicit CollidableEntity(std::unique_ptr<Hitbox> hitbox);
 
-    const sf::Vector2f &getSize() const;
+    sf::Vector2f getSize() override;
 
     void setRotation(float angle) override;
 

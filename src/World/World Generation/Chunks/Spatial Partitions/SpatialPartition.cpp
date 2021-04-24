@@ -9,13 +9,13 @@ bool SpatialPartition::activeZoneContainsSlot(int row, int col, const ActiveZone
             {SLOT_WIDTH, SLOT_HEIGHT});
 }
 
-void SpatialPartition::updateEntities(float dt, Chunk *chunkOwner, const ActiveZones &activeZones) {
+void SpatialPartition::updateEntities(float dt, const ActiveZones &activeZones) {
     for (auto row = 0; row < slots.size(); row++) {
         for (auto col = 0; col < slots[0].size(); col++) {
             auto &slot = slots[row][col];
             slot->update(dt);
             if (activeZoneContainsSlot(row, col, activeZones.collisionZone)) {
-                slot->handleCollisions(this, chunkOwner);
+                slot->handleCollisions(this);
             }
         }
     }
@@ -34,6 +34,7 @@ void SpatialPartition::renderEntities(sf::RenderTarget &renderer, const ActiveZo
 
 void SpatialPartition::addNewEntity(std::unique_ptr<Entity> entity) {
     // add new entity based on its position
+
 }
 
 void SpatialPartition::getSlotsInRange(sf::FloatRect rangeGlobal) {

@@ -19,8 +19,6 @@ void Entity::rotate(float angle) {
     getSprite().rotate(angle);
 }
 
-
-
 void Entity::renderBy(sf::RenderTarget &renderer) {
     if (currentAction) {
         getSprite().playAnim(currentAction);
@@ -43,4 +41,8 @@ void Entity::setCurrentAction(Action const *newAction) {
 
 void Entity::resetCurrentAction() {
     currentAction = nullptr;
+}
+
+sf::Vector2f Entity::getSize() {
+    return getSprite().getSize();
 }

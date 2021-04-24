@@ -16,11 +16,11 @@ public:
     const static int SLOT_WIDTH;
     const static int SLOT_HEIGHT;
 
-    SpatialPartition(sf::Vector2f topLeftCoords);
+    SpatialPartition(sf::Vector2f topLeftCoords, Chunk::Neighbors &chunkNeighbors);
 
     bool activeZoneContainsSlot(int row, int col, const ActiveZone &activeZone) const;
 
-    void updateEntities(float dt, Chunk *chunkOwner, const ActiveZones &activeZones);
+    void updateEntities(float dt, const ActiveZones &activeZones);
 
     void renderEntities(sf::RenderTarget &renderer, const ActiveZones &activeZones);
 
@@ -34,5 +34,6 @@ private:
     typedef std::array<std::array<std::unique_ptr<PartitionSlot>, VERTICAL_PARTITIONS_PER_CHUNK>, HORIZONTAL_PARTITIONS_PER_CHUNK> Slots;
     Slots slots;
     sf::Vector2f topLeftCoords;
+    Chunk::Neighbors &chunkNeighbors;
 };
 
