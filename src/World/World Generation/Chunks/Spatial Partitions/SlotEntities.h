@@ -8,6 +8,8 @@
 class MoveableEntity;
 
 struct SlotEntities {
+public:
+    // could make this private, but it would just be a bunch of getters
     std::unordered_set<MoveableEntity *> moveableEntities;
     std::unordered_set<std::shared_ptr<Entity>> entities;
     std::unordered_set<Prop *> mainProps;
@@ -16,15 +18,16 @@ struct SlotEntities {
 
     SlotEntities();
 
-    void addEntity(const std::shared_ptr<Entity>& entity);
+    void addEntity(const std::shared_ptr<Entity> &entity);
 
-    void removeEntity(const std::shared_ptr<Entity>& entity);
+    void removeEntity(const std::shared_ptr<Entity> &entity);
+
+    std::shared_ptr<Entity> removeAndTransferEntity(Entity *entity);
 
 private:
-
     class Adder : EntityVisitor {
     public:
-        void addEntity(const std::shared_ptr<Entity>& entity);
+        void addEntity(const std::shared_ptr<Entity> &entity);
 
         Adder(SlotEntities *slotEntities);
 
@@ -40,7 +43,7 @@ private:
 
     class Remover : EntityVisitor {
     public:
-        void removeEntity(const std::shared_ptr<Entity>& entity);
+        void removeEntity(const std::shared_ptr<Entity> &entity);
 
         Remover(SlotEntities *slotEntities);
 

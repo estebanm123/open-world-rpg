@@ -33,8 +33,8 @@ void PartitionSlot::handleCollisions(SpatialPartition *slots) {
         auto &moveable = *it;
         auto oldCoordinates = moveable->getPosition();
 
+
         handleCollisionsWithOtherEntities(moveable);
-        // todo: get MoveableEntity shared_ptr from moveable *
         handleCollisionsWithOtherSlotEntities(moveable, slots);
 
         if (isNoLongerInSlot(moveable, oldCoordinates)) {
@@ -79,7 +79,7 @@ void PartitionSlot::handleCollisionsWithOtherEntities(MoveableEntity *moveable) 
     }
 }
 
-void PartitionSlot::handleCollisionsWithOtherSlotEntities(const std::shared_ptr<MoveableEntity> &moveable,
+void PartitionSlot::handleCollisionsWithOtherSlotEntities(MoveableEntity *moveable,
                                                           SpatialPartition *slots) {
     auto moveablePos = moveable->getPosition();
     auto moveableSize = moveable->getSize();
@@ -88,9 +88,13 @@ void PartitionSlot::handleCollisionsWithOtherSlotEntities(const std::shared_ptr<
 
     for (auto slot : slotsInRange) {
         auto oldCoordinates = moveable->getPosition();
-        slot->handleExternalCollision(moveable.get());
-        if (isNoLongerInSlot(moveable.get(), oldCoordinates)) {
-            slot->addEntity(moveable);
+        slot->handleExternalCollision(moveable);
+
+        if (isNoLongerInSlot(moveable, oldCoordinates)) {
+            auto entityPtr = entityHolder.removeAndTransferEntity(moveable);
+            if (entityPtr != nullptr) {
+                slot->addEntity(entityPtr);
+            }
         }
     }
 }

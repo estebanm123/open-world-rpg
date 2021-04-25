@@ -1,11 +1,9 @@
 #include "../../../Entities/Entity.h"
 #include "SlotEntities.h"
-
-#include <utility>
 #include "../../../Entities/Collidables/Props/Prop.h"
 #include "../../../Entities/Collidables/Organisms/Humanoid/Humanoid.h"
 
-void SlotEntities::Remover::removeEntity(const std::shared_ptr<Entity>& entity) {
+void SlotEntities::Remover::removeEntity(const std::shared_ptr<Entity> &entity) {
     entity->accept(this);
     slotEntities->entities.erase(entity);
 }
@@ -26,7 +24,7 @@ void SlotEntities::Remover::visit(Beast *beast) {}
 
 SlotEntities::Remover::Remover(SlotEntities *slotEntities) : slotEntities(slotEntities) {}
 
-void SlotEntities::Adder::addEntity(const std::shared_ptr<Entity>& entity) {
+void SlotEntities::Adder::addEntity(const std::shared_ptr<Entity> &entity) {
     entity->accept(this);
     slotEntities->entities.insert(entity);
 }
@@ -49,10 +47,37 @@ SlotEntities::Adder::Adder(SlotEntities *slotEntities) : slotEntities(slotEntiti
 
 SlotEntities::SlotEntities() : adder(this), remover(this) {}
 
-void SlotEntities::addEntity(const std::shared_ptr<Entity>& entity) {
+void SlotEntities::addEntity(const std::shared_ptr<Entity> &entity) {
     adder.addEntity(entity);
 }
 
-void SlotEntities::removeEntity(const std::shared_ptr<Entity>& entity) {
-
+void SlotEntities::removeEntity(const std::shared_ptr<Entity> &entity) {
+    remover.removeEntity(entity);
 }
+
+std::shared_ptr<Entity> SlotEntities::removeAndTransferEntity(Entity *entity) {
+    std::shared_ptr<Entity> transferResult;
+
+    std::shared_ptr<Entity> tempEntityPtr = std::shared_ptr<Entity>(std::shared_ptr<Entity>{},
+                                                                    entity); // WARNING: has no deleter
+    auto searchResult = entities.find(tempEntityPtr);
+    if (searchResult != entities.end()) {
+        transferResult = *searchResult;
+        removeEntity(transferResult);
+    }
+
+    return transferResult;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
