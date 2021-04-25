@@ -37,7 +37,7 @@ void ChunkCollisionHandler::handleCollisionsWithOtherEntities(MoveableEntity *mo
     }
 
     for (auto &prop : chunk->mainProps) {
-        const auto hitboxes = moveable->getHitbox()->getIntersectingSingleHitboxes(prop->getHitbox());
+        auto hitboxes = moveable->getHitbox()->getIntersectingSingleHitboxes(prop->getHitbox());
         if (hitboxes.first == nullptr || hitboxes.second == nullptr) continue; // no collision
         hitboxes.first->handleCollision(moveable, prop.get());
         hitboxes.second->handleCollision(prop.get(), moveable);

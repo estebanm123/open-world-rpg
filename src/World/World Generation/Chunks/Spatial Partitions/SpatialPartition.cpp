@@ -32,12 +32,30 @@ void SpatialPartition::renderEntities(sf::RenderTarget &renderer, const ActiveZo
     }
 }
 
-void SpatialPartition::addNewEntity(std::unique_ptr<Entity> entity) {
-    // add new entity based on its position
+void SpatialPartition::addNewEntity(const std::shared_ptr<Entity>& entity) {
+    auto &entityPos = entity->getPosition();
+    auto entitySize = entity->getSize();
+    auto entityTopLeft = entityPos - sf::Vector2f{entitySize.x / 2, entitySize.y / 2};
+    auto relativeEntityCoords = topLeftCoords - entityTopLeft;
 
+    if (relativeEntityCoords.x < 0) {
+        relativeEntityCoords.x = 0;
+    } else if (relativeEntityCoords.x > SLOT_WIDTH * HORIZONTAL_PARTITIONS_PER_CHUNK) {
+        relativeEntityCoords.x = SLOT_WIDTH * HORIZONTAL_PARTITIONS_PER_CHUNK;
+    }
+    if (relativeEntityCoords.y < 0) {
+        relativeEntityCoords.y = 0;
+    } else if (relativeEntityCoords.y > SLOT_HEIGHT * VERTICAL_PARTITIONS_PER_CHUNK) {
+        relativeEntityCoords.y = SLOT_HEIGHT * VERTICAL_PARTITIONS_PER_CHUNK;
+    }
+
+    int slotRow = static_cast<int>(relativeEntityCoords.x) / SLOT_WIDTH;
+    int slotCol = static_cast<int>(relativeEntityCoords.y) / SLOT_HEIGHT;
+
+    slots[slotRow][slotCol]->addEntity(entity);
 }
 
-void SpatialPartition::getSlotsInRange(sf::FloatRect rangeGlobal) {
+std::vector<PartitionSlot *> SpatialPartition::getSlotsInRange(sf::FloatRect rangeGlobal) {
 
 }
 

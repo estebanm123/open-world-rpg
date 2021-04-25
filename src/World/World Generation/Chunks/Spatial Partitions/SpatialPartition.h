@@ -24,9 +24,10 @@ public:
 
     void renderEntities(sf::RenderTarget &renderer, const ActiveZones &activeZones);
 
-    void addNewEntity(std::unique_ptr<Entity> entity);
+    void addNewEntity(const std::shared_ptr<Entity> &entity);
 
-    void getSlotsInRange(sf::FloatRect rangeGlobal);
+    std::vector<PartitionSlot *> getSlotsInRange(sf::FloatRect rangeGlobal);
+
 
 private:
     void initSlots();

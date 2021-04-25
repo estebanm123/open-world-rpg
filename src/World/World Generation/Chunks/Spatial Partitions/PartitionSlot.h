@@ -27,6 +27,12 @@ public:
     void removeEntity(const std::shared_ptr<Entity> &entity);
 
 private:
+    void handleCollisionsWithOtherEntities(MoveableEntity *moveable) const;
+
+    void handleCollisionsWithOtherSlotEntities(const std::shared_ptr<MoveableEntity> &moveable, SpatialPartition *slots);
+
+    bool isNoLongerInSlot(Entity *entity, sf::Vector2f oldCoordinates) const;
+
     SlotEntities entityHolder;
 
 };

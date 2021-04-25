@@ -1,7 +1,9 @@
 
 
+#include "SpatialPartition.h"
 #include "PartitionSlot.h"
 #include "../Chunk.h"
+#include "../../../Entities/Collidables/Hitbox/SingleHitbox.h"
 
 void PartitionSlot::update(float dt) {
     for (auto &moveable : entityHolder.moveableEntities) {
@@ -26,14 +28,23 @@ void PartitionSlot::renderBy(sf::RenderTarget &renderer) {
 }
 
 void PartitionSlot::handleCollisions(SpatialPartition *slots) {
-    // If hasMoved
-    // Check internal collisions - create reusable helper
-    // If still hasMoved
-    // get slot(s) in range of hitbox size
+    auto &moveables = entityHolder.moveableEntities;
+    for (auto it = moveables.begin(); it != moveables.end();) {
+        auto &moveable = *it;
+        auto oldCoordinates = moveable->getPosition();
+
+        handleCollisionsWithOtherEntities(moveable);
+        // todo: get MoveableEntity shared_ptr from moveable *
+        handleCollisionsWithOtherSlotEntities(moveable, slots);
+
+        if (isNoLongerInSlot(moveable, oldCoordinates)) {
+            it++;
+        }
+    }
 }
 
 void PartitionSlot::handleExternalCollision(MoveableEntity *externalEntity) {
-    // check against internal collisions
+    handleCollisionsWithOtherEntities(externalEntity);
 }
 
 void PartitionSlot::addEntity(const std::shared_ptr<Entity> &entity) {
@@ -44,3 +55,42 @@ void PartitionSlot::removeEntity(const std::shared_ptr<Entity> &entity) {
     entityHolder.removeEntity(entity);
 }
 
+void PartitionSlot::handleCollisionsWithOtherEntities(MoveableEntity *moveable) const {
+    if (!moveable->hasMoved()) return;
+    auto &moveableEntities = entityHolder.moveableEntities;
+    for (auto &otherMoveable : moveableEntities) {
+        // todo: some way to cache pairs seen, so we avoid double counting
+        //         - each moveable can hold a set of other moveables it's checked?
+        //              + then verified in handleCollision + reset on next update call
+        //         - could also load them into a vector, so we can use indexing - would take up n space instead of n^2
+        if (moveable == otherMoveable) continue;
+
+        const auto hitboxes = moveable->getHitbox()->getIntersectingSingleHitboxes(otherMoveable->getHitbox());
+        if (hitboxes.first == nullptr || hitboxes.second == nullptr) continue; // no collision
+        hitboxes.first->handleCollision(moveable, otherMoveable);
+        hitboxes.second->handleCollision(otherMoveable, moveable);
+    }
+
+    for (auto &prop : entityHolder.mainProps) {
+        auto hitboxes = moveable->getHitbox()->getIntersectingSingleHitboxes(prop->getHitbox());
+        if (hitboxes.first == nullptr || hitboxes.second == nullptr) continue; // no collision
+        hitboxes.first->handleCollision(moveable, prop);
+        hitboxes.second->handleCollision(prop, moveable);
+    }
+}
+
+void PartitionSlot::handleCollisionsWithOtherSlotEntities(const std::shared_ptr<MoveableEntity> &moveable,
+                                                          SpatialPartition *slots) {
+    auto moveablePos = moveable->getPosition();
+    auto moveableSize = moveable->getSize();
+    auto slotsInRange = slots->getSlotsInRange(
+            sf::FloatRect{moveablePos.x, moveablePos.y, moveableSize.x, moveableSize.y});
+
+    for (auto slot : slotsInRange) {
+        auto oldCoordinates = moveable->getPosition();
+        slot->handleExternalCollision(moveable.get());
+        if (isNoLongerInSlot(moveable.get(), oldCoordinates)) {
+            slot->addEntity(moveable);
+        }
+    }
+}
