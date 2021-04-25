@@ -5,6 +5,7 @@
 #include <unordered_set>
 #include "../Tiles/TileMap.h"
 #include "../Tiles/Tile.h"
+#include "Spatial Partitions/SpatialPartition.h"
 
 
 class Tile;
@@ -14,7 +15,9 @@ class Prop;
 
 class ChunkPropGenerator {
 public:
-    static std::unordered_set<std::unique_ptr<Prop>> generateEnvironmentalProps(TileMap &tileMap, bool isDecor);
+    static void
+    generateEnvironmentalProps(bool isDecor, SpatialPartition *entitySpatialPartition,
+                               TileMap &tileMap);
 
 private:
     typedef std::array<std::array<bool, TileMap::SIZE_X>, TileMap::SIZE_Y> TilesSeen;

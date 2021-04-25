@@ -69,12 +69,15 @@ void ChunkGenerator::disableSetUpMode() {
 void ChunkGenerator::generateChunk(const Chunk::RequestData &data) {
     using namespace worldConstants;
     auto center = Chunk::getCenterFromReqData(data);
-    TileMap tileMap(center);
-    std::unordered_set<std::unique_ptr<Prop>> mainProps = ChunkPropGenerator::generateEnvironmentalProps(tileMap, false);
-    std::unordered_set<std::unique_ptr<Prop>> decorProps = ChunkPropGenerator::generateEnvironmentalProps(tileMap, true);
+    TileMap tileMap{center};
+    std::unique_ptr<SpatialPartition> entitySpatialPartition = std::make_unique<SpatialPartition>(center);
+    ChunkPropGenerator::generateEnvironmentalProps(false, entitySpatialPartition.get(),
+                                                   tileMap);
+    ChunkPropGenerator::generateEnvironmentalProps(true, entitySpatialPartition.get(),
+                                                   tileMap);
 
     enqueueNewChunk(
-            std::make_unique<Chunk>(data, std::move(tileMap), center, std::move(mainProps), std::move(decorProps)));
+            std::make_unique<Chunk>(data, std::move(tileMap), center, std::move(entitySpatialPartition)));
 }
 
 bool ChunkGenerator::chunksGeneratedIsEmpty() {

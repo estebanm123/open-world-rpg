@@ -8,10 +8,10 @@
 
 
 Chunk::Chunk(const RequestData &reqData, TileMap tiles, const sf::Vector2f &center,
-             std::unordered_set<std::unique_ptr<Prop>> mainProps, std::unordered_set<std::unique_ptr<Prop>> decorProps)
-        : reqData(reqData), tiles(std::move(tiles)), center(center), mainProps(std::move(mainProps)),
-          decorProps(std::move(decorProps)),
-          collisionHandler(this) {
+             std::unique_ptr<SpatialPartition> spatialPartition)
+        : reqData(reqData), tiles(std::move(tiles)), center(center),
+          entitySpatialPartition(std::move(spatialPartition)) {
+    entitySpatialPartition->setChunkNeighbors(&neighbors);
 }
 
 const Chunk::RequestData &Chunk::getReqData() const {
@@ -40,18 +40,6 @@ sf::Vector2f Chunk::getCenterFromReqData(const Chunk::RequestData &data) {
 
 void Chunk::update(float dt, const ActiveZones &activeZones) {
     entitySpatialPartition->updateEntities(dt, activeZones);
-}
-
-void Chunk::addMoveable(MoveableEntity *moveable, bool checkCollision) {
-    // eventually call some overloaded helpers to add to humanoids, items, etc...
-    moveableEntities.insert(moveable);
-    if (checkCollision) {
-        collisionHandler.handleCollisionsWithOtherEntities(moveable); // add true
-    }
-}
-
-void Chunk::removeMoveable(MoveableIter &it) {
-    it = moveableEntities.erase(it);
 }
 
 void Chunk::setNeighbors(const Chunk::Neighbors &newNeighbors) {

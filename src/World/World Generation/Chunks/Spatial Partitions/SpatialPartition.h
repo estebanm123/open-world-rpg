@@ -16,7 +16,9 @@ public:
     const static int SLOT_WIDTH;
     const static int SLOT_HEIGHT;
 
-    SpatialPartition(sf::Vector2f topLeftCoords, Chunk::Neighbors &chunkNeighbors);
+    SpatialPartition(sf::Vector2f center);
+
+    void setChunkNeighbors(Chunk::Neighbors *neighbors);
 
     bool activeZoneContainsSlot(int row, int col, const ActiveZone &activeZone) const;
 
@@ -28,13 +30,12 @@ public:
 
     std::vector<PartitionSlot *> getSlotsInRange(sf::FloatRect rangeGlobal);
 
-
 private:
     void initSlots();
 
     typedef std::array<std::array<std::unique_ptr<PartitionSlot>, VERTICAL_PARTITIONS_PER_CHUNK>, HORIZONTAL_PARTITIONS_PER_CHUNK> Slots;
     Slots slots;
     sf::Vector2f topLeftCoords;
-    Chunk::Neighbors &chunkNeighbors;
+    Chunk::Neighbors *chunkNeighbors;
 };
 

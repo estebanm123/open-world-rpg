@@ -33,7 +33,6 @@ void PartitionSlot::handleCollisions(SpatialPartition *slots) {
         auto &moveable = *it;
         auto oldCoordinates = moveable->getPosition();
 
-
         handleCollisionsWithOtherEntities(moveable);
         handleCollisionsWithOtherSlotEntities(moveable, slots);
 

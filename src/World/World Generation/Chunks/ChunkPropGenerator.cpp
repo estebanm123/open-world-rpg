@@ -24,9 +24,9 @@ sf::Vector2f generatePropCoords(float propGenChance, int hashVal1, const sf::Vec
     return {x + tileGlobalCoords.x, y + tileGlobalCoords.y};
 }
 
-std::unordered_set<std::unique_ptr<Prop>>
-ChunkPropGenerator::generateEnvironmentalProps(TileMap &tileMap, bool isDecor) {
-    std::unordered_set<std::unique_ptr<Prop>> props;
+void
+ChunkPropGenerator::generateEnvironmentalProps(bool isDecor, SpatialPartition *entitySpatialPartition,
+                                               TileMap &tileMap) {
     auto currentPropChance = PROP_CHANCE;
     TilesSeen tilesSeen = initializeTilesSeen();
 
@@ -42,14 +42,13 @@ ChunkPropGenerator::generateEnvironmentalProps(TileMap &tileMap, bool isDecor) {
                     continue;
                 }
                 updateCurrentPropChanceOnSuccess(currentPropChance);
-                props.insert(std::move(prop));
+                std::shared_ptr<Entity> entityPtr = std::move(prop);
+                entitySpatialPartition->addNewEntity(entityPtr);
             } else {
                 updateCurrentPropChanceOnFailure(currentPropChance);
             }
         }
     }
-
-    return props;
 }
 
 void ChunkPropGenerator::updateCurrentPropChanceOnFailure(float &currentChance) {
@@ -73,7 +72,8 @@ ChunkPropGenerator::isPropOverlappingOthersAndMarkAsSeen(Prop *prop, const sf::V
                                                          const TileMap &tiles) {
     auto entitySize = prop->getSize();
     auto &entityPos = prop->getPosition();
-    auto entityMaxLen = std::max(entitySize.y, entitySize.x) / PROP_COLLISION_LENIENCY_FACTOR; // take max to be safe; entity could be rotated
+    auto entityMaxLen = std::max(entitySize.y, entitySize.x) /
+                        PROP_COLLISION_LENIENCY_FACTOR; // take max to be safe; entity could be rotated
 
     auto southEntityLim = tiles.convertGlobalToLocalCoords({entityPos.x, entityPos.y + entityMaxLen}).y;
     auto eastEntityLim = tiles.convertGlobalToLocalCoords({entityPos.x + entityMaxLen, entityPos.y}).x;

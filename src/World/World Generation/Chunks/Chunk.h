@@ -32,7 +32,7 @@ public:
     };
 
     Chunk(const RequestData &reqData, TileMap tiles, const sf::Vector2f &center,
-          std::unordered_set<std::unique_ptr<Prop>> mainProps, std::unordered_set<std::unique_ptr<Prop>> decorProps);
+          std::unique_ptr<SpatialPartition> spatialPartition);
 
     static sf::Vector2f getCenterFromReqData(const Chunk::RequestData &data);
 
@@ -42,20 +42,16 @@ public:
 
     void update(float dt, const ActiveZones &activeZones);
 
-    SpatialPartition * getSpatialPartition();
+    SpatialPartition *getSpatialPartition();
 
     void render(sf::RenderTarget &renderer, const ActiveZones &activeZones);
 
     void setNeighbors(const Neighbors &newNeighbors);
 
-    void addMoveable(MoveableEntity *moveable, bool checkCollision = false);
-
 private:
     void renderTiles(sf::RenderTarget &target);
 
     typedef std::unordered_set<MoveableEntity *>::iterator MoveableIter;
-
-    void removeMoveable(MoveableIter &it);
 
     friend class ChunkCollisionHandler;
 
@@ -64,12 +60,4 @@ private:
     sf::Vector2f center;
     Neighbors neighbors;
     std::unique_ptr<SpatialPartition> entitySpatialPartition;
-
-    ChunkCollisionHandler collisionHandler;
-    std::unordered_set<std::unique_ptr<Prop>> mainProps;
-    std::unordered_set<std::unique_ptr<Prop>> decorProps;
-    std::unordered_set<std::unique_ptr<Humanoid>> humanoids;
-    std::unordered_set<MoveableEntity *> moveableEntities;
-
-
 };

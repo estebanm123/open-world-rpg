@@ -2,6 +2,20 @@
 
 #include "SpatialPartition.h"
 
+SpatialPartition::SpatialPartition(sf::Vector2f center) : topLeftCoords(center - worldConstants::CHUNK_SIZE / 2.f) {}
+
+void SpatialPartition::setChunkNeighbors(Chunk::Neighbors *neighbors) {
+    this->chunkNeighbors = neighbors;
+}
+
+void SpatialPartition::initSlots() {
+    for (auto row = 0; row < slots.size(); row++) {
+        for (auto col = 0; col < slots[0].size(); col++) {
+            slots[row][col] = std::make_unique<PartitionSlot>();
+        }
+    }
+}
+
 
 bool SpatialPartition::activeZoneContainsSlot(int row, int col, const ActiveZone &activeZone) const {
     return activeZone.containsSlot(
@@ -32,7 +46,7 @@ void SpatialPartition::renderEntities(sf::RenderTarget &renderer, const ActiveZo
     }
 }
 
-void SpatialPartition::addNewEntity(const std::shared_ptr<Entity>& entity) {
+void SpatialPartition::addNewEntity(const std::shared_ptr<Entity> &entity) {
     auto &entityPos = entity->getPosition();
     auto entitySize = entity->getSize();
     auto entityTopLeft = entityPos - sf::Vector2f{entitySize.x / 2, entitySize.y / 2};
@@ -53,10 +67,6 @@ void SpatialPartition::addNewEntity(const std::shared_ptr<Entity>& entity) {
     int slotCol = static_cast<int>(relativeEntityCoords.y) / SLOT_HEIGHT;
 
     slots[slotRow][slotCol]->addEntity(entity);
-}
-
-std::vector<PartitionSlot *> SpatialPartition::getSlotsInRange(sf::FloatRect rangeGlobal) {
-
 }
 
 const int SpatialPartition::SLOT_WIDTH = static_cast<int>(worldConstants::CHUNK_SIZE.x) /
