@@ -14,7 +14,7 @@
 class ChunkManager : sf::NonCopyable, NonMoveable {
 public:
 
-    ChunkManager(int seed, Player *player, const sf::Vector2f &pos);
+    ChunkManager(int seed, const std::shared_ptr<Player> &player, const sf::Vector2f &pos);
 
     void update(float dt);
 

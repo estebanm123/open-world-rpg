@@ -16,11 +16,12 @@ do {                                                        \
 #endif
 
 
-ChunkManager::ChunkManager(int seed, Player *player, const sf::Vector2f &pos)
-        : generator(seed), generatorThread(std::ref(generator)), player(player),
+ChunkManager::ChunkManager(int seed, const std::shared_ptr<Player> &player, const sf::Vector2f &pos)
+        : generator(seed), generatorThread(std::ref(generator)), player(player.get()),
           activeZones(player->getPosition(), {RENDER_ZONE_WIDTH, RENDER_ZONE_HEIGHT},
                       {COLLISION_ZONE_WIDTH, COLLISION_ZONE_HEIGHT}) {
     allocateInitialChunks(pos);
+    chunks[1][1]->addEntity(player);
 }
 
 // - dir must be a cardinal direction w/ length == sqrt(2)

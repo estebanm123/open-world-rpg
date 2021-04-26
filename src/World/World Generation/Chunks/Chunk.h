@@ -48,6 +48,8 @@ public:
 
     void setNeighbors(const Neighbors &newNeighbors);
 
+    void addEntity(const std::shared_ptr<Entity> &entity);
+
 private:
     void renderTiles(sf::RenderTarget &target);
 

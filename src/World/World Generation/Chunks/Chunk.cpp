@@ -1,10 +1,8 @@
 ﻿
 #include <utility>
-#include <unordered_set>
 #include "Spatial Partitions/SpatialPartition.h"
 #include "../Tiles/Tile.h"
 #include "../Environments/CompleteEnv.h"
-#include "Chunk.h"
 
 
 Chunk::Chunk(const RequestData &reqData, TileMap tiles, const sf::Vector2f &center,
@@ -53,6 +51,10 @@ void Chunk::render(sf::RenderTarget &renderer, const ActiveZones &activeZones) {
 
 SpatialPartition *Chunk::getSpatialPartition() {
     return entitySpatialPartition.get();
+}
+
+void Chunk::addEntity(const std::shared_ptr<Entity> &entity) {
+    entitySpatialPartition->addNewEntity(entity);
 }
 
 
