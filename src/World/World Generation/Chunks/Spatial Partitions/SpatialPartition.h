@@ -11,8 +11,8 @@ class ActiveZones;
 
 class SpatialPartition {
 public:
-    constexpr static int HORIZONTAL_PARTITIONS_PER_CHUNK = 4;
-    constexpr static int VERTICAL_PARTITIONS_PER_CHUNK = HORIZONTAL_PARTITIONS_PER_CHUNK;
+    constexpr static int HORIZONTAL_SLOTS_PER_CHUNK = 4;
+    constexpr static int VERTICAL_SLOTS_PER_CHUNK = HORIZONTAL_SLOTS_PER_CHUNK;
     const static int SLOT_WIDTH;
     const static int SLOT_HEIGHT;
 
@@ -35,7 +35,7 @@ public:
 private:
     void initSlots();
 
-    typedef std::array<std::array<std::unique_ptr<PartitionSlot>, VERTICAL_PARTITIONS_PER_CHUNK>, HORIZONTAL_PARTITIONS_PER_CHUNK> Slots;
+    typedef std::array<std::array<std::unique_ptr<PartitionSlot>, VERTICAL_SLOTS_PER_CHUNK>, HORIZONTAL_SLOTS_PER_CHUNK> Slots;
     Slots slots;
     sf::Vector2f topLeftCoords;
     Chunk::Neighbors *chunkNeighbors;

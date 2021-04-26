@@ -30,6 +30,8 @@ public:
 
     virtual void accept(EntityVisitor *visitor) = 0;
 
+    sf::Vector2f getTopLeftPosition();
+
 protected:
     virtual EntitySprite &getSprite() = 0;
 

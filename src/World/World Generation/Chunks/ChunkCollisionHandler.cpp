@@ -9,7 +9,7 @@
 //    auto & moveables = chunk->moveableEntities;
 //    for (auto it = moveables.begin(); it != moveables.end(); ) {
 //        auto & moveable = *it;
-//        handleCollisionsWithOtherEntities(moveable);
+//        handleCollisionsFor(moveable);
 //        if (!handleNeighborChunkCrossing(moveable, it)) {
 //            it++;
 //        }
@@ -21,7 +21,7 @@
 //
 //}
 //
-//void ChunkCollisionHandler::handleCollisionsWithOtherEntities(MoveableEntity *moveable) const {
+//void ChunkCollisionHandler::handleCollisionsFor(MoveableEntity *moveable) const {
 //    if (!moveable->hasMoved()) return;
 //    for (auto &otherMoveable : chunk->moveableEntities) {
 //        // todo: some way to cache pairs seen, so we avoid double counting
@@ -49,6 +49,7 @@
 //    return chunkWrapper->get();
 //}
 //
+
 //bool ChunkCollisionHandler::handleNeighborChunkCrossing(MoveableEntity *moveable, Chunk::MoveableIter & it) {
 //    using namespace worldConstants;
 //    if (!moveable->hasMoved()) {
@@ -99,12 +100,12 @@
 //    transferMoveableToNeighbor(neighbor, moveable, it);
 //    return true;
 //}
-//
-//void ChunkCollisionHandler::transferMoveableToNeighbor(Chunk *neighbor, MoveableEntity *moveable, Chunk::MoveableIter & it) {
-//    if (neighbor != nullptr) {
-//        neighbor->addMoveable(moveable); // set to true
-//    }
-//    chunk->removeMoveable(it);
-//}
-//
-//
+////
+////void ChunkCollisionHandler::transferMoveableToNeighbor(Chunk *neighbor, MoveableEntity *moveable, Chunk::MoveableIter & it) {
+////    if (neighbor != nullptr) {
+////        neighbor->addMoveable(moveable); // set to true
+////    }
+////    chunk->removeMoveable(it);
+////}
+////
+////

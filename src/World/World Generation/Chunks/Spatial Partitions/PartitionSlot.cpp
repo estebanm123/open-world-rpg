@@ -33,7 +33,10 @@ void PartitionSlot::handleCollisions(SpatialPartition *slots) {
         auto &moveable = *it;
         auto oldCoordinates = moveable->getPosition();
 
-        handleCollisionsWithOtherEntities(moveable);
+        handleCollisionsFor(moveable);
+        if (!moveable->hasMoved()) {
+            continue; // skip because its
+        }
         handleCollisionsWithOtherSlotEntities(moveable, slots);
 
         if (entityHasMovedSlots(moveable, oldCoordinates, slots)) {
@@ -43,7 +46,7 @@ void PartitionSlot::handleCollisions(SpatialPartition *slots) {
 }
 
 void PartitionSlot::handleExternalCollision(MoveableEntity *externalEntity) {
-    handleCollisionsWithOtherEntities(externalEntity);
+    handleCollisionsFor(externalEntity);
 }
 
 void PartitionSlot::addEntity(const std::shared_ptr<Entity> &entity) {
@@ -54,7 +57,7 @@ void PartitionSlot::removeEntity(const std::shared_ptr<Entity> &entity) {
     entityHolder.removeEntity(entity);
 }
 
-void PartitionSlot::handleCollisionsWithOtherEntities(MoveableEntity *moveable) const {
+void PartitionSlot::handleCollisionsFor(MoveableEntity *moveable) const {
     if (!moveable->hasMoved()) return;
     auto &moveableEntities = entityHolder.moveableEntities;
     for (auto &otherMoveable : moveableEntities) {
@@ -78,14 +81,15 @@ void PartitionSlot::handleCollisionsWithOtherEntities(MoveableEntity *moveable) 
     }
 }
 
-void PartitionSlot::handleCollisionsWithOtherSlotEntities(MoveableEntity *moveable,
-                                                          SpatialPartition *slots) {
-    auto moveablePos = moveable->getPosition();
+void PartitionSlot::handleCollisionsWithOtherSlotEntities(MoveableEntity *moveable, SpatialPartition *slots) {
+    auto moveablePos = moveable->getTopLeftPosition();
     auto moveableSize = moveable->getSize();
     auto slotsInRange = slots->getSlotsInRange(
             sf::FloatRect{moveablePos.x, moveablePos.y, moveableSize.x, moveableSize.y});
 
     for (auto slot : slotsInRange) {
+        if (slot == this) continue;
+
         auto oldCoordinates = moveable->getPosition();
         slot->handleExternalCollision(moveable);
 
@@ -109,3 +113,5 @@ PartitionSlot::entityHasMovedSlots(MoveableEntity *entity, sf::Vector2f oldEntit
     auto currentSlot = slots->resolveSlotFromEntityGlobalCoords(entity->getPosition(), size);
     return oldSlot != currentSlot;
 }
+
+

@@ -27,7 +27,7 @@ public:
     void removeEntity(const std::shared_ptr<Entity> &entity);
 
 private:
-    void handleCollisionsWithOtherEntities(MoveableEntity *moveable) const;
+    void handleCollisionsFor(MoveableEntity *moveable) const;
 
     void handleCollisionsWithOtherSlotEntities(MoveableEntity *moveable, SpatialPartition *slots);
 
