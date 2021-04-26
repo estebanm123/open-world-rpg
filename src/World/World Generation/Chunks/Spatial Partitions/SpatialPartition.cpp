@@ -2,7 +2,9 @@
 
 #include "SpatialPartition.h"
 
-SpatialPartition::SpatialPartition(sf::Vector2f center) : topLeftCoords(center - worldConstants::CHUNK_SIZE / 2.f) {}
+SpatialPartition::SpatialPartition(sf::Vector2f center) : topLeftCoords(center - worldConstants::CHUNK_SIZE / 2.f) {
+    initSlots();
+}
 
 void SpatialPartition::setChunkNeighbors(Chunk::Neighbors *neighbors) {
     this->chunkNeighbors = neighbors;
@@ -47,9 +49,18 @@ void SpatialPartition::renderEntities(sf::RenderTarget &renderer, const ActiveZo
 }
 
 void SpatialPartition::addNewEntity(const std::shared_ptr<Entity> &entity) {
-    auto &entityPos = entity->getPosition();
-    auto entitySize = entity->getSize();
-    auto entityTopLeft = entityPos - sf::Vector2f{entitySize.x / 2, entitySize.y / 2};
+    auto slot = resolveSlotFromEntityGlobalCoords(entity->getPosition(), entity->getSize());
+    slot->addEntity(entity);
+}
+
+const int SpatialPartition::SLOT_WIDTH = static_cast<int>(worldConstants::CHUNK_SIZE.x) /
+                                         HORIZONTAL_PARTITIONS_PER_CHUNK;
+const int SpatialPartition::SLOT_HEIGHT =
+        static_cast<int>(worldConstants::CHUNK_SIZE.y) / VERTICAL_PARTITIONS_PER_CHUNK;
+
+PartitionSlot *SpatialPartition::resolveSlotFromEntityGlobalCoords(sf::Vector2f entityCenterPos,
+                                                                   sf::Vector2f entitySize) {
+    auto entityTopLeft = entityCenterPos - sf::Vector2f{entitySize.x / 2, entitySize.y / 2};
     auto relativeEntityCoords = topLeftCoords - entityTopLeft;
 
     if (relativeEntityCoords.x < 0) {
@@ -65,11 +76,5 @@ void SpatialPartition::addNewEntity(const std::shared_ptr<Entity> &entity) {
 
     int slotRow = static_cast<int>(relativeEntityCoords.x) / SLOT_WIDTH;
     int slotCol = static_cast<int>(relativeEntityCoords.y) / SLOT_HEIGHT;
-
-    slots[slotRow][slotCol]->addEntity(entity);
+    return slots[slotRow][slotCol].get();
 }
-
-const int SpatialPartition::SLOT_WIDTH = static_cast<int>(worldConstants::CHUNK_SIZE.x) /
-                                         HORIZONTAL_PARTITIONS_PER_CHUNK;
-const int SpatialPartition::SLOT_HEIGHT =
-        static_cast<int>(worldConstants::CHUNK_SIZE.y) / VERTICAL_PARTITIONS_PER_CHUNK;

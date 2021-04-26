@@ -28,6 +28,8 @@ public:
 
     void addNewEntity(const std::shared_ptr<Entity> &entity);
 
+    PartitionSlot *resolveSlotFromEntityGlobalCoords(sf::Vector2f entityCenterPos, sf::Vector2f entitySize);
+
     std::vector<PartitionSlot *> getSlotsInRange(sf::FloatRect rangeGlobal);
 
 private:
@@ -38,4 +40,3 @@ private:
     sf::Vector2f topLeftCoords;
     Chunk::Neighbors *chunkNeighbors;
 };
-

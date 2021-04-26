@@ -31,7 +31,7 @@ private:
 
     void handleCollisionsWithOtherSlotEntities(MoveableEntity *moveable, SpatialPartition *slots);
 
-    bool isNoLongerInSlot(Entity *entity, sf::Vector2f oldCoordinates) const;
+    bool entityHasMovedSlots(MoveableEntity *entity, sf::Vector2f oldEntityPosition, SpatialPartition *slots) const;
 
     SlotEntities entityHolder;
 
