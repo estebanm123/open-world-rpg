@@ -11,8 +11,8 @@ class ActiveZones;
 
 class SpatialPartition {
 public:
-    constexpr static int HORIZONTAL_SLOTS_PER_CHUNK = 4;
-    constexpr static int VERTICAL_SLOTS_PER_CHUNK = HORIZONTAL_SLOTS_PER_CHUNK;
+    constexpr static int SLOT_ROWS_PER_CHUNK = 4;
+    constexpr static int SLOT_COLS_PER_CHUNK = SLOT_ROWS_PER_CHUNK;
     const static int SLOT_WIDTH;
     const static int SLOT_HEIGHT;
 
@@ -30,12 +30,22 @@ public:
 
     PartitionSlot *resolveSlotFromEntityGlobalCoords(sf::Vector2f entityCenterPos, sf::Vector2f entitySize);
 
-    std::vector<PartitionSlot *> getSlotsInRange(sf::FloatRect rangeGlobal);
+    std::unordered_set<PartitionSlot *> getSlotsInRange(sf::FloatRect rangeGlobal);
 
 private:
     void initSlots();
 
-    typedef std::array<std::array<std::unique_ptr<PartitionSlot>, VERTICAL_SLOTS_PER_CHUNK>, HORIZONTAL_SLOTS_PER_CHUNK> Slots;
+    std::unordered_set<PartitionSlot *>
+    getSlotsInRange(sf::Vector2i topLeftLocalCoords, sf::Vector2i bottomRightLocalCoords);
+
+    static void appendForeignSlotsInRange(std::unordered_set<PartitionSlot *> &resultSlots,
+                                          SpatialPartition *foreignSpatialPartition,
+                                          sf::Vector2i topLeftSlotCoords,
+                                          sf::Vector2i botRightSlotCoords);
+
+    sf::Vector2i convertGlobalToLocalCoords(sf::Vector2f globalCoordsTopLeft);
+
+    typedef std::array<std::array<std::unique_ptr<PartitionSlot>, SLOT_COLS_PER_CHUNK>, SLOT_ROWS_PER_CHUNK> Slots;
     Slots slots;
     sf::Vector2f topLeftCoords;
     Chunk::Neighbors *chunkNeighbors;

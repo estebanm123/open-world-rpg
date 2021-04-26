@@ -18,22 +18,76 @@ void SpatialPartition::initSlots() {
     }
 }
 
-std::vector<PartitionSlot *> SpatialPartition::getSlotsInRange(sf::FloatRect rangeGlobal) {
-    // covert coords to local coords -> don't check bounds (start and last part of resolve func)
-    // add dist to left and top slot from width and height (so convert the slot lims to global coords)
-    // divide new width and height by slot width / height -> make sure float is used + take ceiling
-    //
-    // loop over each numHorizontal and each numVertical slots
-    //     add each num to local coords of cur [entity topleft] slot
-    //     if bounds reached (eg. local coords are negative or surpass numSlots:
-    //          call getSlotsInRange neighbor chunk associated to bound - MAKE SURE TO CUT OFF rangeGlobal
-    //          append foreign slots
+
+std::unordered_set<PartitionSlot *> SpatialPartition::getSlotsInRange(sf::FloatRect rangeGlobal) {
+    auto topLeftSlot = convertGlobalToLocalCoords({rangeGlobal.left, rangeGlobal.top});
+    auto botRightSlot = convertGlobalToLocalCoords(
+            {rangeGlobal.left + rangeGlobal.width, rangeGlobal.top + rangeGlobal.height});
+    return getSlotsInRange(topLeftSlot, botRightSlot);
+}
+
+void SpatialPartition::appendForeignSlotsInRange(std::unordered_set<PartitionSlot *> &resultSlots,
+                                                 SpatialPartition *foreignSpatialPartition,
+                                                 sf::Vector2i topLeftSlotCoords,
+                                                 sf::Vector2i botRightSlotCoords) {
+    if (foreignSpatialPartition == nullptr) return;
+    auto foreignSlots = foreignSpatialPartition->getSlotsInRange(topLeftSlotCoords, botRightSlotCoords);
+    for (auto slot : foreignSlots) {
+        resultSlots.insert(slot);
+    }
+}
+
+SpatialPartition *getForeignPartitionFrom(Chunk *chunk) {
+    return chunk == nullptr ? nullptr : chunk->getSpatialPartition();
 }
 
 
+std::unordered_set<PartitionSlot *>
+SpatialPartition::getSlotsInRange(sf::Vector2i topLeftLocalCoords, sf::Vector2i bottomRightLocalCoords) {
+    std::unordered_set<PartitionSlot *> resultSlots;
+
+    auto startRow = topLeftLocalCoords.y;
+    auto startCol = topLeftLocalCoords.x;
+    auto endRow = bottomRightLocalCoords.y;
+    auto endCol = bottomRightLocalCoords.x;
+    if (startRow < 0) {
+        auto foreignTopRow = SLOT_ROWS_PER_CHUNK + startRow;
+        auto foreignBotRow = SLOT_ROWS_PER_CHUNK - 1;
+        appendForeignSlotsInRange(resultSlots, getForeignPartitionFrom(chunkNeighbors->north->get()),
+                                  sf::Vector2i{topLeftLocalCoords.x, foreignTopRow},
+                                  sf::Vector2i{bottomRightLocalCoords.x, foreignBotRow});
+        startRow = 0;
+        if (endRow >= SLOT_ROWS_PER_CHUNK) {
+            foreignTopRow = 0;
+            foreignBotRow = endRow;
+            appendForeignSlotsInRange(resultSlots, getForeignPartitionFrom(chunkNeighbors->south->get()),
+                                      sf::Vector2i{topLeftLocalCoords.x, foreignTopRow},
+                                      sf::Vector2i{topLeftLocalCoords.x, foreignBotRow});
+
+            endRow = SLOT_ROWS_PER_CHUNK - 1;
+        } else if (endRow < 0) {
+            return resultSlots; // all relevant slots are north of us
+        }
+    } else if (startRow >= SLOT_ROWS_PER_CHUNK) {
+
+        return resultSlots; // all relevant slots are south of us
+    } else if (startCol < 0) {
+
+    } else if (startCol >= SLOT_COLS_PER_CHUNK) {
+        // run through some test with recursive lookups for diagonals
+    }
+
+    for (auto row = startRow; row <= endRow; row++) {
+        for (auto col = startCol; col <= endCol; col++) {
+            resultSlots.insert(slots[row][col].get());
+        }
+    }
+    return resultSlots;
+}
+
 bool SpatialPartition::activeZoneContainsSlot(int row, int col, const ActiveZone &activeZone) const {
     return activeZone.containsSlot(
-            {SLOT_WIDTH * row + topLeftCoords.x, SLOT_HEIGHT * col + topLeftCoords.y},
+            {SLOT_WIDTH * col + topLeftCoords.x, SLOT_HEIGHT * row + topLeftCoords.y},
             {SLOT_WIDTH, SLOT_HEIGHT});
 }
 
@@ -61,31 +115,38 @@ void SpatialPartition::renderEntities(sf::RenderTarget &renderer, const ActiveZo
 }
 
 void SpatialPartition::addNewEntity(const std::shared_ptr<Entity> &entity) {
-    auto slot = resolveSlotFromEntityGlobalCoords(entity->getPosition(), entity->getSize());
-    slot->addEntity(entity);
+    auto localCoords = convertGlobalToLocalCoords(entity->getTopLeftPosition());
+    if (localCoords.x < 0) {
+        localCoords.x = 0;
+    } else if (localCoords.x >= SLOT_COLS_PER_CHUNK) {
+        localCoords.x = SLOT_COLS_PER_CHUNK - 1;
+    }
+    if (localCoords.y < 0) {
+        localCoords.y = 0;
+    } else if (localCoords.y >= SLOT_ROWS_PER_CHUNK) {
+        localCoords.y = SLOT_ROWS_PER_CHUNK - 1;
+    }
+
+    slots[localCoords.y][localCoords.x]->addEntity(entity);
 }
 
 const int SpatialPartition::SLOT_WIDTH = static_cast<int>(worldConstants::CHUNK_SIZE.x) /
-                                         HORIZONTAL_SLOTS_PER_CHUNK;
+                                         SLOT_COLS_PER_CHUNK;
 const int SpatialPartition::SLOT_HEIGHT =
-        static_cast<int>(worldConstants::CHUNK_SIZE.y) / VERTICAL_SLOTS_PER_CHUNK;
+        static_cast<int>(worldConstants::CHUNK_SIZE.y) / SLOT_ROWS_PER_CHUNK;
 
 PartitionSlot *SpatialPartition::resolveSlotFromEntityGlobalCoords(sf::Vector2f entityCenterPos,
                                                                    sf::Vector2f entitySize) {
     auto entityTopLeft = entityCenterPos - sf::Vector2f{entitySize.x / 2, entitySize.y / 2};
-    auto relativeEntityGlobalCoords = (topLeftCoords - entityTopLeft);
-    auto localCoords = sf::Vector2i{static_cast<int>(relativeEntityGlobalCoords.x / SLOT_WIDTH),
-                                    static_cast<int>(relativeEntityGlobalCoords.y / SLOT_HEIGHT)};
-    if (localCoords.x < 0) {
-        localCoords.x = 0;
-    } else if (localCoords.x >= HORIZONTAL_SLOTS_PER_CHUNK) {
-        localCoords.x = HORIZONTAL_SLOTS_PER_CHUNK - 1;
-    }
-    if (localCoords.y < 0) {
-        localCoords.y = 0;
-    } else if (localCoords.y >= VERTICAL_SLOTS_PER_CHUNK) {
-        localCoords.y = VERTICAL_SLOTS_PER_CHUNK - 1;
-    }
+    auto localCoords = convertGlobalToLocalCoords(entityTopLeft);
 
-    return slots[localCoords.x][localCoords.y].get();
+    return slots[localCoords.y][localCoords.x].get();
 }
+
+sf::Vector2i SpatialPartition::convertGlobalToLocalCoords(sf::Vector2f globalCoordsTopLeft) {
+    auto relativeEntityGlobalCoords = (topLeftCoords - globalCoordsTopLeft);
+    return sf::Vector2i{static_cast<int>(relativeEntityGlobalCoords.x / SLOT_WIDTH),
+                        static_cast<int>(relativeEntityGlobalCoords.y / SLOT_HEIGHT)};
+}
+
+
