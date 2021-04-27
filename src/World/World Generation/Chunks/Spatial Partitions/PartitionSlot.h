@@ -29,10 +29,11 @@ public:
 private:
     void handleCollisionsFor(MoveableEntity *moveable) const;
 
-    void handleCollisionsWithOtherSlotEntities(MoveableEntity *moveable, SpatialPartition *slots,
+    // Returns true if entity has moved to a different slot
+    bool handleCollisionsWithOtherSlotEntities(MoveableEntity *moveable, SpatialPartition *slots,
                                                SlotEntities::MoveableIter &it);
 
-    static bool entityHasMovedSlots(MoveableEntity *entity, SpatialPartition *slots) ;
+//    static bool entityHasMovedSlots(MoveableEntity *entity, SpatialPartition *slots) ;
 
     static bool hasEntityMovedToSlot(MoveableEntity *entity, SpatialPartition *slots, PartitionSlot *slot) ;
 

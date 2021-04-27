@@ -23,7 +23,7 @@ std::unordered_set<PartitionSlot *> SpatialPartition::getSlotsAroundEntity(sf::F
     auto topLeftSlot = convertGlobalToLocalCoords({rangeGlobal.left, rangeGlobal.top});
     auto botRightSlot = convertGlobalToLocalCoords(
             {rangeGlobal.left + rangeGlobal.width, rangeGlobal.top + rangeGlobal.height});
-    topLeftSlot += sf::Vector2i{-1, -1};
+    topLeftSlot += sf::Vector2i{-1, -1}; // over-extend range to capture props that could be on the edge of a slot
     botRightSlot += sf::Vector2i{1, 1};
     return getSlotsInRange(topLeftSlot, botRightSlot);
 }
@@ -167,7 +167,7 @@ const int SpatialPartition::SLOT_WIDTH = static_cast<int>(worldConstants::CHUNK_
 const int SpatialPartition::SLOT_HEIGHT =
         static_cast<int>(worldConstants::CHUNK_SIZE.y) / SLOT_ROWS_PER_CHUNK;
 
-PartitionSlot * resolveForeignSlot(Chunk * chunk, sf::Vector2f entityCenterPos, sf::Vector2f entitySize) {
+PartitionSlot *resolveForeignSlot(Chunk *chunk, sf::Vector2f entityCenterPos, sf::Vector2f entitySize) {
     auto foreignPartition = getForeignPartitionFrom(chunk);
     if (!foreignPartition) return nullptr;
     return foreignPartition->resolveSlotFromEntityGlobalCoords(entityCenterPos, entitySize);
@@ -178,6 +178,7 @@ PartitionSlot *SpatialPartition::resolveSlotFromEntityGlobalCoords(sf::Vector2f 
                                                                    sf::Vector2f entitySize) {
     auto entityTopLeft = entityCenterPos - sf::Vector2f{entitySize.x / 2, entitySize.y / 2};
     auto localCoords = convertGlobalToLocalCoords(entityTopLeft);
+//    std::cout << "local coords: " << localCoords.x << ", " << localCoords.y << std::endl;
 
     if (localCoords.x < 0) {
         return resolveForeignSlot(chunkNeighbors->west->get(), entityCenterPos, entitySize);
@@ -198,6 +199,16 @@ PartitionSlot *SpatialPartition::resolveSlotFromEntityGlobalCoords(sf::Vector2f 
 sf::Vector2i SpatialPartition::convertGlobalToLocalCoords(sf::Vector2f globalCoordsTopLeft) {
     auto relativeEntityGlobalCoords = (topLeftCoords - globalCoordsTopLeft);
     relativeEntityGlobalCoords = {std::abs(relativeEntityGlobalCoords.x), std::abs(relativeEntityGlobalCoords.y)};
-    return sf::Vector2i{static_cast<int>(relativeEntityGlobalCoords.x / SLOT_WIDTH),
-                        static_cast<int>(relativeEntityGlobalCoords.y / SLOT_HEIGHT)};
+
+    auto localCoords = sf::Vector2i{static_cast<int>(relativeEntityGlobalCoords.x / SLOT_WIDTH),
+                 static_cast<int>(relativeEntityGlobalCoords.y / SLOT_HEIGHT)};
+
+    // slot is a foreign partition
+    if (globalCoordsTopLeft.x < topLeftCoords.x) {
+        localCoords.x = -localCoords.x - 1;
+    }
+    if (globalCoordsTopLeft.y < topLeftCoords.y) {
+        localCoords.y = -localCoords.y - 1;
+    }
+    return localCoords;
 }

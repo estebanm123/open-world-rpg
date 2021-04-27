@@ -34,10 +34,10 @@ void PartitionSlot::handleCollisions(SpatialPartition *slots) {
         auto moveable = *it;
 
         handleCollisionsFor(moveable);
-        handleCollisionsWithOtherSlotEntities(moveable, slots, it);
+        bool entityMovedToAnotherSlot = handleCollisionsWithOtherSlotEntities(moveable, slots, it);
 
-        if (!entityHasMovedSlots(moveable, slots)) {
-            it++;
+        if (!entityMovedToAnotherSlot) {
+            it++; // iterator wasn't updated during moveable removal from this slot
         }
     }
 }
@@ -78,7 +78,7 @@ void PartitionSlot::handleCollisionsFor(MoveableEntity *moveable) const {
     }
 }
 
-void PartitionSlot::handleCollisionsWithOtherSlotEntities(MoveableEntity *moveable, SpatialPartition *slots,
+bool PartitionSlot::handleCollisionsWithOtherSlotEntities(MoveableEntity *moveable, SpatialPartition *slots,
                                                           SlotEntities::MoveableIter &it) {
     auto moveablePos = moveable->getTopLeftPosition();
     auto moveableSize = moveable->getSize();
@@ -88,30 +88,19 @@ void PartitionSlot::handleCollisionsWithOtherSlotEntities(MoveableEntity *moveab
     for (auto slot : slotsInRange) {
         if (slot == this) continue;
 //        std::cout << "slot in range: " << slot << std::endl;
-
         slot->handleExternalCollision(moveable);
+    }
 
+    for (auto slot : slotsInRange) {
         if (hasEntityMovedToSlot(moveable, slots, slot)) {
             auto entityPtr = entityHolder.removeAndTransferMoveable(moveable, it);
             if (entityPtr != nullptr) {
                 slot->addEntity(entityPtr);
             }
+            return true;
         }
     }
-}
-
-bool
-PartitionSlot::entityHasMovedSlots(MoveableEntity *entity, SpatialPartition *slots) {
-    if (!entity->hasMoved()) {
-        return false;
-    }
-    auto currentPos = entity->getPosition();
-    auto oldPos = entity->getPosition() - entity->getLastMoveOffset();
-
-    auto size = entity->getSize();
-    auto oldSlot = slots->resolveSlotFromEntityGlobalCoords(oldPos, size);
-    auto currentSlot = slots->resolveSlotFromEntityGlobalCoords(currentPos, size);
-    return oldSlot != currentSlot;
+    return false;
 }
 
 bool PartitionSlot::hasEntityMovedToSlot(MoveableEntity *entity, SpatialPartition *slots, PartitionSlot *slot) {
@@ -119,8 +108,8 @@ bool PartitionSlot::hasEntityMovedToSlot(MoveableEntity *entity, SpatialPartitio
         return false;
     }
     auto currentPos = entity->getPosition();
-
     auto size = entity->getSize();
     auto currentSlot = slots->resolveSlotFromEntityGlobalCoords(currentPos, size);
     return currentSlot == slot;
 }
+
