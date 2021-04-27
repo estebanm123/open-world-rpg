@@ -140,8 +140,15 @@ void SpatialPartition::renderEntities(sf::RenderTarget &renderer, const ActiveZo
     for (auto row = 0; row < slots.size(); row++) {
         for (auto col = 0; col < slots[0].size(); col++) {
             if (activeZoneContainsSlot(row, col, activeZones.renderZone)) {
-                auto &slot = slots[row][col];
-                slot->renderBy(renderer);
+                slots[row][col]->renderProps(renderer);
+            }
+        }
+    }
+
+    for (auto row = 0; row < slots.size(); row++) {
+        for (auto col = 0; col < slots[0].size(); col++) {
+            if (activeZoneContainsSlot(row, col, activeZones.renderZone)) {
+                slots[row][col]->renderMoveables(renderer);
             }
         }
     }

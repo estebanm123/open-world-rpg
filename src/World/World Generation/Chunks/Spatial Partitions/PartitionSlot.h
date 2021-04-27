@@ -18,7 +18,9 @@ public:
 
     void handleCollisions(SpatialPartition *slots);
 
-    void renderBy(sf::RenderTarget &renderer);
+    void renderProps(sf::RenderTarget & renderer);
+
+    void renderMoveables(sf::RenderTarget & renderer);
 
     void handleExternalCollision(MoveableEntity *externalEntity);
 

@@ -15,14 +15,16 @@ void PartitionSlot::update(float dt) {
     }
 }
 
-void PartitionSlot::renderBy(sf::RenderTarget &renderer) {
-    // todo: add debug render option
+void PartitionSlot::renderProps(sf::RenderTarget &renderer) {
     for (auto &prop : entityHolder.decorProps) {
         prop->renderBy(renderer);
     }
     for (auto &prop  : entityHolder.mainProps) {
         prop->renderBy(renderer);
     }
+}
+
+void PartitionSlot::renderMoveables(sf::RenderTarget &renderer) {
     for (auto &moveable : entityHolder.moveableEntities) {
         moveable->renderBy(renderer);
     }
