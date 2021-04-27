@@ -15,6 +15,8 @@ public:
 
     bool isAnimated() override;
 
+    sf::Vector2f getSize() override;
+
     void playDefaultAnim() override;
 
     // TODO: set animPlayers?

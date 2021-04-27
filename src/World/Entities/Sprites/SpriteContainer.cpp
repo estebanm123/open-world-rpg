@@ -60,3 +60,7 @@ bool SpriteContainer::isAnimated() {
     return false;
 }
 
+sf::Vector2f SpriteContainer::getSize() {
+    return sprites[0]->getSize();
+}
+

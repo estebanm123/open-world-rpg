@@ -2,14 +2,27 @@
 
 class Chunk;
 
-class ChunkDebug {
+class ActiveZones;
 
-public:
-    static void drawOutline(sf::RenderTarget &renderTargetRef, sf::Vector2f center, sf::Vector2f size);
+class SpatialPartition;
 
+struct ChunkDebug {
+
+    static void renderDebugInfo(sf::RenderTarget &renderTargetRef,
+                                const std::array<std::array<std::unique_ptr<Chunk>, 3>, 3> &chunks,
+                                const ActiveZones &activeZones);
+
+    static void drawOutline(sf::RenderTarget &renderTargetRef, sf::Vector2f center, sf::Vector2f size, sf::Color color,
+                            float thickness);
+
+private:
     static void
     drawChunkOutlines(sf::RenderTarget &renderTargetRef,
                       const std::array<std::array<std::unique_ptr<Chunk>, 3>, 3> &chunks);
+
+    static void drawActiveZones(sf::RenderTarget &renderTargetRef, const ActiveZones &activeZones);
+
+    static void drawSpatialPartitionSlots(sf::RenderTarget &renderTargetRef, SpatialPartition *spatialPartition);
 };
 
 

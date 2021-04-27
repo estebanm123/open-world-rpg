@@ -8,7 +8,7 @@
 #include "../../../Util/MathExtra.h"
 
 // Creates a tile map for rendering and collision detection purposes.
-// ctor used primarily for chunks - where pos is based on chunk center
+// ctor intended for chunks - where pos is based on chunk center
 // since pos corresponds to top left corner - a shift is performed to accommodate for chunk center
 TileMap::TileMap(sf::Vector2f pos) : pos(pos - worldConstants::CHUNK_SIZE / 2.f) {
     tiles = TileMapGenerator::generate(this->pos);
@@ -44,7 +44,7 @@ bool TileMap::isEntityCrossingBounds(CollidableEntity *entity) const {
     auto yChunkLim = CHUNK_SIZE.y + pos.y;
     auto xChunkLim = CHUNK_SIZE.x + pos.x;
 
-    auto &entitySize = entity->getSize();
+    auto entitySize = entity->getSize();
     auto &entityPos = entity->getPosition();
     auto entityMaxLen = std::max(entitySize.y, entitySize.x); // take max to be safe; entity could be rotated
 

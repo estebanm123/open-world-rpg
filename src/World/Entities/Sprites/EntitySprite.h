@@ -10,6 +10,8 @@ public:
 
 //    virtual void setTextureRect(const sf::IntRect &rectangle) = 0;
 
+    virtual sf::Vector2f getSize() = 0;
+
     virtual void playAnim(Action const * action) = 0;
 
     virtual bool isAnimated() = 0;

@@ -40,10 +40,18 @@ public:
 
     void accept(EntityVisitor *visitor) override;
 
+    bool isDecorProp() const;
+
+    void renderBy(sf::RenderTarget & renderTarget) override;
+
+    void setIsDecor(bool isDecorProp);
+
 protected:
     EntitySprite &getSprite() override;
 
     std::unique_ptr<EntitySprite> sprite;
     bool hasDefaultAnim;
+    bool isDecor;
+
 };
 

@@ -10,8 +10,7 @@ namespace sf {
     class RectangleShape;
 }
 
-class CollisionChecker {
-public:
+struct CollisionChecker {
     static bool intersect(const sf::CircleShape &circle, const sf::FloatRect &rect);
 
     static bool intersect(const sf::CircleShape &circle, const sf::RectangleShape &rectShape);
@@ -24,7 +23,6 @@ public:
     static bool intersect(const sf::ConvexShape &a, const sf::ConvexShape &b);
 
     static sf::FloatRect convertToFloatRect(const sf::RectangleShape &rect);
-
 };
 
 

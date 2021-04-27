@@ -21,7 +21,8 @@ const std::string &Env::getSpriteSheetPath() const {
 
 
 TileContainer *
-getBorderTileContainerUtil(const Env *otherEnv, const Env::BorderTileContainers &borderTileContainers, const sf::Vector2f & globalCoords) {
+getBorderTileContainerUtil(const Env *otherEnv, const Env::BorderTileContainers &borderTileContainers,
+                           const sf::Vector2f &globalCoords) {
     // todo: could there be a case where otherEnv == this?
     if (borderTileContainers.find(otherEnv) == borderTileContainers.end()) return nullptr;
     const auto &borderContainers = borderTileContainers.at(otherEnv);
@@ -30,12 +31,12 @@ getBorderTileContainerUtil(const Env *otherEnv, const Env::BorderTileContainers 
     return borderContainers.at(hashVal).get();
 }
 
-TileContainer *Env::getSplitTileContainer(const Env *otherEnv, const sf::Vector2f & globalCoords) const {
+TileContainer *Env::getSplitTileContainer(const Env *otherEnv, const sf::Vector2f &globalCoords) const {
     // check to see what in the maps
     return getBorderTileContainerUtil(otherEnv, splitBorderTileContainers, globalCoords);
 }
 
-TileContainer *Env::getCornerTileContainer(const Env *otherEnv, const sf::Vector2f & globalCoords) const {
+TileContainer *Env::getCornerTileContainer(const Env *otherEnv, const sf::Vector2f &globalCoords) const {
     return getBorderTileContainerUtil(otherEnv, cornerBorderTileContainers, globalCoords);
 }
 
@@ -77,7 +78,6 @@ Env::Config::Config(Env::EnvId id, std::string spriteSheet, int numFullTiles, st
                     std::unique_ptr<PropFactory> propFactory, std::unique_ptr<Animation::BaseMetadata> animMetadata)
         : id(id), spriteSheet(std::move(spriteSheet)), numFullTiles(numFullTiles),
           borderDataCollection(std::move(borderData)),
-          propFactory(std::move(propFactory)), animMetadata(std::move(animMetadata))
-{
+          propFactory(std::move(propFactory)), animMetadata(std::move(animMetadata)) {
 
 }

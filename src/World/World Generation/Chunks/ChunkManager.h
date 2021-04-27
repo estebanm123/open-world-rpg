@@ -8,10 +8,13 @@
 #include "../../../Util/NonMoveable.h"
 #include "ChunkGenerator.h"
 #include "../../Entities/Collidables/Organisms/NPC AI/Path/NpcPath.h"
+#include "Spatial Partitions/SpatialPartition.h"
+#include "Spatial Partitions/ActiveZones.h"
 
 class ChunkManager : sf::NonCopyable, NonMoveable {
 public:
-    ChunkManager(int seed, Player *player, const sf::Vector2f &pos);
+
+    ChunkManager(int seed, const std::shared_ptr<Player> &player, const sf::Vector2f &pos);
 
     void update(float dt);
 
@@ -24,12 +27,15 @@ private:
     std::array<std::array<std::unique_ptr<Chunk>, MATRIX_LEN>, MATRIX_LEN> chunks;
     static constexpr auto CHUNK_GENERATION_TIMER = 1;
 
+    ActiveZones activeZones; // A collection of spatial constraints restricting rendering, collisions, etc...
     ChunkGenerator generator;
     std::thread generatorThread;
     sf::Clock chunkGenerationTimer;
     Player *player;
 
     void updateChunks(float dt);
+
+    void allocateNewlyGeneratedChunks();
 
     void recalibrateChunks(const sf::Vector2i &dir);
 

@@ -6,32 +6,23 @@
 World::World(std::shared_ptr<sf::View> worldView) :
         worldView(std::move(worldView)),
         seed(generateSeed()),
-        player(worldConstants::INITIAL_PLAYER_POS),
-        chunkManager(seed, &player, worldConstants::INITIAL_PLAYER_POS) {
-    // testing various objects
+        player(std::make_shared<Player>(worldConstants::INITIAL_PLAYER_POS)),
+        chunkManager(seed, player, worldConstants::INITIAL_PLAYER_POS) {
 }
 
 
 void World::renderBy(sf::RenderTarget &renderer) {
     chunkManager.renderChunks(renderer);
-//    for (const auto &weapon: projWeapons) {
-//        // debug why weapon is not showing -> then why
-//        if (weapon->isDropped()) {
-//            weapon->renderBy(renderer);
-//        }
-//    }
-    player.renderBy(renderer);
 }
 
 void World::handleInput(sf::RenderWindow &window) {
-    player.handleInput(window);
+    player->handleInput(window);
 }
 
 void World::update(float dt) {
-    worldView->setCenter(player.getPosition());
+    worldView->setCenter(player->getPosition());
     chunkManager.update(dt);
 }
-
 
 //void World::updateWeapons(float dt) {
 //    for (const auto &projWeapon : projWeapons) {

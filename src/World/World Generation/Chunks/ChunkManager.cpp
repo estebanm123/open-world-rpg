@@ -3,23 +3,25 @@
 #include "ChunkDebug.h"
 #include "../Tiles/Tile.h"
 #include "../../Entities/Collidables/Organisms/Humanoid/Player/Player.h"
-#include "../../Entities/Collidables/Props/Prop.h"
 #include "../Environments/CompleteEnv.h"
 
 #ifdef DEBUG
-#define RENDER_CHUNK_OUTLINE(renderTargetRef, chunks) \
+#define RENDER_DEBUG_INFO(renderTargetRef, chunks, activeZones) \
 do {                                                        \
-    ChunkDebug::drawChunkOutlines(renderTargetRef, chunks); \
+    ChunkDebug::renderDebugInfo(renderTargetRef, chunks, activeZones); \
 } while (0)
 #else
-#define RENDER_CHUNK_OUTLINE
+#define RENDER_DEBUG_INFO
 #endif
 
+using namespace worldConstants;
 
-ChunkManager::ChunkManager(int seed, Player *player, const sf::Vector2f &pos)
-        : generator(seed), generatorThread(std::ref(generator)), player(player) {
+ChunkManager::ChunkManager(int seed, const std::shared_ptr<Player> &player, const sf::Vector2f &pos)
+        : generator(seed), generatorThread(std::ref(generator)), player(player.get()),
+          activeZones(player->getPosition(), {RENDER_ZONE_WIDTH, RENDER_ZONE_HEIGHT},
+                      {COLLISION_ZONE_WIDTH, COLLISION_ZONE_HEIGHT}) {
     allocateInitialChunks(pos);
-    chunks[1][1]->addMoveable(player);
+    chunks[1][1]->addEntity(player);
 }
 
 // - dir must be a cardinal direction w/ length == sqrt(2)
@@ -63,15 +65,19 @@ void ChunkManager::handleChunkChange() {
 void ChunkManager::renderChunks(sf::RenderTarget &target) {
     for (auto i = 0; i < 3; ++i) {
         for (auto j = 0; j < 3; ++j) {
-            if (chunks[i][j]) chunks[i][j]->renderTiles(target);
+            if (chunks[i][j]) {
+                chunks[i][j]->renderTiles(target, activeZones);
+            }
         }
     }
     for (auto i = 0; i < 3; ++i) {
         for (auto j = 0; j < 3; ++j) {
-            if (chunks[i][j]) chunks[i][j]->renderProps(target);
+            if (chunks[i][j]) {
+                chunks[i][j]->renderEntities(target, activeZones);
+            }
         }
     }
-    RENDER_CHUNK_OUTLINE(target, chunks);
+    RENDER_DEBUG_INFO(target, chunks, activeZones);
 
 }
 
@@ -181,8 +187,17 @@ bool ChunkManager::inMatrixBounds(const sf::Vector2i &pos) {
 void ChunkManager::updateChunks(float dt) {
     for (const auto &chunkRow : chunks) {
         for (const auto &chunk : chunkRow) {
-            if (chunk) chunk->update(dt);
+            if (chunk) chunk->update(dt, activeZones);
         }
+    }
+}
+
+
+void ChunkManager::allocateNewlyGeneratedChunks() {
+    auto chunk = generator.getGeneratedChunk();
+    while (chunk != nullptr) {
+        allocateChunkFromDirection(chunk, chunk->getReqData().dir);
+        chunk = generator.getGeneratedChunk();
     }
 }
 
@@ -191,17 +206,12 @@ void ChunkManager::updateChunks(float dt) {
 void ChunkManager::update(float dt) {
     handleChunkChange();
 
-    // refactor to sensibly named helper
-    auto chunk = generator.getGeneratedChunk();
-    while (chunk != nullptr) {
-        allocateChunkFromDirection(chunk, chunk->getReqData().dir);
-        chunk = generator.getGeneratedChunk();
-    }
-
+    allocateNewlyGeneratedChunks();
     updateChunks(dt);
+    activeZones.updateZones(dt, player->getPosition());
 }
 
-// initialize chunks around the relative position to player
+// Blocks until completion of 9 fully generated chunks
 void ChunkManager::allocateInitialChunks(const sf::Vector2f &pos) {
     for (auto dir : directions) {
         generator.requestChunk({dir, pos});
@@ -234,7 +244,7 @@ void ChunkManager::allocateChunkNeighbors(const sf::Vector2i &matrixPos, Chunk *
     Chunk::Neighbors neighbors{};
     sf::Vector2i westNeighborPos = matrixPos + WEST;
     if (westNeighborPos.x >= 0) {
-       neighbors.west = &chunks[westNeighborPos.y][westNeighborPos.x];
+        neighbors.west = &chunks[westNeighborPos.y][westNeighborPos.x];
     }
     sf::Vector2i eastNeighborPos = matrixPos + EAST;
     if (eastNeighborPos.x <= MATRIX_LEN) {
