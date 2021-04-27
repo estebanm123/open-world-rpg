@@ -26,10 +26,10 @@ private:
     static constexpr auto MATRIX_LEN = 3;
     std::array<std::array<std::unique_ptr<Chunk>, MATRIX_LEN>, MATRIX_LEN> chunks;
     static constexpr auto CHUNK_GENERATION_TIMER = 1;
-    static constexpr int RENDER_ZONE_WIDTH = 2; // in number of slots
-    static constexpr int RENDER_ZONE_HEIGHT = 2;
-    static constexpr int COLLISION_ZONE_WIDTH = 0;
-    static constexpr int COLLISION_ZONE_HEIGHT = 0;
+    static constexpr int RENDER_ZONE_WIDTH = 3; // in number of slots
+    static constexpr int RENDER_ZONE_HEIGHT = 3;
+    static constexpr int COLLISION_ZONE_WIDTH = 3;
+    static constexpr int COLLISION_ZONE_HEIGHT = 3;
 
 
     ActiveZones activeZones; // A collection of spatial constraints restricting rendering, collisions, etc...

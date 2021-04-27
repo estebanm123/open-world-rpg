@@ -1,5 +1,6 @@
 
 
+#include <iostream>
 #include "SpatialPartition.h"
 #include "PartitionSlot.h"
 #include "../Chunk.h"
@@ -30,13 +31,12 @@ void PartitionSlot::renderBy(sf::RenderTarget &renderer) {
 void PartitionSlot::handleCollisions(SpatialPartition *slots) {
     auto &moveables = entityHolder.moveableEntities;
     for (auto it = moveables.begin(); it != moveables.end();) {
-        auto &moveable = *it;
-        auto oldCoordinates = moveable->getPosition();
+        auto moveable = *it;
 
         handleCollisionsFor(moveable);
         handleCollisionsWithOtherSlotEntities(moveable, slots, it);
 
-        if (!entityHasMovedSlots(moveable, oldCoordinates, slots)) {
+        if (!entityHasMovedSlots(moveable, slots)) {
             it++;
         }
     }
@@ -57,7 +57,7 @@ void PartitionSlot::removeEntity(const std::shared_ptr<Entity> &entity) {
 void PartitionSlot::handleCollisionsFor(MoveableEntity *moveable) const {
     if (!moveable->hasMoved()) return;
     auto &moveableEntities = entityHolder.moveableEntities;
-    for (auto &otherMoveable : moveableEntities) {
+    for (auto otherMoveable : moveableEntities) {
         // todo: some way to cache pairs seen, so we avoid double counting
         //         - each moveable can hold a set of other moveables it's checked?
         //              + then verified in handleCollision + reset on next update call
@@ -70,7 +70,7 @@ void PartitionSlot::handleCollisionsFor(MoveableEntity *moveable) const {
         hitboxes.second->handleCollision(otherMoveable, moveable);
     }
 
-    for (auto &prop : entityHolder.mainProps) {
+    for (auto prop : entityHolder.mainProps) {
         auto hitboxes = moveable->getHitbox()->getIntersectingSingleHitboxes(prop->getHitbox());
         if (hitboxes.first == nullptr || hitboxes.second == nullptr) continue; // no collision
         hitboxes.first->handleCollision(moveable, prop);
@@ -82,16 +82,16 @@ void PartitionSlot::handleCollisionsWithOtherSlotEntities(MoveableEntity *moveab
                                                           SlotEntities::MoveableIter &it) {
     auto moveablePos = moveable->getTopLeftPosition();
     auto moveableSize = moveable->getSize();
-    auto slotsInRange = slots->getSlotsInRange(
+    auto slotsInRange = slots->getSlotsAroundEntity(
             sf::FloatRect{moveablePos.x, moveablePos.y, moveableSize.x, moveableSize.y});
 
     for (auto slot : slotsInRange) {
         if (slot == this) continue;
+//        std::cout << "slot in range: " << slot << std::endl;
 
-        auto oldCoordinates = moveable->getPosition();
         slot->handleExternalCollision(moveable);
 
-        if (entityHasMovedSlots(moveable, oldCoordinates, slots)) {
+        if (hasEntityMovedToSlot(moveable, slots, slot)) {
             auto entityPtr = entityHolder.removeAndTransferMoveable(moveable, it);
             if (entityPtr != nullptr) {
                 slot->addEntity(entityPtr);
@@ -101,15 +101,26 @@ void PartitionSlot::handleCollisionsWithOtherSlotEntities(MoveableEntity *moveab
 }
 
 bool
-PartitionSlot::entityHasMovedSlots(MoveableEntity *entity, sf::Vector2f oldEntityPosition,
-                                   SpatialPartition *slots) const {
+PartitionSlot::entityHasMovedSlots(MoveableEntity *entity, SpatialPartition *slots) {
     if (!entity->hasMoved()) {
         return false;
     }
+    auto currentPos = entity->getPosition();
+    auto oldPos = entity->getPosition() - entity->getLastMoveOffset();
+
     auto size = entity->getSize();
-    auto oldSlot = slots->resolveSlotFromEntityGlobalCoords(oldEntityPosition, size);
-    auto currentSlot = slots->resolveSlotFromEntityGlobalCoords(entity->getPosition(), size);
+    auto oldSlot = slots->resolveSlotFromEntityGlobalCoords(oldPos, size);
+    auto currentSlot = slots->resolveSlotFromEntityGlobalCoords(currentPos, size);
     return oldSlot != currentSlot;
 }
 
+bool PartitionSlot::hasEntityMovedToSlot(MoveableEntity *entity, SpatialPartition *slots, PartitionSlot *slot) {
+    if (!entity->hasMoved()) {
+        return false;
+    }
+    auto currentPos = entity->getPosition();
 
+    auto size = entity->getSize();
+    auto currentSlot = slots->resolveSlotFromEntityGlobalCoords(currentPos, size);
+    return currentSlot == slot;
+}

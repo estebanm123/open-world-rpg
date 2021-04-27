@@ -30,7 +30,7 @@ public:
 
     PartitionSlot *resolveSlotFromEntityGlobalCoords(sf::Vector2f entityCenterPos, sf::Vector2f entitySize);
 
-    std::unordered_set<PartitionSlot *> getSlotsInRange(sf::FloatRect rangeGlobal);
+    std::unordered_set<PartitionSlot *> getSlotsAroundEntity(sf::FloatRect rangeGlobal);
 
 private:
     friend class ChunkDebug;

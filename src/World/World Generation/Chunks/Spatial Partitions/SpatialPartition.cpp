@@ -18,10 +18,12 @@ void SpatialPartition::initSlots() {
     }
 }
 
-std::unordered_set<PartitionSlot *> SpatialPartition::getSlotsInRange(sf::FloatRect rangeGlobal) {
+std::unordered_set<PartitionSlot *> SpatialPartition::getSlotsAroundEntity(sf::FloatRect rangeGlobal) {
     auto topLeftSlot = convertGlobalToLocalCoords({rangeGlobal.left, rangeGlobal.top});
     auto botRightSlot = convertGlobalToLocalCoords(
             {rangeGlobal.left + rangeGlobal.width, rangeGlobal.top + rangeGlobal.height});
+    topLeftSlot += sf::Vector2i{-1, -1};
+    botRightSlot += sf::Vector2i{1, 1};
     return getSlotsInRange(topLeftSlot, botRightSlot);
 }
 
@@ -171,5 +173,5 @@ sf::Vector2i SpatialPartition::convertGlobalToLocalCoords(sf::Vector2f globalCoo
     auto relativeEntityGlobalCoords = (topLeftCoords - globalCoordsTopLeft);
     relativeEntityGlobalCoords = {std::abs(relativeEntityGlobalCoords.x), std::abs(relativeEntityGlobalCoords.y)};
     return sf::Vector2i{static_cast<int>(relativeEntityGlobalCoords.x / SLOT_WIDTH),
-                                 static_cast<int>(relativeEntityGlobalCoords.y / SLOT_HEIGHT)};
+                        static_cast<int>(relativeEntityGlobalCoords.y / SLOT_HEIGHT)};
 }

@@ -32,7 +32,9 @@ private:
     void handleCollisionsWithOtherSlotEntities(MoveableEntity *moveable, SpatialPartition *slots,
                                                SlotEntities::MoveableIter &it);
 
-    bool entityHasMovedSlots(MoveableEntity *entity, sf::Vector2f oldEntityPosition, SpatialPartition *slots) const;
+    static bool entityHasMovedSlots(MoveableEntity *entity, SpatialPartition *slots) ;
+
+    static bool hasEntityMovedToSlot(MoveableEntity *entity, SpatialPartition *slots, PartitionSlot *slot) ;
 
     SlotEntities entityHolder;
 
