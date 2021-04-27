@@ -14,6 +14,7 @@ do {                                                        \
 #define RENDER_DEBUG_INFO
 #endif
 
+using namespace worldConstants;
 
 ChunkManager::ChunkManager(int seed, const std::shared_ptr<Player> &player, const sf::Vector2f &pos)
         : generator(seed), generatorThread(std::ref(generator)), player(player.get()),

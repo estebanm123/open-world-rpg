@@ -1,7 +1,8 @@
 
 #include <math.h>
-#include <iostream>
 #include "SpatialPartition.h"
+
+using namespace worldConstants;
 
 SpatialPartition::SpatialPartition(sf::Vector2f center) : topLeftCoords(center - worldConstants::CHUNK_SIZE / 2.f) {
     initSlots();
@@ -201,7 +202,7 @@ sf::Vector2i SpatialPartition::convertGlobalToLocalCoords(sf::Vector2f globalCoo
     relativeEntityGlobalCoords = {std::abs(relativeEntityGlobalCoords.x), std::abs(relativeEntityGlobalCoords.y)};
 
     auto localCoords = sf::Vector2i{static_cast<int>(relativeEntityGlobalCoords.x / SLOT_WIDTH),
-                 static_cast<int>(relativeEntityGlobalCoords.y / SLOT_HEIGHT)};
+                                    static_cast<int>(relativeEntityGlobalCoords.y / SLOT_HEIGHT)};
 
     // slot is a foreign partition
     if (globalCoordsTopLeft.x < topLeftCoords.x) {

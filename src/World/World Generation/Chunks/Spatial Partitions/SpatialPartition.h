@@ -9,10 +9,10 @@
 
 class ActiveZones;
 
+using namespace worldConstants;
+
 class SpatialPartition {
 public:
-    constexpr static int SLOT_ROWS_PER_CHUNK = 6;
-    constexpr static int SLOT_COLS_PER_CHUNK = SLOT_ROWS_PER_CHUNK;
     const static int SLOT_WIDTH;
     const static int SLOT_HEIGHT;
 
