@@ -43,4 +43,12 @@ bool Prop::isDecorProp() const {
     return isDecor;
 }
 
+void Prop::renderBy(sf::RenderTarget &renderTarget) {
+    if (isDecor) {
+        Entity::renderBy(renderTarget);
+    } else {
+        CollidableEntity::renderBy(renderTarget);
+    }
+}
+
 

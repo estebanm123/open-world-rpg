@@ -4,7 +4,6 @@
 #include <utility>
 #include "../../../Util/CollisionChecker.h"
 #include "MoveableEntity.h"
-#include "Hitbox/Hitbox.h"
 #include "Hitbox/SingleHitbox.h"
 
 #ifdef DEBUG
@@ -17,7 +16,9 @@ do {                                        \
 #endif
 
 void debugRenderHitbox(sf::RenderTarget &renderer, Hitbox *hitbox) {
-    hitbox->renderBy(renderer);
+    if (hitbox) {
+        hitbox->renderBy(renderer);
+    }
 }
 
 CollidableEntity::CollidableEntity(std::unique_ptr<Hitbox> hitbox) : hitbox(std::move(hitbox)) {

@@ -42,6 +42,8 @@ public:
 
     bool isDecorProp() const;
 
+    void renderBy(sf::RenderTarget & renderTarget) override;
+
     void setIsDecor(bool isDecorProp);
 
 protected:

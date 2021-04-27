@@ -18,7 +18,6 @@ void SpatialPartition::initSlots() {
     }
 }
 
-
 std::unordered_set<PartitionSlot *> SpatialPartition::getSlotsInRange(sf::FloatRect rangeGlobal) {
     auto topLeftSlot = convertGlobalToLocalCoords({rangeGlobal.left, rangeGlobal.top});
     auto botRightSlot = convertGlobalToLocalCoords(
