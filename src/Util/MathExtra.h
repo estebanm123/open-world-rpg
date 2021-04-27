@@ -42,13 +42,6 @@ T length(const sf::Vector2<T> &v) {
 }
 
 template<typename T>
-sf::Vector2<T> rotateVec(const sf::Vector2<T> vec, float angle) {
-    return vec;
-//    angle = -angle;
-    return {std::cos(vec.x * angle) - std::sin(vec.y * angle), std::sin(vec.x * angle) + std::cos(vec.y * angle)};
-}
-
-template<typename T>
 void normalize(sf::Vector2<T> &v) {
     v /= length(v);
 }
@@ -60,16 +53,6 @@ float angleBetweenTwoVectorsRad(sf::Vector2<T> v1, sf::Vector2<T> v2) {
     return acos(dp / (length(v1) * length(v2)));
 }
 
-// calculate vector projection
-
-//// Approximates v2's cardinal direction from v1
-//template<typename T>
-//sf::Vector2i approximateCardinalDirBetween(sf::Vector2<T> v1, sf::Vector2<T> v2) {
-//    sf::Vector2i cardinalDir;
-//    cardinalDir.x = v1.x < v2.x? 1 : v1.x > v2.x? -1 : 0;
-//    cardinalDir.y = v1.y < v2.y? -1 : v1.y > v2.y? 1 : 0;
-//    return cardinalDir;
-//}
 template<typename T>
 static int fastFloor(T f) { return f >= 0 ? (int) f : (int) f - 1; }
 
@@ -77,4 +60,3 @@ template<typename T>
 bool isDiagonal(const sf::Vector2<T> &v) {
     return abs(v.x) == abs(v.y);
 }
-

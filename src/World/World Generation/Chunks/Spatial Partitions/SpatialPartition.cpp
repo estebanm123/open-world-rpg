@@ -1,5 +1,5 @@
 
-
+#include <math.h>
 #include "SpatialPartition.h"
 
 SpatialPartition::SpatialPartition(sf::Vector2f center) : topLeftCoords(center - worldConstants::CHUNK_SIZE / 2.f) {
@@ -169,6 +169,7 @@ PartitionSlot *SpatialPartition::resolveSlotFromEntityGlobalCoords(sf::Vector2f 
 
 sf::Vector2i SpatialPartition::convertGlobalToLocalCoords(sf::Vector2f globalCoordsTopLeft) {
     auto relativeEntityGlobalCoords = (topLeftCoords - globalCoordsTopLeft);
+    relativeEntityGlobalCoords = {std::abs(relativeEntityGlobalCoords.x), std::abs(relativeEntityGlobalCoords.y)};
     return sf::Vector2i{static_cast<int>(relativeEntityGlobalCoords.x / SLOT_WIDTH),
-                        static_cast<int>(relativeEntityGlobalCoords.y / SLOT_HEIGHT)};
+                                 static_cast<int>(relativeEntityGlobalCoords.y / SLOT_HEIGHT)};
 }

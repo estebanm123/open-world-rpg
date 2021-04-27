@@ -6,7 +6,7 @@ class PartitionSlot;
 
 class ActiveZone {
 public:
-    ActiveZone(sf::Vector2f centerPos, sf::Vector2i size);
+    ActiveZone(sf::Vector2f centerPos, sf::Vector2i sizeInSlots);
 
     void update(float dt, sf::Vector2f playerPos);
 
@@ -14,7 +14,11 @@ public:
 
 private:
     sf::Vector2f centerPos;
-    sf::Vector2i size;
+    sf::Vector2f sizeInPx;
+public:
+    const sf::Vector2f &getCenterPos() const;
+
+    const sf::Vector2f & getSize() const;
 };
 
 

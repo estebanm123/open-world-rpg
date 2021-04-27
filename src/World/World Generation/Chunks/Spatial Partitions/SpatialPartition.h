@@ -33,6 +33,8 @@ public:
     std::unordered_set<PartitionSlot *> getSlotsInRange(sf::FloatRect rangeGlobal);
 
 private:
+    friend class ChunkDebug;
+
     void initSlots();
 
     std::unordered_set<PartitionSlot *>

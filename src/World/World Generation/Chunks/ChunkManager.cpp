@@ -6,12 +6,12 @@
 #include "../Environments/CompleteEnv.h"
 
 #ifdef DEBUG
-#define RENDER_CHUNK_OUTLINE(renderTargetRef, chunks) \
+#define RENDER_DEBUG_INFO(renderTargetRef, chunks, activeZones) \
 do {                                                        \
-    ChunkDebug::drawChunkOutlines(renderTargetRef, chunks); \
+    ChunkDebug::renderDebugInfo(renderTargetRef, chunks, activeZones); \
 } while (0)
 #else
-#define RENDER_CHUNK_OUTLINE
+#define RENDER_DEBUG_INFO
 #endif
 
 
@@ -76,7 +76,7 @@ void ChunkManager::renderChunks(sf::RenderTarget &target) {
             }
         }
     }
-    RENDER_CHUNK_OUTLINE(target, chunks);
+    RENDER_DEBUG_INFO(target, chunks, activeZones);
 
 }
 

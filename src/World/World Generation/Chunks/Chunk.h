@@ -53,8 +53,6 @@ public:
     void addEntity(const std::shared_ptr<Entity> &entity);
 
 private:
-    friend class ChunkCollisionHandler;
-
     RequestData reqData;
     TileMap tiles;
     sf::Vector2f center;
