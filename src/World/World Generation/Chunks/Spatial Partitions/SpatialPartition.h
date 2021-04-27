@@ -11,7 +11,7 @@ class ActiveZones;
 
 class SpatialPartition {
 public:
-    constexpr static int SLOT_ROWS_PER_CHUNK = 8;
+    constexpr static int SLOT_ROWS_PER_CHUNK = 6;
     constexpr static int SLOT_COLS_PER_CHUNK = SLOT_ROWS_PER_CHUNK;
     const static int SLOT_WIDTH;
     const static int SLOT_HEIGHT;
@@ -28,6 +28,7 @@ public:
 
     void addNewEntity(const std::shared_ptr<Entity> &entity);
 
+    // ASSUMES entity is always moving to chunks that are loaded in
     PartitionSlot *resolveSlotFromEntityGlobalCoords(sf::Vector2f entityCenterPos, sf::Vector2f entitySize);
 
     std::unordered_set<PartitionSlot *> getSlotsAroundEntity(sf::FloatRect rangeGlobal);

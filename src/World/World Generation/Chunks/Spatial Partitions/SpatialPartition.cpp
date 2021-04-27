@@ -1,5 +1,6 @@
 
 #include <math.h>
+#include <iostream>
 #include "SpatialPartition.h"
 
 SpatialPartition::SpatialPartition(sf::Vector2f center) : topLeftCoords(center - worldConstants::CHUNK_SIZE / 2.f) {
@@ -51,32 +52,35 @@ SpatialPartition::getSlotsInRange(sf::Vector2i topLeftLocalCoords, sf::Vector2i 
     auto startCol = topLeftLocalCoords.x;
     auto endRow = bottomRightLocalCoords.y;
     auto endCol = bottomRightLocalCoords.x;
+//    std::cout << startRow << "," << startCol << "," << endRow << "," << endCol << std::endl;
     if (startRow < 0) { // handle slots to the north of the partition
         auto foreignTopRow = SLOT_ROWS_PER_CHUNK + startRow;
         auto foreignBotRow = SLOT_ROWS_PER_CHUNK - 1;
         appendForeignSlotsInRange(resultSlots, getForeignPartitionFrom(chunkNeighbors->north->get()),
-                                  sf::Vector2i{topLeftLocalCoords.x, foreignTopRow},
-                                  sf::Vector2i{bottomRightLocalCoords.x, foreignBotRow});
+                                  sf::Vector2i{startCol, foreignTopRow},
+                                  sf::Vector2i{endCol, foreignBotRow});
         startRow = 0;
-        if (endRow >= SLOT_ROWS_PER_CHUNK) { // handle slots south of us
-            foreignTopRow = 0;
-            foreignBotRow = endRow - SLOT_ROWS_PER_CHUNK; // make local coords relative to south partition
-            appendForeignSlotsInRange(resultSlots, getForeignPartitionFrom(chunkNeighbors->south->get()),
-                                      sf::Vector2i{topLeftLocalCoords.x, foreignTopRow},
-                                      sf::Vector2i{topLeftLocalCoords.x, foreignBotRow});
-            endRow = SLOT_ROWS_PER_CHUNK - 1;
-        } else if (endRow < 0) {
+
+        if (endRow < 0) {
             return resultSlots; // all relevant slots are north of us
         }
     } else if (startRow >= SLOT_ROWS_PER_CHUNK) { // all relevant slots are south of us
         auto foreignTopRow = startRow - SLOT_ROWS_PER_CHUNK;
         auto foreignBotRow = endRow - SLOT_ROWS_PER_CHUNK;
         appendForeignSlotsInRange(resultSlots, getForeignPartitionFrom(chunkNeighbors->south->get()),
-                                  sf::Vector2i{topLeftLocalCoords.x, foreignTopRow},
-                                  sf::Vector2i{topLeftLocalCoords.x, foreignBotRow});
+                                  sf::Vector2i{startCol, foreignTopRow},
+                                  sf::Vector2i{endCol, foreignBotRow});
         return resultSlots;
     }
-    // symmetrical cases except updated startRow/endRow are used to avoid redundant checks
+    if (endRow >= SLOT_ROWS_PER_CHUNK) { // handle slots south of us
+        auto foreignTopRow = 0;
+        auto foreignBotRow = endRow - SLOT_ROWS_PER_CHUNK; // make local coords relative to south partition
+        appendForeignSlotsInRange(resultSlots, getForeignPartitionFrom(chunkNeighbors->south->get()),
+                                  sf::Vector2i{startCol, foreignTopRow},
+                                  sf::Vector2i{endCol, foreignBotRow});
+        endRow = SLOT_ROWS_PER_CHUNK - 1;
+    }
+    // symmetrical cases except updated startRow/endRow
     if (startCol < 0) {
         auto foreignLeftCol = SLOT_COLS_PER_CHUNK + startCol;
         auto foreignRightCol = SLOT_COLS_PER_CHUNK - 1;
@@ -84,14 +88,8 @@ SpatialPartition::getSlotsInRange(sf::Vector2i topLeftLocalCoords, sf::Vector2i 
                                   sf::Vector2i{foreignLeftCol, startRow},
                                   sf::Vector2i{foreignRightCol, endRow});
         startCol = 0;
-        if (endCol >= SLOT_COLS_PER_CHUNK) {
-            foreignLeftCol = 0;
-            foreignRightCol = endCol - SLOT_COLS_PER_CHUNK;
-            appendForeignSlotsInRange(resultSlots, getForeignPartitionFrom(chunkNeighbors->east->get()),
-                                      sf::Vector2i{foreignLeftCol, startRow},
-                                      sf::Vector2i{foreignRightCol, endRow});
-            endCol = SLOT_COLS_PER_CHUNK - 1;
-        } else if (endCol < 0) {
+
+        if (endCol < 0) {
             return resultSlots;
         }
     } else if (startCol >= SLOT_COLS_PER_CHUNK) {
@@ -101,6 +99,14 @@ SpatialPartition::getSlotsInRange(sf::Vector2i topLeftLocalCoords, sf::Vector2i 
                                   sf::Vector2i{foreignLeftCol, startRow},
                                   sf::Vector2i{foreignRightCol, endRow});
         return resultSlots;
+    }
+    if (endCol >= SLOT_COLS_PER_CHUNK) {
+        auto foreignLeftCol = 0;
+        auto foreignRightCol = endCol - SLOT_COLS_PER_CHUNK;
+        appendForeignSlotsInRange(resultSlots, getForeignPartitionFrom(chunkNeighbors->east->get()),
+                                  sf::Vector2i{foreignLeftCol, startRow},
+                                  sf::Vector2i{foreignRightCol, endRow});
+        endCol = SLOT_COLS_PER_CHUNK - 1;
     }
 
     for (auto row = startRow; row <= endRow; row++) {
@@ -161,10 +167,30 @@ const int SpatialPartition::SLOT_WIDTH = static_cast<int>(worldConstants::CHUNK_
 const int SpatialPartition::SLOT_HEIGHT =
         static_cast<int>(worldConstants::CHUNK_SIZE.y) / SLOT_ROWS_PER_CHUNK;
 
+PartitionSlot * resolveForeignSlot(Chunk * chunk, sf::Vector2f entityCenterPos, sf::Vector2f entitySize) {
+    auto foreignPartition = getForeignPartitionFrom(chunk);
+    if (!foreignPartition) return nullptr;
+    return foreignPartition->resolveSlotFromEntityGlobalCoords(entityCenterPos, entitySize);
+}
+
+
 PartitionSlot *SpatialPartition::resolveSlotFromEntityGlobalCoords(sf::Vector2f entityCenterPos,
                                                                    sf::Vector2f entitySize) {
     auto entityTopLeft = entityCenterPos - sf::Vector2f{entitySize.x / 2, entitySize.y / 2};
     auto localCoords = convertGlobalToLocalCoords(entityTopLeft);
+
+    if (localCoords.x < 0) {
+        return resolveForeignSlot(chunkNeighbors->west->get(), entityCenterPos, entitySize);
+    }
+    if (localCoords.x >= SLOT_COLS_PER_CHUNK) {
+        return resolveForeignSlot(chunkNeighbors->east->get(), entityCenterPos, entitySize);
+    }
+    if (localCoords.y < 0) {
+        return resolveForeignSlot(chunkNeighbors->north->get(), entityCenterPos, entitySize);
+    }
+    if (localCoords.y >= SLOT_ROWS_PER_CHUNK) {
+        return resolveForeignSlot(chunkNeighbors->south->get(), entityCenterPos, entitySize);
+    }
 
     return slots[localCoords.y][localCoords.x].get();
 }
