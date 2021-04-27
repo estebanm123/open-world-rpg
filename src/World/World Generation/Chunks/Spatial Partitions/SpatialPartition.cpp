@@ -173,5 +173,3 @@ sf::Vector2i SpatialPartition::convertGlobalToLocalCoords(sf::Vector2f globalCoo
     return sf::Vector2i{static_cast<int>(relativeEntityGlobalCoords.x / SLOT_WIDTH),
                         static_cast<int>(relativeEntityGlobalCoords.y / SLOT_HEIGHT)};
 }
-
-

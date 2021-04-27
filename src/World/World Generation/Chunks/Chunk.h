@@ -44,16 +44,15 @@ public:
 
     SpatialPartition *getSpatialPartition();
 
-    void render(sf::RenderTarget &renderer, const ActiveZones &activeZones);
+    void renderEntities(sf::RenderTarget &renderer, const ActiveZones &activeZones);
+
+    void renderTiles(sf::RenderTarget &renderer, const ActiveZones &activeZones);
 
     void setNeighbors(const Neighbors &newNeighbors);
 
     void addEntity(const std::shared_ptr<Entity> &entity);
 
 private:
-    void renderTiles(sf::RenderTarget &target);
-
-
     friend class ChunkCollisionHandler;
 
     RequestData reqData;

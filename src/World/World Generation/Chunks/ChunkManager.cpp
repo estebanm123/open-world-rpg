@@ -65,7 +65,14 @@ void ChunkManager::renderChunks(sf::RenderTarget &target) {
     for (auto i = 0; i < 3; ++i) {
         for (auto j = 0; j < 3; ++j) {
             if (chunks[i][j]) {
-                chunks[i][j]->render(target, activeZones);
+                chunks[i][j]->renderTiles(target, activeZones);
+            }
+        }
+    }
+    for (auto i = 0; i < 3; ++i) {
+        for (auto j = 0; j < 3; ++j) {
+            if (chunks[i][j]) {
+                chunks[i][j]->renderEntities(target, activeZones);
             }
         }
     }

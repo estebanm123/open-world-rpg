@@ -11,7 +11,7 @@ class ActiveZones;
 
 class SpatialPartition {
 public:
-    constexpr static int SLOT_ROWS_PER_CHUNK = 4;
+    constexpr static int SLOT_ROWS_PER_CHUNK = 8;
     constexpr static int SLOT_COLS_PER_CHUNK = SLOT_ROWS_PER_CHUNK;
     const static int SLOT_WIDTH;
     const static int SLOT_HEIGHT;

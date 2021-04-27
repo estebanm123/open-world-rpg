@@ -3,6 +3,7 @@
 #include "Spatial Partitions/SpatialPartition.h"
 #include "../Tiles/Tile.h"
 #include "../Environments/CompleteEnv.h"
+#include "Chunk.h"
 
 
 Chunk::Chunk(const RequestData &reqData, TileMap tiles, const sf::Vector2f &center,
@@ -20,7 +21,7 @@ const sf::Vector2f &Chunk::getCenter() const {
     return center;
 }
 
-void Chunk::renderTiles(sf::RenderTarget &target) {
+void Chunk::renderTiles(sf::RenderTarget &target, const ActiveZones &activeZones) {
     tiles.renderBy(target);
 }
 
@@ -44,11 +45,6 @@ void Chunk::setNeighbors(const Chunk::Neighbors &newNeighbors) {
     neighbors = newNeighbors;
 }
 
-void Chunk::render(sf::RenderTarget &renderer, const ActiveZones &activeZones) {
-    renderTiles(renderer);
-    entitySpatialPartition->renderEntities(renderer, activeZones);
-}
-
 SpatialPartition *Chunk::getSpatialPartition() {
     return entitySpatialPartition.get();
 }
@@ -57,4 +53,7 @@ void Chunk::addEntity(const std::shared_ptr<Entity> &entity) {
     entitySpatialPartition->addNewEntity(entity);
 }
 
+void Chunk::renderEntities(sf::RenderTarget &renderer, const ActiveZones &activeZones) {
+    entitySpatialPartition->renderEntities(renderer, activeZones);
+}
 
