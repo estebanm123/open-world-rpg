@@ -22,7 +22,10 @@ public:
 
     void removeEntity(const std::shared_ptr<Entity> &entity);
 
-    std::shared_ptr<Entity> removeAndTransferEntity(Entity *entity);
+    typedef std::unordered_set<MoveableEntity *>::iterator MoveableIter;
+
+    std::shared_ptr<Entity> removeAndTransferMoveable(Entity *entity, MoveableIter &it);
+
 
 private:
     class Adder : EntityVisitor {

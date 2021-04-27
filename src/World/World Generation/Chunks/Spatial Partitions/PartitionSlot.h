@@ -29,7 +29,8 @@ public:
 private:
     void handleCollisionsFor(MoveableEntity *moveable) const;
 
-    void handleCollisionsWithOtherSlotEntities(MoveableEntity *moveable, SpatialPartition *slots);
+    void handleCollisionsWithOtherSlotEntities(MoveableEntity *moveable, SpatialPartition *slots,
+                                               SlotEntities::MoveableIter &it);
 
     bool entityHasMovedSlots(MoveableEntity *entity, sf::Vector2f oldEntityPosition, SpatialPartition *slots) const;
 

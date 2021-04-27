@@ -38,10 +38,10 @@ ChunkPropGenerator::generateEnvironmentalProps(bool isDecor, SpatialPartition *e
             if (tileCoordHash > currentPropChance) {
                 auto propCoords = generatePropCoords(currentPropChance, tileCoordHash, curTile->getPosition());
                 auto prop = curEnv->generateEnvironmentalProp(propCoords, isDecor);
-                prop->setIsDecor(isDecor);
                 if (!isPropValid(prop.get(), tileMap, tilesSeen, {x, y}, isDecor)) {
                     continue;
                 }
+                prop->setIsDecor(isDecor);
                 updateCurrentPropChanceOnSuccess(currentPropChance);
                 std::shared_ptr<Entity> entityPtr = std::move(prop);
                 entitySpatialPartition->addNewEntity(entityPtr);

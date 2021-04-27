@@ -18,7 +18,8 @@ void Prop::update(float dt) {
 Prop::Prop(PropOptions config)
         : CollidableEntity(
         std::make_unique<SingleHitbox>(sf::FloatRect{config.pos.x, config.pos.y, config.size.x, config.size.y},
-                                       config.rotationAngle, std::move(config.collisionPhysics))) {
+                                       config.rotationAngle, std::move(config.collisionPhysics))),
+          isDecor(false) {
     // todo: decouple
     sprite = config.hasShadow ? std::make_unique<ShadowedSpriteReg>(config.spriteSheet, config.pos, config.size / 2.f,
                                                                     std::move(config.animPlayer), config.defaultFrame)
@@ -35,7 +36,7 @@ void Prop::accept(EntityVisitor *visitor) {
 }
 
 void Prop::setIsDecor(bool isDecorProp) {
-    Prop::isDecor = isDecorProp;
+    isDecor = isDecorProp;
 }
 
 bool Prop::isDecorProp() const {

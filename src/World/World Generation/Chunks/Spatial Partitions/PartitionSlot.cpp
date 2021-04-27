@@ -34,12 +34,9 @@ void PartitionSlot::handleCollisions(SpatialPartition *slots) {
         auto oldCoordinates = moveable->getPosition();
 
         handleCollisionsFor(moveable);
-        if (!moveable->hasMoved()) {
-            continue; // skip because its
-        }
-        handleCollisionsWithOtherSlotEntities(moveable, slots);
+        handleCollisionsWithOtherSlotEntities(moveable, slots, it);
 
-        if (entityHasMovedSlots(moveable, oldCoordinates, slots)) {
+        if (!entityHasMovedSlots(moveable, oldCoordinates, slots)) {
             it++;
         }
     }
@@ -81,7 +78,8 @@ void PartitionSlot::handleCollisionsFor(MoveableEntity *moveable) const {
     }
 }
 
-void PartitionSlot::handleCollisionsWithOtherSlotEntities(MoveableEntity *moveable, SpatialPartition *slots) {
+void PartitionSlot::handleCollisionsWithOtherSlotEntities(MoveableEntity *moveable, SpatialPartition *slots,
+                                                          SlotEntities::MoveableIter &it) {
     auto moveablePos = moveable->getTopLeftPosition();
     auto moveableSize = moveable->getSize();
     auto slotsInRange = slots->getSlotsInRange(
@@ -94,7 +92,7 @@ void PartitionSlot::handleCollisionsWithOtherSlotEntities(MoveableEntity *moveab
         slot->handleExternalCollision(moveable);
 
         if (entityHasMovedSlots(moveable, oldCoordinates, slots)) {
-            auto entityPtr = entityHolder.removeAndTransferEntity(moveable);
+            auto entityPtr = entityHolder.removeAndTransferMoveable(moveable, it);
             if (entityPtr != nullptr) {
                 slot->addEntity(entityPtr);
             }

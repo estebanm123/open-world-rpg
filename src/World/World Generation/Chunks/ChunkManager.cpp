@@ -3,7 +3,6 @@
 #include "ChunkDebug.h"
 #include "../Tiles/Tile.h"
 #include "../../Entities/Collidables/Organisms/Humanoid/Player/Player.h"
-#include "../../Entities/Collidables/Props/Prop.h"
 #include "../Environments/CompleteEnv.h"
 
 #ifdef DEBUG

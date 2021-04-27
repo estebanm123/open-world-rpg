@@ -53,7 +53,6 @@ public:
 private:
     void renderTiles(sf::RenderTarget &target);
 
-    typedef std::unordered_set<MoveableEntity *>::iterator MoveableIter;
 
     friend class ChunkCollisionHandler;
 

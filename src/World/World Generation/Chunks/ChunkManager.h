@@ -26,7 +26,7 @@ private:
     static constexpr auto MATRIX_LEN = 3;
     std::array<std::array<std::unique_ptr<Chunk>, MATRIX_LEN>, MATRIX_LEN> chunks;
     static constexpr auto CHUNK_GENERATION_TIMER = 1;
-    static constexpr int RENDER_ZONE_WIDTH = 10;
+    static constexpr int RENDER_ZONE_WIDTH = 10; // in number of slots
     static constexpr int RENDER_ZONE_HEIGHT = 5;
     static constexpr int COLLISION_ZONE_WIDTH = 15;
     static constexpr int COLLISION_ZONE_HEIGHT = 10;
