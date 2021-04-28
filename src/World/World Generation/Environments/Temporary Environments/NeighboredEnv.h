@@ -11,6 +11,8 @@ class CompleteEnv;
 
 class TileContainer;
 
+class Env;
+
 class NeighboredEnv {
 public:
     typedef std::vector<std::shared_ptr<NeighboredEnv>> Neighbors;
@@ -29,6 +31,9 @@ public:
     // Alternative to overload boolean== as it can modify this object if it contains 'wildcard'
     // fields (nullptrs)
     virtual bool handleEquality(const std::shared_ptr<NeighboredEnv> &other) = 0;
+
+    // Envs could be null
+    virtual std::pair<const Env *, const Env *> getEnvs() const = 0;
 
     virtual bool operator==(const NeighboredEnv &other) const = 0;
 

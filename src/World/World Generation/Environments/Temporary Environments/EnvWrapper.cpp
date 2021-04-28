@@ -88,6 +88,10 @@ const Env *EnvWrapper::getEnv() const {
     return env;
 }
 
+std::pair<const Env *, const Env *> EnvWrapper::getEnvs() const {
+   return std::make_pair(env, nullptr);
+}
+
 
 
 

@@ -18,6 +18,8 @@ struct EnvWrapper : public NeighboredEnv {
 
     const Env *getEnv() const;
 
+    std::pair<const Env *, const Env *> getEnvs() const override;
+
     bool operator==(const NeighboredEnv &other) const override;
 
     std::string toString() const override;

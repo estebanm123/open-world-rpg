@@ -15,12 +15,12 @@ void applyPositionalOffset(sf::Vector2f &pos) {
 // Allocate an env to each cell in our extended matrix (covers adjacent chunks' first/ last row/col)
 // These Envs are purely temporary, and will be used for the generation of border Envs.
 void generateInitialEnvs(EnvAllocator::EnvMap &initialEnvs, const sf::Vector2f &pos) {
-    for (int x = 0; x < initialEnvs.size(); x++) {
-        for (int y = 0; y < initialEnvs[0].size(); y++) {
-            sf::Vector2i localCoords{x, y};
+    for (int row = 0; row < initialEnvs.size(); row++) {
+        for (int col = 0; col < initialEnvs[0].size(); col++) {
+            sf::Vector2i localCoords{row, col};
             auto globalCoords = TileMap::convertLocalToGlobalCoords(localCoords, pos);
             const auto environment = EnvSelector::getEnvironment(globalCoords);
-            initialEnvs[x][y] = std::make_unique<EnvWrapper>(environment);
+            initialEnvs[row][col] = std::make_unique<EnvWrapper>(environment);
         }
     }
 }
@@ -28,10 +28,10 @@ void generateInitialEnvs(EnvAllocator::EnvMap &initialEnvs, const sf::Vector2f &
 void
 assignContainer(NeighboredEnv::TileContainerWrapper tileContainerWrapper, const sf::Vector2i coords,
                 TileMap::Tiles &tiles) {
-    int x = coords.x;
-    int y = coords.y;
+    int row = coords.y;
+    int col = coords.x;
     if (tileContainerWrapper.tileContainer->getNumTiles() == 1) {
-        tiles[x][y] = tileContainerWrapper.tileContainer->extractFirstTile(
+        tiles[col][row] = tileContainerWrapper.tileContainer->extractFirstTile(
                 std::move(tileContainerWrapper.metadata));
     } else {
 // Todo: refactor to use array of standardized coordinates
@@ -44,11 +44,11 @@ assignContainer(NeighboredEnv::TileContainerWrapper tileContainerWrapper, const 
 
 void allocateTiles(TileMap::Tiles &tiles, const EnvAllocator::FinalNeighboredEnvs &currentEnvs,
                    const sf::Vector2f &globalPos) {
-    for (int x = 0; x < currentEnvs.size(); x++) {
-        for (int y = 0; y < currentEnvs[0].size(); y++) {
-            const auto tilePos = TileMap::convertLocalToGlobalCoords({x, y}, globalPos);
-            auto tileContainerWrapper = currentEnvs[x][y]->extractTileMetadata(tilePos);
-            assignContainer(std::move(tileContainerWrapper), {x, y}, tiles);
+    for (int row = 0; row < currentEnvs.size(); row++) {
+        for (int col = 0; col < currentEnvs[0].size(); col++) {
+            const auto tilePos = TileMap::convertLocalToGlobalCoords({row, col}, globalPos);
+            auto tileContainerWrapper = currentEnvs[row][col]->extractTileMetadata(tilePos);
+            assignContainer(std::move(tileContainerWrapper), {row, col}, tiles);
         }
     }
 }

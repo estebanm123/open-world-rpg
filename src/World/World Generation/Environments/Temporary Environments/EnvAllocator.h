@@ -13,7 +13,7 @@ class NeighboredEnv;
 
 struct EnvAllocator {
 
-// + 2 for each row/col is to accommodate neighboring chunks' envs
+    // + 2 for each row/col is to accommodate neighboring chunks' envs
     typedef std::array<std::array<std::shared_ptr<EnvWrapper>, TileMap::SIZE_X + 2>, TileMap::SIZE_Y + 2> EnvMap;
     typedef std::array<std::array<std::shared_ptr<NeighboredEnv>, TileMap::SIZE_Y + 2>,
             TileMap::SIZE_X + 2> TmpNeighboredEnvs;

@@ -8,12 +8,9 @@
 #include <utility>
 
 
-EnvBorderData::EnvBorderData(const std::shared_ptr<EnvWrapper> &primary, const std::shared_ptr<EnvWrapper> &secondary)
-        : primaryEnv(
-        primary),
-          secondaryEnv(
-                  secondary) {
-}
+EnvBorderData::EnvBorderData(std::shared_ptr<EnvWrapper> primary, std::shared_ptr<EnvWrapper> secondary)
+        : primaryEnv(std::move(primary)),
+          secondaryEnv(std::move(secondary)) {}
 
 bool EnvBorderData::handleEquality(const std::shared_ptr<NeighboredEnv> &other) {
     if (other == nullptr) return false;
@@ -84,8 +81,14 @@ const NeighboredEnv::TileContainerWrapper EnvBorderData::extractTileMetadata(con
                             simplifiedAngle}; // EnvBorder is placeholder - todo: make a borderTile class
     return {std::move(metadata), tileContainer};
 }
-const TileContainer *EnvBorderData::getTileContainer(const Env *primary, const Env *secondary, const sf::Vector2f & globalCoords) const {
+
+const TileContainer *
+EnvBorderData::getTileContainer(const Env *primary, const Env *secondary, const sf::Vector2f &globalCoords) const {
     return primary->getSplitTileContainer(secondary, globalCoords);
+}
+
+std::pair<const Env *, const Env *> EnvBorderData::getEnvs() const {
+    return std::make_pair(primaryEnv->env, secondaryEnv->env);
 }
 
 

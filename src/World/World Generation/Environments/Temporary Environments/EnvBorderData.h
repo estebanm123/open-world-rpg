@@ -12,9 +12,12 @@ class Env;
 class SingleTileContainer;
 
 struct EnvBorderData : public NeighboredEnv {
-    EnvBorderData(const std::shared_ptr<EnvWrapper> &primary, const std::shared_ptr<EnvWrapper> &secondary);
+    EnvBorderData(std::shared_ptr<EnvWrapper> primary, std::shared_ptr<EnvWrapper> secondary);
 
     std::shared_ptr<EnvWrapper> primaryEnv;
+
+    std::pair<const Env *, const Env *> getEnvs() const override;
+
     std::shared_ptr<EnvWrapper> secondaryEnv;
 
     bool operator==(const NeighboredEnv &other) const override;

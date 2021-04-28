@@ -24,15 +24,15 @@ void updateTempCandidates(NeighboredEnv::Neighbors &candidates,
 std::shared_ptr<NeighboredEnv>
 selectCandidate(const std::shared_ptr<EnvWrapper> &initialEnv, NeighboredEnv::Neighbors &candidates) {
     if (candidates.empty()) return nullptr; // this should never be reached
+
+    std::sort(candidates.begin(), candidates.end(), EnvAllocator::candidateCompare);
+
     for (const auto &candidate : candidates) {
         if (*candidate == *initialEnv) {
-            return initialEnv; // don't return; store in a temp result var if storing
+            return initialEnv;
         }
         candidate->fillWildcardIfExists(initialEnv);
     }
-
-    std::sort(candidates.begin(), candidates.end(), EnvAllocator::candidateCompare);
-    // can also add these candidates to the selected candidate?
 
     return candidates[0];
 }
@@ -170,34 +170,119 @@ EnvAllocator::allocateSharedSides(const EnvAllocator::EnvMap &initialEnvs, EnvAl
     sf::Vector2i bottom = {0, maxCornerTopLeftY};
     allocateColumn(initialEnvs, finalEnvs, bottom, top, true);
     allocateColumn(initialEnvs, finalEnvs, {bottom.x + 1, bottom.y}, {top.x + 1, top.y}, true);
+
     top.x = maxCornerTopLeftX;
     bottom.x = top.x;
     allocateColumn(initialEnvs, finalEnvs, bottom, top, true);
     allocateColumn(initialEnvs, finalEnvs, {bottom.x + 1, bottom.y}, {top.x + 1, top.y}, true);
 
+
     sf::Vector2i left = {1, 0};
     sf::Vector2i right = {maxCornerTopLeftX, 0};
     allocateRow(initialEnvs, finalEnvs, right, left, true);
     allocateRow(initialEnvs, finalEnvs, {right.x, right.y + 1}, {left.x, left.y + 1}, true);
+
     left.y = maxCornerTopLeftY;
     right.y = left.y;
     allocateRow(initialEnvs, finalEnvs, right, left, true);
     allocateRow(initialEnvs, finalEnvs, {right.x, right.y + 1}, {left.x, left.y + 1}, true);
 }
 
+void recordEnvFrequency(std::unordered_map<const Env *, int> &frequencies, const Env *env) {
+    if (env == nullptr) return;
+    if (frequencies.count(env) == 0) {
+        frequencies.insert({env, 1});
+    } else {
+        auto curFreq = frequencies[env];
+        frequencies.insert({env, curFreq + 1});
+    }
+}
+
+const Env *findEnvWithMaxFrequency(std::unordered_map<const Env *, int> &envFrequencies) {
+    const Env *maxEnv;
+    int maxFreq = INT_MIN;
+    for (auto const&[key, val] : envFrequencies) {
+        if (val > maxFreq) {
+            maxEnv = key;
+        }
+    }
+    return maxEnv;
+}
+
+// DominantEnv = most frequently appearing env including both sides of border cells
+std::shared_ptr<EnvWrapper> computeDominantEnvFromSharedCells(EnvAllocator::TmpNeighboredEnvs &finalEnvs) {
+    // need a polymorphic method of resolving which env * are associated to a n
+    int sizeX = static_cast<int>(finalEnvs.size());
+    int sizeY = static_cast<int>(finalEnvs[0].size());
+    std::unordered_map<const Env *, int> envFrequencies;
+
+    for (auto x = 0; x < sizeX - 1; x++) {
+        auto envs = finalEnvs[x][0]->getEnvs();
+        recordEnvFrequency(envFrequencies, envs.first);
+        recordEnvFrequency(envFrequencies, envs.second);
+    }
+
+    for (auto x = 0; x < sizeX - 1; x++) {
+        auto envs = finalEnvs[x][sizeY - 1]->getEnvs();
+        recordEnvFrequency(envFrequencies, envs.first);
+        recordEnvFrequency(envFrequencies, envs.second);
+    }
+
+    for (auto y = 0; y < sizeY - 1; y++) {
+        auto envs = finalEnvs[0][y]->getEnvs();
+        recordEnvFrequency(envFrequencies, envs.first);
+        recordEnvFrequency(envFrequencies, envs.second);
+    }
+
+    for (auto y = 0; y < sizeY - 1; y++) {
+        auto envs = finalEnvs[sizeX - 1][y]->getEnvs();
+        recordEnvFrequency(envFrequencies, envs.first);
+        recordEnvFrequency(envFrequencies, envs.second);
+    }
+
+    const Env *mostFrequentEnv = findEnvWithMaxFrequency(envFrequencies);
+    return std::make_shared<EnvWrapper>(mostFrequentEnv);
+}
+
+
 void
 EnvAllocator::allocateInnerCells(const EnvAllocator::EnvMap &initialEnvs, EnvAllocator::TmpNeighboredEnvs &finalEnvs) {
     int sizeX = static_cast<int>(initialEnvs.size());
     int sizeY = static_cast<int>(initialEnvs[0].size());
 
+    auto dominantEnv = computeDominantEnvFromSharedCells(finalEnvs);
+
+    for (auto x = 3; x < sizeX - 3;  x++) {
+        for (auto y = 3; y < sizeY - 3; y++) {
+            finalEnvs[x][y] = dominantEnv; // WARNING: if EnvWrapper becomes mutable, this will cause issues
+        }
+    }
+
+    // allocate 3rd row/col and 3rd from last row/col
     sf::Vector2i bottom{2, sizeY - 2};
     sf::Vector2i top{2, 1};
+    allocateColumn(initialEnvs, finalEnvs, bottom, top);
 
-    while (top.x < sizeX - 2) {
-        allocateColumn(initialEnvs, finalEnvs, bottom, top);
-        top.x++;
-        bottom.x++;
-    }
+    bottom.x = sizeX - 3;
+    top.x = bottom.x;
+    allocateColumn(initialEnvs, finalEnvs, bottom, top);
+
+    sf::Vector2i right{sizeX - 2, 2};
+    sf::Vector2i left{1, 2};
+    allocateRow(initialEnvs, finalEnvs, right, left);
+
+    right.y = sizeY - 3;
+    left.y = right.y;
+    allocateRow(initialEnvs, finalEnvs, right, left);
+
+//    sf::Vector2i bottom{2, sizeY - 2};
+//    sf::Vector2i top{2, 1};
+//
+//    while (top.x < sizeX - 2) {
+//        allocateColumn(initialEnvs, finalEnvs, bottom, top);
+//        top.x++;
+//        bottom.x++;
+//    }
 }
 
 EnvAllocator::FinalNeighboredEnvs resizeFinalEnvs(const EnvAllocator::TmpNeighboredEnvs &finalEnvs) {
