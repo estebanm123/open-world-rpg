@@ -36,6 +36,7 @@ public:
                 return metadata->initializer->initialize(arg);
             }
         }
+        return nullptr;
     }
 
 protected:
@@ -43,7 +44,7 @@ protected:
 
     // Enables rate-limiting initialization depending on arg (for subclasses)
     virtual bool shouldInitialize(Arg arg) {
-       return true;
+        return true;
     }
 
     float minInitializationLimit; // sets a minimum
@@ -57,6 +58,7 @@ private:
     };
 
     void normalizeScoreDistribution() {
+        if (initializers.empty()) return;
 //        std::sort(initializers.begin(), initializers.end(), InitializerMetadataCompare<Output, Arg>{}); // todo: uncomment
 
         float sum = 0;

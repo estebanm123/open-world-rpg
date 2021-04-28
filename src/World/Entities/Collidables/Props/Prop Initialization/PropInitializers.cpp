@@ -106,3 +106,9 @@ DesertGrassInitializer::DesertGrassInitializer() : PropInitializer(std::vector<s
 
                                                                                             }}) {}
 
+WaterGrassInitializer::WaterGrassInitializer() : PropInitializer(std::vector<sf::IntRect>{{0,0, 96, 76}}){}
+
+std::unique_ptr<Prop>
+WaterGrassInitializer::initializeProp(PropInitializer::Position pos, sf::IntRect spriteSheetCoords, int variantIndex) {
+    return std::make_unique<Prop>(Prop::PropOptions{FOLIAGE + "SeaGrass", spriteSheetCoords, pos});
+}

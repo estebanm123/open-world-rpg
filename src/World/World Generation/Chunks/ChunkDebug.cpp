@@ -5,30 +5,47 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include "Spatial Partitions/SpatialPartition.h"
 #include "ChunkDebug.h"
-#include "../../../Util/Constants.h"
-#include "Chunk.h"
+#include "../Tiles/Tile.h"
+#include "../Environments/CompleteEnv.h"
+
+using namespace worldConstants;
+
+void ChunkDebug::renderDebugInfo(sf::RenderTarget &renderTargetRef,
+                                 const std::array<std::array<std::unique_ptr<Chunk>, 3>, 3> &chunks,
+                                 const ActiveZones &activeZones) {
+    drawChunkOutlines(renderTargetRef, chunks, true, false);
+    drawActiveZones(renderTargetRef, activeZones);
+}
+
 
 // refactor to a separate class (static)
 void ChunkDebug::drawOutline(sf::RenderTarget &renderTargetRef, sf::Vector2f center, sf::Vector2f size, sf::Color color,
                              float thickness = .8) {
     using namespace worldConstants;
     sf::RectangleShape outline{{size.x, size.y}};
-    outline.setPosition({center.x - (size.x / 2.f), center.y - (size.y / 2.f)});
+    outline.setOrigin({size.x / 2.f, size.y / 2.f});
+    outline.setPosition({center.x, center.y});
     outline.setOutlineColor(color);
     outline.setFillColor(sf::Color{0, 0, 0, 0});
     outline.setOutlineThickness(thickness);
     renderTargetRef.draw(outline);
 }
 
-void ChunkDebug::drawChunkOutlines(
-        sf::RenderTarget &renderTargetRef,
-        const std::array<std::array<std::unique_ptr<Chunk>, 3>, 3> &chunks) {
+void ChunkDebug::drawChunkOutlines(sf::RenderTarget &renderTargetRef,
+                                   const std::array<std::array<std::unique_ptr<Chunk>, 3>, 3> &chunks,
+                                   bool debugTileOutlines, bool debugPartitionSlots) {
     for (auto i = 0; i < 3; ++i) {
         for (auto j = 0; j < 3; ++j) {
             if (chunks[i][j]) {
-                drawOutline(renderTargetRef, chunks[i][j]->getCenter(), worldConstants::CHUNK_SIZE, sf::Color::Magenta,
+                drawOutline(renderTargetRef, chunks[i][j]->getCenter(),worldConstants::CHUNK_SIZE, sf::Color::Magenta,
                             1.5);
-                drawSpatialPartitionSlots(renderTargetRef, chunks[i][j]->getSpatialPartition());
+                if (debugPartitionSlots) {
+                    drawSpatialPartitionSlots(renderTargetRef, chunks[i][j]->getSpatialPartition());
+                }
+
+                if (debugTileOutlines) {
+                    drawTileOutlines(renderTargetRef, chunks[i][j]->tiles);
+                }
             }
 
         }
@@ -51,17 +68,18 @@ void ChunkDebug::drawSpatialPartitionSlots(sf::RenderTarget &renderTargetRef, Sp
     }
 }
 
-void ChunkDebug::renderDebugInfo(sf::RenderTarget &renderTargetRef,
-                                 const std::array<std::array<std::unique_ptr<Chunk>, 3>, 3> &chunks,
-                                 const ActiveZones &activeZones) {
-    drawChunkOutlines(renderTargetRef, chunks);
-    drawActiveZones(renderTargetRef, activeZones);
-
-}
-
 void ChunkDebug::drawActiveZones(sf::RenderTarget &renderTargetRef, const ActiveZones &activeZones) {
     drawOutline(renderTargetRef, activeZones.renderZone.getCenterPos(),
                 static_cast<sf::Vector2f>(activeZones.renderZone.getSize()), sf::Color::White);
     drawOutline(renderTargetRef, activeZones.collisionZone.getCenterPos(),
                 static_cast<sf::Vector2f>(activeZones.collisionZone.getSize()), sf::Color::Blue);
+}
+
+void ChunkDebug::drawTileOutlines(sf::RenderTarget &renderTargetRef, TileMap &tileMap) {
+    auto &tiles = tileMap.tiles;
+    for (auto row = 0; row < TileMap::SIZE_X; row++) {
+        for (auto col = 0; col < TileMap::SIZE_Y; col++) {
+            drawOutline(renderTargetRef, tiles[row][col]->topLeft + TILE_SIZE / 2.f, TILE_SIZE, sf::Color::Yellow, 0.3);
+        }
+    }
 }

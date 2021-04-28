@@ -28,17 +28,21 @@ public:
     // spritesheet path is taken from Env
     explicit Tile(Metadata metadata);
 
+    friend class TileMap; //todo: DELETE
+
     virtual void renderBy(sf::RenderTarget &target);
 
     virtual ~Tile() = default;
 
-    const sf::Vector2f &getPosition();
+    const sf::Vector2f &getTopLeftPos();
 
     const CompleteEnv * getEnvironment() const;
 
 protected:
+    friend class ChunkDebug;
+
     SpriteReg sprite;
-    sf::Vector2f pos;
+    sf::Vector2f topLeft;
     std::unique_ptr<const CompleteEnv> env;
 };
 

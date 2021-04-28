@@ -7,6 +7,11 @@ struct GrassCoverInitializer : public PropInitializer {
     std::unique_ptr<Prop> initializeProp(Position pos, sf::IntRect spriteSheetCoords, int variantIndex) override;
 };
 
+struct WaterGrassInitializer : public PropInitializer {
+    WaterGrassInitializer();
+    std::unique_ptr<Prop> initializeProp(Position pos, sf::IntRect spriteSheetCoords, int variantIndex) override;
+};
+
 struct RockCoverInitializer : public PropInitializer {
     RockCoverInitializer();
     std::unique_ptr<Prop> initializeProp(Position pos, sf::IntRect spriteSheetCoords, int variantIndex) override;

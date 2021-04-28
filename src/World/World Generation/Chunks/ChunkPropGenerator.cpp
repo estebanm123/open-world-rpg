@@ -36,7 +36,7 @@ ChunkPropGenerator::generateEnvironmentalProps(bool isDecor, SpatialPartition *e
             auto curEnv = curTile->getEnvironment();
             auto tileCoordHash = hashTileCoords(*curTile) ^static_cast<int>(currentPropChance);
             if (tileCoordHash > currentPropChance) {
-                auto propCoords = generatePropCoords(currentPropChance, tileCoordHash, curTile->getPosition());
+                auto propCoords = generatePropCoords(currentPropChance, tileCoordHash, curTile->getTopLeftPos());
                 auto prop = curEnv->generateEnvironmentalProp(propCoords, isDecor);
                 if (!isPropValid(prop.get(), tileMap, tilesSeen, {x, y}, isDecor)) {
                     continue;
@@ -103,7 +103,7 @@ bool ChunkPropGenerator::isPropValid(Prop *prop, const TileMap &tiles, TilesSeen
 }
 
 int ChunkPropGenerator::hashTileCoords(Tile &tile) {
-    auto pos = tile.getPosition();
+    auto pos = tile.getTopLeftPos();
     auto tileCoordHash = hash2ValuesModSize(pos.x, pos.y, static_cast<int>(PROP_CHANCE_MAX)); // never more than 1000
     return tileCoordHash;
 }

@@ -54,6 +54,23 @@ InitializerMetadataCollection initializeDirtDecorProps() {
     return props;
 }
 
+InitializerMetadataCollection initializeWaterDecorProps() {
+    auto props = InitializerMetadataCollection{};
+    props.push_back(
+            std::make_unique<InitializerMetadata<Prop, sf::Vector2f>>(std::make_unique<WaterGrassInitializer>(), 60));
+    return props;
+}
+
+InitializerMetadataCollection initializeWaterMainProps() {
+    auto props = InitializerMetadataCollection{};
+    return props;
+}
+
+WaterPropFactory::WaterPropFactory() : PropFactory(
+        initializeWaterMainProps(),
+        initializeWaterDecorProps(),
+        50, 50) {}
+
 DirtPropFactory::DirtPropFactory() : PropFactory(
         initializeDirtMainProps(),
         initializeDirtDecorProps(),
