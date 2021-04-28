@@ -7,8 +7,8 @@
 SpriteReg::SpriteReg(Config config) : animPlayer(
         std::move(config.animPlayer)) {
     sprite.setTexture(ResourceHolder::get().textures.get(config.spriteSheet));
-    sprite.setOrigin(config.origin);
     sprite.setPosition(config.pos);
+    sprite.setOrigin(config.origin);
     if (config.defaultFrame != animConstants::EMPTY_FRAME) {
         sprite.setTextureRect(config.defaultFrame);
     }

@@ -18,11 +18,14 @@ struct ChunkDebug {
 private:
     static void
     drawChunkOutlines(sf::RenderTarget &renderTargetRef,
-                      const std::array<std::array<std::unique_ptr<Chunk>, 3>, 3> &chunks);
+                      const std::array<std::array<std::unique_ptr<Chunk>, 3>, 3> &chunks,
+                      bool debugTileOutlines, bool debugPartitionSlots);
 
     static void drawActiveZones(sf::RenderTarget &renderTargetRef, const ActiveZones &activeZones);
 
     static void drawSpatialPartitionSlots(sf::RenderTarget &renderTargetRef, SpatialPartition *spatialPartition);
+
+    static void drawTileOutlines(sf::RenderTarget & renderTargetRef, TileMap & tileMap);
 };
 
 

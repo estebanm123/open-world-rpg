@@ -37,6 +37,8 @@ public:
     // Global position should be the global origin of the TileMap
     static sf::Vector2f convertLocalToGlobalCoords(sf::Vector2i localCoords, sf::Vector2f globalPos);
 private:
+    friend class ChunkDebug;
+
     Tiles tiles;
     sf::Vector2f pos; // NOTE: this is top left pos!
 };
