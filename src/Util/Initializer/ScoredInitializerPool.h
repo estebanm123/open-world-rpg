@@ -36,6 +36,7 @@ public:
                 return metadata->initializer->initialize(arg);
             }
         }
+        return nullptr;
     }
 
 protected:
