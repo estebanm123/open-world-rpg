@@ -11,4 +11,6 @@ struct DirtPropFactory : public PropFactory {
     DirtPropFactory();
 };
 
-
+struct WaterPropFactory : public PropFactory {
+    WaterPropFactory();
+};
