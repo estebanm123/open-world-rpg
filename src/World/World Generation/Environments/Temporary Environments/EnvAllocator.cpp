@@ -1,5 +1,6 @@
 
 
+#include <iostream>
 #include "EnvAllocator.h"
 #include "EnvWrapper.h"
 #include "../CompleteEnv.h"
@@ -53,10 +54,12 @@ EnvAllocator::getEnvFromNeighbors(const std::shared_ptr<EnvWrapper> &initialEnv,
             neighborCoords.y >= finalEnvs.size() || finalEnvs[neighborCoords.x][neighborCoords.y] == nullptr)
             continue;
 
+
         auto currentEnv = finalEnvs[neighborCoords.x][neighborCoords.y];
         sf::Vector2i invertedDir = {dir.x * -1, dir.y * -1};
         auto possibleCandidates = currentEnv->getCompatibleNeighbors(invertedDir);
 
+//        std::cout << "getEnvFromNeighbors - neighbor " << dir.x << ", " << dir.y << std::endl;
         NeighboredEnv::Neighbors tempCandidates = {};
         for (const auto &possibleCandidate : possibleCandidates) {
             if (noDirSeenYet) { // will only run for first dir; todo: refactor above
@@ -69,6 +72,8 @@ EnvAllocator::getEnvFromNeighbors(const std::shared_ptr<EnvWrapper> &initialEnv,
         candidates = tempCandidates;
         noDirSeenYet = false;
     }
+
+//    std::cout << "getEnvFromNeighbors - " << candidates.size() << " candidates " << std::endl;
 
     if (candidates.empty()) {
         // couldn't find an env the 4 neighbors agree on
@@ -250,39 +255,39 @@ EnvAllocator::allocateInnerCells(const EnvAllocator::EnvMap &initialEnvs, EnvAll
     int sizeX = static_cast<int>(initialEnvs.size());
     int sizeY = static_cast<int>(initialEnvs[0].size());
 
-    auto dominantEnv = computeDominantEnvFromSharedCells(finalEnvs);
-
-    for (auto x = 3; x < sizeX - 3;  x++) {
-        for (auto y = 3; y < sizeY - 3; y++) {
-            finalEnvs[x][y] = dominantEnv; // WARNING: if EnvWrapper becomes mutable, this will cause issues
-        }
-    }
-
-    // allocate 3rd row/col and 3rd from last row/col
-    sf::Vector2i bottom{2, sizeY - 2};
-    sf::Vector2i top{2, 1};
-    allocateColumn(initialEnvs, finalEnvs, bottom, top);
-
-    bottom.x = sizeX - 3;
-    top.x = bottom.x;
-    allocateColumn(initialEnvs, finalEnvs, bottom, top);
-
-    sf::Vector2i right{sizeX - 2, 2};
-    sf::Vector2i left{1, 2};
-    allocateRow(initialEnvs, finalEnvs, right, left);
-
-    right.y = sizeY - 3;
-    left.y = right.y;
-    allocateRow(initialEnvs, finalEnvs, right, left);
-
+//    auto dominantEnv = computeDominantEnvFromSharedCells(finalEnvs);
+//
+//    for (auto x = 3; x < sizeX - 3;  x++) {
+//        for (auto y = 3; y < sizeY - 3; y++) {
+//            finalEnvs[x][y] = dominantEnv; // WARNING: if EnvWrapper becomes mutable, this will cause issues
+//        }
+//    }
+//
+//    // allocate 3rd row/col and 3rd from last row/col
 //    sf::Vector2i bottom{2, sizeY - 2};
 //    sf::Vector2i top{2, 1};
+//    allocateColumn(initialEnvs, finalEnvs, bottom, top);
 //
-//    while (top.x < sizeX - 2) {
-//        allocateColumn(initialEnvs, finalEnvs, bottom, top);
-//        top.x++;
-//        bottom.x++;
-//    }
+//    bottom.x = sizeX - 3;
+//    top.x = bottom.x;
+//    allocateColumn(initialEnvs, finalEnvs, bottom, top);
+//
+//    sf::Vector2i right{sizeX - 2, 2};
+//    sf::Vector2i left{1, 2};
+//    allocateRow(initialEnvs, finalEnvs, right, left);
+//
+//    right.y = sizeY - 3;
+//    left.y = right.y;
+//    allocateRow(initialEnvs, finalEnvs, right, left);
+
+    sf::Vector2i bottom{2, sizeY - 2};
+    sf::Vector2i top{2, 1};
+
+    while (top.x < sizeX - 2) {
+        allocateColumn(initialEnvs, finalEnvs, bottom, top);
+        top.x++;
+        bottom.x++;
+    }
 }
 
 EnvAllocator::FinalNeighboredEnvs resizeFinalEnvs(const EnvAllocator::TmpNeighboredEnvs &finalEnvs) {

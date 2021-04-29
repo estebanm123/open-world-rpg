@@ -12,9 +12,6 @@
 // since pos corresponds to top left corner - a shift is performed to accommodate for chunk center
 TileMap::TileMap(sf::Vector2f pos) : pos(pos - worldConstants::CHUNK_SIZE / 2.f) {
     tiles = TileMapGenerator::generate(this->pos);
-    std::cout << this->pos.x << "," << this->pos.y << std::endl;
-    std::cout << tiles[0][0]->getTopLeftPos().x << "," << tiles[0][0]->getTopLeftPos().y << std::endl;
-    std::cout << tiles[0][0]->sprite.getPosition().x << ", " << tiles[0][0]->sprite.getPosition().y << std::endl;
     if (tiles.empty()) throw std::runtime_error("TileMap has no tiles.");
 }
 

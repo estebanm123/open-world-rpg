@@ -20,14 +20,14 @@ namespace EnvTypes {
 
     inline void initialize() {
         EnvManager::createEnv(std::make_unique<Env::Config>(
-                WATER, "Tiles/Water", 1, std::vector<EnvNeighborInfo>{EnvNeighborInfo{DIRT, 0, 1}},
+                WATER, "Tiles/Water", 1, std::vector<EnvNeighborInfo>{EnvNeighborInfo{DIRT, 0, 2}},
                 std::make_unique<WaterPropFactory>(),
                 std::make_unique<Animation::BaseMetadata>(0, 2, 220)
         ));
 
         EnvManager::createEnv(std::make_unique<Env::Config>(
                 DIRT, "Tiles/Dirt", 6,
-                std::vector<EnvNeighborInfo>{EnvNeighborInfo{WATER, 1, 1}, EnvNeighborInfo{SAND, 0, 1}},
+                std::vector<EnvNeighborInfo>{EnvNeighborInfo{WATER, 1, 2}, EnvNeighborInfo{SAND, 0, 1}},
                 std::make_unique<DirtPropFactory>()
         ));
 
