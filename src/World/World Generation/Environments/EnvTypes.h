@@ -27,7 +27,7 @@ namespace EnvTypes {
 
         EnvManager::createEnv(std::make_unique<Env::Config>(
                 DIRT, "Tiles/Dirt", 6,
-                std::vector<EnvNeighborInfo>{EnvNeighborInfo{WATER, 1, 2}, EnvNeighborInfo{SAND, 0, 1}},
+                std::vector<EnvNeighborInfo>{EnvNeighborInfo{WATER, 1, 3}, EnvNeighborInfo{SAND, 0, 1}},
                 std::make_unique<DirtPropFactory>()
         ));
 

@@ -59,7 +59,7 @@ void MoveableEntity::move(float dt) {
 }
 
 sf::Vector2f MoveableEntity::getMoveOffset() {
-    float PLACEHOLDER = 350;
+    float PLACEHOLDER = 500;
     const auto newOffset = moveDirection * PLACEHOLDER;
     return newOffset;
 }

@@ -118,7 +118,7 @@ NeighboredEnv::Neighbors EnvBorderCorner::getEastNeighbors() const {
                 std::make_unique<EnvBorderCorner>(primaryEnv, nullptr, 180),
                 std::make_unique<EnvBorderCorner>(primaryEnv, nullptr, 90),
                 primaryEnv,
-                std::make_unique<EnvBorderVertical>(nullptr, primaryEnv),
+                std::make_unique<EnvBorderVertical>(primaryEnv, nullptr),
         };
     }
     if (rotationAngle == 90) {
