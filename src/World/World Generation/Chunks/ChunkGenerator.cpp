@@ -8,7 +8,6 @@
 #include "../Tiles/Tile.h"
 #include "../Environments/CompleteEnv.h"
 #include "ChunkPropGenerator.h"
-#include "../../Entities/Collidables/Props/Prop.h"
 #include "../../Entities/Collidables/Organisms/Humanoid/HumanoidNpc.h"
 #include "../../Entities/Collidables/Organisms/NPC AI/Activities/Activities/RandomTravel.h"
 
@@ -81,9 +80,11 @@ void ChunkGenerator::generateChunk(const Chunk::RequestData &data) {
 
     // ~~~~ PLACEHOLDER ~~~~
     auto testActivities = ActivityManager<HumanoidNpc>::Activities{};
-    testActivities.push_front(std::make_unique<RandomTravel<HumanoidNpc>>(200, center, 10000));
+    auto randTravel = std::make_unique<RandomTravel<HumanoidNpc>>(200.f, center, 1000.f);
+    testActivities.push_front(std::move(randTravel));
     auto testAi = NpcAi<HumanoidNpc>(std::make_unique<ActivityManager<HumanoidNpc>>(std::move(testActivities)));
     auto testNpc = std::make_unique<HumanoidNpc>(center, "Player/Shadow/body32", "Player/head32", std::move(testAi));
+    entitySpatialPartition->addNewEntity(std::move(testNpc));
 
     enqueueNewChunk(
             std::make_unique<Chunk>(data, std::move(tileMap), center, std::move(entitySpatialPartition)));

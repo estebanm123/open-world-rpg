@@ -12,7 +12,7 @@ public:
     const static sf::Vector2f EMPTY_POINT;
     const static Edge EMPTY_EDGE;
 
-    NpcPath(const std::vector<Point> & points);
+    NpcPath(const std::vector<Point> & points = {});
 
     Edge getCurrentEdge() const;
 
@@ -22,7 +22,7 @@ public:
 
     void advanceToNextPoint();
 
-    Point getLastPoint() const;
+    Point getLastVisitedPoint() const;
 
     bool noNextPoint() const;
 

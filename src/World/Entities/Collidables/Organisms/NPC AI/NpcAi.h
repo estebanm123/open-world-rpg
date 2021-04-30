@@ -9,6 +9,7 @@
 //class ActivityManager<Organism>;
 
 #include "Activities/Activity Managers/ActivityManager.h"
+#include "Path/NpcPath.h"
 
 template<class Organism>
 class NpcAi : EntityVisitor {
@@ -19,6 +20,7 @@ public:
 
     void init(Organism *organism) {
         entity = organism;
+        path.enqueue(entity->getPosition());
     }
 
     void update(float dt) {
@@ -45,9 +47,14 @@ public:
         return entity;
     }
 
+    NpcPath &getPath() {
+        return path;
+    }
+
 private:
     Organism *entity;
     std::unique_ptr<BaseActivity<Organism>> activities;
+    NpcPath path;
 };
 
 

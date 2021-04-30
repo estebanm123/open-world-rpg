@@ -14,3 +14,7 @@ HumanoidNpc::HumanoidNpc(const sf::Vector2f &globalPosition, const std::string &
                                                                                       ai(std::move(ai)) {
     ai.init(this);
 }
+
+NpcAi<HumanoidNpc> &HumanoidNpc::getAi() {
+    return ai;
+}

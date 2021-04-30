@@ -7,16 +7,23 @@
 
 template<class Organism>
 class RandomTravel : public ContinuousTravel<Organism> {
-protected:
-    NpcPath::Point generateNextPoint() override;
-
 public:
-    RandomTravel(float targetDistFromDestination, const sf::Vector2f &initialPos, float maxRadiusOfTravel);
+    RandomTravel(float targetDistFromDestination, sf::Vector2f initialPos, float maxRadiusOfTravel)
+            : ContinuousTravel<Organism>(targetDistFromDestination),
+              initialPos(initialPos),
+              maxRadiusOfTravel(maxRadiusOfTravel) {}
+
+protected:
+    NpcPath::Point generateNextPoint() override {
+        float x = rand.getFloatInRange(initialPos.x - maxRadiusOfTravel, initialPos.x - maxRadiusOfTravel);
+        float y = rand.getFloatInRange(initialPos.y - maxRadiusOfTravel, initialPos.y - maxRadiusOfTravel);
+        return {x, y};
+    }
 
 private:
     const sf::Vector2f initialPos;
     float maxRadiusOfTravel;
-    Random<float> rand;
+    Random<> rand;
 
 };
 

@@ -29,20 +29,22 @@ public:
 
         auto currentActivity = activities.front().get();
         currentActivity->update(dt);
-        handleActivityCompletion(currentActivity);
+        handleActivityCompletion();
     }
 
     virtual ~ActivityManager() = default;
 
 private:
-    void handleActivityCompletion(BaseActivity<Organism> *currentActivity) {
+    void handleActivityCompletion() {
+        auto currentActivity = activities.front().get();
         if (currentActivity->isFinished()) {
             if (currentActivity->isRecurring()) {
-                activities.push_back(std::move(currentActivity));
+                activities.push_back(std::move(activities.front()));
             }
             activities.pop_front();
         }
     }
+
 
     Activities activities;
 };

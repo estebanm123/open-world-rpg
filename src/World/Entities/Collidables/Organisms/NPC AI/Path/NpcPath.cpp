@@ -42,10 +42,10 @@ NpcPath::Point NpcPath::getNextPoint() const {
     }
 }
 
-NpcPath::Point NpcPath::getLastPoint() const {
+NpcPath::Point NpcPath::getLastVisitedPoint() const {
     return points.front();
 }
 
 bool NpcPath::noNextPoint() const {
-    points.size() == 1;
+    return points.size() == 1;
 }
