@@ -241,13 +241,13 @@ void ChunkManager::allocateChunkFromDirection(std::unique_ptr<Chunk> &chunk, con
 void ChunkManager::allocateChunkNeighbors(const sf::Vector2i &matrixPos, Chunk *target) {
     if (target == nullptr) return;
     using namespace constants;
-    Chunk::Neighbors neighbors{};
+    Chunk::Neighbors neighbors{nullptr, nullptr, nullptr, nullptr};
     sf::Vector2i westNeighborPos = matrixPos + WEST;
     if (westNeighborPos.x >= 0) {
         neighbors.west = &chunks[westNeighborPos.y][westNeighborPos.x];
     }
     sf::Vector2i eastNeighborPos = matrixPos + EAST;
-    if (eastNeighborPos.x <= MATRIX_LEN) {
+    if (eastNeighborPos.x < MATRIX_LEN) {
         neighbors.east = &chunks[eastNeighborPos.y][eastNeighborPos.x];
     }
     sf::Vector2i northNeighborPos = matrixPos - NORTH;
@@ -255,7 +255,7 @@ void ChunkManager::allocateChunkNeighbors(const sf::Vector2i &matrixPos, Chunk *
         neighbors.north = &chunks[northNeighborPos.y][northNeighborPos.x];
     }
     sf::Vector2i southNeighborPos = matrixPos - SOUTH;
-    if (southNeighborPos.y <= MATRIX_LEN) {
+    if (southNeighborPos.y < MATRIX_LEN) {
         neighbors.south = &chunks[southNeighborPos.y][southNeighborPos.x];
     }
     target->setNeighbors(neighbors);

@@ -21,6 +21,7 @@ public:
     void init(Organism *organism) {
         entity = organism;
         path.enqueue(entity->getPosition());
+        this->activities->initialize(this);
     }
 
     void update(float dt) {
@@ -31,15 +32,15 @@ public:
         other.accept(this);
     };
 
-    void visit(Beast *beast) {
+    void visit(Beast *beast) override {
         activities->visit(beast);
     }
 
-    void visit(Humanoid *humanoid) {
+    void visit(Humanoid *humanoid) override {
         activities->visit(humanoid);
     }
 
-    void visit(Prop *prop) {
+    void visit(Prop *prop) override {
         activities->visit(prop);
     }
 

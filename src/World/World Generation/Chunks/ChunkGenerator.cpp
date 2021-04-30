@@ -77,14 +77,13 @@ void ChunkGenerator::generateChunk(const Chunk::RequestData &data) {
     ChunkPropGenerator::generateEnvironmentalProps(true, entitySpatialPartition.get(),
                                                    tileMap);
 
-
-    // ~~~~ PLACEHOLDER ~~~~
+    // ~~~~ NPC PLACEHOLDER ~~~~
     auto testActivities = ActivityManager<HumanoidNpc>::Activities{};
     auto randTravel = std::make_unique<RandomTravel<HumanoidNpc>>(200.f, center, 1000.f);
     testActivities.push_front(std::move(randTravel));
     auto testAi = NpcAi<HumanoidNpc>(std::make_unique<ActivityManager<HumanoidNpc>>(std::move(testActivities)));
-    auto testNpc = std::make_unique<HumanoidNpc>(center, "Player/Shadow/body32", "Player/head32", std::move(testAi));
-    entitySpatialPartition->addNewEntity(std::move(testNpc));
+    auto testNpc = std::make_shared<HumanoidNpc>(center + sf::Vector2f {30.f, 50.f}, "Player/Shadow/body32", "Player/head32", std::move(testAi));
+    entitySpatialPartition->addNewEntity(testNpc);
 
     enqueueNewChunk(
             std::make_unique<Chunk>(data, std::move(tileMap), center, std::move(entitySpatialPartition)));

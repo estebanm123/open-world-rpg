@@ -55,7 +55,7 @@ void SlotEntities::removeEntity(const std::shared_ptr<Entity> &entity) {
     remover.removeEntity(entity);
 }
 
-std::shared_ptr<Entity> SlotEntities::removeAndTransferMoveable(Entity *entity, MoveableIter &it) {
+std::shared_ptr<Entity> SlotEntities::removeMoveable(Entity *entity, MoveableIter &it) {
     std::shared_ptr<Entity> tempEntityPtr = std::shared_ptr<Entity>(std::shared_ptr<Entity>{},
                                                                     entity); // WARNING: has no deleter
     auto searchResult = entities.find(tempEntityPtr);

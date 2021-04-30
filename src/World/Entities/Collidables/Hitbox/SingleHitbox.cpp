@@ -56,6 +56,7 @@ std::pair<SingleHitbox *, SingleHitbox *> SingleHitbox::getIntersectingSingleHit
 }
 
 SingleHitbox *SingleHitbox::getIntersectingSingleHitbox(SingleHitbox *otherHitbox) {
+    // todo: add debug statements here
     return CollisionChecker::intersect(otherHitbox->bounds, bounds) ? this : nullptr;
 }
 

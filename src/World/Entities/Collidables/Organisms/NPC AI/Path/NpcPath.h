@@ -4,6 +4,7 @@
 #include <SFML/System.hpp>
 #include <vector>
 
+// Data structure storing an npc's last visited point and points intended to visit in the future
 class NpcPath {
 public:
     typedef std::pair<sf::Vector2f, sf::Vector2f> Edge;
@@ -20,11 +21,14 @@ public:
 
     Point getNextPoint() const;
 
+    // makes next point the last visited point
     void advanceToNextPoint();
 
     Point getLastVisitedPoint() const;
 
     bool noNextPoint() const;
+
+    bool hasNextPoint() const;
 
     void reset();
 

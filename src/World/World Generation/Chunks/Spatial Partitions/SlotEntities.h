@@ -24,7 +24,7 @@ public:
 
     typedef std::unordered_set<MoveableEntity *>::iterator MoveableIter;
 
-    std::shared_ptr<Entity> removeAndTransferMoveable(Entity *entity, MoveableIter &it);
+    std::shared_ptr<Entity> removeMoveable(Entity *entity, MoveableIter &it);
 
 
 private:

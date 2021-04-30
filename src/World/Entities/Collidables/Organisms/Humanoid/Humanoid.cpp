@@ -3,11 +3,12 @@
 #include "../../../Sprites/ShadowedSpriteReg.h"
 #include "../../Hitbox/SingleHitbox.h"
 #include "../../../EntityVisitor/EntityVisitor.h"
-
+#include "../../Collision Physics/BlockingPhysics.h"
 
 Humanoid::Humanoid(const sf::Vector2f &globalPosition, const std::string &spriteSheetBody,
                    const std::string &spriteSheetHead) : OrganismEntity(std::make_unique<SingleHitbox>(
-        sf::FloatRect{globalPosition.x, globalPosition.y, BASE_FRAME_WIDTH / 2.f, BASE_FRAME_HEIGHT / 3.f})),
+        sf::FloatRect{globalPosition.x, globalPosition.y, BASE_FRAME_WIDTH / 2.f, BASE_FRAME_HEIGHT / 3.f}, 0,
+        std::make_unique<BlockingPhysics>())),
                                                          sprite(initializeSprites(globalPosition, spriteSheetBody,
                                                                                   spriteSheetHead)),
                                                          isPickingUp(false) {

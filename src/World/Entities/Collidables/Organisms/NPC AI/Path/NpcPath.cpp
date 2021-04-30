@@ -49,3 +49,8 @@ NpcPath::Point NpcPath::getLastVisitedPoint() const {
 bool NpcPath::noNextPoint() const {
     return points.size() == 1;
 }
+
+bool NpcPath::hasNextPoint() const {
+
+
+}

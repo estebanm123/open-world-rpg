@@ -12,9 +12,14 @@ HumanoidNpc::HumanoidNpc(const sf::Vector2f &globalPosition, const std::string &
                                                                                                spriteSheetBody,
                                                                                                spriteSheetHead),
                                                                                       ai(std::move(ai)) {
-    ai.init(this);
+    this->ai.init(this);
 }
 
 NpcAi<HumanoidNpc> &HumanoidNpc::getAi() {
     return ai;
+}
+
+void HumanoidNpc::update(float dt) {
+    MoveableEntity::update(dt);
+    ai.update(dt);
 }
