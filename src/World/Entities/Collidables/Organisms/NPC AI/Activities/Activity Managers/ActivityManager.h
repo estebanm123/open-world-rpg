@@ -13,19 +13,24 @@ public:
 
     ActivityManager(Activities activities) : activities(std::move(activities)) {};
 
+    void initialize(NpcAi<Organism> *npcAi) override {
+        BaseActivity<Organism>::initialize(npcAi);
+        for (auto &activity : activities) {
+            activity->initialize(npcAi);
+        }
+    }
+
     // Only updates first activity (front of q)
     void update(float dt) override {
         if (activities.empty()) {
-            this->finished = true;
+            this->setFinished(true);
             return;
         }
 
         auto currentActivity = activities.front().get();
-        currentActivity.update(dt);
+        currentActivity->update(dt);
         handleActivityCompletion(currentActivity);
     }
-
-    bool hasFinished() const override;
 
     virtual ~ActivityManager() = default;
 
@@ -39,9 +44,5 @@ private:
         }
     }
 
-    Activities activities; // Invariant: size > 1
+    Activities activities;
 };
-
-
-
-

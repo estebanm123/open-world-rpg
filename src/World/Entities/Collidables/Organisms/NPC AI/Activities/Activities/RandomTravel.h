@@ -13,8 +13,6 @@ protected:
 public:
     RandomTravel(float targetDistFromDestination, const sf::Vector2f &initialPos, float maxRadiusOfTravel);
 
-public:
-
 private:
     const sf::Vector2f initialPos;
     float maxRadiusOfTravel;

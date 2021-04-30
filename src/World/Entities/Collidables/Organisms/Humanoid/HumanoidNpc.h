@@ -7,14 +7,12 @@
 class HumanoidNpc : public Humanoid {
 public:
     HumanoidNpc(const sf::Vector2f &globalPosition, const std::string &spriteSheetBody,
-                const std::string &spriteSheetHead, NpcAi<HumanoidNpc> *ai);
-
+                const std::string &spriteSheetHead, NpcAi<HumanoidNpc> ai);
 private:
-
     void accept(EntityVisitor *visitor) override;
 
 private:
-    NpcAi<HumanoidNpc> *ai;
+    NpcAi<HumanoidNpc> ai;
 };
 
 
