@@ -28,27 +28,16 @@ public:
         npcEntity->move(dt);
 
         if (isNextPointReached(npcPath, npcPos)) {
-            std::cout << "npc   : " << npcPos.x << ", " << npcPos.y << std::endl;
-            std::cout << "target: " << npcPath.peekNextPoint().x << ", " << npcPath.peekNextPoint().y << std::endl;
-
-            AiDebug::printPath(npcPath);
-
             if (!npcPath.isEmpty()) {
                 npcPath.popNextPoint();
-                AiDebug::printPath(npcPath, "Advancing point");
             }
-
 
             auto generatedPoint = generateNextPoint();
             npcPath.enqueue(generatedPoint);
 
-            AiDebug::printPath(npcPath, "Enqueued point");
-
             auto newNpcDirection = computeMoveDirection(npcPath, npcPos);
             npcEntity->setMoveDirection(newNpcDirection);
             npcEntity->setRotation(-toDegrees(atan2(newNpcDirection.x, newNpcDirection.y)));
-            std::cout << "moving to popNextPoint point: " << npcPath.peekNextPoint().x << ", " << npcPath.peekNextPoint().y
-                      << std::endl;
         }
     }
 
