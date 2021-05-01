@@ -23,3 +23,8 @@ void HumanoidNpc::update(float dt) {
     MoveableEntity::update(dt);
     ai.update(dt);
 }
+
+sf::Vector2f HumanoidNpc::getMoveOffset() {
+    auto offset = MoveableEntity::getMoveOffset();
+    return offset * static_cast<float>(.1);
+}

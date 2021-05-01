@@ -79,7 +79,7 @@ void ChunkGenerator::generateChunk(const Chunk::RequestData &data) {
 
     // ~~~~ NPC PLACEHOLDER ~~~~
     auto testActivities = ActivityManager<HumanoidNpc>::Activities{};
-    auto randTravel = std::make_unique<RandomTravel<HumanoidNpc>>(200.f, center, 1000.f);
+    auto randTravel = std::make_unique<RandomTravel<HumanoidNpc>>(5.f, center, 100.f);
     testActivities.push_front(std::move(randTravel));
     auto testAi = NpcAi<HumanoidNpc>(std::make_unique<ActivityManager<HumanoidNpc>>(std::move(testActivities)));
     auto testNpc = std::make_shared<HumanoidNpc>(center + sf::Vector2f {30.f, 50.f}, "Player/Shadow/body32", "Player/head32", std::move(testAi));

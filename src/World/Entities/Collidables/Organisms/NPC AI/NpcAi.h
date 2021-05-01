@@ -10,6 +10,7 @@
 
 #include "Activities/Activity Managers/ActivityManager.h"
 #include "Path/NpcPath.h"
+#include "AiDebug.h"
 
 template<class Organism>
 class NpcAi : EntityVisitor {

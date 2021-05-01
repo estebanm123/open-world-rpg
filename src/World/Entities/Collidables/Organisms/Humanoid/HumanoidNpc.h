@@ -16,6 +16,11 @@ public:
 private:
     void accept(EntityVisitor *visitor) override;
 
+protected:
+    sf::Vector2f getMoveOffset() override;
+
+private:
+
     NpcAi<HumanoidNpc> ai;
 };
 

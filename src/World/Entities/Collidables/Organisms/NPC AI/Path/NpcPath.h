@@ -15,29 +15,28 @@ public:
 
     NpcPath(const std::vector<Point> & points = {});
 
-    Edge getCurrentEdge() const;
-
     void enqueue(Point point);
 
-    Point getNextPoint() const;
+    Point getTargetPoint() const;
 
     // makes next point the last visited point
-    void advanceToNextPoint();
+    void advanceTargetPoint();
 
     Point getLastVisitedPoint() const;
 
-    bool noNextPoint() const;
+    bool noTargetPoint() const;
 
-    bool hasNextPoint() const;
+    bool hasTargetPoint() const;
+
+    bool isEmpty() const;
 
     void reset();
-
-    static Edge makeEdge(const sf::Vector2f & first, const sf::Vector2f & second);
-
 private:
     // Invariant: points.front() is first point of 'current edge' ; the last point visited by npc
     // points.back() is last point in path
     std::deque<Point> points;
+
+    friend class NpcDebug;
 };
 
 

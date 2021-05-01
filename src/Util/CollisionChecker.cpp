@@ -28,13 +28,6 @@ bool CollisionChecker::intersect(const sf::CircleShape &circle, const sf::Rectan
 
 bool CollisionChecker::intersect(const sf::RectangleShape &rectShape1, const sf::RectangleShape &rectShape2) {
     using namespace std;
-    /*std::cout << "-intersect check-\n" << rectShape1.getPosition().x << ", " << rectShape1.getPosition().y << " :size " <<
-        rectShape1.getSize().x << ", " << rectShape1.getSize().y << std::endl;
-    std::cout << rectShape2.getPosition().x << ", " << rectShape2.getPosition().y << " :size " <<
-        rectShape2.getSize().x << ", " << rectShape2.getSize().y << std::endl;*/
-    //std::cout << endl;
-//    auto rect1 = convertToFloatRect(rectShape1);
-//    auto rect2 = convertToFloatRect(rectShape2);
     auto rect1 = rectShape1.getGlobalBounds();
     auto rect2 = rectShape2.getGlobalBounds();
     return rect1.intersects(rect2);
