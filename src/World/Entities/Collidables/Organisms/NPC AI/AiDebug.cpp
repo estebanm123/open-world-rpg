@@ -11,9 +11,9 @@ void printPoint(NpcPath::Point p) {
 void AiDebug::printPath(NpcPath path, const std::string &message) {
     std::cout << "NPC Path details - " << message << std::endl;
     while (!path.isEmpty()) {
-        auto targetPoint = path.getTargetPoint();
+        auto targetPoint = path.peekNextPoint();
         printPoint(targetPoint);
-        path.advanceTargetPoint();
+        path.popNextPoint();
     }
     std::cout << std::endl;
 }

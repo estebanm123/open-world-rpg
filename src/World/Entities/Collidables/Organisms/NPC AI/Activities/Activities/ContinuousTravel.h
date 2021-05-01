@@ -27,14 +27,14 @@ public:
 
         npcEntity->move(dt);
 
-        if (npcPath.noTargetPoint() || isNextPointReached(npcPath, npcPos)) {
+        if (isNextPointReached(npcPath, npcPos)) {
             std::cout << "npc   : " << npcPos.x << ", " << npcPos.y << std::endl;
-            std::cout << "target: " << npcPath.getTargetPoint().x << ", " << npcPath.getTargetPoint().y << std::endl;
+            std::cout << "target: " << npcPath.peekNextPoint().x << ", " << npcPath.peekNextPoint().y << std::endl;
 
             AiDebug::printPath(npcPath);
 
-            if (npcPath.hasTargetPoint()) {
-                npcPath.advanceTargetPoint();
+            if (!npcPath.isEmpty()) {
+                npcPath.popNextPoint();
                 AiDebug::printPath(npcPath, "Advancing point");
             }
 
@@ -47,7 +47,7 @@ public:
             auto newNpcDirection = computeMoveDirection(npcPath, npcPos);
             npcEntity->setMoveDirection(newNpcDirection);
             npcEntity->setRotation(-toDegrees(atan2(newNpcDirection.x, newNpcDirection.y)));
-            std::cout << "moving to next point: " << npcPath.getTargetPoint().x << ", " << npcPath.getTargetPoint().y
+            std::cout << "moving to popNextPoint point: " << npcPath.peekNextPoint().x << ", " << npcPath.peekNextPoint().y
                       << std::endl;
         }
     }
@@ -57,12 +57,13 @@ protected:
 
 private:
     sf::Vector2f computeMoveDirection(NpcPath &path, sf::Vector2f entityPos) {
-        auto nextPoint = path.getTargetPoint();
+        auto nextPoint = path.peekNextPoint();
         return nextPoint - entityPos;
     }
 
     bool isNextPointReached(NpcPath &path, sf::Vector2f entityPos) const {
-        return CollisionChecker::intersect(SimpleCircle{targetDistFromDestination, path.getTargetPoint()}, entityPos);
+        if (path.isEmpty()) return true;
+        return CollisionChecker::intersect(SimpleCircle{targetDistFromDestination, path.peekNextPoint()}, entityPos);
     }
 
     float targetDistFromDestination;

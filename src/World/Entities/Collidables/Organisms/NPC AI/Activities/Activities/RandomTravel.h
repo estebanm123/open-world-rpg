@@ -15,8 +15,8 @@ public:
 
 protected:
     NpcPath::Point generateNextPoint() override {
-        float x = rand.getFloatInRange(initialPos.x - maxRadiusOfTravel, initialPos.x - maxRadiusOfTravel);
-        float y = rand.getFloatInRange(initialPos.y - maxRadiusOfTravel, initialPos.y - maxRadiusOfTravel);
+        float x = rand.getFloatInRange(initialPos.x - maxRadiusOfTravel, initialPos.x + maxRadiusOfTravel);
+        float y = rand.getFloatInRange(initialPos.y - maxRadiusOfTravel, initialPos.y + maxRadiusOfTravel);
         return {x, y};
     }
 

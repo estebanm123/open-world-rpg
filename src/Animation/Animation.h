@@ -15,7 +15,7 @@ public:
                 : bounds(bnds), delay(dly) {}
 
         sf::IntRect bounds; //The area in a texture of the frame
-        sf::Time delay;  //Time delay to next frame
+        sf::Time delay;  //Time delay to popNextPoint frame
     };
 
     // Start/end frame is 0-indexed and corresponds to position in spritesheet

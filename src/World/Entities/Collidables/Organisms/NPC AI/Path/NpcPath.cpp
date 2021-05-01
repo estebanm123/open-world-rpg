@@ -8,35 +8,19 @@ const sf::Vector2f NpcPath::EMPTY_POINT = {0, 0};
 NpcPath::NpcPath(const std::vector<Point> &points) : points(points.begin(), points.end()) {}
 
 void NpcPath::enqueue(NpcPath::Point point) {
-    points.push_front(point);
+    points.push_back(point);
 }
 
 void NpcPath::reset() {
     points.clear();
 }
 
-void NpcPath::advanceTargetPoint() {
+void NpcPath::popNextPoint() {
     points.pop_front();
 }
 
-NpcPath::Point NpcPath::getTargetPoint() const {
-    if (points.size() > 1) {
-        return points.at(1);
-    } else {
-        return points.at(0);
-    }
-}
-
-NpcPath::Point NpcPath::getLastVisitedPoint() const {
+NpcPath::Point NpcPath::peekNextPoint() const {
     return points.front();
-}
-
-bool NpcPath::hasTargetPoint() const {
-    return !noTargetPoint();
-}
-
-bool NpcPath::noTargetPoint() const {
-    return points.size() <= 1;
 }
 
 bool NpcPath::isEmpty() const {

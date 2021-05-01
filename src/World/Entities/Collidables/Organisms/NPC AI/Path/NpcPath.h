@@ -17,16 +17,10 @@ public:
 
     void enqueue(Point point);
 
-    Point getTargetPoint() const;
+    Point peekNextPoint() const;
 
-    // makes next point the last visited point
-    void advanceTargetPoint();
-
-    Point getLastVisitedPoint() const;
-
-    bool noTargetPoint() const;
-
-    bool hasTargetPoint() const;
+    // makes popNextPoint point the last visited point
+    void popNextPoint();
 
     bool isEmpty() const;
 
@@ -38,7 +32,3 @@ private:
 
     friend class NpcDebug;
 };
-
-
-
-
