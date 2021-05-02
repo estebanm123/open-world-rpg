@@ -6,7 +6,7 @@
 #include <SFML/System/Vector2.hpp>
 #include <thread>
 #include "../../../Util/NonMoveable.h"
-#include "ChunkGenerator.h"
+#include "ChunkGenerator/ChunkGenerator.h"
 #include "../../Entities/Collidables/Organisms/NPC AI/Path/NpcPath.h"
 #include "Spatial Partitions/SpatialPartition.h"
 #include "Spatial Partitions/ActiveZones.h"

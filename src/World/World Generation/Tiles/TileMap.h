@@ -13,7 +13,7 @@
 
 class Tile;
 
-class CollidableEntity;
+class Entity;
 
 class TileMap {
 public:
@@ -30,7 +30,7 @@ public:
 
     Tile * getTile(int x, int y);
 
-    bool isEntityCrossingBounds(CollidableEntity * entity) const;
+    bool isEntityCrossingBounds(Entity * entity) const;
 
     sf::Vector2i convertGlobalToLocalCoords(const sf::Vector2f & globalCoords) const;
 

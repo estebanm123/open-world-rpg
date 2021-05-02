@@ -4,7 +4,6 @@
 #include <unordered_set>
 
 #include "../Tiles/TileMap.h"
-#include "ChunkCollisionHandler.h"
 #include "../../Entities/Collidables/Organisms/Humanoid/Humanoid.h"
 #include "Spatial Partitions/ActiveZones.h"
 
@@ -52,6 +51,7 @@ public:
 
     void addEntity(const std::shared_ptr<Entity> &entity);
 
+    TileMap & getTileMap();
 private:
     friend class ChunkDebug;
 

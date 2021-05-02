@@ -39,7 +39,7 @@ Tile *TileMap::getTile(int x, int y) {
 }
 
 // This is extra safe (not very accurate) - entity pos should refer to center
-bool TileMap::isEntityCrossingBounds(CollidableEntity *entity) const {
+bool TileMap::isEntityCrossingBounds(Entity *entity) const {
     using namespace worldConstants;
     auto yChunkLim = CHUNK_SIZE.y + pos.y;
     auto xChunkLim = CHUNK_SIZE.x + pos.x;

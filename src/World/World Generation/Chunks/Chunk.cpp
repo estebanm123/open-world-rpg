@@ -3,6 +3,7 @@
 #include "Spatial Partitions/SpatialPartition.h"
 #include "../Tiles/Tile.h"
 #include "../Environments/CompleteEnv.h"
+#include "Chunk.h"
 
 
 Chunk::Chunk(const RequestData &reqData, TileMap tiles, const sf::Vector2f &center,
@@ -56,3 +57,6 @@ void Chunk::renderEntities(sf::RenderTarget &renderer, const ActiveZones &active
     entitySpatialPartition->renderEntities(renderer, activeZones);
 }
 
+TileMap &Chunk::getTileMap() {
+    return tiles;
+}

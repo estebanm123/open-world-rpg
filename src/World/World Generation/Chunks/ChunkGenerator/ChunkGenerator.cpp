@@ -1,15 +1,15 @@
 ﻿#include "ChunkGenerator.h"
-#include "Spatial Partitions/SpatialPartition.h"
+#include "../Spatial Partitions/SpatialPartition.h"
 
 #include <iostream>
 #include <memory>
 
-#include "../../../Debug/DebugLog.h"
-#include "../Tiles/Tile.h"
-#include "../Environments/CompleteEnv.h"
-#include "ChunkPropGenerator.h"
-#include "../../Entities/Collidables/Organisms/Humanoid/HumanoidNpc.h"
-#include "../../Entities/Collidables/Organisms/NPC AI/Activities/Activities/RandomTravel.h"
+#include "../../../../Debug/DebugLog.h"
+#include "../../Tiles/Tile.h"
+#include "../../Environments/CompleteEnv.h"
+#include "ChunkDecorPropGenerator.h"
+#include "../../../Entities/Collidables/Organisms/Humanoid/HumanoidNpc.h"
+#include "../../../Entities/Collidables/Organisms/NPC AI/Activities/Activities/RandomTravel.h"
 
 ChunkGenerator::ChunkGenerator(int seed) : rand(seed), setUp(true), generating(false) {
 }
@@ -72,11 +72,6 @@ void ChunkGenerator::generateChunk(const Chunk::RequestData &data) {
     auto center = Chunk::getCenterFromReqData(data);
     TileMap tileMap{center};
     std::unique_ptr<SpatialPartition> entitySpatialPartition = std::make_unique<SpatialPartition>(center);
-    ChunkPropGenerator::generateEnvironmentalProps(false, entitySpatialPartition.get(),
-                                                   tileMap);
-    ChunkPropGenerator::generateEnvironmentalProps(true, entitySpatialPartition.get(),
-                                                   tileMap);
-
     // ~~~~ NPC PLACEHOLDER ~~~~
     if (center.x == 0 && center.y == 0) {
         auto testActivities = ActivityManager<HumanoidNpc>::Activities{};
@@ -87,8 +82,15 @@ void ChunkGenerator::generateChunk(const Chunk::RequestData &data) {
         entitySpatialPartition->addNewEntity(testNpc);
     }
 
-    enqueueNewChunk(
-            std::make_unique<Chunk>(data, std::move(tileMap), center, std::move(entitySpatialPartition)));
+    auto chunk =
+    std::make_unique<Chunk>(data, std::move(tileMap), center, std::move(entitySpatialPartition));
+    auto chunkPtr = chunk.get();
+
+    mainPropGenerator.generateEntities(chunkPtr);
+    decorPropGenerator.generateEntities(chunkPtr);
+    beastGenerator.generateEntities(chunkPtr);
+
+    enqueueNewChunk(std::move(chunk));
 }
 
 bool ChunkGenerator::chunksGeneratedIsEmpty() {

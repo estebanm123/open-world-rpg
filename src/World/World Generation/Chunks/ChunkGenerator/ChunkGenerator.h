@@ -5,8 +5,11 @@
 #include <memory>
 #include <condition_variable>
 
-#include "../../../Util/Random/Random.h"
-#include "Chunk.h"
+#include "../../../../Util/Random/Random.h"
+#include "../Chunk.h"
+#include "ChunkMainPropGenerator.h"
+#include "ChunkDecorPropGenerator.h"
+#include "ChunkBeastGenerator.h"
 
 
 class ChunkGenerator {
@@ -37,4 +40,8 @@ private:
     std::queue<std::unique_ptr<Chunk>> generated;
     std::mutex toGenerateMutex;
     std::condition_variable chunkRequest;
+
+    ChunkMainPropGenerator mainPropGenerator;
+    ChunkDecorPropGenerator decorPropGenerator;
+    ChunkBeastGenerator beastGenerator;
 };
