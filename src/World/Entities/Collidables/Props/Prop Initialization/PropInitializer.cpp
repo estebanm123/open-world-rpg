@@ -13,11 +13,3 @@ std::unique_ptr<Prop> PropInitializer::initialize(Position pos) {
 }
 
 PropInitializer::PropInitializer(std::vector<sf::IntRect> variants) : variants(std::move(variants)) {}
-
-int PropInitializer::computeAnimStartFrame(int variantIndex) {
-    if (variantIndex == 0) {
-        return variants[0].left;
-    } else {
-        return variants[variantIndex - 1].left;
-    }
-}

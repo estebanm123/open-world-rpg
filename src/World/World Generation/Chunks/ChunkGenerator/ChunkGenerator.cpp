@@ -73,17 +73,16 @@ void ChunkGenerator::generateChunk(const Chunk::RequestData &data) {
     TileMap tileMap{center};
     std::unique_ptr<SpatialPartition> entitySpatialPartition = std::make_unique<SpatialPartition>(center);
     // ~~~~ NPC PLACEHOLDER ~~~~
-    if (center.x == 0 && center.y == 0) {
-        auto testActivities = ActivityManager<HumanoidNpc>::Activities{};
-        auto randTravel = std::make_unique<RandomTravel<HumanoidNpc>>(5.f, center, 100.f);
-        testActivities.push_front(std::move(randTravel));
-        auto testAi = NpcAi<HumanoidNpc>(std::make_unique<ActivityManager<HumanoidNpc>>(std::move(testActivities)));
-        auto testNpc = std::make_shared<HumanoidNpc>(center + sf::Vector2f {30.f, 50.f}, "Player/Shadow/body32", "Player/head32", std::move(testAi));
-        entitySpatialPartition->addNewEntity(testNpc);
-    }
+//    auto testActivities = ActivityManager<HumanoidNpc>::Activities{};
+//    auto randTravel = std::make_unique<RandomTravel<HumanoidNpc>>(5.f, center, 100.f);
+//    testActivities.push_front(std::move(randTravel));
+//    auto testAi = NpcAi<HumanoidNpc>(std::make_unique<ActivityManager<HumanoidNpc>>(std::move(testActivities)));
+//    auto testNpc = std::make_shared<HumanoidNpc>(center + sf::Vector2f{30.f, 50.f}, "Player/Shadow/body32",
+//                                                 "Player/head32", std::move(testAi));
+//    entitySpatialPartition->addNewEntity(testNpc);
 
     auto chunk =
-    std::make_unique<Chunk>(data, std::move(tileMap), center, std::move(entitySpatialPartition));
+            std::make_unique<Chunk>(data, std::move(tileMap), center, std::move(entitySpatialPartition));
     auto chunkPtr = chunk.get();
 
     mainPropGenerator.generateEntities(chunkPtr);

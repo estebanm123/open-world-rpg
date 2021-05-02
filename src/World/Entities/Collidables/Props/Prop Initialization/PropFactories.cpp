@@ -3,7 +3,6 @@
 #include "PropFactories.h"
 #include "PropInitializers.h"
 
-// TODO: refactor to an initialize function
 typedef std::vector<std::unique_ptr<InitializerMetadata<Prop, PropInitializer::Position>>> InitializerMetadataCollection;
 
 InitializerMetadataCollection initializeSandMainProps() {

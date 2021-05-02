@@ -31,7 +31,6 @@ void ChunkEnvBasedEntityGenerator::generateEntities(Chunk *chunk) {
             if (tileCoordHash > currentEntityGenLimit) {
                 auto entityCoords = generateEntityCoords(currentEntityGenLimit, tileCoordHash, curTile->getTopLeftPos());
                 auto entity = generateEntity(curEnv, entityCoords);
-//                auto prop = curEnv->generateEnvironmentalProp(propCoords, isDecor);
                 if (!isEntityValid(entity.get(), tileMap, tilesSeen, {x, y})) {
                     continue;
                 }
@@ -75,10 +74,10 @@ bool ChunkEnvBasedEntityGenerator::isEntityValid(Entity *entity, const TileMap &
            !isEntityOverlappingOthersAndMarkAsSeen(entity, localCoords, tilesSeen, tiles);
 }
 
-// Divisor used against prop's max length (width/height) - a larger value = higher chance of collisions but more natural results
+// Divisor used against entity's max length (width/height) - a larger value = higher chance of collisions but more natural results
 constexpr auto ENTITY_COLLISION_LENIENCY_FACTOR = 3;
 
-// Marks prop as seen
+// Marks entity as seen
 // Extra safe (a little inaccurate)
 bool
 ChunkEnvBasedEntityGenerator::isEntityOverlappingOthersAndMarkAsSeen(Entity *entity, const sf::Vector2i &localCoords,

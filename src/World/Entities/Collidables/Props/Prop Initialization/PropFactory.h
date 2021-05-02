@@ -22,7 +22,3 @@ private:
     PositionBasedInitializerPool<Prop> decorProps;
     PositionBasedInitializerPool<Prop> mainProps;
 };
-
-
-
-

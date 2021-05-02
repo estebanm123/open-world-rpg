@@ -11,6 +11,8 @@ public:
     EnvProxy(const Env * env);
 
     std::unique_ptr<Prop> generateEnvironmentalProp(const sf::Vector2f &propCoords, bool isDecor) const override;
+
+    std::unique_ptr<Beast> generateBeast(const sf::Vector2f &propCoords) const override;
 private:
     const Env * env;
 };

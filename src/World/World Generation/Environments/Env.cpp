@@ -3,6 +3,7 @@
 #include "Env.h"
 #include "../../Entities/Collidables/Props/Prop.h"
 #include "EnvNeighborInfo.h"
+#include "../../../Util/Initializer/PositionBasedInitializerPool.h"
 
 
 Env::Env(std::unique_ptr<Env::Config> config)
@@ -66,6 +67,10 @@ Env::Config *Env::getConfig() {
     return tempConfig.get();
 }
 
+std::unique_ptr<Beast> Env::generateBeast(const sf::Vector2f &beastCoords) const {
+    return beastFactory->initialize(beastCoords);
+}
+
 void Env::setSpriteSheet(std::string inputSpriteSheet) {
     spriteSheet = std::move(inputSpriteSheet);
 }
@@ -74,8 +79,9 @@ void Env::setCompleteTileContainers(const TileContainer::TileContainers &tileCon
     completeTileContainers = tileContainers;
 };
 
-Env::Config::Config(Env::EnvId id, std::string spriteSheet, int numFullTiles, std::vector<EnvNeighborInfo> borderData,
-                    std::unique_ptr<PropFactory> propFactory, std::unique_ptr<Animation::BaseMetadata> animMetadata)
+Env::Config::Config(EnvId id, std::string spriteSheet, int numFullTiles, std::vector<EnvNeighborInfo> borderData,
+                    std::unique_ptr<PropFactory> propFactory, std::unique_ptr<BeastFactory> beastFactory,
+                    std::unique_ptr<Animation::BaseMetadata> animMetadata)
         : id(id), spriteSheet(std::move(spriteSheet)), numFullTiles(numFullTiles),
           borderDataCollection(std::move(borderData)),
           propFactory(std::move(propFactory)), animMetadata(std::move(animMetadata)) {

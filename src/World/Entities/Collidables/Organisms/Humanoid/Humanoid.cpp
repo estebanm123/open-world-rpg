@@ -19,10 +19,6 @@ EntitySprite &Humanoid::getSprite() {
     return sprite;
 }
 
-void Humanoid::revertLastMove(bool x, bool y) {
-    MoveableEntity::revertLastMove(x, y);
-}
-
 std::vector<std::unique_ptr<EntitySprite>>
 Humanoid::initializeSprites(const sf::Vector2f &pos, const std::string &spriteSheetBody,
                             const std::string &spriteSheetHead) {

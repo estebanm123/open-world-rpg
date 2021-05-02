@@ -18,9 +18,6 @@ public:
     virtual std::unique_ptr<Prop>
     initializeProp(Position pos, sf::IntRect spriteSheetCoords, int variantIndex) = 0;
 
-protected:
-    int computeAnimStartFrame(int variantIndex);
-
 private:
     std::vector<sf::IntRect> variants;
 };

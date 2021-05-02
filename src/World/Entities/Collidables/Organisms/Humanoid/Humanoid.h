@@ -16,8 +16,6 @@ public:
     Humanoid(const sf::Vector2f &globalPosition, const std::string &spriteSheetBody,
              const std::string &spriteSheetHead);
 
-    void revertLastMove(bool x, bool y) override;
-
     ~Humanoid() override = default;
 
     void accept(EntityVisitor * visitor) override;
