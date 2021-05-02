@@ -2,6 +2,7 @@
 #include "SlotEntities.h"
 #include "../../../Entities/Collidables/Props/Prop.h"
 #include "../../../Entities/Collidables/Organisms/Humanoid/Humanoid.h"
+#include "../../../Entities/Collidables/Organisms/Beast/Beast.h"
 
 void SlotEntities::Remover::removeEntity(const std::shared_ptr<Entity> &entity) {
     entity->accept(this);
@@ -20,9 +21,12 @@ void SlotEntities::Remover::visit(Humanoid *humanoid) {
     slotEntities->moveableEntities.erase(humanoid);
 }
 
-void SlotEntities::Remover::visit(Beast *beast) {}
+void SlotEntities::Remover::visit(Beast *beast) {
+    slotEntities->moveableEntities.erase(beast);
+}
 
 SlotEntities::Remover::Remover(SlotEntities *slotEntities) : slotEntities(slotEntities) {}
+
 
 void SlotEntities::Adder::addEntity(const std::shared_ptr<Entity> &entity) {
     entity->accept(this);
@@ -41,7 +45,9 @@ void SlotEntities::Adder::visit(Humanoid *humanoid) {
     slotEntities->moveableEntities.insert(humanoid);
 }
 
-void SlotEntities::Adder::visit(Beast *beast) {}
+void SlotEntities::Adder::visit(Beast *beast) {
+    slotEntities->moveableEntities.insert(beast);
+}
 
 SlotEntities::Adder::Adder(SlotEntities *slotEntities) : slotEntities(slotEntities) {}
 
@@ -50,6 +56,7 @@ SlotEntities::SlotEntities() : adder(this), remover(this) {}
 void SlotEntities::addEntity(const std::shared_ptr<Entity> &entity) {
     adder.addEntity(entity);
 }
+
 
 void SlotEntities::removeEntity(const std::shared_ptr<Entity> &entity) {
     remover.removeEntity(entity);

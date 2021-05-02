@@ -10,11 +10,7 @@ protected:
 
     std::unique_ptr<Hitbox> generateHitbox(Position pos) override;
 
-    SpriteReg generateSprite(Position pos, std::unique_ptr<AnimationPlayer> animPlayer) override;
+    ShadowedSpriteReg generateSprite(Position pos, std::unique_ptr<AnimationPlayer> animPlayer) override;
 
     std::unique_ptr<AnimationPlayer> generateAnimPlayer(Position pos) override;
 };
-
-
-
-

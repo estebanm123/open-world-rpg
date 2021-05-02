@@ -1,5 +1,3 @@
-
-
 #include <vector>
 #include <memory>
 #include "BeastFactories.h"
@@ -10,9 +8,9 @@
 typedef std::vector<std::unique_ptr<InitializerMetadata<Beast, BeastInitializer::Position>>> InitializerMetadataCollection;
 
 InitializerMetadataCollection constructDirtBeastInitializers() {
-    auto props = InitializerMetadataCollection{};
-    props.push_back(std::make_unique<InitializerMetadata<Beast, sf::Vector2f>>(std::make_unique<CatInitializer>(), 100));
-    return props;
+    auto beasts = InitializerMetadataCollection{};
+    beasts.push_back(std::make_unique<InitializerMetadata<Beast, sf::Vector2f>>(std::make_unique<CatInitializer>(), 100));
+    return beasts;
 }
 
 DirtBeastFactory::DirtBeastFactory() : PositionBasedInitializerPool<Beast>(constructDirtBeastInitializers()) {}
@@ -20,3 +18,4 @@ DirtBeastFactory::DirtBeastFactory() : PositionBasedInitializerPool<Beast>(const
 SandBeastFactory::SandBeastFactory() : PositionBasedInitializerPool<Beast>({}) {}
 
 WaterBeastFactory::WaterBeastFactory() : PositionBasedInitializerPool<Beast>({}) {}
+

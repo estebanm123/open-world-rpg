@@ -2,11 +2,11 @@
 
 #include "../OrganismEntity.h"
 #include "../NPC AI/NpcAi.h"
-#include "../../../Sprites/SpriteReg.h"
+#include "../../../Sprites/ShadowedSpriteReg.h"
 
 class Beast : public OrganismEntity {
 public:
-    Beast(std::unique_ptr<Hitbox> hitbox, NpcAi<Beast> ai, SpriteReg sprite);
+    Beast(std::unique_ptr<Hitbox> hitbox, NpcAi<Beast> ai, ShadowedSpriteReg sprite);
 
     void accept(EntityVisitor *visitor) override;
 
@@ -15,9 +15,11 @@ public:
 protected:
     EntitySprite &getSprite() override;
 
+    sf::Vector2f getMoveOffset() override;
+
 private:
     NpcAi<Beast> ai;
-    SpriteReg sprite;
+    ShadowedSpriteReg sprite;
 };
 
 

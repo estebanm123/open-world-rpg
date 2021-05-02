@@ -14,7 +14,6 @@ public:
     std::unordered_set<std::shared_ptr<Entity>> entities;
     std::unordered_set<Prop *> mainProps;
     std::unordered_set<Prop *> decorProps;
-    // todo Humanoid/beast??
 
     SlotEntities();
 

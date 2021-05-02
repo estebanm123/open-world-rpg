@@ -7,8 +7,15 @@ void Beast::accept(EntityVisitor *visitor) {
     visitor->visit(this);
 }
 
-Beast::Beast(std::unique_ptr<Hitbox> hitbox, NpcAi<Beast> ai, SpriteReg sprite)
-        : OrganismEntity(std::move(hitbox)), ai(std::move(ai)), sprite(std::move(sprite)) {}
+Beast::Beast(std::unique_ptr<Hitbox> hitbox, NpcAi<Beast> ai, ShadowedSpriteReg sprite)
+        : OrganismEntity(std::move(hitbox)), ai(std::move(ai)), sprite(std::move(sprite)) {
+    this->ai.init(this);
+}
+
+sf::Vector2f Beast::getMoveOffset() {
+    float multiplier = .15;
+    return MoveableEntity::getMoveOffset() * multiplier;
+}
 
 EntitySprite &Beast::getSprite() {
     return sprite;

@@ -18,7 +18,7 @@ protected:
 
     virtual std::unique_ptr<Hitbox> generateHitbox(Position pos) = 0;
 
-    virtual SpriteReg generateSprite(Position pos, std::unique_ptr<AnimationPlayer> animPlayer) = 0;
+    virtual ShadowedSpriteReg generateSprite(Position pos, std::unique_ptr<AnimationPlayer> animPlayer) = 0;
 
     virtual std::unique_ptr<AnimationPlayer> generateAnimPlayer(Position pos) = 0;
 };

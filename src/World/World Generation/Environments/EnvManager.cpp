@@ -116,8 +116,8 @@ void EnvManager::initializeEnvs() {
         auto env = el.second.get();
         auto config = env->getConfig();
 
-        env->setPropFactory(std::move(config->propFactory));
-        env->setSpriteSheet(config->spriteSheet);
+//        env->setPropFactory(std::move(config->propFactory));
+//        env->setSpriteSheet(config->spriteSheet);
 
         initializeCompleteTileContainers(env);
         initializeBorderTileContainers(env);

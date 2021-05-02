@@ -1,13 +1,12 @@
 
 #include "Temporary Environments/EnvWrapper.h"
 #include "Env.h"
-#include "../../Entities/Collidables/Props/Prop.h"
 #include "EnvNeighborInfo.h"
-#include "../../../Util/Initializer/PositionBasedInitializerPool.h"
 
 
 Env::Env(std::unique_ptr<Env::Config> config)
-        : tempConfig(std::move(config)) {};
+        : tempConfig(std::move(config)), spriteSheet(tempConfig->spriteSheet), propFactory(std::move(tempConfig->propFactory)),
+        beastFactory(std::move(tempConfig->beastFactory)) {};
 
 TileContainer *Env::selectTileContainer(const sf::Vector2f &coords) const {
     // todo: refactor to a separate class when tile fetching gets more complex
@@ -68,6 +67,7 @@ Env::Config *Env::getConfig() {
 }
 
 std::unique_ptr<Beast> Env::generateBeast(const sf::Vector2f &beastCoords) const {
+    if (!beastFactory) return nullptr;
     return beastFactory->initialize(beastCoords);
 }
 
@@ -84,6 +84,5 @@ Env::Config::Config(EnvId id, std::string spriteSheet, int numFullTiles, std::ve
                     std::unique_ptr<Animation::BaseMetadata> animMetadata)
         : id(id), spriteSheet(std::move(spriteSheet)), numFullTiles(numFullTiles),
           borderDataCollection(std::move(borderData)),
-          propFactory(std::move(propFactory)), animMetadata(std::move(animMetadata)) {
-
+          propFactory(std::move(propFactory)), beastFactory(std::move(beastFactory)), animMetadata(std::move(animMetadata)) {
 }

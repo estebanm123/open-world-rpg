@@ -70,13 +70,12 @@ public:
 
 
 private:
-//    const int multiTileIndex;
+    std::unique_ptr<Config> tempConfig;
     TileContainer::TileContainers completeTileContainers;
     BorderTileContainers splitBorderTileContainers;
     BorderTileContainers cornerBorderTileContainers;
     std::unique_ptr<PropFactory> propFactory;
     std::unique_ptr<BeastFactory> beastFactory;
     std::string spriteSheet;
-    std::unique_ptr<Config> tempConfig;
 };
 

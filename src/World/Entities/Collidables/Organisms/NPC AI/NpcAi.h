@@ -3,11 +3,6 @@
 
 #include <memory>
 #include "../../CollidableEntity.h"
-
-
-//template<typename Organism>
-//class ActivityManager<Organism>;
-
 #include "Activities/Activity Managers/ActivityManager.h"
 #include "Path/NpcPath.h"
 #include "AiDebug.h"
