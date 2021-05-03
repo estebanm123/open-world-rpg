@@ -139,19 +139,22 @@ void SpatialPartition::updateEntities(float dt, const ActiveZones &activeZones) 
     }
 }
 
-void SpatialPartition::renderEntities(sf::RenderTarget &renderer, const ActiveZones &activeZones) {
+void SpatialPartition::renderNonDecorEntities(sf::RenderTarget &renderer, const ActiveZones &activeZones) {
     for (auto row = 0; row < slots.size(); row++) {
         for (auto col = 0; col < slots[0].size(); col++) {
             if (activeZoneContainsSlot(row, col, activeZones.renderZone)) {
-                slots[row][col]->renderProps(renderer);
+                slots[row][col]->renderNonDecorEntities(renderer);
             }
         }
     }
+}
+
+void SpatialPartition::renderDecorEntities(sf::RenderTarget &renderer, const ActiveZones &activeZones) {
 
     for (auto row = 0; row < slots.size(); row++) {
         for (auto col = 0; col < slots[0].size(); col++) {
             if (activeZoneContainsSlot(row, col, activeZones.renderZone)) {
-                slots[row][col]->renderMoveables(renderer);
+                slots[row][col]->renderDecorEntities(renderer);
             }
         }
     }
@@ -223,3 +226,4 @@ sf::Vector2i SpatialPartition::convertGlobalToLocalCoords(sf::Vector2f globalCoo
     }
     return localCoords;
 }
+

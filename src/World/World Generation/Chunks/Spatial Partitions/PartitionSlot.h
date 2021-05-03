@@ -18,9 +18,9 @@ public:
 
     void handleCollisions(SpatialPartition *slots);
 
-    void renderProps(sf::RenderTarget & renderer);
+    void renderNonDecorEntities(sf::RenderTarget & renderer);
 
-    void renderMoveables(sf::RenderTarget & renderer);
+    void renderDecorEntities(sf::RenderTarget & renderer);
 
     void handleExternalCollision(MoveableEntity *externalEntity);
 
@@ -34,10 +34,6 @@ private:
     // Returns true if entity has moved to a different slot
     bool handleCollisionsWithOtherSlotEntities(MoveableEntity *moveable, SpatialPartition *slots,
                                                SlotEntities::MoveableIter &it);
-
-//    static bool entityHasMovedSlots(MoveableEntity *entity, SpatialPartition *slots) ;
-
-    static bool hasEntityMovedToSlot(MoveableEntity *entity, SpatialPartition *slots, PartitionSlot *slot) ;
 
     SlotEntities entityHolder;
 
