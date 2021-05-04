@@ -65,9 +65,7 @@ void PartitionSlot::handleCollisionsFor(MoveableEntity *moveable) const {
     auto &moveableEntities = entityHolder.moveableEntities;
     for (auto otherMoveable : moveableEntities) {
         // todo: some way to cache pairs seen, so we avoid double counting
-        //         - each moveable can hold a set of other moveables it's checked?
-        //              + then verified in handleCollision + reset on popNextPoint update call
-        //         - could also load them into a vector, so we can use indexing - would take up n space instead of n^2
+        //         - just use a map stored in slot, sort moveable addr and make a str -> O(n) space
         if (moveable == otherMoveable) continue;
 
         const auto hitboxes = moveable->getHitbox()->getIntersectingSingleHitboxes(otherMoveable->getHitbox());

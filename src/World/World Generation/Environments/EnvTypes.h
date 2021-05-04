@@ -35,7 +35,7 @@ namespace EnvTypes {
         ));
 
         EnvManager::createEnv(std::make_unique<Env::Config>(
-                SAND, "Tiles/Sand", 5,
+                SAND, "Tiles/Sand", 4,
                 std::vector<EnvNeighborInfo>{EnvNeighborInfo{DIRT, 2, 2}},
                 std::make_unique<SandPropFactory>(),
                 std::make_unique<SandBeastFactory>()));
