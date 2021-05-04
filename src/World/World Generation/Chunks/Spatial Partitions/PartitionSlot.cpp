@@ -5,6 +5,7 @@
 #include "PartitionSlot.h"
 #include "../Chunk.h"
 #include "../../../Entities/Collidables/Hitbox/SingleHitbox.h"
+#include "../../../Entities/Collidables/Hitbox/EntityCollisionHandler.h"
 
 void PartitionSlot::update(float dt) {
     for (auto &moveable : entityHolder.moveableEntities) {
@@ -67,18 +68,11 @@ void PartitionSlot::handleCollisionsFor(MoveableEntity *moveable) const {
         // todo: some way to cache pairs seen, so we avoid double counting
         //         - just use a map stored in slot, sort moveable addr and make a str -> O(n) space
         if (moveable == otherMoveable) continue;
-
-        const auto hitboxes = moveable->getHitbox()->getIntersectingSingleHitboxes(otherMoveable->getHitbox());
-        if (hitboxes.first == nullptr || hitboxes.second == nullptr) continue; // no collision
-        hitboxes.first->handleCollision(moveable, otherMoveable);
-        hitboxes.second->handleCollision(otherMoveable, moveable);
+        EntityCollisionHandler::handleCollision<MoveableEntity>(moveable, otherMoveable);
     }
 
     for (auto prop : entityHolder.mainProps) {
-        auto hitboxes = moveable->getHitbox()->getIntersectingSingleHitboxes(prop->getHitbox());
-        if (hitboxes.first == nullptr || hitboxes.second == nullptr) continue; // no collision
-        hitboxes.first->handleCollision(moveable, prop);
-        hitboxes.second->handleCollision(prop, moveable);
+        EntityCollisionHandler::handleCollision<Prop>(moveable, prop);
     }
 }
 
