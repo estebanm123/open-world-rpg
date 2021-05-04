@@ -37,7 +37,7 @@ CatInitializer::generateSprite(BeastInitializer::Position pos, std::unique_ptr<A
 std::unique_ptr<AnimationPlayer> CatInitializer::generateAnimPlayer(BeastInitializer::Position pos) {
     std::unordered_map<Action const *, std::unique_ptr<Animation>> anims;
     anims.insert({&MoveableActions::Idle, std::make_unique<RepeatingAnim>(
-            Animation::Metadata{CAT_FRAME_WIDTH, CAT_FRAME_HEIGHT, 2, 4, 0, 200, {4}})});
+            Animation::Metadata{CAT_FRAME_WIDTH, CAT_FRAME_HEIGHT, 2, 4, 0, 250, {4}})});
     anims.insert({&MoveableActions::Move, std::make_unique<RepeatingAnim>(
             Animation::Metadata{CAT_FRAME_WIDTH, CAT_FRAME_HEIGHT, 0, 2, 0, 150, {2}, Animation::Priority::LOW, 0,
                                 true})});

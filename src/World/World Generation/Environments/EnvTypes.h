@@ -29,13 +29,13 @@ namespace EnvTypes {
 
         EnvManager::createEnv(std::make_unique<Env::Config>(
                 DIRT, "Tiles/Dirt", 6,
-                std::vector<EnvNeighborInfo>{EnvNeighborInfo{WATER, 1, 3}, EnvNeighborInfo{SAND, 0, 3}},
+                std::vector<EnvNeighborInfo>{EnvNeighborInfo{WATER, 1, 3}, EnvNeighborInfo{SAND, 0, 4}},
                 std::make_unique<DirtPropFactory>(),
                 std::make_unique<DirtBeastFactory>()
         ));
 
         EnvManager::createEnv(std::make_unique<Env::Config>(
-                SAND, "Tiles/Sand", 4,
+                SAND, "Tiles/Sand", 5,
                 std::vector<EnvNeighborInfo>{EnvNeighborInfo{DIRT, 2, 2}},
                 std::make_unique<SandPropFactory>(),
                 std::make_unique<SandBeastFactory>()));
