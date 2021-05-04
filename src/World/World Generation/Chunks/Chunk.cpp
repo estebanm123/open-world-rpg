@@ -53,10 +53,14 @@ void Chunk::addEntity(const std::shared_ptr<Entity> &entity) {
     entitySpatialPartition->addNewEntity(entity);
 }
 
-void Chunk::renderEntities(sf::RenderTarget &renderer, const ActiveZones &activeZones) {
-    entitySpatialPartition->renderEntities(renderer, activeZones);
-}
-
 TileMap &Chunk::getTileMap() {
     return tiles;
+}
+
+void Chunk::renderDecorEntities(sf::RenderTarget &renderer, const ActiveZones &activeZones) {
+    entitySpatialPartition->renderDecorEntities(renderer,activeZones);
+}
+
+void Chunk::renderNonDecorEntities(sf::RenderTarget &renderer, const ActiveZones &activeZones) {
+    entitySpatialPartition->renderNonDecorEntities(renderer, activeZones);
 }

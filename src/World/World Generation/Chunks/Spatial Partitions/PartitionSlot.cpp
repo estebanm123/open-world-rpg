@@ -15,18 +15,18 @@ void PartitionSlot::update(float dt) {
     }
 }
 
-void PartitionSlot::renderProps(sf::RenderTarget &renderer) {
+void PartitionSlot::renderNonDecorEntities(sf::RenderTarget &renderer) {
+    for (auto &moveable : entityHolder.moveableEntities) {
+        moveable->renderBy(renderer);
+    }
+}
+
+void PartitionSlot::renderDecorEntities(sf::RenderTarget &renderer) {
     for (auto &prop : entityHolder.decorProps) {
         prop->renderBy(renderer);
     }
     for (auto &prop  : entityHolder.mainProps) {
         prop->renderBy(renderer);
-    }
-}
-
-void PartitionSlot::renderMoveables(sf::RenderTarget &renderer) {
-    for (auto &moveable : entityHolder.moveableEntities) {
-        moveable->renderBy(renderer);
     }
 }
 
@@ -115,3 +115,4 @@ bool PartitionSlot::handleCollisionsWithOtherSlotEntities(MoveableEntity *moveab
     }
     return false;
 }
+

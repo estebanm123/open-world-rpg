@@ -24,7 +24,9 @@ public:
 
     void updateEntities(float dt, const ActiveZones &activeZones);
 
-    void renderEntities(sf::RenderTarget &renderer, const ActiveZones &activeZones);
+    void renderDecorEntities(sf::RenderTarget &renderer, const ActiveZones &activeZones);
+
+    void renderNonDecorEntities(sf::RenderTarget &renderer, const ActiveZones &activeZones);
 
     void addNewEntity(const std::shared_ptr<Entity> &entity);
 

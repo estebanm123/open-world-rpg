@@ -3,10 +3,11 @@
 #include "../OrganismEntity.h"
 #include "../NPC AI/NpcAi.h"
 #include "../../../Sprites/ShadowedSpriteReg.h"
+#include "../../../Sprites/SpriteReg.h"
 
 class Beast : public OrganismEntity {
 public:
-    Beast(std::unique_ptr<Hitbox> hitbox, NpcAi<Beast> ai, ShadowedSpriteReg sprite);
+    Beast(std::unique_ptr<Hitbox> hitbox, NpcAi<Beast> ai, std::unique_ptr<SpriteReg> sprite);
 
     void accept(EntityVisitor *visitor) override;
 
@@ -19,7 +20,7 @@ protected:
 
 private:
     NpcAi<Beast> ai;
-    ShadowedSpriteReg sprite;
+    std::unique_ptr<SpriteReg> sprite;
 };
 
 

@@ -24,27 +24,6 @@ void World::update(float dt) {
     chunkManager.update(dt);
 }
 
-//void World::updateWeapons(float dt) {
-//    for (const auto &projWeapon : projWeapons) {
-//        if (projWeapon->isDropped()) {
-//            projWeapon->update(dt);
-//        } else if (!projWeapon->isProjGenerationLocked()) {
-//            projectiles.push_back(projWeapon->generateProjectile(player.getLookDirection(), player.getPosition()));
-//        }
-//    }
-//}
-
-//void World::updateProjectiles(float dt) {
-//    for (auto it = projectiles.begin(); it != projectiles.end();) {
-//        if ((*it)->getCurDistTravelled() >= Projectile::DESPAWN_DIST) {
-//            it = projectiles.erase(it);
-//        } else {
-//            (*it)->update(dt);
-//            ++it;
-//        }
-//    }
-//}
-
 int World::generateSeed() {
     Random<> rand;
     return rand.getIntInRange(0, INT16_MAX);

@@ -9,7 +9,7 @@
 #include "../../Environments/CompleteEnv.h"
 #include "ChunkDecorPropGenerator.h"
 #include "../../../Entities/Collidables/Organisms/Humanoid/HumanoidNpc.h"
-#include "../../../Entities/Collidables/Organisms/NPC AI/Activities/Activities/RandomTravel.h"
+#include "../../../Entities/Collidables/Organisms/NPC AI/Activities/RandomTravel.h"
 
 ChunkGenerator::ChunkGenerator(int seed) : rand(seed), setUp(true), generating(false) {
 }

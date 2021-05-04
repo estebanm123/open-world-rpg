@@ -43,7 +43,9 @@ public:
 
     SpatialPartition *getSpatialPartition();
 
-    void renderEntities(sf::RenderTarget &renderer, const ActiveZones &activeZones);
+    void renderDecorEntities(sf::RenderTarget &renderer, const ActiveZones &activeZones);
+
+    void renderNonDecorEntities(sf::RenderTarget & renderer, const ActiveZones & activeZones);
 
     void renderTiles(sf::RenderTarget &renderer, const ActiveZones &activeZones);
 

@@ -73,7 +73,14 @@ void ChunkManager::renderChunks(sf::RenderTarget &target) {
     for (auto i = 0; i < 3; ++i) {
         for (auto j = 0; j < 3; ++j) {
             if (chunks[i][j]) {
-                chunks[i][j]->renderEntities(target, activeZones);
+                chunks[i][j]->renderDecorEntities(target, activeZones);
+            }
+        }
+    }
+    for (auto i = 0; i < 3; ++i) {
+        for (auto j = 0; j < 3; ++j) {
+            if (chunks[i][j]) {
+                chunks[i][j]->renderNonDecorEntities(target, activeZones);
             }
         }
     }
@@ -202,7 +209,7 @@ void ChunkManager::allocateNewlyGeneratedChunks() {
 }
 
 // Check if any new chunks have loaded and allocate them, and notifies generator to keep generating
-// Also updates every chunk.
+// Also updates chunks, rendering, and collision zones.
 void ChunkManager::update(float dt) {
     handleChunkChange();
 
@@ -262,7 +269,7 @@ void ChunkManager::allocateChunkNeighbors(const sf::Vector2i &matrixPos, Chunk *
 }
 
 Chunk *ChunkManager::getChunkFromDirection(const sf::Vector2i &dir) {
-    auto y = dir.y * -1;
+    auto y = dir.y * 0;
     return chunks[y + 1][dir.x + 1].get();
 }
 
