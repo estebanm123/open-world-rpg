@@ -34,15 +34,15 @@ const inline std::array<sf::Vector2i, 9> directions{
 namespace worldConstants {
 
     // Spatial partition related
-    constexpr inline int RENDER_ZONE_WIDTH = 12; // in number of slots
-    constexpr inline int RENDER_ZONE_HEIGHT = 12;
+    constexpr inline int RENDER_ZONE_WIDTH = 16; // in number of slots
+    constexpr inline int RENDER_ZONE_HEIGHT = 10;
     constexpr inline int COLLISION_ZONE_WIDTH = 15;
     constexpr inline int COLLISION_ZONE_HEIGHT = 15;
     constexpr static int SLOT_ROWS_PER_CHUNK = 8;
     constexpr static int SLOT_COLS_PER_CHUNK = SLOT_ROWS_PER_CHUNK;
 
-    constexpr inline int TILES_PER_CHUNK_X = 17;
-    constexpr inline int TILES_PER_CHUNK_Y = 17;
+    constexpr inline int TILES_PER_CHUNK_X = 13;
+    constexpr inline int TILES_PER_CHUNK_Y = TILES_PER_CHUNK_X;
     const inline sf::Vector2f TILE_SIZE = {48, 48}; // (all sizes in pixels)
     const inline int TILE_SIZE_INT_X = static_cast<int>(TILE_SIZE.x);
     const inline int TILE_SIZE_INT_Y = static_cast<int>(TILE_SIZE.y);

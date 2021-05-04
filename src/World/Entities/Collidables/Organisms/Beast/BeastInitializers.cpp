@@ -4,7 +4,7 @@
 #include "../../../Sprites/ShadowedSpriteReg.h"
 #include "../../Collision Physics/BlockingPhysics.h"
 #include "../../Hitbox/SingleHitbox.h"
-#include "../NPC AI/Activities/Activities/RandomTravel.h"
+#include "../NPC AI/Activities/RandomTravel.h"
 
 const std::string NPC_FOLDER = "Npc/Shadow/";
 
@@ -15,7 +15,7 @@ constexpr float CAT_HITBOX_HEIGHT = 29;
 
 std::unique_ptr<BaseActivity<Beast>> CatInitializer::generateActivities(BeastInitializer::Position pos) {
     auto testActivities = ActivityManager<Beast>::Activities{};
-    auto randTravel = std::make_unique<RandomTravel<Beast>>(5.f, pos, 100.f);
+    auto randTravel = std::make_unique<RandomTravel<Beast>>(50.f, pos, 150.f);
     testActivities.push_front(std::move(randTravel));
     return std::make_unique<ActivityManager<Beast>>(std::move(testActivities));
 }

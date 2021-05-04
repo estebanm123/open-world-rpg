@@ -12,7 +12,7 @@ InitializerMetadataCollection constructDirtBeastInitializers() {
             std::make_unique<InitializerMetadata<Beast, sf::Vector2f>>(std::make_unique<CatInitializer>(), 10));
 
     beasts.push_back(
-            std::make_unique<InitializerMetadata<Beast, sf::Vector2f>>(std::make_unique<SnakeInitializer>(), 10));
+            std::make_unique<InitializerMetadata<Beast, sf::Vector2f>>(std::make_unique<SnakeInitializer>(), 1));
     return beasts;
 }
 

@@ -12,7 +12,7 @@ Beast::Beast(std::unique_ptr<Hitbox> hitbox, NpcAi<Beast> ai, std::unique_ptr<Sp
 }
 
 sf::Vector2f Beast::getMoveOffset() {
-    float multiplier = .15;
+    float multiplier = .5;
     return MoveableEntity::getMoveOffset() * multiplier;
 }
 

@@ -31,7 +31,6 @@ inline int mixCoordsHeavy(T a, T b, int seed = RAND_MIXER_1) {
     return h ^ (h >> 16);
 }
 
-
 template<typename T, typename X = T>
 inline int hash2ValuesModSize(T a, T b, X size, int seed = RAND_MIXER_1) {
     if (size == 0) throw std::runtime_error("Trying to hash w/ size 0!");
