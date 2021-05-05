@@ -3,6 +3,7 @@
 #include "PropInitializers.h"
 #include "../Prop.h"
 #include "../../../../../Animation/RepeatingAnim.h"
+#include "../../Collision Physics/BlockingPhysics.h"
 
 const std::string FOLIAGE = "Foliage/";
 const std::string FOLIAGE_SHADOW = FOLIAGE + "Shadow/";

@@ -24,8 +24,9 @@ struct EntityCollisionHandler {
 private:
     template<class CollidableA, class CollidableB>
     static void handleSecondaryHitboxCollisions(CollidableA * a, CollidableB * b, SingleHitbox * bMainHitbox) {
-        auto & aSecondaryHitboxes = a->getSecondaryHitboxes()->getHitboxes();
-        if (!aSecondaryHitboxes) return;
+        auto secondaryMultiHitbox = a->getSecondaryHitboxes();
+        if (!secondaryMultiHitbox) return;
+        auto & aSecondaryHitboxes = secondaryMultiHitbox->getHitboxes();
         for (auto & hitbox : aSecondaryHitboxes) {
             if (CollisionChecker::intersect(hitbox->getBounds(), bMainHitbox->getBounds())) {
                 hitbox->handleCollision(a, b);

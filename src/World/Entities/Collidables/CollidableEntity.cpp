@@ -33,7 +33,7 @@ SingleHitbox *CollidableEntity::getMainHitbox() {
 }
 
 MultiHitbox *CollidableEntity::getSecondaryHitboxes() {
-    return secondaryHitboxes.get();
+    return secondaryHitboxes == nullptr ? nullptr : secondaryHitboxes.get();
 }
 
 sf::Vector2f CollidableEntity::getSize() {
@@ -42,25 +42,25 @@ sf::Vector2f CollidableEntity::getSize() {
 
 void CollidableEntity::renderBy(sf::RenderTarget &renderer) {
     Entity::renderBy(renderer);
-    RENDER_HITBOX(renderer, mainHitbox.get(), secondaryHitboxes.get());
+    RENDER_HITBOX(renderer, mainHitbox.get(), secondaryHitboxes == nullptr? nullptr : secondaryHitboxes.get());
 }
 
 void CollidableEntity::setRotation(float angle) {
     Entity::setRotation(angle);
     mainHitbox->setRotation(angle);
-    secondaryHitboxes->setRotation(angle);
+    if (secondaryHitboxes) secondaryHitboxes->setRotation(angle);
 }
 
 void CollidableEntity::rotate(float angle) {
     Entity::rotate(angle);
     mainHitbox->rotate(angle);
-    secondaryHitboxes->rotate(angle);
+    if (secondaryHitboxes) secondaryHitboxes->rotate(angle);
 }
 
 void CollidableEntity::setPosition(const sf::Vector2f &pos) {
     Entity::setPosition(pos);
     mainHitbox->setPosition(pos);
-    secondaryHitboxes->setPosition(pos);
+    if (secondaryHitboxes) secondaryHitboxes->setPosition(pos);
 }
 
 void CollidableEntity::analyzeCollision(CollidableEntity *otherEntity) {}

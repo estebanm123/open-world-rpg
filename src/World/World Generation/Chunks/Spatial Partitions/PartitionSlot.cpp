@@ -4,7 +4,6 @@
 #include "SpatialPartition.h"
 #include "PartitionSlot.h"
 #include "../Chunk.h"
-#include "../../../Entities/Collidables/Hitbox/SingleHitbox.h"
 #include "../../../Entities/Collidables/Hitbox/EntityCollisionHandler.h"
 
 void PartitionSlot::update(float dt) {
@@ -68,11 +67,11 @@ void PartitionSlot::handleCollisionsFor(MoveableEntity *moveable) const {
         // todo: some way to cache pairs seen, so we avoid double counting
         //         - just use a map stored in slot, sort moveable addr and make a str -> O(n) space
         if (moveable == otherMoveable) continue;
-        EntityCollisionHandler::handleCollision<MoveableEntity>(moveable, otherMoveable);
+        EntityCollisionHandler::handleCollision<MoveableEntity, MoveableEntity>(moveable, otherMoveable);
     }
 
     for (auto prop : entityHolder.mainProps) {
-        EntityCollisionHandler::handleCollision<Prop>(moveable, prop);
+        EntityCollisionHandler::handleCollision<MoveableEntity, Prop>(moveable, prop);
     }
 }
 

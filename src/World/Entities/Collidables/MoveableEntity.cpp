@@ -56,7 +56,7 @@ void MoveableEntity::move(float dt) {
     lastMoveOffset = offset;
     getSprite().move(offset);
     mainHitbox->move(offset);
-    secondaryHitboxes->move(offset);
+    if (secondaryHitboxes) secondaryHitboxes->move(offset);
 }
 
 sf::Vector2f MoveableEntity::getMoveOffset() {

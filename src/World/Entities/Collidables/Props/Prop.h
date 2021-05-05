@@ -40,7 +40,7 @@ public:
 
     bool isDecorProp() const;
 
-    bool isBlocking() const;
+    bool isPropBlocking() const;
 
     void renderBy(sf::RenderTarget & renderTarget) override;
 

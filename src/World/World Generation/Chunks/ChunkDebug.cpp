@@ -13,7 +13,7 @@ using namespace worldConstants;
 void ChunkDebug::renderDebugInfo(sf::RenderTarget &renderTargetRef,
                                  const std::array<std::array<std::unique_ptr<Chunk>, 3>, 3> &chunks,
                                  const ActiveZones &activeZones) {
-    drawChunkOutlines(renderTargetRef, chunks, true, false);
+    drawChunkOutlines(renderTargetRef, chunks, false, true);
     drawActiveZones(renderTargetRef, activeZones);
 }
 

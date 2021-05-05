@@ -52,8 +52,8 @@ void Prop::renderBy(sf::RenderTarget &renderTarget) {
     }
 }
 
-bool Prop::isBlocking() const {
-    return isBlocking();
+bool Prop::isPropBlocking() const {
+    return isPropBlocking();
 }
 
 
