@@ -37,30 +37,14 @@ void MultiHitbox::setPosition(const sf::Vector2f &pos) {
     }
 }
 
-std::pair<SingleHitbox *, SingleHitbox *> MultiHitbox::getIntersectingSingleHitboxes(Hitbox *otherHitbox) {
-    for (auto & hitbox : hitboxes) {
-        auto candidatePair = hitbox->getIntersectingSingleHitboxes(otherHitbox);
-        if (candidatePair.first != nullptr && candidatePair.second != nullptr) return {nullptr, nullptr};
-    }
-    return {nullptr, nullptr};
-}
-
-SingleHitbox *MultiHitbox::getIntersectingSingleHitbox(SingleHitbox *otherHitbox) {
-    for (auto & hitbox : hitboxes) {
-        auto candidateHitbox = hitbox->getIntersectingSingleHitbox(otherHitbox);
-        if (candidateHitbox != nullptr) return candidateHitbox;
-    }
-    return nullptr;
-}
-
 void MultiHitbox::renderBy(sf::RenderTarget &renderer) {
     for (auto & hitbox : hitboxes) {
         hitbox->renderBy(renderer);
     }
 }
 
-MultiHitbox::MultiHitbox(std::vector<std::unique_ptr<SingleHitbox>> hitboxes) : hitboxes(std::move(hitboxes)) {}
+MultiHitbox::MultiHitbox(Hitboxes hitboxes) : hitboxes(std::move(hitboxes)) {}
 
-const sf::Vector2f &MultiHitbox::getSize() {
-    std::__throw_runtime_error("Not implemented");
+MultiHitbox::Hitboxes &MultiHitbox::getHitboxes() {
+    return hitboxes;
 }

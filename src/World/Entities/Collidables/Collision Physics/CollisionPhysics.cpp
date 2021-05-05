@@ -6,3 +6,7 @@ void CollisionPhysics::applyPhysics(CollidableEntity * owner, MoveableEntity *mo
 
 void CollisionPhysics::applyPhysics(CollidableEntity *owner, Prop *prop) {}
 
+bool CollisionPhysics::isBlocking() const {
+    return false;
+}
+

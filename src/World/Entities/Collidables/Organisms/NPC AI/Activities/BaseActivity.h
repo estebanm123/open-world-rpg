@@ -8,7 +8,7 @@ class NpcAi;
 
 
 template<class Organism>
-class BaseActivity : public EntityVisitor {
+class BaseActivity {
 public:
     explicit BaseActivity() : ai(), finished(false), recurring(false) {};
 

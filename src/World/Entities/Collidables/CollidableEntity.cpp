@@ -7,49 +7,60 @@
 #include "Hitbox/SingleHitbox.h"
 
 #ifdef DEBUG
-#define RENDER_HITBOX(renderTargetRef, hitbox) \
+#define RENDER_HITBOX(renderTargetRef, hitbox, secondaryHitboxes) \
 do {                                        \
-    debugRenderHitbox(renderer, hitbox);                                            \
+    debugRenderHitbox(renderer, hitbox, secondaryHitboxes);                                            \
 } while (0)
 #else
 #define RENDER_HITBOX
 #endif
 
-void debugRenderHitbox(sf::RenderTarget &renderer, Hitbox *hitbox) {
+void debugRenderHitbox(sf::RenderTarget &renderer, Hitbox *hitbox, MultiHitbox *secondaryHitboxes) {
     if (hitbox) {
         hitbox->renderBy(renderer);
     }
+    if (secondaryHitboxes) {
+        secondaryHitboxes->renderBy(renderer);
+    }
 }
 
-CollidableEntity::CollidableEntity(std::unique_ptr<Hitbox> hitbox) : hitbox(std::move(hitbox)) {
+CollidableEntity::CollidableEntity(Config config) :
+        mainHitbox(std::move(config.mainHitbox)),
+        secondaryHitboxes(std::move(config.secondaryHitboxes)) {}
+
+SingleHitbox *CollidableEntity::getMainHitbox() {
+    return mainHitbox.get();
+}
+
+MultiHitbox *CollidableEntity::getSecondaryHitboxes() {
+    return secondaryHitboxes.get();
 }
 
 sf::Vector2f CollidableEntity::getSize() {
-    return hitbox->getSize();
+    return mainHitbox->getSize();
 }
 
 void CollidableEntity::renderBy(sf::RenderTarget &renderer) {
     Entity::renderBy(renderer);
-    RENDER_HITBOX(renderer, hitbox.get());
-}
-
-Hitbox *CollidableEntity::getHitbox() const {
-    return hitbox.get();
+    RENDER_HITBOX(renderer, mainHitbox.get(), secondaryHitboxes.get());
 }
 
 void CollidableEntity::setRotation(float angle) {
     Entity::setRotation(angle);
-    hitbox->setRotation(angle);
+    mainHitbox->setRotation(angle);
+    secondaryHitboxes->setRotation(angle);
 }
 
 void CollidableEntity::rotate(float angle) {
     Entity::rotate(angle);
-    hitbox->rotate(angle);
+    mainHitbox->rotate(angle);
+    secondaryHitboxes->rotate(angle);
 }
 
 void CollidableEntity::setPosition(const sf::Vector2f &pos) {
     Entity::setPosition(pos);
-    hitbox->setPosition(pos);
+    mainHitbox->setPosition(pos);
+    secondaryHitboxes->setPosition(pos);
 }
 
-void CollidableEntity::analyzeCollision(CollidableEntity &otherEntity) {}
+void CollidableEntity::analyzeCollision(CollidableEntity *otherEntity) {}

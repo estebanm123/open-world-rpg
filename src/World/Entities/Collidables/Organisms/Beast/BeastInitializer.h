@@ -16,7 +16,7 @@ struct BeastInitializer : public ArgDependentInitializer<Beast, sf::Vector2f> {
 protected:
     virtual std::unique_ptr<BaseActivity<Beast>> generateActivities(Position pos) = 0;
 
-    virtual std::unique_ptr<Hitbox> generateHitbox(Position pos) = 0;
+    virtual std::unique_ptr<SingleHitbox> generateHitbox(Position pos) = 0;
 
     virtual std::unique_ptr<SpriteReg> generateSprite(Position pos, std::unique_ptr<AnimationPlayer> animPlayer) = 0;
 

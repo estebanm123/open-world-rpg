@@ -1,10 +1,10 @@
 #include "./MoveableEntity.h"
 #include "../Sprites/EntitySprite.h"
-#include "Hitbox/Hitbox.h"
+#include "Hitbox/SingleHitbox.h"
 #include "../../../Util/MathExtra.h"
 
-MoveableEntity::MoveableEntity(std::unique_ptr<Hitbox> hitbox)
-        : CollidableEntity(std::move(hitbox)), lastMoveOffset({0, 0}) {}
+MoveableEntity::MoveableEntity(Config hitboxes)
+        : CollidableEntity(std::move(hitboxes)), lastMoveOffset({0, 0}) {}
 
 void MoveableEntity::setLookDirection(const sf::Vector2f &direction) {
     lookDirection = direction;
@@ -25,7 +25,7 @@ void MoveableEntity::revertLastMove(bool x, bool y) {
     if (!y) moveToReset.y = 0;
 
     getSprite().move(-moveToReset);
-    hitbox->move(-moveToReset);
+    mainHitbox->move(-moveToReset);
     lastMoveOffset = {!x ? lastMoveOffset.x : 0, !y ? lastMoveOffset.y : 0};
 }
 
@@ -55,7 +55,8 @@ void MoveableEntity::move(float dt) {
     const auto offset = getMoveOffset() * dt;
     lastMoveOffset = offset;
     getSprite().move(offset);
-    hitbox->move(offset);
+    mainHitbox->move(offset);
+    secondaryHitboxes->move(offset);
 }
 
 sf::Vector2f MoveableEntity::getMoveOffset() {

@@ -4,7 +4,8 @@
 #include <memory>
 #include "Collision Physics/CollisionPhysics.h"
 #include "../Entity.h"
-#include "Hitbox/Hitbox.h"
+#include "Hitbox/SingleHitbox.h"
+#include "Hitbox/MultiHitbox.h"
 
 class MoveableEntity;
 
@@ -12,7 +13,14 @@ class Hitbox;
 
 class CollidableEntity : public Entity {
 public:
-    explicit CollidableEntity(std::unique_ptr<Hitbox> hitbox);
+    struct Config {
+        std::unique_ptr<SingleHitbox> mainHitbox;
+        std::unique_ptr<MultiHitbox> secondaryHitboxes = nullptr;
+    };
+
+    typedef std::vector<std::unique_ptr<SingleHitbox>> Hitboxes;
+
+    explicit CollidableEntity(Config config);
 
     sf::Vector2f getSize() override;
 
@@ -24,12 +32,15 @@ public:
 
     void renderBy(sf::RenderTarget &renderer) override;
 
-    Hitbox * getHitbox() const;
+    SingleHitbox * getMainHitbox();
 
-    virtual void analyzeCollision(CollidableEntity & otherEntity);
+    MultiHitbox * getSecondaryHitboxes();
+
+    virtual void analyzeCollision(CollidableEntity *otherEntity);
 
 protected:
-    std::unique_ptr<Hitbox> hitbox;
+    std::unique_ptr<SingleHitbox> mainHitbox; // Is checked against each hitbox of another collidable
+    std::unique_ptr<MultiHitbox> secondaryHitboxes; // Is checked only against main hitbox of other collidable
 };
 
 

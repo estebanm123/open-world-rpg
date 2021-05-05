@@ -3,6 +3,6 @@
 #include "OrganismEntity.h"
 #include "../Hitbox/Hitbox.h"
 
-OrganismEntity::OrganismEntity(std::unique_ptr<Hitbox> hitbox)
-        : MoveableEntity(std::move(hitbox)) {
+OrganismEntity::OrganismEntity(Config hitboxes)
+        : MoveableEntity(std::move(hitboxes)) {
 }

@@ -1,19 +1,11 @@
 #pragma once
 
 
-class CollidableEntity;
+#include "CollisionPhysics.h"
 
-class MoveableEntity;
-
-class Prop;
-
-class CollisionPhysics {
-public:
+class ViewConePhysics : public CollisionPhysics {
     virtual void applyPhysics(CollidableEntity * owner, MoveableEntity *movingEntity);
     virtual void applyPhysics(CollidableEntity * owner, Prop *prop);
-
-    virtual bool isBlocking() const;
-    virtual ~CollisionPhysics() = default;
 };
 
 

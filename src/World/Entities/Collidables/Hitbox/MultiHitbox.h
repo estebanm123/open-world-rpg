@@ -9,7 +9,9 @@ class SingleHitbox;
 // Proxy for a collection of a Hitboxes
 class MultiHitbox : public Hitbox {
 public:
-    MultiHitbox(std::vector<std::unique_ptr<SingleHitbox>> hitboxes);
+    typedef std::vector<std::unique_ptr<SingleHitbox>> Hitboxes;
+
+    MultiHitbox(Hitboxes hitboxes);
 
     void move(const sf::Vector2f &offset) override;
 
@@ -23,17 +25,12 @@ public:
 
     void setPosition(const sf::Vector2f &pos) override;
 
-    const sf::Vector2f & getSize() override;
-
-    // Performs hitbox.size * otherHitbox.size comparisons
-    std::pair<SingleHitbox *, SingleHitbox *> getIntersectingSingleHitboxes(Hitbox *otherHitbox) override;
-
-    // Performs hitbox.size comparisons
-    SingleHitbox *getIntersectingSingleHitbox(SingleHitbox *otherHitbox) override;
+    Hitboxes & getHitboxes();
 
     void renderBy(sf::RenderTarget &renderer) override;
+
 private:
-    std::vector<std::unique_ptr<SingleHitbox>> hitboxes;
+    Hitboxes hitboxes;
 };
 
 

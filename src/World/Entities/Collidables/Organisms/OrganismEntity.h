@@ -5,7 +5,7 @@
 class OrganismEntity : public MoveableEntity {
 public:
 
-    explicit OrganismEntity(std::unique_ptr<Hitbox> hitbox);
+    explicit OrganismEntity(Config hitboxes);
 
 //    virtual void sleep();
 //    virtual void die();

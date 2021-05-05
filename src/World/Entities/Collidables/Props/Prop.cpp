@@ -16,10 +16,11 @@ void Prop::update(float dt) {
 }
 
 Prop::Prop(PropOptions config)
-        : CollidableEntity(
+        : CollidableEntity(CollidableEntity::Config{
         std::make_unique<SingleHitbox>(sf::FloatRect{config.pos.x, config.pos.y, config.size.x, config.size.y},
-                                       config.rotationAngle, std::move(config.collisionPhysics))),
-          isDecor(false) {
+                                       config.rotationAngle, std::move(config.collisionPhysics))}),
+          isDecor(false),
+          isBlocking(config.isBlocking) {
     // todo: decouple
     sprite = config.hasShadow ? std::make_unique<ShadowedSpriteReg>(config.spriteSheet, config.pos, config.size / 2.f,
                                                                     std::move(config.animPlayer), config.defaultFrame)
@@ -49,6 +50,10 @@ void Prop::renderBy(sf::RenderTarget &renderTarget) {
     } else {
         CollidableEntity::renderBy(renderTarget);
     }
+}
+
+bool Prop::isBlocking() const {
+    return isBlocking();
 }
 
 

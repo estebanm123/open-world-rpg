@@ -8,7 +8,7 @@ struct CatInitializer : public BeastInitializer {
 protected:
     std::unique_ptr<BaseActivity<Beast>> generateActivities(Position pos) override;
 
-    std::unique_ptr<Hitbox> generateHitbox(Position pos) override;
+    std::unique_ptr<SingleHitbox> generateHitbox(Position pos) override;
 
     std::unique_ptr<SpriteReg> generateSprite(Position pos, std::unique_ptr<AnimationPlayer> animPlayer) override;
 
@@ -19,7 +19,7 @@ struct SnakeInitializer : public BeastInitializer {
 protected:
     std::unique_ptr<BaseActivity<Beast>> generateActivities(Position pos) override;
 
-    std::unique_ptr<Hitbox> generateHitbox(Position pos) override;
+    std::unique_ptr<SingleHitbox> generateHitbox(Position pos) override;
 
     std::unique_ptr<SpriteReg> generateSprite(Position pos, std::unique_ptr<AnimationPlayer> animPlayer) override;
 

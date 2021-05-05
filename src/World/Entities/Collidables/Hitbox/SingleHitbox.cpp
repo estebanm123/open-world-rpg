@@ -45,21 +45,6 @@ SingleHitbox::SingleHitbox(const sf::ConvexShape &bounds, const sf::Vector2f &si
                                                                         physics(std::move(physics)) {
 }
 
-std::pair<SingleHitbox *, SingleHitbox *> SingleHitbox::getIntersectingSingleHitboxes(Hitbox *otherHitbox) {
-    auto otherIntersectingHitbox = otherHitbox->getIntersectingSingleHitbox(this);
-    if (otherIntersectingHitbox == nullptr) {
-        // no collision
-        return {nullptr, nullptr};
-    }
-
-    return {this, otherIntersectingHitbox};
-}
-
-SingleHitbox *SingleHitbox::getIntersectingSingleHitbox(SingleHitbox *otherHitbox) {
-    // todo: add debug statements here
-    return CollisionChecker::intersect(otherHitbox->bounds, bounds) ? this : nullptr;
-}
-
 void SingleHitbox::renderBy(sf::RenderTarget &renderer) {
     // (debug)
     bounds.setOutlineColor(sf::Color::Cyan);
@@ -70,5 +55,9 @@ void SingleHitbox::renderBy(sf::RenderTarget &renderer) {
 
 const sf::Vector2f &SingleHitbox::getSize() {
     return size;
+}
+
+const sf::ConvexShape &SingleHitbox::getBounds() const {
+    return bounds;
 }
 

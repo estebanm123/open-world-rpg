@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../Entity.h"
 #include "CollidableEntity.h"
 #include "../../../Animation/Actions.h"
 
@@ -11,7 +10,7 @@ struct MoveableActions : public Actions {
 
 class MoveableEntity : public CollidableEntity {
 public:
-    explicit MoveableEntity(std::unique_ptr<Hitbox> hitbox);
+    explicit MoveableEntity(Config hitboxes);
 
     // optional delta is intended to be from time since last frame, for purposes of smooth movement
     virtual void move(float dt);

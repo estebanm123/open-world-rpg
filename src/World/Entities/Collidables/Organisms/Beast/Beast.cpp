@@ -6,8 +6,8 @@ void Beast::accept(EntityVisitor *visitor) {
     visitor->visit(this);
 }
 
-Beast::Beast(std::unique_ptr<Hitbox> hitbox, NpcAi<Beast> ai, std::unique_ptr<SpriteReg> sprite)
-        : OrganismEntity(std::move(hitbox)), ai(std::move(ai)), sprite(std::move(sprite)) {
+Beast::Beast(Config hitboxes, NpcAi<Beast> ai, std::unique_ptr<SpriteReg> sprite)
+        : OrganismEntity(std::move(hitboxes)), ai(std::move(ai)), sprite(std::move(sprite)) {
     this->ai.init(this);
 }
 

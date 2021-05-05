@@ -23,14 +23,4 @@ public:
     virtual void handleCollision(CollidableEntity *receiver, MoveableEntity *moving) = 0;
 
     virtual void handleCollision(CollidableEntity *receiver, Prop *prop) = 0;
-
-    // Returns a SingleHitbox from this and otherHitbox that intersect (non-hitbox client should only call once)
-    // first corresponds to this hitbox, and second is otherHitbox's singleHitbox
-    virtual std::pair<SingleHitbox *, SingleHitbox *> getIntersectingSingleHitboxes(Hitbox *otherHitbox) = 0;
-
-    virtual SingleHitbox *getIntersectingSingleHitbox(SingleHitbox *otherHitbox) = 0;
-
-    virtual const sf::Vector2f &getSize() = 0;
 };
-
-

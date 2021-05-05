@@ -31,3 +31,7 @@ void BlockingPhysics::applyPhysics(CollidableEntity * receivingEntity, MoveableE
         // what about the case where x + y are equal (ie. we're moving in a pure diagonal way)
     }
 }
+
+bool BlockingPhysics::isBlocking() const {
+    return true;
+}
