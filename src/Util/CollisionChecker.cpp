@@ -1,10 +1,7 @@
 
 
 #include "CollisionChecker.h"
-
 #include <SFML/Graphics/RectangleShape.hpp>
-
-
 #include "MathExtra.h"
 #include "Shapes/ConvexShapeExtra.h"
 
@@ -32,6 +29,27 @@ bool CollisionChecker::intersect(const sf::RectangleShape &rectShape1, const sf:
     auto rect2 = rectShape2.getGlobalBounds();
     return rect1.intersects(rect2);
 
+}
+
+bool CollisionChecker::intersect(const sf::ConvexShape &shapeA, const GlobalEdge &edgeB) {
+    auto edges = ConvexShapeExtra::getGlobalEdges(shapeA);
+    for (auto edgeA : edges) {
+        // https://stackoverflow.com/questions/9043805/test-if-two-lines-intersect-javascript-function
+        auto a = edgeA.vertexA.x, b = edgeA.vertexA.y, c = edgeA.vertexB.x, d = edgeA.vertexB.y;
+        auto p = edgeB.vertexA.x, q = edgeB.vertexA.y, r = edgeB.vertexB.x, s = edgeB.vertexB.y;
+
+        auto det = (c - a) * (s - q) - (r - p) * (d - b);
+        if (det == 0) {
+            return false;
+        } else {
+            auto lambda = ((s - q) * (r - a) + (p - r) * (s - b)) / det;
+            auto gamma = ((b - d) * (r - a) + (c - a) * (s - b)) / det;
+            if ((0 < lambda && lambda < 1) && (0 < gamma && gamma < 1)) {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 sf::FloatRect CollisionChecker::convertToFloatRect(const sf::RectangleShape &rect) {

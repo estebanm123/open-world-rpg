@@ -6,9 +6,10 @@
 #include "Activities/Activity Managers/ActivityManager.h"
 #include "Path/NpcPath.h"
 #include "AiDebug.h"
+#include "Entity Reactors/PropReactor.h"
 
 template<class Organism>
-class NpcAi {
+class NpcAi : public EntityVisitor {
 public:
     explicit NpcAi(std::unique_ptr<BaseActivity<Organism>> activities) : activities(std::move(activities)) {}
 
@@ -23,8 +24,12 @@ public:
     }
 
     void analyzeCollision(CollidableEntity *other) {
-        // todo forward
+        other->accept(this);
     };
+
+    void visit(Prop *prop) override {
+        propReactor.analyzeCollision(entity, this, prop);
+    }
 
     Organism *getEntity() {
         return entity;
@@ -51,6 +56,9 @@ private:
     Organism *entity;
     std::unique_ptr<BaseActivity<Organism>> activities;
     NpcPath path;
+
+    // todo: If logic gets too complex, move reactors to new EntityVisitor subtype eg. CollisionAnalyzer
+    PropReactor<Organism> propReactor;
 };
 
 

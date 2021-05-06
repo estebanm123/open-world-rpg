@@ -3,8 +3,7 @@
 #include "ViewCone.h"
 #include "../Collision Physics/ViewConePhysics.h"
 
-sf::ConvexShape initializeTrapezoid(float botWidth, float topWidth, float height, sf::Vector2f globalConePos,
-                                    sf::Vector2f globalNpcCenter) {
+sf::ConvexShape initializeTrapezoid(float botWidth, float topWidth, float height, sf::Vector2f globalConePos) {
     sf::ConvexShape bounds{};
     bounds.setPointCount(4);
 
@@ -21,9 +20,8 @@ sf::ConvexShape initializeTrapezoid(float botWidth, float topWidth, float height
     return bounds;
 }
 
-ViewCone::ViewCone(sf::Vector2f globalConePos, sf::Vector2f globalNpcCenter, float botWidth, float topWidth,
-                   float height)
-        : SingleHitbox(initializeTrapezoid(botWidth, topWidth, height, globalConePos, globalNpcCenter), {0, 0},
+ViewCone::ViewCone(sf::Vector2f globalConePos, float botWidth, float topWidth, float height)
+        : SingleHitbox(initializeTrapezoid(botWidth, topWidth, height, globalConePos), {0, 0},
                        std::make_unique<ViewConePhysics>()) {}
 
 

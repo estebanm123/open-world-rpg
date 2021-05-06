@@ -13,7 +13,7 @@ void AiDebug::printPath(NpcPath path, const std::string &message) {
     while (!path.isEmpty()) {
         auto targetPoint = path.peekNextPoint();
         printPoint(targetPoint);
-        path.popNextPoint();
+        path.dequeueNextPoint();
     }
     std::cout << std::endl;
 }

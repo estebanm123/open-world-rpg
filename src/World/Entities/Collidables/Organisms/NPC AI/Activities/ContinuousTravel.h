@@ -103,23 +103,10 @@ protected:
 private:
 
     void moveTowardsNewPoint(NpcPath &npcPath, Organism *npcEntity, sf::Vector2f npcPos) {
-        if (!npcPath.isEmpty()) {
-            npcPath.popNextPoint();
-        }
-
         auto generatedPoint = generateNextPoint();
-        npcPath.enqueue(generatedPoint);
-
-        auto newNpcDirection = computeMoveDirection(npcPath, npcPos);
-        npcEntity->setMoveDirection(newNpcDirection);
-        npcEntity->setRotation(-toDegrees(atan2(newNpcDirection.x, newNpcDirection.y)));
+        npcPath.pushPointAndUpdateEntityDirection(npcEntity, npcPos, generatedPoint);
     }
 
-
-    sf::Vector2f computeMoveDirection(NpcPath &path, sf::Vector2f entityPos) {
-        auto nextPoint = path.peekNextPoint();
-        return nextPoint - entityPos;
-    }
 
     bool isNextPointReached(NpcPath &path, sf::Vector2f entityPos) const {
         if (path.isEmpty()) return true;

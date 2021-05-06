@@ -4,6 +4,8 @@
 #include <SFML/System.hpp>
 #include <vector>
 
+class MoveableEntity;
+
 // Data structure storing an npc's last visited point and points intended to visit in the future
 class NpcPath {
 public:
@@ -15,12 +17,14 @@ public:
 
     NpcPath(const std::vector<Point> & points = {});
 
+    void pushPointAndUpdateEntityDirection(MoveableEntity * entity, sf::Vector2f npcPos, Point newPoint);
+
     void enqueue(Point point);
 
     Point peekNextPoint() const;
 
     // makes popNextPoint point the last visited point
-    void popNextPoint();
+    void dequeueNextPoint();
 
     bool isEmpty() const;
 

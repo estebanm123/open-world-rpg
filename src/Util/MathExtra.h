@@ -6,7 +6,6 @@
 constexpr float PI = 3.14159265f;
 constexpr float MIN_PI = 3.14f;
 
-
 template<typename T>
 T toRadians(T degrees) {
     return degrees * PI / 180;
@@ -24,6 +23,13 @@ T clamp(T val, T min, T max) {
     return min;
 }
 
+
+template<typename T>
+T dist(T x1, T x2, T y1, T y2) {
+    T distanceX = x1 - x2;
+    T distanceY = y1 - y2;
+    return sqrt(distanceX * distanceX) + (distanceY * distanceY);
+}
 template<typename T>
 T distSquared(T x1, T x2, T y1, T y2) {
     T distanceX = x1 - x2;
@@ -56,7 +62,3 @@ float angleBetweenTwoVectorsRad(sf::Vector2<T> v1, sf::Vector2<T> v2) {
 template<typename T>
 static int fastFloor(T f) { return f >= 0 ? (int) f : (int) f - 1; }
 
-template<typename T>
-bool isDiagonal(const sf::Vector2<T> &v) {
-    return abs(v.x) == abs(v.y);
-}
