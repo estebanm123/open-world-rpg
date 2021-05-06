@@ -26,6 +26,7 @@ void MoveableEntity::revertLastMove(bool x, bool y) {
 
     getSprite().move(-moveToReset);
     mainHitbox->move(-moveToReset);
+    if (secondaryHitboxes) secondaryHitboxes->move(-moveToReset);
     lastMoveOffset = {!x ? lastMoveOffset.x : 0, !y ? lastMoveOffset.y : 0};
 }
 

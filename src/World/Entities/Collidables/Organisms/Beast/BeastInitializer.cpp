@@ -11,5 +11,5 @@ std::unique_ptr<Beast> BeastInitializer::initialize(BeastInitializer::Position p
     auto animPlayer = generateAnimPlayer(pos);
     auto sprite = generateSprite(pos, std::move(animPlayer));
 
-    return std::make_unique<Beast>(CollidableEntity::Config{std::move(hitbox)}, std::move(ai), std::move(sprite));
+    return std::make_unique<Beast>(std::move(hitbox), std::move(ai), std::move(sprite));
 }

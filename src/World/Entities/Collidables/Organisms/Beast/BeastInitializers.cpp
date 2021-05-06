@@ -5,6 +5,7 @@
 #include "../../Collision Physics/BlockingPhysics.h"
 #include "../../Hitbox/SingleHitbox.h"
 #include "../NPC AI/Activities/RandomTravel.h"
+#include "../../Hitbox/ViewCone.h"
 
 const std::string NPC_FOLDER = "Npc/Shadow/";
 
@@ -20,9 +21,13 @@ std::unique_ptr<BaseActivity<Beast>> CatInitializer::generateActivities(BeastIni
     return std::make_unique<ActivityManager<Beast>>(std::move(testActivities));
 }
 
-std::unique_ptr<SingleHitbox> CatInitializer::generateHitbox(BeastInitializer::Position pos) {
-    return std::make_unique<SingleHitbox>(
-            sf::FloatRect{pos.x, pos.y, CAT_HITBOX_WIDTH, CAT_HITBOX_HEIGHT}, 0, std::make_unique<BlockingPhysics>());
+CollidableEntity::Config CatInitializer::generateHitbox(BeastInitializer::Position pos) {
+
+    auto secondaryHitboxes = MultiHitbox::Hitboxes {};
+    secondaryHitboxes.push_back(std::make_unique<ViewCone>(pos, pos, 100, CAT_HITBOX_WIDTH, 100));
+    return CollidableEntity::Config {std::make_unique<SingleHitbox>(sf::FloatRect{pos.x, pos.y, CAT_HITBOX_WIDTH, CAT_HITBOX_HEIGHT}, 0, std::make_unique<BlockingPhysics>()),
+                                     std::make_unique<MultiHitbox>(std::move(secondaryHitboxes))};
+
 }
 
 std::unique_ptr<SpriteReg>
@@ -56,10 +61,10 @@ std::unique_ptr<BaseActivity<Beast>> SnakeInitializer::generateActivities(BeastI
     return std::make_unique<ActivityManager<Beast>>(std::move(testActivities));
 }
 
-std::unique_ptr<SingleHitbox> SnakeInitializer::generateHitbox(BeastInitializer::Position pos) {
-    return std::make_unique<SingleHitbox>(
+CollidableEntity::Config SnakeInitializer::generateHitbox(BeastInitializer::Position pos) {
+    return CollidableEntity::Config{ std::make_unique<SingleHitbox>(
             sf::FloatRect{pos.x, pos.y, SNAKE_HITBOX_WIDTH, SNAKE_HITBOX_HEIGHT}, 0,
-            std::make_unique<BlockingPhysics>());
+            std::make_unique<BlockingPhysics>())};
 }
 
 std::unique_ptr<SpriteReg>
