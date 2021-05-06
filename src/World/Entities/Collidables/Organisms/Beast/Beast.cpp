@@ -1,14 +1,15 @@
 
 
 #include "Beast.h"
+#include "../NPC AI/NpcAi.h"
 
 void Beast::accept(EntityVisitor *visitor) {
     visitor->visit(this);
 }
 
 Beast::Beast(Config hitboxes, NpcAi<Beast> ai, std::unique_ptr<SpriteReg> sprite)
-        : OrganismEntity(std::move(hitboxes)), ai(std::move(ai)), sprite(std::move(sprite)) {
-    this->ai.init(this);
+        : OrganismEntity(std::move(hitboxes)), ai(std::make_unique<NpcAi<Beast>>(std::move(ai))), sprite(std::move(sprite)) {
+    this->ai->init(this);
 }
 
 sf::Vector2f Beast::getMoveOffset() {
@@ -22,6 +23,6 @@ EntitySprite &Beast::getSprite() {
 
 void Beast::update(float dt) {
     MoveableEntity::update(dt);
-    ai.update(dt);
+    ai->update(dt);
 }
 

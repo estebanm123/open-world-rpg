@@ -1,11 +1,11 @@
 
 #include "BeastInitializers.h"
 #include "../../../../../Animation/RepeatingAnim.h"
-#include "../../../Sprites/ShadowedSpriteReg.h"
 #include "../../Collision Physics/BlockingPhysics.h"
-#include "../../Hitbox/SingleHitbox.h"
 #include "../NPC AI/Activities/RandomTravel.h"
+#include "../NPC AI/Activities/Activity Managers/ActivityManager.h"
 #include "../../Hitbox/ViewCone.h"
+#include "../NPC AI/NpcAi.h"
 
 const std::string NPC_FOLDER = "Npc/Shadow/";
 

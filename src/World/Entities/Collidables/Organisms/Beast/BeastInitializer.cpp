@@ -1,6 +1,7 @@
 
 
 #include "BeastInitializer.h"
+#include "../NPC AI/NpcAi.h"
 
 std::unique_ptr<Beast> BeastInitializer::initialize(BeastInitializer::Position pos) {
     auto activities = generateActivities(pos);

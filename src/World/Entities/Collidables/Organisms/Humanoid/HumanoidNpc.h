@@ -9,8 +9,6 @@ public:
     HumanoidNpc(const sf::Vector2f &globalPosition, const std::string &spriteSheetBody,
                 const std::string &spriteSheetHead, NpcAi<HumanoidNpc> ai);
 
-    NpcAi<HumanoidNpc> &getAi();
-
     void update(float dt) override;
 
 private:
@@ -20,8 +18,7 @@ protected:
     sf::Vector2f getMoveOffset() override;
 
 private:
-
-    NpcAi<HumanoidNpc> ai;
+    std::unique_ptr<NpcAi<HumanoidNpc>> ai;
 };
 
 

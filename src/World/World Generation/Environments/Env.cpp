@@ -1,4 +1,5 @@
 
+#include "../../Entities/Collidables/Organisms/NPC AI/NpcAi.h"
 #include "Temporary Environments/EnvWrapper.h"
 #include "Env.h"
 #include "EnvNeighborInfo.h"

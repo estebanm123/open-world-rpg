@@ -1,9 +1,11 @@
 #pragma once
 
 #include "../OrganismEntity.h"
-#include "../NPC AI/NpcAi.h"
 #include "../../../Sprites/ShadowedSpriteReg.h"
 #include "../../../Sprites/SpriteReg.h"
+
+template<class T>
+class NpcAi;
 
 class Beast : public OrganismEntity {
 public:
@@ -19,7 +21,7 @@ protected:
     sf::Vector2f getMoveOffset() override;
 
 private:
-    NpcAi<Beast> ai;
+    std::unique_ptr<NpcAi<Beast>> ai;
     std::unique_ptr<SpriteReg> sprite;
 };
 

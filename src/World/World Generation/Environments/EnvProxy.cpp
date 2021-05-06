@@ -1,6 +1,7 @@
 
 
 #include "../../Entities/Collidables/Props/Prop.h"
+#include "../../Entities/Collidables/Organisms/NPC AI/NpcAi.h"
 #include "EnvProxy.h"
 
 EnvProxy::EnvProxy(const Env *env) : env(env) {

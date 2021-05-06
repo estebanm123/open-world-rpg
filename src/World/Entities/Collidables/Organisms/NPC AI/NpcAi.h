@@ -7,6 +7,8 @@
 #include "Path/NpcPath.h"
 #include "AiDebug.h"
 #include "Entity Reactors/PropReactor.h"
+#include "Entity Reactors/BeastReactor.h"
+#include "Entity Reactors/HumanoidReactor.h"
 
 template<class Organism>
 class NpcAi : public EntityVisitor {
@@ -29,6 +31,14 @@ public:
 
     void visit(Prop *prop) override {
         propReactor.analyzeCollision(entity, this, prop);
+    }
+
+    void visit(Beast *beast) override {
+        beastReactor.analyzeCollision(entity, this, beast);
+    }
+
+    void visit(Humanoid *humanoid) override {
+        humanoidReactor.analyzeCollision(entity, this, humanoid);
     }
 
     Organism *getEntity() {
@@ -59,6 +69,8 @@ private:
 
     // todo: If logic gets too complex, move reactors to new EntityVisitor subtype eg. CollisionAnalyzer
     PropReactor<Organism> propReactor;
+    BeastReactor<Organism> beastReactor;
+    HumanoidReactor<Organism> humanoidReactor;
 };
 
 
