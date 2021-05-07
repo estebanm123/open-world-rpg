@@ -71,3 +71,7 @@ void MoveableEntity::setMoveDirection(const sf::Vector2f &direction) {
     if (direction.x != 0 && direction.y != 0) normalize(moveDirection);
 }
 
+sf::Vector2f MoveableEntity::getMoveDirection() const {
+   return moveDirection;
+}
+

@@ -90,7 +90,13 @@ public:
                 if (idler.shouldEntityIdle()) {
                     idler.startIdling(npcEntity);
                 } else {
-                    moveTowardsNewPoint(npcPath, npcEntity, npcPos);
+                    npcPath.dequeueNextPoint();
+                    auto nextPoint = npcPath.getRealNextPoint();
+                    if (nextPoint == nullptr) {
+                        moveTowardsNewPoint(npcPath, npcEntity, npcPos);
+                    } else {
+                        npcPath.updateEntityDirectionWithNextPoint(npcEntity, npcPos);
+                    }
                 }
             }
         }
@@ -107,10 +113,14 @@ private:
         npcPath.pushPointAndUpdateEntityDirection(npcEntity, npcPos, generatedPoint);
     }
 
-
     bool isNextPointReached(NpcPath &path, sf::Vector2f entityPos) const {
         if (path.isEmpty()) return true;
-        return CollisionChecker::intersect(SimpleCircle{targetDistFromDestination, path.peekNextPoint()}, entityPos);
+        auto targetPoint = path.peekNextPoint();
+        auto targetPointRadius = targetDistFromDestination;
+        if (targetPoint.isTemp) { // require higher precision if point is temp
+          targetPointRadius = 5;
+        }
+        return CollisionChecker::intersect(SimpleCircle{targetPointRadius, path.peekNextPoint().pos}, entityPos);
     }
 
     float targetDistFromDestination;

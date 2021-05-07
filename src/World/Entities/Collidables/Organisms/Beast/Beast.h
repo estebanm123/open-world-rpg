@@ -15,6 +15,8 @@ public:
 
     void update(float dt) override;
 
+    void analyzeCollision(CollidableEntity *otherEntity) override;
+
 protected:
     EntitySprite &getSprite() override;
 

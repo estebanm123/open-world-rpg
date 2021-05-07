@@ -11,6 +11,8 @@ public:
 
     void update(float dt) override;
 
+    void analyzeCollision(CollidableEntity *otherEntity) override;
+
 private:
     void accept(EntityVisitor *visitor) override;
 

@@ -16,7 +16,7 @@ constexpr float CAT_HITBOX_HEIGHT = 29;
 
 std::unique_ptr<BaseActivity<Beast>> CatInitializer::generateActivities(BeastInitializer::Position pos) {
     auto testActivities = ActivityManager<Beast>::Activities{};
-    auto randTravel = std::make_unique<RandomTravel<Beast>>(50.f, pos, 150.f);
+    auto randTravel = std::make_unique<RandomTravel<Beast>>(50.f, pos, 200.f);
     testActivities.push_front(std::move(randTravel));
     return std::make_unique<ActivityManager<Beast>>(std::move(testActivities));
 }
@@ -24,7 +24,7 @@ std::unique_ptr<BaseActivity<Beast>> CatInitializer::generateActivities(BeastIni
 CollidableEntity::Config CatInitializer::generateHitbox(BeastInitializer::Position pos) {
 
     auto secondaryHitboxes = MultiHitbox::Hitboxes {};
-    secondaryHitboxes.push_back(std::make_unique<ViewCone>(pos, 100, CAT_HITBOX_WIDTH, 100));
+    secondaryHitboxes.push_back(std::make_unique<ViewCone>(pos, 250, CAT_HITBOX_WIDTH, 350));
     return CollidableEntity::Config {std::make_unique<SingleHitbox>(sf::FloatRect{pos.x, pos.y, CAT_HITBOX_WIDTH, CAT_HITBOX_HEIGHT}, 0, std::make_unique<BlockingPhysics>()),
                                      std::make_unique<MultiHitbox>(std::move(secondaryHitboxes))};
 

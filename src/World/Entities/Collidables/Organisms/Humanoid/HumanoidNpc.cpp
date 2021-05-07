@@ -22,5 +22,9 @@ void HumanoidNpc::update(float dt) {
 
 sf::Vector2f HumanoidNpc::getMoveOffset() {
     auto offset = MoveableEntity::getMoveOffset();
-    return offset * static_cast<float>(.1);
+    return offset * static_cast<float>(.3);
+}
+
+void HumanoidNpc::analyzeCollision(CollidableEntity *otherEntity) {
+    ai->analyzeCollision(otherEntity);
 }

@@ -10,6 +10,7 @@
 #include "ChunkDecorPropGenerator.h"
 #include "../../../Entities/Collidables/Organisms/Humanoid/HumanoidNpc.h"
 #include "../../../Entities/Collidables/Organisms/NPC AI/Activities/RandomTravel.h"
+#include "../../../Entities/Collidables/Organisms/Beast/BeastInitializers.h"
 
 ChunkGenerator::ChunkGenerator(int seed) : rand(seed), setUp(true), generating(false) {
 }
@@ -72,17 +73,14 @@ void ChunkGenerator::generateChunk(const Chunk::RequestData &data) {
     auto center = Chunk::getCenterFromReqData(data);
     TileMap tileMap{center};
     std::unique_ptr<SpatialPartition> entitySpatialPartition = std::make_unique<SpatialPartition>(center);
-    // ~~~~ NPC PLACEHOLDER ~~~~
-//    auto testActivities = ActivityManager<HumanoidNpc>::Activities{};
-//    auto randTravel = std::make_unique<RandomTravel<HumanoidNpc>>(5.f, center, 100.f);
-//    testActivities.push_front(std::move(randTravel));
-//    auto testAi = NpcAi<HumanoidNpc>(std::make_unique<ActivityManager<HumanoidNpc>>(std::move(testActivities)));
-//    auto testNpc = std::make_shared<HumanoidNpc>(center + sf::Vector2f{30.f, 50.f}, "Player/Shadow/body32",
-//                                                 "Player/head32", std::move(testAi));
-//    entitySpatialPartition->addNewEntity(testNpc);
 
-    auto chunk =
-            std::make_unique<Chunk>(data, std::move(tileMap), center, std::move(entitySpatialPartition));
+// ~~~~ 1 NPC PLACEHOLDER ~~~~
+//    if (center.x == 0 && center.y == 0) {
+//        CatInitializer x;
+//        entitySpatialPartition->addNewEntity(x.initialize(center));
+//    }
+
+    auto chunk = std::make_unique<Chunk>(data, std::move(tileMap), center, std::move(entitySpatialPartition));
     auto chunkPtr = chunk.get();
 
     mainPropGenerator.generateEntities(chunkPtr);

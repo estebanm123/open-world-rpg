@@ -12,6 +12,10 @@ Beast::Beast(Config hitboxes, NpcAi<Beast> ai, std::unique_ptr<SpriteReg> sprite
     this->ai->init(this);
 }
 
+void Beast::analyzeCollision(CollidableEntity *otherEntity) {
+    ai->analyzeCollision(otherEntity);
+}
+
 sf::Vector2f Beast::getMoveOffset() {
     float multiplier = .5;
     return MoveableEntity::getMoveOffset() * multiplier;

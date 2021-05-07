@@ -28,7 +28,7 @@ template<typename T>
 T dist(T x1, T x2, T y1, T y2) {
     T distanceX = x1 - x2;
     T distanceY = y1 - y2;
-    return sqrt(distanceX * distanceX) + (distanceY * distanceY);
+    return sqrt((distanceX * distanceX) + (distanceY * distanceY));
 }
 template<typename T>
 T distSquared(T x1, T x2, T y1, T y2) {

@@ -26,6 +26,8 @@ public:
 
     void setMoveDirection(const sf::Vector2f & direction);
 
+    sf::Vector2f getMoveDirection() const;
+
     const sf::Vector2f &getLookDirection() const;
 
     // x indicates revert movement in x dir, and y indicates revert movement in y dir

@@ -17,7 +17,6 @@ public:
 
     void init(Organism *organism) {
         entity = organism;
-        path.enqueue(entity->getPosition());
         this->activities->initialize(this);
     }
 
