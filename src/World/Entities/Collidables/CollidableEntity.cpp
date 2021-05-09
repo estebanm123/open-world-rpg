@@ -5,17 +5,19 @@
 #include "../../../Util/CollisionChecker.h"
 #include "MoveableEntity.h"
 #include "Hitbox/SingleHitbox.h"
+#include "../../../Util/Debug/VectorDebug.h"
 
 #ifdef DEBUG
-#define RENDER_HITBOX(renderTargetRef, hitbox, secondaryHitboxes) \
+#define RENDER_HITBOX(renderTargetRef, hitbox, secondaryHitboxes, entity) \
 do {                                        \
-    debugRenderHitbox(renderer, hitbox, secondaryHitboxes);                                            \
+    debugRenderHitbox(renderer, hitbox, secondaryHitboxes, entity);                                            \
 } while (0)
 #else
 #define RENDER_HITBOX
 #endif
 
-void debugRenderHitbox(sf::RenderTarget &renderer, Hitbox *hitbox, MultiHitbox *secondaryHitboxes) {
+void debugRenderHitbox(sf::RenderTarget &renderer, Hitbox *hitbox, MultiHitbox *secondaryHitboxes,
+                       CollidableEntity *entity) {
     if (hitbox) {
         hitbox->renderBy(renderer);
     }
@@ -42,7 +44,7 @@ sf::Vector2f CollidableEntity::getSize() {
 
 void CollidableEntity::renderBy(sf::RenderTarget &renderer) {
     Entity::renderBy(renderer);
-    RENDER_HITBOX(renderer, mainHitbox.get(), secondaryHitboxes == nullptr? nullptr : secondaryHitboxes.get());
+    RENDER_HITBOX(renderer, mainHitbox.get(), secondaryHitboxes == nullptr ? nullptr : secondaryHitboxes.get(), this);
 }
 
 void CollidableEntity::setRotation(float angle) {

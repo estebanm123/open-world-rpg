@@ -75,10 +75,10 @@ void ChunkGenerator::generateChunk(const Chunk::RequestData &data) {
     std::unique_ptr<SpatialPartition> entitySpatialPartition = std::make_unique<SpatialPartition>(center);
 
 // ~~~~ 1 NPC PLACEHOLDER ~~~~
-//    if (center.x == 0 && center.y == 0) {
-//        CatInitializer x;
-//        entitySpatialPartition->addNewEntity(x.initialize(center));
-//    }
+    if (center.x == 0 && center.y == 0) {
+        CatInitializer x;
+        entitySpatialPartition->addNewEntity(x.initialize(center));
+    }
 
     auto chunk = std::make_unique<Chunk>(data, std::move(tileMap), center, std::move(entitySpatialPartition));
     auto chunkPtr = chunk.get();

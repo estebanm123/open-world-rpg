@@ -61,4 +61,3 @@ float angleBetweenTwoVectorsRad(sf::Vector2<T> v1, sf::Vector2<T> v2) {
 
 template<typename T>
 static int fastFloor(T f) { return f >= 0 ? (int) f : (int) f - 1; }
-

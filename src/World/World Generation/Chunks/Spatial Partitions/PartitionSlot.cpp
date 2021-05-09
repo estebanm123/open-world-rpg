@@ -1,6 +1,7 @@
 
 
 #include <iostream>
+#include <sstream>
 #include "SpatialPartition.h"
 #include "PartitionSlot.h"
 #include "../Chunk.h"
@@ -31,6 +32,8 @@ void PartitionSlot::renderDecorEntities(sf::RenderTarget &renderer) {
 }
 
 void PartitionSlot::handleCollisions(SpatialPartition *slots) {
+    moveablePairsSeenForCurUpdate.clear();
+
     auto &moveables = entityHolder.moveableEntities;
     for (auto it = moveables.begin(); it != moveables.end();) {
         auto moveable = *it;
@@ -60,13 +63,29 @@ void PartitionSlot::removeEntity(const std::shared_ptr<Entity> &entity) {
     entityHolder.removeEntity(entity);
 }
 
-void PartitionSlot::handleCollisionsFor(MoveableEntity *moveable) const {
+std::string moveableAddressesToStr(MoveableEntity * a, MoveableEntity * b) {
+    std::ostringstream stream;
+    if (a > b) { // make sure they're always converted to string in the same order, so you always get the same resulting hash
+        stream << a << b;
+    } else {
+        stream << b << a;
+    }
+    return stream.str();
+}
+
+bool PartitionSlot::shouldSkipMoveablePair(MoveableEntity * a, MoveableEntity * b) {
+    if (a == b) return true;
+    auto pairId = moveableAddressesToStr(a, b);
+    return moveablePairsSeenForCurUpdate.find(pairId) != moveablePairsSeenForCurUpdate.end();
+}
+
+void PartitionSlot::handleCollisionsFor(MoveableEntity *moveable) {
     if (!moveable->hasMoved()) return;
     auto &moveableEntities = entityHolder.moveableEntities;
     for (auto otherMoveable : moveableEntities) {
-        // todo: some way to cache pairs seen, so we avoid double counting
-        //         - just use a map stored in slot, sort moveable addr and make a str -> O(n) space
-        if (moveable == otherMoveable) continue;
+        if (shouldSkipMoveablePair(moveable, otherMoveable)) continue;
+        moveablePairsSeenForCurUpdate.insert(moveableAddressesToStr(moveable, otherMoveable));
+
         EntityCollisionHandler::handleCollision<MoveableEntity, MoveableEntity>(moveable, otherMoveable);
     }
 

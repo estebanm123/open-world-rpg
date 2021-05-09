@@ -2,6 +2,7 @@
 #include "../Sprites/EntitySprite.h"
 #include "Hitbox/SingleHitbox.h"
 #include "../../../Util/MathExtra.h"
+#include "../../../Util/Debug/VectorDebug.h"
 
 MoveableEntity::MoveableEntity(Config hitboxes)
         : CollidableEntity(std::move(hitboxes)), lastMoveOffset({0, 0}) {}
@@ -50,6 +51,23 @@ void MoveableEntity::renderBy(sf::RenderTarget &renderer) {
     }
 
     CollidableEntity::renderBy(renderer);
+
+//    auto receivingMoveDir = getMoveDirection();
+//    auto translation = receivingMoveDir * 50.f;
+//    auto receivingSize = getSize();
+//    auto maxReceivingLength = std::max(receivingSize.x, receivingSize.y);
+//    auto pos = getPosition();
+//
+//    if (getSecondaryHitboxes() != nullptr) {
+//        auto centerRayEndPoint = getPosition() + receivingMoveDir * 50.f;
+//        auto edgePoint1 = getPosition() + sf::Vector2f{receivingMoveDir.y, -receivingMoveDir.x} * maxReceivingLength / 2.f;
+//        auto edgeEndPoint1 = edgePoint1 + translation;
+//        auto edgePoint2 = getPosition() + sf::Vector2f{-receivingMoveDir.y, receivingMoveDir.x} * maxReceivingLength / 2.f;
+//        auto edgeEndPoint2 =  edgePoint2 + translation;
+//        VectorDebug::drawLine(getPosition(), centerRayEndPoint, renderer, sf::Color::Cyan);
+//        VectorDebug::drawLine(edgePoint1, edgeEndPoint1, renderer, sf::Color::Cyan);
+//        VectorDebug::drawLine(edgePoint2, edgeEndPoint2, renderer, sf::Color::Cyan);
+//    }
 }
 
 void MoveableEntity::move(float dt) {
@@ -72,6 +90,6 @@ void MoveableEntity::setMoveDirection(const sf::Vector2f &direction) {
 }
 
 sf::Vector2f MoveableEntity::getMoveDirection() const {
-   return moveDirection;
+    return moveDirection;
 }
 

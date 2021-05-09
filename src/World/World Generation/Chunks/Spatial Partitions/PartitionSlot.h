@@ -29,12 +29,14 @@ public:
     void removeEntity(const std::shared_ptr<Entity> &entity);
 
 private:
-    void handleCollisionsFor(MoveableEntity *moveable) const;
+    void handleCollisionsFor(MoveableEntity *moveable);
 
     // Returns true if entity has moved to a different slot
     bool handleCollisionsWithOtherSlotEntities(MoveableEntity *moveable, SpatialPartition *slots,
                                                SlotEntities::MoveableIter &it);
+    bool shouldSkipMoveablePair(MoveableEntity * a, MoveableEntity * b);
 
     SlotEntities entityHolder;
+    std::unordered_set<std::string> moveablePairsSeenForCurUpdate;
 
 };
