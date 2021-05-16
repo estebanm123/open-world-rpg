@@ -57,7 +57,6 @@ void PlayerInputManager::handleMouseMovement(sf::RenderWindow &window) {
     auto playerPos = player->getPosition();
     auto mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
     auto mouseDirRelativeToPlayer = mousePos - playerPos;
-    player->setLookDirection(mouseDirRelativeToPlayer);
     const auto mouseAngle = toDegrees(atan2(mouseDirRelativeToPlayer.x, mouseDirRelativeToPlayer.y));
     player->setRotation(-mouseAngle);
 

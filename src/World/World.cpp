@@ -28,7 +28,3 @@ int World::generateSeed() {
     Random<> rand;
     return rand.getIntInRange(0, INT16_MAX);
 }
-
-
-
-	

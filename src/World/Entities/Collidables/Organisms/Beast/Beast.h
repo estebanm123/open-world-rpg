@@ -9,7 +9,7 @@ class NpcAi;
 
 class Beast : public OrganismEntity {
 public:
-    Beast(Config hitboxes, NpcAi<Beast> ai, std::unique_ptr<SpriteReg> sprite);
+    Beast(Config hitboxes, NpcAi<Beast> ai, std::unique_ptr<SpriteReg> sprite, float initialSpeed);
 
     void accept(EntityVisitor *visitor) override;
 

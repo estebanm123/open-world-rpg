@@ -8,8 +8,8 @@ void HumanoidNpc::accept(EntityVisitor *visitor) {
 }
 
 HumanoidNpc::HumanoidNpc(const sf::Vector2f &globalPosition, const std::string &spriteSheetBody,
-                         const std::string &spriteSheetHead, NpcAi<HumanoidNpc> ai):
-                         Humanoid(globalPosition, spriteSheetBody, spriteSheetHead),
+                         const std::string &spriteSheetHead, NpcAi<HumanoidNpc> ai, float initialSpeed) :
+                         Humanoid(globalPosition, spriteSheetBody, spriteSheetHead, initialSpeed),
                          ai(std::make_unique<NpcAi<HumanoidNpc>>(std::move(ai))) {
 
     this->ai->init(this);
@@ -18,11 +18,6 @@ HumanoidNpc::HumanoidNpc(const sf::Vector2f &globalPosition, const std::string &
 void HumanoidNpc::update(float dt) {
     MoveableEntity::update(dt);
     ai->update(dt);
-}
-
-sf::Vector2f HumanoidNpc::getMoveOffset() {
-    auto offset = MoveableEntity::getMoveOffset();
-    return offset * static_cast<float>(.3);
 }
 
 void HumanoidNpc::analyzeCollision(CollidableEntity *otherEntity) {

@@ -23,7 +23,7 @@ Prop::Prop(PropOptions config)
           isBlocking(config.isBlocking) {
     // todo: decouple
     sprite = config.hasShadow ? std::make_unique<ShadowedSpriteReg>(config.spriteSheet, config.pos, config.size / 2.f,
-                                                                    std::move(config.animPlayer), config.defaultFrame)
+                                                                    std::move(config.animPlayer), 1, config.defaultFrame)
                               : std::make_unique<SpriteReg>(
                     SpriteReg::Config{config.spriteSheet, config.pos, config.size / 2.f,
                                       std::move(config.animPlayer),

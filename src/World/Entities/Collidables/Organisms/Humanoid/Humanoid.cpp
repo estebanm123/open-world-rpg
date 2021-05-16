@@ -6,12 +6,12 @@
 #include "../../Collision Physics/BlockingPhysics.h"
 
 Humanoid::Humanoid(const sf::Vector2f &globalPosition, const std::string &spriteSheetBody,
-                   const std::string &spriteSheetHead) :
+                   const std::string &spriteSheetHead, float initialSpeed) :
         OrganismEntity(
                 CollidableEntity::Config{.mainHitbox =  std::make_unique<SingleHitbox>(
                         sf::FloatRect{globalPosition.x, globalPosition.y, BASE_FRAME_WIDTH / 2.f,
                                       BASE_FRAME_HEIGHT / 3.f}, 0,
-                        std::make_unique<BlockingPhysics>())}),
+                        std::make_unique<BlockingPhysics>())}, initialSpeed),
         sprite(initializeSprites(globalPosition, spriteSheetBody,
                                  spriteSheetHead)),
         isPickingUp(false) {

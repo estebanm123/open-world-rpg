@@ -4,7 +4,7 @@
 #include "../../../Hitbox/Hitbox.h"
 #include "../../../../EntityVisitor/EntityVisitor.h"
 
-Player::Player(const sf::Vector2f &globalPosition) : Humanoid(globalPosition, "Player/Shadow/body32", "Player/head32"),
+Player::Player(const sf::Vector2f &globalPosition) : Humanoid(globalPosition, "Player/Shadow/body32", "Player/head32", INITIAL_SPEED),
                                                      inputManager(this) {}
 
 void Player::update(float dt) {

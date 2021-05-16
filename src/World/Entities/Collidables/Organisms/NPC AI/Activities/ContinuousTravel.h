@@ -14,11 +14,18 @@
 
 // Simulates random idling for an entity
 struct Idler {
+    Idler(float idleProbability, float maxIdleSeconds, sf::Vector2f coords) :
+            idleProbability(idleProbability),
+            maxIdleSeconds(maxIdleSeconds),
+            rand(mixCoords(coords.x, coords.y)) {
+    }
+    Idler() = default;
+
     Idler(sf::Vector2f coords) : rand(mixCoords(coords.x, coords.y)) {}
 
     bool shouldEntityIdle() {
         if (!enabled) return false;
-       auto idleScore = rand.getFloatInRange(0.f, 1.f);
+        auto idleScore = rand.getFloatInRange(0.f, 1.f);
         return idleScore <= idleProbability;
     }
 
@@ -29,9 +36,9 @@ struct Idler {
         return retVal;
     }
 
-    void startIdling(MoveableEntity * entity) {
+    void startIdling(MoveableEntity *entity) {
         if (!enabled) return;
-        entity->setMoveDirection({0,0});
+        entity->setMoveDirection({0, 0});
 
         idle = true;
         currentIdleDelay = rand.getFloatInRange(0.f, maxIdleSeconds);
@@ -55,10 +62,11 @@ private:
     bool idle = false;
     bool justFinishedIdling = false;
     sf::Clock timer{};
+
     float idleProbability = .8;
     int currentIdleDelay = 0;
     float maxIdleSeconds = 3.f;
-    Random<> rand {};
+    Random<> rand{};
 
 };
 
@@ -73,6 +81,9 @@ public:
 
     void initialize(NpcAi<Organism> *npcAi) override {
         BaseActivity<Organism>::initialize(npcAi);
+        if (idler.shouldEntityIdle()) {
+            idler.startIdling(npcAi->getEntity());
+        }
     }
 
     void update(float dt) override {
@@ -118,7 +129,7 @@ private:
         auto targetPoint = path.peekNextPoint();
         auto targetPointRadius = targetDistFromDestination;
         if (targetPoint.isTemp) { // require higher precision if point is temp
-          targetPointRadius = 5;
+            targetPointRadius = 5;
         }
         return CollisionChecker::intersect(SimpleCircle{targetPointRadius, path.peekNextPoint().pos}, entityPos);
     }

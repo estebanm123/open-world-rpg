@@ -7,17 +7,13 @@
 class HumanoidNpc : public Humanoid {
 public:
     HumanoidNpc(const sf::Vector2f &globalPosition, const std::string &spriteSheetBody,
-                const std::string &spriteSheetHead, NpcAi<HumanoidNpc> ai);
+                const std::string &spriteSheetHead, NpcAi<HumanoidNpc> ai, float initialSpeed);
 
     void update(float dt) override;
 
     void analyzeCollision(CollidableEntity *otherEntity) override;
-
 private:
     void accept(EntityVisitor *visitor) override;
-
-protected:
-    sf::Vector2f getMoveOffset() override;
 
 private:
     std::unique_ptr<NpcAi<HumanoidNpc>> ai;

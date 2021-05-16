@@ -5,7 +5,7 @@
 class OrganismEntity : public MoveableEntity {
 public:
 
-    explicit OrganismEntity(Config hitboxes);
+    explicit OrganismEntity(Config hitboxes, float initialSpeed);
 
 //    virtual void sleep();
 //    virtual void die();

@@ -8,8 +8,8 @@
 template<class Organism>
 class RandomTravel : public ContinuousTravel<Organism> {
 public:
-    RandomTravel(float targetDistFromDestination, sf::Vector2f initialPos, float maxRadiusOfTravel)
-            : ContinuousTravel<Organism>(targetDistFromDestination, Idler{initialPos}),
+    RandomTravel(float targetDistFromDestination, sf::Vector2f initialPos, float maxRadiusOfTravel, Idler idler = {})
+            : ContinuousTravel<Organism>(targetDistFromDestination, Idler{idler}),
               initialPos(initialPos),
               maxRadiusOfTravel(maxRadiusOfTravel) {}
 

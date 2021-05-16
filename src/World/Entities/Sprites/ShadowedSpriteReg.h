@@ -6,6 +6,7 @@ class ShadowedSpriteReg : public SpriteReg {
 public:
     ShadowedSpriteReg(const std::string &spriteSheet, const sf::Vector2f &pos, const sf::Vector2f &origin,
                       std::unique_ptr<AnimationPlayer> animPlayer = nullptr,
+                      float shadowOffsetMultiplier = 1,
                       const sf::IntRect &defaultFrame = animConstants::EMPTY_FRAME);
 
     void renderBy(sf::RenderTarget &renderer) override;

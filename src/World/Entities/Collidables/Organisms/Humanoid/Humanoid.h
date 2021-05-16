@@ -14,7 +14,7 @@ public:
 
     // TODO: add option to pass in a custom hitbox
     Humanoid(const sf::Vector2f &globalPosition, const std::string &spriteSheetBody,
-             const std::string &spriteSheetHead);
+             const std::string &spriteSheetHead, float initialSpeed);
 
     ~Humanoid() override = default;
 

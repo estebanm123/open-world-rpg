@@ -1,4 +1,3 @@
-
 #include "BeastInitializers.h"
 #include "../../../../../Animation/RepeatingAnim.h"
 #include "../../Collision Physics/BlockingPhysics.h"
@@ -16,7 +15,7 @@ constexpr float CAT_HITBOX_HEIGHT = 29;
 
 std::unique_ptr<BaseActivity<Beast>> CatInitializer::generateActivities(BeastInitializer::Position pos) {
     auto testActivities = ActivityManager<Beast>::Activities{};
-    auto randTravel = std::make_unique<RandomTravel<Beast>>(50.f, pos, 200.f);
+    auto randTravel = std::make_unique<RandomTravel<Beast>>(50.f, pos, 200, Idler{.9, 2.5, pos});
     testActivities.push_front(std::move(randTravel));
     return std::make_unique<ActivityManager<Beast>>(std::move(testActivities));
 }
@@ -49,6 +48,10 @@ std::unique_ptr<AnimationPlayer> CatInitializer::generateAnimPlayer(BeastInitial
     return std::make_unique<AnimationPlayer>(std::move(anims));
 }
 
+float CatInitializer::getSpeed() {
+    return 150;
+}
+
 constexpr int SNAKE_FRAME_WIDTH = 12;
 constexpr int SNAKE_FRAME_HEIGHT = 34;
 constexpr int SNAKE_HITBOX_WIDTH = 10;
@@ -56,22 +59,23 @@ constexpr int SNAKE_HITBOX_HEIGHT = 29;
 
 std::unique_ptr<BaseActivity<Beast>> SnakeInitializer::generateActivities(BeastInitializer::Position pos) {
     auto testActivities = ActivityManager<Beast>::Activities{};
-    auto randTravel = std::make_unique<RandomTravel<Beast>>(5.f, pos, 100.f);
+    auto randTravel = std::make_unique<RandomTravel<Beast>>(25, pos, 400, Idler{.6, 8, pos});
     testActivities.push_front(std::move(randTravel));
     return std::make_unique<ActivityManager<Beast>>(std::move(testActivities));
 }
 
 CollidableEntity::Config SnakeInitializer::generateHitbox(BeastInitializer::Position pos) {
-    return CollidableEntity::Config{ std::make_unique<SingleHitbox>(
-            sf::FloatRect{pos.x, pos.y, SNAKE_HITBOX_WIDTH, SNAKE_HITBOX_HEIGHT}, 0,
-            std::make_unique<BlockingPhysics>())};
+    auto secondaryHitboxes = MultiHitbox::Hitboxes {};
+    secondaryHitboxes.push_back(std::make_unique<ViewCone>(pos, SNAKE_HITBOX_WIDTH, SNAKE_HITBOX_WIDTH, 50));
+    return CollidableEntity::Config {std::make_unique<SingleHitbox>(sf::FloatRect{pos.x, pos.y, SNAKE_HITBOX_WIDTH, SNAKE_HITBOX_HEIGHT}, 0, std::make_unique<BlockingPhysics>()),
+                                     std::make_unique<MultiHitbox>(std::move(secondaryHitboxes))};
 }
 
 std::unique_ptr<SpriteReg>
 SnakeInitializer::generateSprite(BeastInitializer::Position pos, std::unique_ptr<AnimationPlayer> animPlayer) {
-    return std::make_unique<SpriteReg>(
-            SpriteReg::Config{NPC_FOLDER + "Snake", pos, {SNAKE_FRAME_WIDTH / 2.f, SNAKE_FRAME_HEIGHT / 2.f},
-                              std::move(animPlayer)});
+    return std::make_unique<ShadowedSpriteReg>(
+            ShadowedSpriteReg{NPC_FOLDER + "Snake", pos, {SNAKE_FRAME_WIDTH / 2.f, SNAKE_FRAME_HEIGHT / 2.f},
+                              std::move(animPlayer), .3});
 }
 
 std::unique_ptr<AnimationPlayer> SnakeInitializer::generateAnimPlayer(BeastInitializer::Position pos) {
@@ -83,4 +87,8 @@ std::unique_ptr<AnimationPlayer> SnakeInitializer::generateAnimPlayer(BeastIniti
             Animation::Metadata{SNAKE_FRAME_WIDTH, SNAKE_FRAME_HEIGHT, 0, 2, 0, 300, {2}, Animation::Priority::LOW, 30,
                                 true})});
     return std::make_unique<AnimationPlayer>(std::move(anims));
+}
+
+float SnakeInitializer::getSpeed() {
+    return 23;
 }

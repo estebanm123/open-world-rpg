@@ -10,7 +10,7 @@ struct MoveableActions : public Actions {
 
 class MoveableEntity : public CollidableEntity {
 public:
-    explicit MoveableEntity(Config hitboxes);
+    explicit MoveableEntity(Config hitboxes, float initialVelocity);
 
     // optional delta is intended to be from time since last frame, for purposes of smooth movement
     virtual void move(float dt);
@@ -22,13 +22,9 @@ public:
 
     void renderBy(sf::RenderTarget & renderer) override;
 
-    void setLookDirection(const sf::Vector2f &direction);
-
     void setMoveDirection(const sf::Vector2f & direction);
 
     sf::Vector2f getMoveDirection() const;
-
-    const sf::Vector2f &getLookDirection() const;
 
     // x indicates revert movement in x dir, and y indicates revert movement in y dir
     virtual void revertLastMove(bool x, bool y);
@@ -42,7 +38,7 @@ public:
 
 protected:
     virtual sf::Vector2f getMoveOffset();
-    sf::Vector2f lookDirection;
+    float speed;
     sf::Vector2f moveDirection;
 
 private:

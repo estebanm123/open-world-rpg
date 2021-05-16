@@ -4,16 +4,9 @@
 #include "../../../Util/MathExtra.h"
 #include "../../../Util/Debug/VectorDebug.h"
 
-MoveableEntity::MoveableEntity(Config hitboxes)
-        : CollidableEntity(std::move(hitboxes)), lastMoveOffset({0, 0}) {}
+MoveableEntity::MoveableEntity(Config hitboxes, float initialSpeed)
+        : CollidableEntity(std::move(hitboxes)), lastMoveOffset({0, 0}), speed(initialSpeed) {}
 
-void MoveableEntity::setLookDirection(const sf::Vector2f &direction) {
-    lookDirection = direction;
-}
-
-const sf::Vector2f &MoveableEntity::getLookDirection() const {
-    return lookDirection;
-}
 
 bool MoveableEntity::hasMoved() const {
     return lastMoveOffset.x != 0 || lastMoveOffset.y != 0;
@@ -68,6 +61,7 @@ void MoveableEntity::renderBy(sf::RenderTarget &renderer) {
 //        VectorDebug::drawLine(edgePoint1, edgeEndPoint1, renderer, sf::Color::Cyan);
 //        VectorDebug::drawLine(edgePoint2, edgeEndPoint2, renderer, sf::Color::Cyan);
 //    }
+
 }
 
 void MoveableEntity::move(float dt) {
@@ -79,9 +73,7 @@ void MoveableEntity::move(float dt) {
 }
 
 sf::Vector2f MoveableEntity::getMoveOffset() {
-    float PLACEHOLDER = 150;
-    const auto newOffset = moveDirection * PLACEHOLDER;
-    return newOffset;
+    return moveDirection * speed;
 }
 
 void MoveableEntity::setMoveDirection(const sf::Vector2f &direction) {

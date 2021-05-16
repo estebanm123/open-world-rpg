@@ -6,7 +6,7 @@
 struct StatType {};
 
 struct StatTypes {
-    constexpr static StatType Stamina {}; // Affects animation speed, movement speed, rotation speed
+    constexpr static StatType Agility {}; // Affects animation speed, movement speed, rotation speed
 };
 
 
