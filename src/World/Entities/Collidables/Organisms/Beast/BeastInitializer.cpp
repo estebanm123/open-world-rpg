@@ -2,6 +2,7 @@
 
 #include "BeastInitializer.h"
 #include "../NPC AI/NpcAi.h"
+#include "../../../../../Util/Random/GlobalRand.h"
 
 std::unique_ptr<Beast> BeastInitializer::initialize(BeastInitializer::Position pos) {
     auto activities = generateActivities(pos);
@@ -12,5 +13,8 @@ std::unique_ptr<Beast> BeastInitializer::initialize(BeastInitializer::Position p
     auto animPlayer = generateAnimPlayer(pos);
     auto sprite = generateSprite(pos, std::move(animPlayer));
 
-    return std::make_unique<Beast>(std::move(hitbox), std::move(ai), std::move(sprite), getSpeed());
+    auto beast = std::make_unique<Beast>(std::move(hitbox), std::move(ai), std::move(sprite), getSpeed());
+    auto randomRotation = GlobalRand::rand.getFloatInRange(0, 360);
+    beast->rotate(randomRotation);
+    return beast;
 }

@@ -22,7 +22,6 @@ public:
 
 private:
     std::shared_ptr<sf::View> worldView;
-    Random<> rand;
     const int seed;
     std::shared_ptr<Player> player;
     ChunkManager chunkManager;

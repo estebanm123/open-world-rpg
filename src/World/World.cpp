@@ -1,7 +1,6 @@
 #include "World.h"
+#include "../Util/Random/GlobalRand.h"
 
-
-#include <iostream>
 
 World::World(std::shared_ptr<sf::View> worldView) :
         worldView(std::move(worldView)),
@@ -25,6 +24,5 @@ void World::update(float dt) {
 }
 
 int World::generateSeed() {
-    Random<> rand;
-    return rand.getIntInRange(0, INT16_MAX);
+    return GlobalRand::rand.getIntInRange(0, INT16_MAX);
 }

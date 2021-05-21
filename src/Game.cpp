@@ -2,11 +2,14 @@
 
 #include "States/StatePlaying.h"
 #include "World/World Generation/Environments/EnvTypes.h"
-#include "Util/SpriteShadowGenerator.h"
+#include "Util/Random/GlobalRand.h"
 
 Game::Game()
         : window({1280, 720}, "Test") {
 
+
+    int arbitraryPlaceholderSeed = 123121;
+    GlobalRand::initGlobalRand(arbitraryPlaceholderSeed);
     SpriteShadowGenerator::generateMissingShadowSprites();
     window.setPosition({window.getPosition().x, 0});
     window.setFramerateLimit(120);
