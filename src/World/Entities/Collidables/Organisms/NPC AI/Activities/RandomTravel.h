@@ -16,15 +16,14 @@ public:
 
 protected:
     NpcPath::Point generateNextPoint() override {
-        float x = rand.getFloatInRange(initialPos.x - maxRadiusOfTravel, initialPos.x + maxRadiusOfTravel);
-        float y = rand.getFloatInRange(initialPos.y - maxRadiusOfTravel, initialPos.y + maxRadiusOfTravel);
+        float x = GlobalRand::rand.getFloatInRange(initialPos.x - maxRadiusOfTravel, initialPos.x + maxRadiusOfTravel);
+        float y = GlobalRand::rand.getFloatInRange(initialPos.y - maxRadiusOfTravel, initialPos.y + maxRadiusOfTravel);
         return NpcPath::Point{sf::Vector2f{x, y}};
     }
 
 private:
     const sf::Vector2f initialPos;
     float maxRadiusOfTravel;
-    Random<> rand;
 };
 
 

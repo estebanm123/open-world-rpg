@@ -14,7 +14,5 @@ std::unique_ptr<Beast> BeastInitializer::initialize(BeastInitializer::Position p
     auto sprite = generateSprite(pos, std::move(animPlayer));
 
     auto beast = std::make_unique<Beast>(std::move(hitbox), std::move(ai), std::move(sprite), getSpeed());
-    auto randomRotation = GlobalRand::rand.getFloatInRange(0, 360);
-    beast->rotate(randomRotation);
     return beast;
 }

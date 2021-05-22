@@ -11,21 +11,21 @@
 #include "../../../../../../Util/MathExtra.h"
 #include "../../../../../../Util/Random/Hash.h"
 #include "../AiDebug.h"
+#include "../../../../../../Util/Random/GlobalRand.h"
 
 // Simulates random idling for an entity
 struct Idler {
     Idler(float idleProbability, float maxIdleSeconds, sf::Vector2f coords) :
             idleProbability(idleProbability),
-            maxIdleSeconds(maxIdleSeconds),
-            rand(mixCoords(coords.x, coords.y)) {
+            maxIdleSeconds(maxIdleSeconds) {
     }
     Idler() = default;
 
-    Idler(sf::Vector2f coords) : rand(mixCoords(coords.x, coords.y)) {}
+    Idler(sf::Vector2f coords) {}
 
     bool shouldEntityIdle() {
         if (!enabled) return false;
-        auto idleScore = rand.getFloatInRange(0.f, 1.f);
+        auto idleScore = GlobalRand::rand.getFloatInRange(0.f, 1.f);
         return idleScore <= idleProbability;
     }
 
@@ -41,7 +41,7 @@ struct Idler {
         entity->setMoveDirection({0, 0});
 
         idle = true;
-        currentIdleDelay = rand.getFloatInRange(0.f, maxIdleSeconds);
+        currentIdleDelay = GlobalRand::rand.getFloatInRange(0.f, maxIdleSeconds);
         timer.restart();
     }
 
@@ -66,8 +66,6 @@ private:
     float idleProbability = .8;
     int currentIdleDelay = 0;
     float maxIdleSeconds = 3.f;
-    Random<> rand{};
-
 };
 
 // Only computes entity direction to next point once (after reaching dest)
