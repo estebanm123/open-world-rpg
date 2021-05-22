@@ -113,24 +113,22 @@ std::unique_ptr<BaseActivity<Beast>> BeetleInitializer::generateActivities(Beast
 
 CollidableEntity::Config BeetleInitializer::generateHitbox(BeastInitializer::Position pos) {
     auto secondaryHitboxes = MultiHitbox::Hitboxes{};
-    secondaryHitboxes.push_back(std::make_unique<ViewCone>(pos, BEETLE_FRAME_WIDTH, BEETLE_FRAME_HEIGHT, 25));
+    secondaryHitboxes.push_back(std::make_unique<ViewCone>(pos, BEETLE_HITBOX_WIDTH, BEETLE_HITBOX_HEIGHT, 25));
     return CollidableEntity::Config{
-            std::make_unique<SingleHitbox>(sf::FloatRect{pos.x, pos.y, BEETLE_FRAME_WIDTH, BEETLE_FRAME_HEIGHT}, 0,
+            std::make_unique<SingleHitbox>(sf::FloatRect{pos.x, pos.y, BEETLE_HITBOX_WIDTH, BEETLE_HITBOX_HEIGHT}, 0,
                                            std::make_unique<CollisionPhysics>()),
             std::make_unique<MultiHitbox>(std::move(secondaryHitboxes))};
 }
 
 std::unique_ptr<SpriteReg>
 BeetleInitializer::generateSprite(BeastInitializer::Position pos, std::unique_ptr<AnimationPlayer> animPlayer) {
-    return std::make_unique<SpriteReg>(
-            SpriteReg::Config{NPC_BASE_PATH + "Bugs", pos, {BEETLE_FRAME_WIDTH / 2.f, BEETLE_FRAME_HEIGHT / 2.f},
-                              std::move(animPlayer)});
+    return std::make_unique<ShadowedSpriteReg>(
+            ShadowedSpriteReg{NPC_SHADOW_PATH + "Bugs", pos, {BEETLE_FRAME_WIDTH / 2.f, BEETLE_FRAME_HEIGHT / 2.f},
+                              std::move(animPlayer), .25});
 }
 
 std::unique_ptr<AnimationPlayer> BeetleInitializer::generateAnimPlayer(BeastInitializer::Position pos) {
     std::unordered_map<Action const *, std::unique_ptr<Animation>> anims;
-//    anims.insert({&MoveableActions::Idle, std::make_unique<RepeatingAnim>(
-//            Animation::Metadata{CAT_FRAME_WIDTH, CAT_FRAME_HEIGHT, 2, 4, 0, 250, {4}})});
     anims.insert({&MoveableActions::Move, std::make_unique<RepeatingAnim>(
             Animation::Metadata{BEETLE_FRAME_WIDTH, BEETLE_FRAME_HEIGHT, 0, 2, 0, 170, {2}, Animation::Priority::LOW, 0,
                                 true})});
