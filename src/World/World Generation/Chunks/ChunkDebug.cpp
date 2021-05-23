@@ -17,12 +17,6 @@ void ChunkDebug::renderDebugInfo(sf::RenderTarget &renderTargetRef,
     drawActiveZones(renderTargetRef, activeZones);
 }
 
-
-
-
-
-
-
 // refactor to a separate class (static)
 void ChunkDebug::drawOutline(sf::RenderTarget &renderTargetRef, sf::Vector2f center, sf::Vector2f size, sf::Color color,
                              float thickness = .8) {
@@ -84,7 +78,7 @@ void ChunkDebug::drawTileOutlines(sf::RenderTarget &renderTargetRef, TileMap &ti
     auto &tiles = tileMap.tiles;
     for (auto row = 0; row < TileMap::SIZE_X; row++) {
         for (auto col = 0; col < TileMap::SIZE_Y; col++) {
-            drawOutline(renderTargetRef, tiles[row][col]->topLeft + TILE_SIZE / 2.f, TILE_SIZE, sf::Color::Yellow, 0.3);
+            drawOutline(renderTargetRef, tiles[row][col]->topLeft + TILE_SIZE / 2.f, TILE_SIZE, sf::Color::Yellow, 0.2);
         }
     }
 }

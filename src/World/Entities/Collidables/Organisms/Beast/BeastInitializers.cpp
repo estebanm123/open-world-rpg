@@ -70,7 +70,7 @@ std::unique_ptr<BaseActivity<Beast>> SnakeInitializer::generateActivities(BeastI
 
 CollidableEntity::Config SnakeInitializer::generateHitbox(BeastInitializer::Position pos) {
     auto secondaryHitboxes = MultiHitbox::Hitboxes{};
-    secondaryHitboxes.push_back(std::make_unique<ViewCone>(pos, SNAKE_HITBOX_WIDTH, SNAKE_HITBOX_WIDTH, 50));
+    secondaryHitboxes.push_back(std::make_unique<ViewCone>(pos, SNAKE_HITBOX_WIDTH + 20, SNAKE_HITBOX_WIDTH, 50));
     return CollidableEntity::Config{
             std::make_unique<SingleHitbox>(sf::FloatRect{pos.x, pos.y, SNAKE_HITBOX_WIDTH, SNAKE_HITBOX_HEIGHT}, 0,
                                            std::make_unique<BlockingPhysics>()),

@@ -48,6 +48,8 @@ GrassCoverInitializer::GrassCoverInitializer() : PropInitializer(std::vector<sf:
         {0,   0, 64, 64},
         {64,  0, 64, 64},
         {128, 0, 64, 64},
+        {192, 0, 64, 64},
+        {256, 0, 64, 64}
 }) {}
 
 std::unique_ptr<Prop>
