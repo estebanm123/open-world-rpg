@@ -214,10 +214,10 @@ sf::Vector2i SpatialPartition::convertGlobalToLocalCoords(sf::Vector2f globalCoo
     auto relativeEntityGlobalCoords = (topLeftCoords - globalCoordsTopLeft);
     relativeEntityGlobalCoords = {std::abs(relativeEntityGlobalCoords.x), std::abs(relativeEntityGlobalCoords.y)};
 
-    auto localCoords = sf::Vector2i{static_cast<int>(relativeEntityGlobalCoords.x / SLOT_WIDTH),
-                                    static_cast<int>(relativeEntityGlobalCoords.y / SLOT_HEIGHT)};
+    auto localCoords = sf::Vector2i{static_cast<int>(relativeEntityGlobalCoords.x) / SLOT_WIDTH,
+                                    static_cast<int>(relativeEntityGlobalCoords.y) / SLOT_HEIGHT};
 
-    // slot is a foreign partition
+    // slot is in a foreign partition
     if (globalCoordsTopLeft.x < topLeftCoords.x) {
         localCoords.x = -localCoords.x - 1;
     }

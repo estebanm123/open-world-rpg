@@ -17,7 +17,7 @@ constexpr float CAT_HITBOX_HEIGHT = 29;
 
 std::unique_ptr<BaseActivity<Beast>> CatInitializer::generateActivities(BeastInitializer::Position pos) {
     auto testActivities = ActivityManager<Beast>::Activities{};
-    auto randTravel = std::make_unique<RandomTravel<Beast>>(50.f, pos, 200, Idler{.9, 2.5, pos});
+    auto randTravel = std::make_unique<RandomTravel<Beast>>(50.f, pos, 200, Idler{.9, 5.5, pos});
     testActivities.push_front(std::move(randTravel));
     return std::make_unique<ActivityManager<Beast>>(std::move(testActivities));
 }

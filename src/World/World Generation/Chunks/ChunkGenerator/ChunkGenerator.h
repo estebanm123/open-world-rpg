@@ -33,7 +33,6 @@ public:
 private:
     void generateChunk(const Chunk::RequestData &data);
 
-    Random<> rand;
     volatile bool setUp;
     volatile bool generating;
     std::queue<Chunk::RequestData> toGenerate;

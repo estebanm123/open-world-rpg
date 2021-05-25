@@ -18,7 +18,7 @@ protected:
     NpcPath::Point generateNextPoint() override {
         float x = GlobalRand::rand.getFloatInRange(initialPos.x - maxRadiusOfTravel, initialPos.x + maxRadiusOfTravel);
         float y = GlobalRand::rand.getFloatInRange(initialPos.y - maxRadiusOfTravel, initialPos.y + maxRadiusOfTravel);
-        return NpcPath::Point{sf::Vector2f{x, y}};
+        return NpcPath::Point{sf::Vector2f{x, y}, true};
     }
 
 private:

@@ -12,7 +12,7 @@
 #include "../../../Entities/Collidables/Organisms/NPC AI/Activities/RandomTravel.h"
 #include "../../../Entities/Collidables/Organisms/Beast/BeastInitializers.h"
 
-ChunkGenerator::ChunkGenerator(int seed) : rand(seed), setUp(true), generating(false) {
+ChunkGenerator::ChunkGenerator(int seed) : setUp(true), generating(false) {
 }
 
 inline const std::string GENERATOR = "Chunk Generator";
