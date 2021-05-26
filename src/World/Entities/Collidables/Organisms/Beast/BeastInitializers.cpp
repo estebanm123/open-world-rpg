@@ -106,7 +106,7 @@ constexpr int BEETLE_HITBOX_HEIGHT = 8;
 
 std::unique_ptr<BaseActivity<Beast>> BeetleInitializer::generateActivities(BeastInitializer::Position pos) {
     auto testActivities = ActivityManager<Beast>::Activities{};
-    auto randTravel = std::make_unique<RandomTravel<Beast>>(10, pos, 300, Idler{.3, 2, pos});
+    auto randTravel = std::make_unique<RandomTravel<Beast>>(25, pos, 100, Idler{.3, 2, pos});
     testActivities.push_front(std::move(randTravel));
     return std::make_unique<ActivityManager<Beast>>(std::move(testActivities));
 }
