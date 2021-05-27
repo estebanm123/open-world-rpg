@@ -22,7 +22,7 @@ public:
 
     bool activeZoneContainsSlot(int row, int col, const ActiveZone &activeZone) const;
 
-    void updateEntities(float dt, const ActiveZones &activeZones);
+    void updateEntities(float dt, const ActiveZones &activeZones, Chunk *chunkOwner);
 
     void renderDecorEntities(sf::RenderTarget &renderer, const ActiveZones &activeZones);
 

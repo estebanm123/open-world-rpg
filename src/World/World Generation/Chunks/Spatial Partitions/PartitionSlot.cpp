@@ -109,10 +109,10 @@ bool PartitionSlot::handleCollisionsWithOtherSlotEntities(MoveableEntity *moveab
     if (!moveable->hasMoved()) return false;
     auto currentSlot = slots->resolveSlotFromEntityGlobalCoords(moveable->getPosition(), moveable->getSize());
     if (currentSlot == nullptr) {
+        // moveable went out of bounds
         entityHolder.removeMoveable(moveable, it);
-        return true; // out of bounds
+        return true;
     }
-
 
     for (auto slot : slotsInRange) {
         if (currentSlot == slot) {

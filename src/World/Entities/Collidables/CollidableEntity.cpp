@@ -2,10 +2,7 @@
 
 #include "CollidableEntity.h"
 #include <utility>
-#include "../../../Util/CollisionChecker.h"
 #include "MoveableEntity.h"
-#include "Hitbox/SingleHitbox.h"
-#include "../../../Util/Debug/VectorDebug.h"
 
 #ifdef DEBUG
 #define RENDER_HITBOX(renderTargetRef, hitbox, secondaryHitboxes, entity) \

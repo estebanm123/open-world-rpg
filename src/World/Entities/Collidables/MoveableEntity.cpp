@@ -85,3 +85,7 @@ sf::Vector2f MoveableEntity::getMoveDirection() const {
     return moveDirection;
 }
 
+std::vector<Env::EnvId> &MoveableEntity::getUnpassableEnvs() {
+    return unpassableEnvs;
+}
+

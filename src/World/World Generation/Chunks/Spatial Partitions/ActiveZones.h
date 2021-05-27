@@ -5,9 +5,9 @@
 
 struct ActiveZones {
     ActiveZone renderZone;
-    ActiveZone collisionZone;
+    ActiveZone updateZone;
 
-    ActiveZones(sf::Vector2f playerPos, sf::Vector2i renderZoneSize, sf::Vector2i collisionZoneSize);
+    ActiveZones(sf::Vector2f playerPos, sf::Vector2i renderZoneSize, sf::Vector2i updateZoneSize);
 
     void updateZones(float dt, sf::Vector2f playerPos);
 };

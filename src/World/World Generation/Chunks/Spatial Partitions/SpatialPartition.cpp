@@ -127,12 +127,12 @@ bool SpatialPartition::activeZoneContainsSlot(int row, int col, const ActiveZone
             {SLOT_WIDTH, SLOT_HEIGHT});
 }
 
-void SpatialPartition::updateEntities(float dt, const ActiveZones &activeZones) {
+void SpatialPartition::updateEntities(float dt, const ActiveZones &activeZones, Chunk *chunkOwner) {
     for (auto row = 0; row < slots.size(); row++) {
         for (auto col = 0; col < slots[0].size(); col++) {
             auto &slot = slots[row][col];
-            slot->update(dt);
-            if (activeZoneContainsSlot(row, col, activeZones.collisionZone)) {
+            if (activeZoneContainsSlot(row, col, activeZones.updateZone)) {
+                slot->update(dt);
                 slot->handleCollisions(this);
             }
         }

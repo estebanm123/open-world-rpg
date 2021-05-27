@@ -5,7 +5,8 @@
 #include <memory>
 #include <SFML/System/Vector2.hpp>
 #include "../../../Util/Random/Hash.h"
-#include "../../Entities/Collidables/Organisms/Beast/Beast.h"
+
+class Beast;
 
 class Prop;
 

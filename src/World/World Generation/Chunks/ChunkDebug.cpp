@@ -70,8 +70,8 @@ void ChunkDebug::drawSpatialPartitionSlots(sf::RenderTarget &renderTargetRef, Sp
 void ChunkDebug::drawActiveZones(sf::RenderTarget &renderTargetRef, const ActiveZones &activeZones) {
     drawOutline(renderTargetRef, activeZones.renderZone.getCenterPos(),
                 static_cast<sf::Vector2f>(activeZones.renderZone.getSize()), sf::Color::White);
-    drawOutline(renderTargetRef, activeZones.collisionZone.getCenterPos(),
-                static_cast<sf::Vector2f>(activeZones.collisionZone.getSize()), sf::Color::Blue);
+    drawOutline(renderTargetRef, activeZones.updateZone.getCenterPos(),
+                static_cast<sf::Vector2f>(activeZones.updateZone.getSize()), sf::Color::Blue);
 }
 
 void ChunkDebug::drawTileOutlines(sf::RenderTarget &renderTargetRef, TileMap &tileMap) {

@@ -38,7 +38,7 @@ sf::Vector2f Chunk::getCenterFromReqData(const Chunk::RequestData &data) {
 }
 
 void Chunk::update(float dt, const ActiveZones &activeZones) {
-    entitySpatialPartition->updateEntities(dt, activeZones);
+    entitySpatialPartition->updateEntities(dt, activeZones, this);
 }
 
 void Chunk::setNeighbors(const Chunk::Neighbors &newNeighbors) {

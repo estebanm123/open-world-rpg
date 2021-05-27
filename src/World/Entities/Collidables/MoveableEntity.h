@@ -2,6 +2,7 @@
 
 #include "CollidableEntity.h"
 #include "../../../Animation/Actions.h"
+#include "../../World Generation/Environments/Env.h"
 
 struct MoveableActions : public Actions {
     static constexpr Action Idle {};
@@ -32,6 +33,8 @@ public:
     // approximates cardinal direction of last move (for players, this isn't an approximation)
     sf::Vector2f &getLastMoveOffset();
 
+    std::vector<Env::EnvId> & getUnpassableEnvs();
+
     bool hasMoved() const;
 
     ~MoveableEntity() override = default;
@@ -43,6 +46,7 @@ protected:
 
 private:
     sf::Vector2f lastMoveOffset; // offset in dir of last move
+    std::vector<Env::EnvId> unpassableEnvs; // envs this moveable can't traverse through
 };
 
 

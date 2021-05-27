@@ -36,8 +36,8 @@ namespace worldConstants {
     // Spatial partition related
     constexpr inline int RENDER_ZONE_WIDTH = 16; // in number of slots
     constexpr inline int RENDER_ZONE_HEIGHT = 10;
-    constexpr inline int COLLISION_ZONE_WIDTH = 15;
-    constexpr inline int COLLISION_ZONE_HEIGHT = 15;
+    constexpr inline int UPDATE_ZONE_WIDTH = 15;
+    constexpr inline int UPDATE_ZONE_HEIGHT = 15;
     constexpr static int SLOT_ROWS_PER_CHUNK = 8;
     constexpr static int SLOT_COLS_PER_CHUNK = SLOT_ROWS_PER_CHUNK;
 

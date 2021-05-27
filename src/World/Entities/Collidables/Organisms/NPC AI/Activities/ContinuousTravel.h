@@ -19,12 +19,15 @@ struct Idler {
             idleProbability(idleProbability),
             maxIdleSeconds(maxIdleSeconds) {
     }
+
     Idler() = default;
 
     Idler(sf::Vector2f coords) {}
 
     bool shouldEntityIdle() {
-        if (!enabled) return false;
+        bool tmpFirstTime = firstTimeCheckingIfShouldIdle;
+        firstTimeCheckingIfShouldIdle = false; // we don't want idle on very first call
+        if (!enabled || tmpFirstTime) return false;
         auto idleScore = GlobalRand::rand.getFloatInRange(0.f, 1.f);
         return idleScore <= idleProbability;
     }
@@ -59,6 +62,7 @@ struct Idler {
 
 private:
     bool enabled = true;
+    bool firstTimeCheckingIfShouldIdle;
     bool idle = false;
     bool justFinishedIdling = false;
     sf::Clock timer{};
@@ -79,9 +83,6 @@ public:
 
     void initialize(NpcAi<Organism> *npcAi) override {
         BaseActivity<Organism>::initialize(npcAi);
-        if (idler.shouldEntityIdle()) {
-            idler.startIdling(npcAi->getEntity());
-        }
     }
 
     void update(float dt) override {
