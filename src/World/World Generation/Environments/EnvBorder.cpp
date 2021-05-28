@@ -11,3 +11,7 @@ std::unique_ptr<Prop> EnvBorder::generateEnvironmentalProp(const sf::Vector2f &p
 std::unique_ptr<Beast> EnvBorder::generateBeast(const sf::Vector2f &beastCoords) const {
     return nullptr; // todo
 }
+
+int *EnvBorder::getId() const {
+    return nullptr;
+}

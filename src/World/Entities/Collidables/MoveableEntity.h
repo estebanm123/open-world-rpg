@@ -1,5 +1,6 @@
 #pragma once
 
+#include <unordered_set>
 #include "CollidableEntity.h"
 #include "../../../Animation/Actions.h"
 #include "../../World Generation/Environments/Env.h"
@@ -33,7 +34,9 @@ public:
     // approximates cardinal direction of last move (for players, this isn't an approximation)
     sf::Vector2f &getLastMoveOffset();
 
-    std::vector<Env::EnvId> & getUnpassableEnvs();
+    std::unordered_set<Env::EnvId> & getUnpassableEnvs();
+
+    virtual void handleUnpassableEnv(const CompleteEnv * env);
 
     bool hasMoved() const;
 
@@ -46,7 +49,7 @@ protected:
 
 private:
     sf::Vector2f lastMoveOffset; // offset in dir of last move
-    std::vector<Env::EnvId> unpassableEnvs; // envs this moveable can't traverse through
+    std::unordered_set<Env::EnvId> unpassableEnvs; // envs this moveable can't traverse through
 };
 
 

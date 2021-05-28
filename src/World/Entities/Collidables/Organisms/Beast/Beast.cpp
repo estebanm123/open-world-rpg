@@ -2,6 +2,7 @@
 
 #include "Beast.h"
 #include "../NPC AI/NpcAi.h"
+#include "../../../../World Generation/Environments/EnvTypes.h"
 
 void Beast::accept(EntityVisitor *visitor) {
     visitor->visit(this);
@@ -10,6 +11,7 @@ void Beast::accept(EntityVisitor *visitor) {
 Beast::Beast(Config hitboxes, NpcAi<Beast> ai, std::unique_ptr<SpriteReg> sprite, float initialSpeed)
         : OrganismEntity(std::move(hitboxes),  initialSpeed), ai(std::make_unique<NpcAi<Beast>>(std::move(ai))), sprite(std::move(sprite)) {
     this->ai->init(this);
+    getUnpassableEnvs() = {EnvTypes::WATER};
 }
 
 void Beast::analyzeCollision(CollidableEntity *otherEntity) {
@@ -28,4 +30,8 @@ EntitySprite &Beast::getSprite() {
 void Beast::update(float dt) {
     MoveableEntity::update(dt);
     ai->update(dt);
+}
+
+void Beast::handleUnpassableEnv(const CompleteEnv *env) {
+     ai->getPath().reset(this);
 }

@@ -17,6 +17,8 @@ public:
 
     void analyzeCollision(CollidableEntity *otherEntity) override;
 
+    void handleUnpassableEnv(const CompleteEnv *env) override;
+
 protected:
     EntitySprite &getSprite() override;
 

@@ -78,6 +78,11 @@ void Env::setSpriteSheet(std::string inputSpriteSheet) {
 
 void Env::setCompleteTileContainers(const TileContainer::TileContainers &tileContainers) {
     completeTileContainers = tileContainers;
+}
+
+int *Env::getId() const {
+    return &tempConfig->id;
+
 };
 
 Env::Config::Config(EnvId id, std::string spriteSheet, int numFullTiles, std::vector<EnvNeighborInfo> borderData,

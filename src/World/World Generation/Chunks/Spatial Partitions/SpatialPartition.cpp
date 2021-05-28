@@ -137,6 +137,17 @@ void SpatialPartition::updateEntities(float dt, const ActiveZones &activeZones, 
             }
         }
     }
+
+    // At cost of spatial locality, ensure all collisions are resolved before handling tile collisions
+    for (auto row = 0; row < slots.size(); row++) {
+        for (auto col = 0; col < slots[0].size(); col++) {
+            auto &slot = slots[row][col];
+            if (activeZoneContainsSlot(row, col, activeZones.updateZone)) {
+                slot->handleTileCollisions(this, chunkOwner);
+            }
+        }
+    }
+
 }
 
 void SpatialPartition::renderNonDecorEntities(sf::RenderTarget &renderer, const ActiveZones &activeZones) {

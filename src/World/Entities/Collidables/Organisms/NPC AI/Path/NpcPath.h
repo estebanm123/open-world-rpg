@@ -17,9 +17,6 @@ public:
         bool isTemp = false; // temp points are disregarded as soon as another point is pushed in front of it
     };
 
-    const static sf::Vector2f EMPTY_POINT;
-    const static Edge EMPTY_EDGE;
-
     NpcPath(const std::vector<Point> & points = {});
 
     void pushPointAndUpdateEntityDirection(MoveableEntity *entity, sf::Vector2f npcPos, NpcPath::Point newPoint);
@@ -30,17 +27,19 @@ public:
 
     Point peekNextPoint() const;
 
-    // makes popNextPoint point the last visited point
     void dequeueNextPoint();
 
     // dequeues any temp points before reaching a non-temp point. If there are no non-temp points, returns null.
     Point * getRealNextPoint();
 
+    // Next point is real or temp
     void updateEntityDirectionWithNextPoint(MoveableEntity *entity, sf::Vector2f npcPos);
 
     bool isEmpty() const;
 
-    void reset();
+    // Removes all temp points until real next point and makes npc move to next point.
+    // If no real next points, resets npc move direction.
+    void reset(MoveableEntity * entity);
 private:
     // Invariant: points.front() is first point of 'current edge' ; the last point visited by npc
     // points.back() is last point in path

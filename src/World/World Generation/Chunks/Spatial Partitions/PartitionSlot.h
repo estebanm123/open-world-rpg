@@ -18,6 +18,8 @@ public:
 
     void handleCollisions(SpatialPartition *slots);
 
+    void handleTileCollisions(SpatialPartition * spatialPartition, Chunk * chunk);
+
     void renderNonDecorEntities(sf::RenderTarget & renderer);
 
     void renderDecorEntities(sf::RenderTarget & renderer);

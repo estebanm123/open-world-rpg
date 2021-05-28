@@ -1,5 +1,4 @@
 
-
 #include <vector>
 #include <cmath>
 #include <iostream>
@@ -7,16 +6,10 @@
 #include "../../../MoveableEntity.h"
 #include "../../../../../../Util/MathExtra.h"
 
-const sf::Vector2f NpcPath::EMPTY_POINT = {0, 0};
-
 NpcPath::NpcPath(const std::vector<Point> &points) : points(points.begin(), points.end()) {}
 
 void NpcPath::enqueue(NpcPath::Point point) {
     points.push_back(point);
-}
-
-void NpcPath::reset() {
-    points.clear();
 }
 
 void NpcPath::dequeueNextPoint() {
@@ -54,12 +47,21 @@ NpcPath::Point *NpcPath::getRealNextPoint() {
 }
 
 void NpcPath::updateEntityDirectionWithNextPoint(MoveableEntity *entity, sf::Vector2f npcPos) {
-    auto nextPoint = peekNextPoint();
-    auto newDir = nextPoint.pos - npcPos;
-    entity->setMoveDirection(newDir);
-    entity->setRotation(-toDegrees(atan2(newDir.x, newDir.y)));
+    if (isEmpty()) {
+        entity->setMoveDirection({0,0});
+    } else {
+        auto nextPoint = peekNextPoint();
+        auto newDir = nextPoint.pos - npcPos;
+        entity->setMoveDirection(newDir);
+        entity->setRotation(-toDegrees(atan2(newDir.x, newDir.y)));
+    }
 }
 
 void NpcPath::enqueue(sf::Vector2f point) {
     points.push_back(Point{point});
+}
+
+void NpcPath::reset(MoveableEntity *entity) {
+    getRealNextPoint();
+    updateEntityDirectionWithNextPoint(entity, entity->getPosition());
 }

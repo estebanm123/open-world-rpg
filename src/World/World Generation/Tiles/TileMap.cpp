@@ -62,4 +62,20 @@ sf::Vector2i TileMap::convertGlobalToLocalCoords(const sf::Vector2f &globalCoord
     return {fastFloor(relativePos.x / TILE_SIZE.x), fastFloor(relativePos.y / TILE_SIZE.y)};
 }
 
+Tile *TileMap::getTileFromGlobalCoords(sf::Vector2f globalCoords) {
+    using namespace worldConstants;
+    auto localCoords = convertGlobalToLocalCoords(globalCoords);
+    if (localCoords.x < 0) {
+        localCoords.x = 0;
+    } else if (localCoords.x >= TILES_PER_CHUNK.x) {
+        localCoords.x = TILES_PER_CHUNK.x - 1;
+    }
+    if (localCoords.y < 0) {
+        localCoords.y = 0;
+    } else if (localCoords.y >= TILES_PER_CHUNK.y) {
+        localCoords.y = TILES_PER_CHUNK_Y - 1;
+    }
+    return getTile(localCoords.x, localCoords.y);
+}
+
 

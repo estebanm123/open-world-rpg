@@ -28,6 +28,9 @@ public:
 
     const sf::Vector2f & getTopLeftPos() const;
 
+    Tile * getTileFromGlobalCoords(sf::Vector2f globalCoords);
+
+    // in local coords
     Tile * getTile(int x, int y);
 
     bool isEntityCrossingBounds(Entity * entity) const;

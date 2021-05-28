@@ -15,3 +15,7 @@ std::unique_ptr<Prop> EnvProxy::generateEnvironmentalProp(const sf::Vector2f &pr
 std::unique_ptr<Beast> EnvProxy::generateBeast(const sf::Vector2f &propCoords) const {
     return env->generateBeast(propCoords);
 }
+
+int *EnvProxy::getId() const {
+    return env->getId();
+}

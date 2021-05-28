@@ -107,7 +107,7 @@ bool PartitionSlot::handleCollisionsWithOtherSlotEntities(MoveableEntity *moveab
     }
 
     if (!moveable->hasMoved()) return false;
-    auto currentSlot = slots->resolveSlotFromEntityGlobalCoords(moveable->getPosition(), moveable->getSize());
+    auto currentSlot = slots->resolveSlotFromEntityGlobalCoords(moveable->getTopLeftPosition(), moveable->getSize());
     if (currentSlot == nullptr) {
         // moveable went out of bounds
         entityHolder.removeMoveable(moveable, it);
@@ -124,5 +124,24 @@ bool PartitionSlot::handleCollisionsWithOtherSlotEntities(MoveableEntity *moveab
         }
     }
     return false;
+}
+
+
+void PartitionSlot::handleTileCollisions(SpatialPartition *spatialPartition, Chunk *chunk) {
+    auto & tileMap = chunk->getTileMap();
+
+    for (auto moveable : entityHolder.moveableEntities) {
+        if (!moveable->hasMoved()) continue;
+        auto moveablePos = moveable->getPosition();
+        auto currentTile = tileMap.getTileFromGlobalCoords(moveablePos);
+        auto env = currentTile->getEnvironment();
+        auto envId = env->getId();
+        if (!envId) continue;
+
+        auto & unpassableEnvs = moveable->getUnpassableEnvs();
+        if (unpassableEnvs.find(*env->getId()) != unpassableEnvs.end()) {
+            moveable->handleUnpassableEnv(env);
+        }
+    }
 }
 
