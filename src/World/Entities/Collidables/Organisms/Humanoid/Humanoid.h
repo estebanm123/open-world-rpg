@@ -32,6 +32,7 @@ protected:
 private:
     static std::vector<std::unique_ptr<EntitySprite>>
     initializeSprites(const sf::Vector2f &pos, const std::string &spriteSheetBody, const std::string &spriteSheetHead);
+    void initializeFootprintGenerator();
 };
 
 

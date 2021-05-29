@@ -22,10 +22,10 @@ public:
     };
 
     struct CopyableConfig {
-        const std::string &spriteSheet;
-        const sf::Vector2f &pos;
-        const sf::Vector2f &origin;
-        const sf::IntRect &defaultFrame;
+        const std::string spriteSheet;
+        const sf::Vector2f pos;
+        const sf::Vector2f origin;
+        const sf::IntRect defaultFrame;
     };
 
     // CONFIG IS NOT USEABLE AFTER

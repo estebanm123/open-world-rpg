@@ -6,9 +6,11 @@
 #include "../../Hitbox/ViewCone.h"
 #include "../NPC AI/NpcAi.h"
 #include "../../../Surface Effects/FootprintGenerator.h"
+#include "../../../Sprites/SpriteReg.h"
 
 const std::string NPC_BASE_PATH = "Npc/";
 const std::string NPC_SHADOW_PATH = NPC_BASE_PATH + "Shadow/";
+const std::string NPC_FOOTPRINT_PATH = NPC_BASE_PATH + "Footprints/";
 
 
 constexpr int CAT_FRAME_WIDTH = 27;
@@ -58,8 +60,18 @@ float CatInitializer::getSpeed() {
 }
 
 std::unique_ptr<SurfaceEffectGenerator> CatInitializer::generateSurfaceEffectGenerator(sf::Vector2f pos) {
-    return std::make_unique<FootprintGenerator>(SpriteReg::CopyableConfig{.spriteSheet: "" .pos: pos, });
+    sf::Vector2i size = {7, 6};
+    auto spriteConfig = SpriteReg::CopyableConfig{.spriteSheet= NPC_FOOTPRINT_PATH + "MediumBeast", .pos= pos, .origin= sf::Vector2f{static_cast<float>(size.x / 2),static_cast<float>(size.y / 2)}, .defaultFrame= sf::IntRect{0,0,size.x,size.y}};
+    FootprintGenerator footprintGenerator {
+            spriteConfig,
+            CAT_HITBOX_HEIGHT / 3.f,
+            {CAT_HITBOX_WIDTH / 2.1, 0},
+            pos
+    };
+    return nullptr; // TEMP
+    return std::make_unique<FootprintGenerator>(footprintGenerator);
 }
+
 
 constexpr int SNAKE_FRAME_WIDTH = 12;
 constexpr int SNAKE_FRAME_HEIGHT = 34;

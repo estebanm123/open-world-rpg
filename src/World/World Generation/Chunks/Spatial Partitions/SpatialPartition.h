@@ -28,6 +28,8 @@ public:
 
     void renderNonDecorEntities(sf::RenderTarget &renderer, const ActiveZones &activeZones);
 
+    void renderSurfaceEffects(sf::RenderTarget &renderer, const ActiveZones &activeZones);
+
     void addNewEntity(const std::shared_ptr<Entity> &entity);
 
     // ASSUMES entity is always moving to chunks that are loaded in

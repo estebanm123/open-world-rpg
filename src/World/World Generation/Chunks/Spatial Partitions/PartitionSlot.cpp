@@ -1,5 +1,3 @@
-
-
 #include <iostream>
 #include <sstream>
 #include "SpatialPartition.h"
@@ -20,6 +18,12 @@ void PartitionSlot::update(float dt) {
 void PartitionSlot::renderNonDecorEntities(sf::RenderTarget &renderer) {
     for (auto &moveable : entityHolder.moveableEntities) {
         moveable->renderBy(renderer);
+    }
+}
+
+void PartitionSlot::renderSurfaceEffects(sf::RenderTarget &renderer) {
+    for (auto &surfaceEffect : entityHolder.surfaceEffects) {
+        surfaceEffect->renderBy(renderer);
     }
 }
 
@@ -157,4 +161,5 @@ void PartitionSlot::handleSurfaceEffectGeneration(MoveableEntity *moveable) {
         }
     }
 }
+
 

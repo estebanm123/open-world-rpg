@@ -24,6 +24,8 @@ public:
 
     void renderDecorEntities(sf::RenderTarget & renderer);
 
+    void renderSurfaceEffects(sf::RenderTarget & renderer);
+
     void handleExternalCollision(MoveableEntity *externalEntity);
 
     void addEntity(const std::shared_ptr<Entity> &entity);

@@ -95,7 +95,7 @@ SurfaceEffectGenerator *MoveableEntity::getSurfaceEffectGenerator() {
     return surfaceEffectGenerator.get();
 }
 
-void MoveableEntity::setSurfaceEffectGenerator(std::unique_ptr<SurfaceEffectGenerator> surfaceEffectGenerator) {
-    this->surfaceEffectGenerator = std::move(surfaceEffectGenerator);
+void MoveableEntity::setSurfaceEffectGenerator(std::unique_ptr<SurfaceEffectGenerator> newSurfaceEffectGenerator) {
+    this->surfaceEffectGenerator = std::move(newSurfaceEffectGenerator);
 }
 

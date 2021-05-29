@@ -49,6 +49,8 @@ public:
 
     void renderTiles(sf::RenderTarget &renderer, const ActiveZones &activeZones);
 
+    void renderSurfaceEffects(sf::RenderTarget &renderer, const ActiveZones &activeZones);
+
     void setNeighbors(const Neighbors &newNeighbors);
 
     void addEntity(const std::shared_ptr<Entity> &entity);

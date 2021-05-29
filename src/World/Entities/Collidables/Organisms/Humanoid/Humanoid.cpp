@@ -50,3 +50,4 @@ void Humanoid::attemptPickup() {
     this->setCurrentAction(&HumanoidActions::Touch);
     // todo: Deploy a temporary hitbox for the hand/reach
 }
+

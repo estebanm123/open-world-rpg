@@ -64,3 +64,7 @@ void Chunk::renderDecorEntities(sf::RenderTarget &renderer, const ActiveZones &a
 void Chunk::renderNonDecorEntities(sf::RenderTarget &renderer, const ActiveZones &activeZones) {
     entitySpatialPartition->renderNonDecorEntities(renderer, activeZones);
 }
+
+void Chunk::renderSurfaceEffects(sf::RenderTarget &renderer, const ActiveZones &activeZones) {
+    entitySpatialPartition->renderSurfaceEffects(renderer, activeZones);
+}

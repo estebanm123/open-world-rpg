@@ -11,7 +11,7 @@ void Tile::renderBy(sf::RenderTarget &renderer) {
 }
 
 Tile::Tile(Metadata metadata) : env(std::move(metadata.completeEnv)), topLeft(metadata.globalCoords),
-                                sprite({metadata.spriteSheetPath, metadata.globalCoords + worldConstants::TILE_SIZE / 2.f, // pass center pos
+                                sprite(SpriteReg::Config{metadata.spriteSheetPath, metadata.globalCoords + worldConstants::TILE_SIZE / 2.f, // pass center pos
                                               worldConstants::TILE_SIZE / 2.f}) {
     sprite.setRotation(metadata.rotationAngle);
 }
