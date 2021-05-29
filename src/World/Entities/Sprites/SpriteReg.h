@@ -21,8 +21,17 @@ public:
         const sf::IntRect &defaultFrame;
     };
 
+    struct CopyableConfig {
+        const std::string &spriteSheet;
+        const sf::Vector2f &pos;
+        const sf::Vector2f &origin;
+        const sf::IntRect &defaultFrame;
+    };
+
     // CONFIG IS NOT USEABLE AFTER
     explicit SpriteReg(Config config);
+
+    explicit SpriteReg(CopyableConfig config);
 
     sf::Vector2f getSize() override;
 

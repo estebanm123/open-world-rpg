@@ -4,6 +4,7 @@
 #include "CollidableEntity.h"
 #include "../../../Animation/Actions.h"
 #include "../../World Generation/Environments/Env.h"
+#include "../Surface Effects/SurfaceEffectGenerator.h"
 
 struct MoveableActions : public Actions {
     static constexpr Action Idle {};
@@ -38,6 +39,10 @@ public:
 
     virtual void handleUnpassableEnv(const CompleteEnv * env);
 
+    void setSurfaceEffectGenerator(std::unique_ptr<SurfaceEffectGenerator> surfaceEffectGenerator);
+
+    SurfaceEffectGenerator* getSurfaceEffectGenerator();
+
     bool hasMoved() const;
 
     ~MoveableEntity() override = default;
@@ -50,6 +55,7 @@ protected:
 private:
     sf::Vector2f lastMoveOffset; // offset in dir of last move
     std::unordered_set<Env::EnvId> unpassableEnvs; // envs this moveable can't traverse through
+    std::unique_ptr<SurfaceEffectGenerator> surfaceEffectGenerator;
 };
 
 

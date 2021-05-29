@@ -91,3 +91,11 @@ std::unordered_set<Env::EnvId> & MoveableEntity::getUnpassableEnvs() {
 
 void MoveableEntity::handleUnpassableEnv(const CompleteEnv *env) {}
 
+SurfaceEffectGenerator *MoveableEntity::getSurfaceEffectGenerator() {
+    return surfaceEffectGenerator.get();
+}
+
+void MoveableEntity::setSurfaceEffectGenerator(std::unique_ptr<SurfaceEffectGenerator> surfaceEffectGenerator) {
+    this->surfaceEffectGenerator = std::move(surfaceEffectGenerator);
+}
+

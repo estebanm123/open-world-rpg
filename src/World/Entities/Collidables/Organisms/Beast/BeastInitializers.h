@@ -13,6 +13,8 @@ protected:
 
     std::unique_ptr<AnimationPlayer> generateAnimPlayer(Position pos) override;
 
+    std::unique_ptr<SurfaceEffectGenerator> generateSurfaceEffectGenerator(sf::Vector2f pos) override;
+
     float getSpeed() override;
 };
 

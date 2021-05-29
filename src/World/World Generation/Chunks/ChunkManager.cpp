@@ -77,6 +77,7 @@ void ChunkManager::renderChunks(sf::RenderTarget &target) {
             }
         }
     }
+    // render surface effects
     for (auto i = 0; i < 3; ++i) {
         for (auto j = 0; j < 3; ++j) {
             if (chunks[i][j]) {

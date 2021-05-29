@@ -27,6 +27,10 @@ void SlotEntities::Remover::visit(Beast *beast) {
 
 SlotEntities::Remover::Remover(SlotEntities *slotEntities) : slotEntities(slotEntities) {}
 
+void SlotEntities::Remover::visit(SurfaceEffect *surfaceEffect) {
+    slotEntities->surfaceEffects.erase(surfaceEffect);
+}
+
 
 void SlotEntities::Adder::addEntity(const std::shared_ptr<Entity> &entity) {
     entity->accept(this);
@@ -51,12 +55,13 @@ void SlotEntities::Adder::visit(Beast *beast) {
 
 SlotEntities::Adder::Adder(SlotEntities *slotEntities) : slotEntities(slotEntities) {}
 
-SlotEntities::SlotEntities() : adder(this), remover(this) {}
+void SlotEntities::Adder::visit(SurfaceEffect *surfaceEffect) {
+    slotEntities->surfaceEffects.insert(surfaceEffect);
+}
 
 void SlotEntities::addEntity(const std::shared_ptr<Entity> &entity) {
     adder.addEntity(entity);
 }
-
 
 void SlotEntities::removeEntity(const std::shared_ptr<Entity> &entity) {
     remover.removeEntity(entity);
@@ -77,6 +82,8 @@ std::shared_ptr<Entity> SlotEntities::removeMoveable(Entity *entity, MoveableIte
 
     return transferResult;
 }
+
+SlotEntities::SlotEntities() : adder(this), remover(this) {}
 
 
 

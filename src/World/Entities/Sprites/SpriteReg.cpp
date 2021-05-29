@@ -13,6 +13,14 @@ SpriteReg::SpriteReg(Config config) : animPlayer(
         sprite.setTextureRect(config.defaultFrame);
     }
 }
+SpriteReg::SpriteReg(CopyableConfig config) : animPlayer(nullptr) {
+    sprite.setTexture(ResourceHolder::get().textures.get(config.spriteSheet));
+    sprite.setPosition(config.pos);
+    sprite.setOrigin(config.origin);
+    if (config.defaultFrame != animConstants::EMPTY_FRAME) {
+        sprite.setTextureRect(config.defaultFrame);
+    }
+}
 
 void SpriteReg::setTexture(const sf::Texture &texture) {
     sprite.setTexture(texture);

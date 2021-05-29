@@ -8,7 +8,7 @@ Game::Game()
         : window({1280, 720}, "Test") {
 
 
-    int arbitraryPlaceholderSeed = 123121;
+    int arbitraryPlaceholderSeed = 1;
     GlobalRand::initGlobalRand(arbitraryPlaceholderSeed);
     SpriteShadowGenerator::generateMissingShadowSprites();
     window.setPosition({window.getPosition().x, 0});

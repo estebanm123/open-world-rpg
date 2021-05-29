@@ -41,4 +41,5 @@ private:
     SlotEntities entityHolder;
     std::unordered_set<std::string> moveablePairsSeenForCurUpdate;
 
+    void handleSurfaceEffectGeneration(MoveableEntity *moveable);
 };

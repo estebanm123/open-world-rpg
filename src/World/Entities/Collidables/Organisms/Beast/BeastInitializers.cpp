@@ -5,6 +5,7 @@
 #include "../NPC AI/Activities/Activity Managers/ActivityManager.h"
 #include "../../Hitbox/ViewCone.h"
 #include "../NPC AI/NpcAi.h"
+#include "../../../Surface Effects/FootprintGenerator.h"
 
 const std::string NPC_BASE_PATH = "Npc/";
 const std::string NPC_SHADOW_PATH = NPC_BASE_PATH + "Shadow/";
@@ -54,6 +55,10 @@ std::unique_ptr<AnimationPlayer> CatInitializer::generateAnimPlayer(BeastInitial
 
 float CatInitializer::getSpeed() {
     return 150;
+}
+
+std::unique_ptr<SurfaceEffectGenerator> CatInitializer::generateSurfaceEffectGenerator(sf::Vector2f pos) {
+    return std::make_unique<FootprintGenerator>(SpriteReg::CopyableConfig{.spriteSheet: "" .pos: pos, });
 }
 
 constexpr int SNAKE_FRAME_WIDTH = 12;

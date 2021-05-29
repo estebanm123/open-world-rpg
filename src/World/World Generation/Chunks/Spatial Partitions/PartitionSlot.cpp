@@ -6,6 +6,7 @@
 #include "PartitionSlot.h"
 #include "../Chunk.h"
 #include "../../../Entities/Collidables/Hitbox/EntityCollisionHandler.h"
+#include "../../../Entities/Surface Effects/SurfaceEffect.h"
 
 void PartitionSlot::update(float dt) {
     for (auto &moveable : entityHolder.moveableEntities) {
@@ -141,6 +142,18 @@ void PartitionSlot::handleTileCollisions(SpatialPartition *spatialPartition, Chu
         auto & unpassableEnvs = moveable->getUnpassableEnvs();
         if (unpassableEnvs.find(*env->getId()) != unpassableEnvs.end()) {
             moveable->handleUnpassableEnv(env);
+        } else {
+            handleSurfaceEffectGeneration(moveable);
+        }
+    }
+}
+
+void PartitionSlot::handleSurfaceEffectGeneration(MoveableEntity *moveable) {
+    auto surfaceEffectGenerator = moveable->getSurfaceEffectGenerator();
+    if (surfaceEffectGenerator) {
+        auto newSurfaceEffect = surfaceEffectGenerator->generateSurfaceEffect(moveable);
+        if (newSurfaceEffect) {
+            entityHolder.addEntity(std::move(newSurfaceEffect));
         }
     }
 }

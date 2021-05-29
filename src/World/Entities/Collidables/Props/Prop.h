@@ -53,6 +53,5 @@ protected:
     bool hasDefaultAnim;
     bool isDecor;
     bool isBlocking;
-
 };
 

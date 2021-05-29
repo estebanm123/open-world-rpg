@@ -23,6 +23,8 @@ protected:
     virtual std::unique_ptr<AnimationPlayer> generateAnimPlayer(Position pos) = 0;
 
     virtual float getSpeed() = 0;
+
+    virtual std::unique_ptr<SurfaceEffectGenerator> generateSurfaceEffectGenerator(sf::Vector2f pos);
 };
 
 

@@ -11,10 +11,12 @@ class Env;
 
 class CompleteEnv;
 
+// Generates entities across a chunk, using hashing for randomness.
 class ChunkEnvBasedEntityGenerator {
 public:
     void generateEntities(Chunk *chunk);
 
+    // entityGenLimit___ variables are used to manipulate
     ChunkEnvBasedEntityGenerator(int entityGenLimitMax = 100, int entityGenLimitChange = 3,
                                  int entityGenLimitInitial = 80);
 

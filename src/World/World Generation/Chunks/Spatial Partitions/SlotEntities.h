@@ -5,14 +5,16 @@
 #include <memory>
 #include "../../../Entities/EntityVisitor/EntityVisitor.h"
 
+class SurfaceEffect;
+
 class MoveableEntity;
 
 struct SlotEntities {
-public:
     // could make this private, but it would just be a bunch of getters
     std::unordered_set<MoveableEntity *> moveableEntities;
     std::unordered_set<std::shared_ptr<Entity>> entities;
     std::unordered_set<Prop *> mainProps;
+    std::unordered_set<SurfaceEffect *> surfaceEffects;
     std::unordered_set<Prop *> decorProps;
 
     SlotEntities();
@@ -36,6 +38,8 @@ private:
     private:
         void visit(Prop *prop) override;
 
+        void visit(SurfaceEffect *surfaceEffect) override;
+
         void visit(Humanoid *humanoid) override;
 
         void visit(Beast *beast) override;
@@ -51,6 +55,8 @@ private:
 
     private:
         void visit(Prop *prop) override;
+
+        void visit(SurfaceEffect *surfaceEffect) override;
 
         void visit(Humanoid *humanoid) override;
 
