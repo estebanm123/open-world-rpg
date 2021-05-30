@@ -63,7 +63,7 @@ void Humanoid::initializeFootprintGenerator() {
     FootprintGenerator footprintGenerator{
             spriteConfig,
              size.y * 3,
-            {size.x / 3, size.y / 3},
+            {size.x / 2.3f, size.y / 2.3f},
             pos
     };
     setSurfaceEffectGenerator(std::make_unique<FootprintGenerator>(footprintGenerator));
