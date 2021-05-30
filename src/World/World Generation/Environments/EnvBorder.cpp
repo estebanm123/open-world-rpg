@@ -16,6 +16,6 @@ int *EnvBorder::getId() const {
     return nullptr;
 }
 
-std::vector<std::unique_ptr<SurfaceEffectGenerator>> EnvBorder::getSurfaceEffectGenerators() const {
-    return {};
+const std::vector<std::unique_ptr<SurfaceEffectGenerator>> * EnvBorder::getSurfaceEffectGenerators() const {
+    return nullptr;
 }

@@ -16,6 +16,10 @@ std::unique_ptr<Beast> EnvProxy::generateBeast(const sf::Vector2f &propCoords) c
     return env->generateBeast(propCoords);
 }
 
+const std::vector<std::unique_ptr<SurfaceEffectGenerator>> * EnvProxy::getSurfaceEffectGenerators() const {
+    return env->getSurfaceEffectGenerators();
+}
+
 int *EnvProxy::getId() const {
     return env->getId();
 }

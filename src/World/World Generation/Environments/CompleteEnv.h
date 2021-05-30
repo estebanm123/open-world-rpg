@@ -22,7 +22,7 @@ public:
 
     virtual std::unique_ptr<Beast> generateBeast(const sf::Vector2f & beastCoords) const = 0;
 
-    virtual std::vector<std::unique_ptr<SurfaceEffectGenerator>> getSurfaceEffectGenerators() const = 0;
+    virtual const std::vector<std::unique_ptr<SurfaceEffectGenerator>> * getSurfaceEffectGenerators() const = 0;
 
 };
 

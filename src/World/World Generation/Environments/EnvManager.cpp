@@ -6,6 +6,7 @@
 #include "../Tiles/TileContainers/SingleTileContainer.h"
 #include "../Tiles/TileContainers/AnimatedTileContainer.h"
 #include "EnvNeighborInfo.h"
+#include "../../Entities/Surface Effects/SurfaceEffectGenerator.h"
 
 using namespace worldConstants;
 using namespace animConstants;

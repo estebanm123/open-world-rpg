@@ -152,13 +152,13 @@ void PartitionSlot::makeMoveablesInteractWithEnvironment(SpatialPartition *spati
         if (unpassableEnvs.find(*env->getId()) != unpassableEnvs.end()) {
             moveable->handleUnpassableEnv(env);
         } else {
-            handleSurfaceEffectGeneration(moveable, nullptr);
+            handleSurfaceEffectGeneration(moveable, env);
         }
 
     }
 }
 
-void PartitionSlot::handleSurfaceEffectGeneration(MoveableEntity *moveable, CompleteEnv *env) {
+void PartitionSlot::handleSurfaceEffectGeneration(MoveableEntity *moveable, const CompleteEnv *env) {
     auto moveableSurfaceEffectGenerator = moveable->getSurfaceEffectGenerator();
     if (moveableSurfaceEffectGenerator) {
         auto newSurfaceEffect = moveableSurfaceEffectGenerator->generateSurfaceEffect(moveable);
@@ -167,8 +167,10 @@ void PartitionSlot::handleSurfaceEffectGeneration(MoveableEntity *moveable, Comp
         }
     }
 
+    if (!env) return;
     auto envSurfaceEffectGenerators = env->getSurfaceEffectGenerators();
-    for (auto & surfaceEffectGenerator : envSurfaceEffectGenerators) {
+    if (!envSurfaceEffectGenerators) return;
+    for (auto & surfaceEffectGenerator : *envSurfaceEffectGenerators) {
         auto newSurfaceEffect = surfaceEffectGenerator->generateSurfaceEffect(moveable);
         if (newSurfaceEffect) {
             entityHolder.addEntity(std::move(newSurfaceEffect));

@@ -15,10 +15,11 @@ public:
     int *getId() const override;
 
     std::unique_ptr<Beast> generateBeast(const sf::Vector2f &propCoords) const override;
+
+    const std::vector<std::unique_ptr<SurfaceEffectGenerator>> * getSurfaceEffectGenerators() const override;
+
 private:
     const Env * env;
 };
-
-
 
 

@@ -83,6 +83,10 @@ void Env::setCompleteTileContainers(const TileContainer::TileContainers &tileCon
 int *Env::getId() const {
     return &tempConfig->id;
 
+}
+
+const std::vector<std::unique_ptr<SurfaceEffectGenerator>> * Env::getSurfaceEffectGenerators() const {
+    return &surfaceEffectGenerators;
 };
 
 Env::Config::Config(EnvId id, std::string spriteSheet, int numFullTiles, std::vector<EnvNeighborInfo> borderData,
