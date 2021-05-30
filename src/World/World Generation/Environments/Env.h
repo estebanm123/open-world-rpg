@@ -77,6 +77,7 @@ private:
     BorderTileContainers cornerBorderTileContainers;
     std::unique_ptr<PropFactory> propFactory;
     std::unique_ptr<BeastFactory> beastFactory;
+    std::vector<std::unique_ptr<SurfaceEffectGenerator>> surfaceEffectGenerators;
     std::string spriteSheet;
 };
 

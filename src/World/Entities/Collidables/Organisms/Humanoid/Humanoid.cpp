@@ -4,6 +4,7 @@
 #include "../../Hitbox/SingleHitbox.h"
 #include "../../../EntityVisitor/EntityVisitor.h"
 #include "../../Collision Physics/BlockingPhysics.h"
+#include "../../../Surface Effects/FootprintGenerator.h"
 
 Humanoid::Humanoid(const sf::Vector2f &globalPosition, const std::string &spriteSheetBody,
                    const std::string &spriteSheetHead, float initialSpeed) :
@@ -15,6 +16,7 @@ Humanoid::Humanoid(const sf::Vector2f &globalPosition, const std::string &sprite
         sprite(initializeSprites(globalPosition, spriteSheetBody,
                                  spriteSheetHead)),
         isPickingUp(false) {
+    initializeFootprintGenerator();
 }
 
 
@@ -49,5 +51,21 @@ void Humanoid::accept(EntityVisitor *visitor) {
 void Humanoid::attemptPickup() {
     this->setCurrentAction(&HumanoidActions::Touch);
     // todo: Deploy a temporary hitbox for the hand/reach
+}
+
+void Humanoid::initializeFootprintGenerator() {
+    auto pos = getPosition();
+    auto size = getSize();
+    auto spriteConfig = SpriteReg::CopyableConfig{.spriteSheet= "Npc/Footprints/Humanoid", .pos= pos, .origin= sf::Vector2f{
+            static_cast<float>(size.x / 2), static_cast<float>(size.y / 2)}, .defaultFrame= sf::IntRect{0, 0,
+                                                                                                        static_cast<int>(size.x),
+                                                                                                        static_cast<int>(size.y)}};
+    FootprintGenerator footprintGenerator{
+            spriteConfig,
+             size.y * 3,
+            {size.x / 3, size.y / 3},
+            pos
+    };
+    setSurfaceEffectGenerator(std::make_unique<FootprintGenerator>(footprintGenerator));
 }
 

@@ -18,7 +18,7 @@ public:
 
     void handleCollisions(SpatialPartition *slots);
 
-    void handleTileCollisions(SpatialPartition * spatialPartition, Chunk * chunk);
+    void makeMoveablesInteractWithEnvironment(SpatialPartition * spatialPartition, Chunk * chunk);
 
     void renderNonDecorEntities(sf::RenderTarget & renderer);
 
@@ -43,5 +43,5 @@ private:
     SlotEntities entityHolder;
     std::unordered_set<std::string> moveablePairsSeenForCurUpdate;
 
-    void handleSurfaceEffectGeneration(MoveableEntity *moveable);
+    void handleSurfaceEffectGeneration(MoveableEntity *moveable, CompleteEnv *env);
 };

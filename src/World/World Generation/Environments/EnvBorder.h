@@ -8,5 +8,7 @@ public:
 
     std::unique_ptr<Beast> generateBeast(const sf::Vector2f &beastCoords) const override;
 
+    std::vector<std::unique_ptr<SurfaceEffectGenerator>> getSurfaceEffectGenerators() const override;
+
     int *getId() const override;
 };

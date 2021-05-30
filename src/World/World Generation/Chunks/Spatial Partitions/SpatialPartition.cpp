@@ -143,7 +143,7 @@ void SpatialPartition::updateEntities(float dt, const ActiveZones &activeZones, 
         for (auto col = 0; col < slots[0].size(); col++) {
             auto &slot = slots[row][col];
             if (activeZoneContainsSlot(row, col, activeZones.updateZone)) {
-                slot->handleTileCollisions(this, chunkOwner);
+                slot->makeMoveablesInteractWithEnvironment(this, chunkOwner);
             }
         }
     }

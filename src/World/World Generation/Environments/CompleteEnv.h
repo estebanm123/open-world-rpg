@@ -10,6 +10,8 @@ class Beast;
 
 class Prop;
 
+class SurfaceEffectGenerator;
+
 class CompleteEnv {
 public:
     virtual ~CompleteEnv() = default;
@@ -20,7 +22,7 @@ public:
 
     virtual std::unique_ptr<Beast> generateBeast(const sf::Vector2f & beastCoords) const = 0;
 
-protected:
+    virtual std::vector<std::unique_ptr<SurfaceEffectGenerator>> getSurfaceEffectGenerators() const = 0;
 
 };
 

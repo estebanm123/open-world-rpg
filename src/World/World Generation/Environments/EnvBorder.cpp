@@ -15,3 +15,7 @@ std::unique_ptr<Beast> EnvBorder::generateBeast(const sf::Vector2f &beastCoords)
 int *EnvBorder::getId() const {
     return nullptr;
 }
+
+std::vector<std::unique_ptr<SurfaceEffectGenerator>> EnvBorder::getSurfaceEffectGenerators() const {
+    return {};
+}

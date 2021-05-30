@@ -61,7 +61,7 @@ float CatInitializer::getSpeed() {
 
 std::unique_ptr<SurfaceEffectGenerator> CatInitializer::generateSurfaceEffectGenerator(sf::Vector2f pos) {
     sf::Vector2i size = {7, 6};
-    auto spriteConfig = SpriteReg::CopyableConfig{.spriteSheet= NPC_FOOTPRINT_PATH + "MediumBeast", .pos= pos, .origin= sf::Vector2f{static_cast<float>(size.x / 2),static_cast<float>(size.y / 2)}, .defaultFrame= sf::IntRect{0,0,size.x,size.y}};
+    auto spriteConfig = SpriteReg::CopyableConfig{.spriteSheet= NPC_FOOTPRINT_PATH + "Medium", .pos= pos, .origin= sf::Vector2f{static_cast<float>(size.x / 2),static_cast<float>(size.y / 2)}, .defaultFrame= sf::IntRect{0,0,size.x,size.y}};
     FootprintGenerator footprintGenerator {
             spriteConfig,
             CAT_HITBOX_HEIGHT / 3.f,

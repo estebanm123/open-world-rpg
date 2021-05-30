@@ -132,29 +132,43 @@ bool PartitionSlot::handleCollisionsWithOtherSlotEntities(MoveableEntity *moveab
 }
 
 
-void PartitionSlot::handleTileCollisions(SpatialPartition *spatialPartition, Chunk *chunk) {
+void PartitionSlot::makeMoveablesInteractWithEnvironment(SpatialPartition *spatialPartition, Chunk *chunk) {
     auto & tileMap = chunk->getTileMap();
 
     for (auto moveable : entityHolder.moveableEntities) {
         if (!moveable->hasMoved()) continue;
+
+
         auto moveablePos = moveable->getPosition();
         auto currentTile = tileMap.getTileFromGlobalCoords(moveablePos);
         auto env = currentTile->getEnvironment();
         auto envId = env->getId();
-        if (!envId) continue;
+        if (!envId) { // todo: placeholder; support border tiles
+            handleSurfaceEffectGeneration(moveable, nullptr);
+            return;
+        }
 
         auto & unpassableEnvs = moveable->getUnpassableEnvs();
         if (unpassableEnvs.find(*env->getId()) != unpassableEnvs.end()) {
             moveable->handleUnpassableEnv(env);
         } else {
-            handleSurfaceEffectGeneration(moveable);
+            handleSurfaceEffectGeneration(moveable, nullptr);
         }
+
     }
 }
 
-void PartitionSlot::handleSurfaceEffectGeneration(MoveableEntity *moveable) {
-    auto surfaceEffectGenerator = moveable->getSurfaceEffectGenerator();
-    if (surfaceEffectGenerator) {
+void PartitionSlot::handleSurfaceEffectGeneration(MoveableEntity *moveable, CompleteEnv *env) {
+    auto moveableSurfaceEffectGenerator = moveable->getSurfaceEffectGenerator();
+    if (moveableSurfaceEffectGenerator) {
+        auto newSurfaceEffect = moveableSurfaceEffectGenerator->generateSurfaceEffect(moveable);
+        if (newSurfaceEffect) {
+            entityHolder.addEntity(std::move(newSurfaceEffect));
+        }
+    }
+
+    auto envSurfaceEffectGenerators = env->getSurfaceEffectGenerators();
+    for (auto & surfaceEffectGenerator : envSurfaceEffectGenerators) {
         auto newSurfaceEffect = surfaceEffectGenerator->generateSurfaceEffect(moveable);
         if (newSurfaceEffect) {
             entityHolder.addEntity(std::move(newSurfaceEffect));
