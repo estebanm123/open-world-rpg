@@ -22,16 +22,27 @@ public:
 
     void attemptPickup();
 
+    bool isAttemptingPickUp() const;
+
+    SingleHitbox * getPickUpZone();
+
+    void update(float dt) override;
+
 protected:
     EntitySprite &getSprite() override;
 
     SpriteContainer sprite;
 
-    bool isPickingUp;
 
 private:
+    bool isPickingUp = false;
+    SingleHitbox * pickupZone;
+
+    SingleHitbox * initializePickUpZone(sf::Vector2f pos);
+
     static std::vector<std::unique_ptr<EntitySprite>>
     initializeSprites(const sf::Vector2f &pos, const std::string &spriteSheetBody, const std::string &spriteSheetHead);
+
     void initializeFootprintGenerator();
 };
 

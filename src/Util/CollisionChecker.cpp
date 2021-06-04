@@ -14,23 +14,6 @@ bool CollisionChecker::intersect(const sf::CircleShape &circle, const sf::FloatR
     return distSquared(closestX, origin.x, closestY, origin.y) < (circle.getRadius() * circle.getRadius());
 }
 
-bool CollisionChecker::intersect(const sf::CircleShape &circle, const sf::RectangleShape &rectShape) {
-    auto rect = convertToFloatRect(rectShape);
-    const auto origin = circle.getPosition();
-    const auto closestX = clamp(origin.x, rect.left, rect.left + rect.width);
-    const auto closestY = clamp(origin.y, rect.top, rect.top + rect.height);
-
-    return distSquared(closestX, origin.x, closestY, origin.y) < (circle.getRadius() * circle.getRadius());
-}
-
-bool CollisionChecker::intersect(const sf::RectangleShape &rectShape1, const sf::RectangleShape &rectShape2) {
-    using namespace std;
-    auto rect1 = rectShape1.getGlobalBounds();
-    auto rect2 = rectShape2.getGlobalBounds();
-    return rect1.intersects(rect2);
-
-}
-
 bool CollisionChecker::intersect(const sf::ConvexShape &shapeA, const GlobalEdge &edgeB) {
     auto edges = ConvexShapeExtra::getGlobalEdges(shapeA);
     for (auto edgeA : edges) {
@@ -51,13 +34,6 @@ bool CollisionChecker::intersect(const sf::ConvexShape &shapeA, const GlobalEdge
     }
     return false;
 }
-
-sf::FloatRect CollisionChecker::convertToFloatRect(const sf::RectangleShape &rect) {
-    auto size = rect.getSize();
-    auto pos = rect.getPosition();
-    return {pos.x, pos.y, size.x, size.y};
-}
-
 
 bool intersectUtil(const sf::ConvexShape &a, const sf::ConvexShape &b) {
     const auto aGlobalPoints = ConvexShapeExtra::getGlobalPoints(a);

@@ -39,8 +39,9 @@ public:
     virtual void analyzeCollision(CollidableEntity *otherEntity);
 
 protected:
-    std::unique_ptr<SingleHitbox> mainHitbox; // Is checked against each hitbox of another collidable
-    std::unique_ptr<MultiHitbox> secondaryHitboxes; // Is checked only against main hitbox of other collidable
+    std::unique_ptr<SingleHitbox> mainHitbox; // checked against each hitbox of another collidable
+    std::unique_ptr<MultiHitbox> secondaryHitboxes; // checked only against main hitbox of other collidable
+    std::unique_ptr<MultiHitbox> tertiaryHitboxes; // special cases handled by subclass
 };
 
 

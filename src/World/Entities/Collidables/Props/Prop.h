@@ -6,6 +6,9 @@
 #include "../CollidableEntity.h"
 #include "../../../../Animation/AnimationPlayer.h"
 #include "../../../../Util/Random/Hash.h"
+#include "../../Items/ItemInitializer.h"
+
+class Item;
 
 class Prop : public CollidableEntity {
 public:
@@ -15,11 +18,14 @@ public:
         explicit PropOptions(std::string spriteSheet, const sf::IntRect &defaultFrame,
                              const sf::Vector2f &pos, bool hasShadow = false, sf::Vector2i hitboxSizeOffset = {0, 0},
                              std::unique_ptr<CollisionPhysics> collisionPhysics = std::make_unique<CollisionPhysics>(),
-                             std::unique_ptr<AnimationPlayer> animPlayer = nullptr)
+                             std::unique_ptr<AnimationPlayer> animPlayer = nullptr,
+                             std::unique_ptr<ItemInitializer> itemInitializer = nullptr)
                 : hasShadow(hasShadow), spriteSheet(std::move(spriteSheet)), defaultFrame(defaultFrame),
                   size(hitboxSizeOffset + sf::Vector2i{defaultFrame.width, defaultFrame.height}), pos(pos),
                   collisionPhysics(std::move(collisionPhysics)),
-                  animPlayer(std::move(animPlayer)) {
+                  animPlayer(std::move(animPlayer)),
+                  itemInitializer(std::move(itemInitializer))
+                  {
         };
         std::string spriteSheet;
         sf::IntRect defaultFrame;
@@ -30,6 +36,7 @@ public:
         bool isBlocking = collisionPhysics->isBlocking();
         bool hasShadow;
         float rotationAngle = static_cast<float>(hash2ValuesModSize(pos.x, pos.y * PRIME, 360));
+        std::unique_ptr<ItemInitializer> itemInitializer;
     };
 
     Prop(PropOptions config);
@@ -49,6 +56,7 @@ public:
 protected:
     EntitySprite &getSprite() override;
 
+    std::unique_ptr<ItemInitializer> itemInitializer;
     std::unique_ptr<EntitySprite> sprite;
     bool hasDefaultAnim;
     bool isDecor;
