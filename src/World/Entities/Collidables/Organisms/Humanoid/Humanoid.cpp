@@ -4,15 +4,20 @@
 #include "../../../EntityVisitor/EntityVisitor.h"
 #include "../../Collision Physics/BlockingPhysics.h"
 #include "../../../Surface Effects/FootprintGenerator.h"
+#include "../../Hitbox/MultiHitbox.h"
 
 
 Humanoid::Humanoid(const sf::Vector2f &globalPosition, const std::string &spriteSheetBody,
                    const std::string &spriteSheetHead, float initialSpeed) :
         OrganismEntity(
-                CollidableEntity::Config{.mainHitbox =  std::make_unique<SingleHitbox>(
-                        sf::FloatRect{globalPosition.x, globalPosition.y, BASE_FRAME_WIDTH / 2.f,
-                                      BASE_FRAME_HEIGHT / 3.f}, 0,
-                        std::make_unique<BlockingPhysics>())}, initialSpeed),
+                CollidableEntity::Config{
+                        std::make_unique<SingleHitbox>(
+                                sf::FloatRect{globalPosition.x, globalPosition.y, BASE_FRAME_WIDTH / 2.f,
+                                              BASE_FRAME_HEIGHT / 3.f}, 0, std::make_unique<BlockingPhysics>()),
+                        std::make_unique<MultiHitbox>(MultiHitbox::Hitboxes{}),
+                        std::make_unique<MultiHitbox>(MultiHitbox::Hitboxes{})
+                }, initialSpeed),
+
         sprite(initializeSprites(globalPosition, spriteSheetBody,
                                  spriteSheetHead)),
         isPickingUp(false),
@@ -25,11 +30,12 @@ EntitySprite &Humanoid::getSprite() {
     return sprite;
 }
 
-SingleHitbox * Humanoid::initializePickUpZone(sf::Vector2f pos) {
-    auto bounds = sf::FloatRect{pos.x, pos.y + Humanoid::BASE_FRAME_HEIGHT / 3.f, 10, 25};
+SingleHitbox *Humanoid::initializePickUpZone(sf::Vector2f pos) {
+    auto bounds = sf::FloatRect{pos.x, pos.y, 20, 30};
     auto pickUpZone = std::make_unique<SingleHitbox>(bounds);
-    // where we left off: add addHitbox to multihitbox; add pickupzone to
-    return pickupZone.get();
+    auto tempPickUpZone = pickUpZone.get();
+    tertiaryHitboxes->addSingleHitbox(std::move(pickUpZone));
+    return tempPickUpZone;
 }
 
 std::vector<std::unique_ptr<EntitySprite>>
@@ -81,34 +87,6 @@ void Humanoid::initializeFootprintGenerator() {
     setSurfaceEffectGenerator(std::make_unique<FootprintGenerator>(footprintGenerator));
 }
 
-bool Humanoid::isAttemptingPickUp() const {
-    return isPickingUp;
-}
-
-SingleHitbox * Humanoid::getPickUpZone() {
-    return pickupZone.get();
-}
-
-void Humanoid::setRotation(float angle) {
-    OrganismEntity::setRotation(angle);
-    pickupZone->setRotation(angle);
-}
-
-void Humanoid::rotate(float angle) {
-    OrganismEntity::rotate(angle);
-    pickupZone->rotate(angle);
-}
-
-void Humanoid::setPosition(const sf::Vector2f &pos) {
-    OrganismEntity::setPosition(pos);
-    pickupZone->setPosition(pos);
-}
-
-void Humanoid::move(float dt) {
-    OrganismEntity::move(dt);
-    pickupZone->move(getMoveOffset() * dt);
-}
-
 void Humanoid::renderBy(sf::RenderTarget &renderer) {
     if (isPickingUp) {
         pickupZone->renderBy(renderer);
@@ -116,6 +94,18 @@ void Humanoid::renderBy(sf::RenderTarget &renderer) {
     OrganismEntity::renderBy(renderer);
 }
 
+bool Humanoid::isAttemptingPickUp() const {
+    return isPickingUp;
+}
+
+SingleHitbox *Humanoid::getPickUpHitbox() {
+    return pickupZone;
+}
+
 void Humanoid::setIsAttemptingPickUp(bool isAttemptingPickUp) {
     isPickingUp = isAttemptingPickUp;
 }
+
+
+
+

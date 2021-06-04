@@ -21,6 +21,7 @@ void MoveableEntity::revertLastMove(bool x, bool y) {
     getSprite().move(-moveToReset);
     mainHitbox->move(-moveToReset);
     if (secondaryHitboxes) secondaryHitboxes->move(-moveToReset);
+    if (tertiaryHitboxes) tertiaryHitboxes->move(-moveToReset);
     lastMoveOffset = {!x ? lastMoveOffset.x : 0, !y ? lastMoveOffset.y : 0};
 }
 
@@ -44,24 +45,6 @@ void MoveableEntity::renderBy(sf::RenderTarget &renderer) {
     }
 
     CollidableEntity::renderBy(renderer);
-
-//    auto receivingMoveDir = getMoveDirection();
-//    auto translation = receivingMoveDir * 50.f;
-//    auto receivingSize = getSize();
-//    auto maxReceivingLength = std::max(receivingSize.x, receivingSize.y);
-//    auto pos = getPosition();
-//
-//    if (getSecondaryHitboxes() != nullptr) {
-//        auto centerRayEndPoint = getPosition() + receivingMoveDir * 50.f;
-//        auto edgePoint1 = getPosition() + sf::Vector2f{receivingMoveDir.y, -receivingMoveDir.x} * maxReceivingLength / 2.f;
-//        auto edgeEndPoint1 = edgePoint1 + translation;
-//        auto edgePoint2 = getPosition() + sf::Vector2f{-receivingMoveDir.y, receivingMoveDir.x} * maxReceivingLength / 2.f;
-//        auto edgeEndPoint2 =  edgePoint2 + translation;
-//        VectorDebug::drawLine(getPosition(), centerRayEndPoint, renderer, sf::Color::Cyan);
-//        VectorDebug::drawLine(edgePoint1, edgeEndPoint1, renderer, sf::Color::Cyan);
-//        VectorDebug::drawLine(edgePoint2, edgeEndPoint2, renderer, sf::Color::Cyan);
-//    }
-
 }
 
 void MoveableEntity::move(float dt) {
@@ -70,6 +53,7 @@ void MoveableEntity::move(float dt) {
     getSprite().move(offset);
     mainHitbox->move(offset);
     if (secondaryHitboxes) secondaryHitboxes->move(offset);
+    if (tertiaryHitboxes) tertiaryHitboxes->move(offset);
 }
 
 sf::Vector2f MoveableEntity::getMoveOffset() {

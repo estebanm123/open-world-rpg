@@ -24,9 +24,13 @@ public:
 
     bool isAttemptingPickUp() const;
 
-    SingleHitbox * getPickUpZone();
+    void setIsAttemptingPickUp(bool isAttemptingPickUp);
+
+    SingleHitbox * getPickUpHitbox();
 
     void update(float dt) override;
+
+    void renderBy(sf::RenderTarget &renderer) override;
 
 protected:
     EntitySprite &getSprite() override;

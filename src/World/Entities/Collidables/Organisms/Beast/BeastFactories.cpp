@@ -32,7 +32,7 @@ InitializerMetadataCollection constructSandBeastInitializers() {
     return beasts;
 }
 
-SandBeastFactory::SandBeastFactory() : PositionBasedInitializerPool<Beast>(constructSandBeastInitializers()) {}
+SandBeastFactory::SandBeastFactory() : PositionBasedInitializerPool<Beast>(constructSandBeastInitializers(),  950, 1000) {}
 
 WaterBeastFactory::WaterBeastFactory() : PositionBasedInitializerPool<Beast>({}) {}
 

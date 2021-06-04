@@ -16,6 +16,7 @@ public:
     struct Config {
         std::unique_ptr<SingleHitbox> mainHitbox;
         std::unique_ptr<MultiHitbox> secondaryHitboxes = nullptr;
+        std::unique_ptr<MultiHitbox> tertiaryHitboxes = nullptr;
     };
 
     typedef std::vector<std::unique_ptr<SingleHitbox>> Hitboxes;
@@ -39,9 +40,9 @@ public:
     virtual void analyzeCollision(CollidableEntity *otherEntity);
 
 protected:
-    std::unique_ptr<SingleHitbox> mainHitbox; // checked against each hitbox of another collidable
+    std::unique_ptr<SingleHitbox> mainHitbox; // checked against each main and secondary hitbox of another collidable
     std::unique_ptr<MultiHitbox> secondaryHitboxes; // checked only against main hitbox of other collidable
-    std::unique_ptr<MultiHitbox> tertiaryHitboxes; // special cases handled by subclass
+    std::unique_ptr<MultiHitbox> tertiaryHitboxes; // special cases handled by subclass(es)
 };
 
 

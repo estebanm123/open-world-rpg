@@ -57,4 +57,8 @@ bool Prop::isPropBlocking() const {
     return isBlocking;
 }
 
+bool Prop::isItemProp() const {
+    return itemInitializer != nullptr;
+}
+
 

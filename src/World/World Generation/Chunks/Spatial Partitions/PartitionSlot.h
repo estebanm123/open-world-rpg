@@ -35,6 +35,10 @@ public:
 private:
     void handleCollisionsFor(MoveableEntity *moveable);
 
+    void handleMoveableCollisions(SpatialPartition *spatialPartition);
+
+    void handleHumanoidItemCollisions(SpatialPartition *spatialPartition);
+
     // Returns true if entity has moved to a different slot
     bool handleCollisionsWithOtherSlotEntities(MoveableEntity *moveable, SpatialPartition *slots,
                                                SlotEntities::MoveableIter &it);

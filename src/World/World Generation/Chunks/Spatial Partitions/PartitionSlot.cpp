@@ -36,7 +36,7 @@ void PartitionSlot::renderDecorEntities(sf::RenderTarget &renderer) {
     }
 }
 
-void PartitionSlot::handleCollisions(SpatialPartition *slots) {
+void PartitionSlot::handleMoveableCollisions(SpatialPartition *spatialPartition) {
     moveablePairsSeenForCurUpdate.clear();
 
     auto &moveables = entityHolder.moveableEntities;
@@ -48,12 +48,28 @@ void PartitionSlot::handleCollisions(SpatialPartition *slots) {
             it++;
             continue;
         }
-        bool entityMovedToAnotherSlot = handleCollisionsWithOtherSlotEntities(moveable, slots, it);
+        bool entityMovedToAnotherSlot = handleCollisionsWithOtherSlotEntities(moveable, spatialPartition, it);
 
         if (!entityMovedToAnotherSlot) {
             it++;
         }
     }
+}
+
+void PartitionSlot::handleHumanoidItemCollisions(SpatialPartition *spatialPartition) {
+    for (auto humanoid : entityHolder.humanoids) {
+        if (!humanoid->isAttemptingPickUp()) continue;
+
+        auto pickUpHitbox = humanoid->getPickUpHitbox();
+        if (CollisionChecker::intersect(pickUpHitbox, )) {
+
+        }
+    }
+}
+
+void PartitionSlot::handleCollisions(SpatialPartition *slots) {
+    handleMoveableCollisions(slots);
+    handleHumanoidItemCollisions(slots);
 }
 
 void PartitionSlot::handleExternalCollision(MoveableEntity *externalEntity) {
@@ -113,12 +129,14 @@ bool PartitionSlot::handleCollisionsWithOtherSlotEntities(MoveableEntity *moveab
 
     if (!moveable->hasMoved()) return false;
     auto currentSlot = slots->resolveSlotFromEntityGlobalCoords(moveable->getTopLeftPosition(), moveable->getSize());
+
+    // check if moveable went out of bounds
     if (currentSlot == nullptr) {
-        // moveable went out of bounds
         entityHolder.removeMoveable(moveable, it);
         return true;
     }
 
+    // check if moveable was moved to another slot
     for (auto slot : slotsInRange) {
         if (currentSlot == slot) {
             auto entityPtr = entityHolder.removeMoveable(moveable, it);
@@ -147,6 +165,8 @@ void PartitionSlot::makeMoveablesInteractWithEnvironment(SpatialPartition *spati
             handleSurfaceEffectGeneration(moveable, nullptr);
             return;
         }
+
+
 
         auto & unpassableEnvs = moveable->getUnpassableEnvs();
         if (unpassableEnvs.find(*env->getId()) != unpassableEnvs.end()) {

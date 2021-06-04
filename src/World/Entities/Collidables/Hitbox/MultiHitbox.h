@@ -13,6 +13,7 @@ public:
 
     MultiHitbox(Hitboxes hitboxes);
 
+
     void move(const sf::Vector2f &offset) override;
 
     void handleCollision(CollidableEntity *receiver, MoveableEntity *moving) override;
@@ -28,6 +29,8 @@ public:
     Hitboxes & getHitboxes();
 
     void renderBy(sf::RenderTarget &renderer) override;
+
+    void addSingleHitbox(std::unique_ptr<SingleHitbox> singleHitbox);
 
 private:
     Hitboxes hitboxes;

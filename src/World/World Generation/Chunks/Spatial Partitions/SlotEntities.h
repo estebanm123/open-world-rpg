@@ -11,11 +11,13 @@ class MoveableEntity;
 
 struct SlotEntities {
     // could make this private, but it would just be a bunch of getters
-    std::unordered_set<MoveableEntity *> moveableEntities;
     std::unordered_set<std::shared_ptr<Entity>> entities;
+    std::unordered_set<MoveableEntity *> moveableEntities;
     std::unordered_set<Prop *> mainProps;
-    std::unordered_set<SurfaceEffect *> surfaceEffects;
+    std::unordered_set<Prop *> itemProps;
     std::unordered_set<Prop *> decorProps;
+    std::unordered_set<SurfaceEffect *> surfaceEffects;
+    std::unordered_set<Humanoid *> humanoids;
 
     SlotEntities();
 

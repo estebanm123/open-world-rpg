@@ -25,7 +25,8 @@ void debugRenderHitbox(sf::RenderTarget &renderer, Hitbox *hitbox, MultiHitbox *
 
 CollidableEntity::CollidableEntity(Config config) :
         mainHitbox(std::move(config.mainHitbox)),
-        secondaryHitboxes(std::move(config.secondaryHitboxes)) {}
+        secondaryHitboxes(std::move(config.secondaryHitboxes)),
+        tertiaryHitboxes(std::move(config.tertiaryHitboxes)) {}
 
 SingleHitbox *CollidableEntity::getMainHitbox() {
     return mainHitbox.get();
@@ -48,18 +49,21 @@ void CollidableEntity::setRotation(float angle) {
     Entity::setRotation(angle);
     mainHitbox->setRotation(angle);
     if (secondaryHitboxes) secondaryHitboxes->setRotation(angle);
+    if (tertiaryHitboxes) tertiaryHitboxes->setRotation(angle);
 }
 
 void CollidableEntity::rotate(float angle) {
     Entity::rotate(angle);
     mainHitbox->rotate(angle);
     if (secondaryHitboxes) secondaryHitboxes->rotate(angle);
+    if (tertiaryHitboxes) tertiaryHitboxes->rotate(angle);
 }
 
 void CollidableEntity::setPosition(const sf::Vector2f &pos) {
     Entity::setPosition(pos);
     mainHitbox->setPosition(pos);
     if (secondaryHitboxes) secondaryHitboxes->setPosition(pos);
+    if (tertiaryHitboxes) tertiaryHitboxes->setPosition(pos);
 }
 
 void CollidableEntity::analyzeCollision(CollidableEntity *otherEntity) {}

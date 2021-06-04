@@ -13,12 +13,16 @@ void SlotEntities::Remover::visit(Prop *prop) {
     if (prop->isDecorProp()) {
         slotEntities->decorProps.erase(prop);
     } else {
+        if (prop->isItemProp()) {
+            slotEntities->itemProps.erase(prop);
+        }
         slotEntities->mainProps.erase(prop); // todo : set this in propgenerator for chunk
     }
 }
 
 void SlotEntities::Remover::visit(Humanoid *humanoid) {
     slotEntities->moveableEntities.erase(humanoid);
+    slotEntities->humanoids.erase(humanoid);
 }
 
 void SlotEntities::Remover::visit(Beast *beast) {
@@ -42,11 +46,15 @@ void SlotEntities::Adder::visit(Prop *prop) {
         slotEntities->decorProps.insert(prop);
     } else {
         slotEntities->mainProps.insert(prop); // todo : set this in propgenerator for chunk
+        if (prop->isItemProp()) {
+            slotEntities->itemProps.insert(prop);
+        }
     }
 }
 
 void SlotEntities::Adder::visit(Humanoid *humanoid) {
     slotEntities->moveableEntities.insert(humanoid);
+    slotEntities->humanoids.insert(humanoid);
 }
 
 void SlotEntities::Adder::visit(Beast *beast) {

@@ -48,3 +48,7 @@ MultiHitbox::MultiHitbox(Hitboxes hitboxes) : hitboxes(std::move(hitboxes)) {}
 MultiHitbox::Hitboxes &MultiHitbox::getHitboxes() {
     return hitboxes;
 }
+
+void MultiHitbox::addSingleHitbox(std::unique_ptr<SingleHitbox> singleHitbox) {
+    hitboxes.push_back(std::move(singleHitbox));
+}
