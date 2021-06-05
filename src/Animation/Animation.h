@@ -74,7 +74,7 @@ public:
 
     virtual const sf::IntRect &getFrameAndAdvanceAnim() = 0;
 
-    virtual const sf::IntRect &peekNextFrame() const = 0;
+   virtual const sf::IntRect &peekNextFrame() const = 0;
 
 
     virtual ~Animation() = default;

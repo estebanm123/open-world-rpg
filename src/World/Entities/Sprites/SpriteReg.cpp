@@ -86,6 +86,14 @@ sf::Vector2f SpriteReg::getSize() {
     return {sprite.getGlobalBounds().width, sprite.getLocalBounds().height};
 }
 
+bool SpriteReg::notCurrentlyPlayingAnim() {
+    if (animPlayer) {
+        return animPlayer->noAnimCurrentlyPlaying();
+    } else {
+        return false;
+    }
+}
+
 SpriteReg::Config::Config(const std::string &spriteSheet, const sf::Vector2f &pos, const sf::Vector2f &origin,
                           std::unique_ptr<AnimationPlayer> animPlayer, const sf::IntRect &defaultFrame) : spriteSheet(
         spriteSheet), pos(pos), origin(origin), animPlayer(std::move(animPlayer)), defaultFrame(defaultFrame) {

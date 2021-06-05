@@ -34,6 +34,13 @@ void SpriteContainer::setPosition(const sf::Vector2f &pos) {
     }
 }
 
+bool SpriteContainer::notCurrentlyPlayingAnim() {
+    for (auto & sprite : sprites) {
+        if (sprite->notCurrentlyPlayingAnim()) return true;
+    }
+    return false;
+}
+
 float SpriteContainer::getRotation() const {
     return sprites[0]->getRotation();
 }

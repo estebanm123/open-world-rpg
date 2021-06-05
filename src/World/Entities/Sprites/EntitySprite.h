@@ -16,6 +16,8 @@ public:
 
     virtual bool isAnimated() = 0;
 
+    virtual bool notCurrentlyPlayingAnim() = 0;
+
     virtual void playDefaultAnim() = 0;
 
     virtual const sf::Vector2f &getPosition() const = 0;

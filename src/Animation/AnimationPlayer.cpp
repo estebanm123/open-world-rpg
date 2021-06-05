@@ -54,3 +54,7 @@ void AnimationPlayer::setDefaultAnim(std::unique_ptr<Animation> anim) {
     anims.insert({&Actions::Default, std::move(anim)});
 }
 
+bool AnimationPlayer::noAnimCurrentlyPlaying() {
+    return curAnim == nullptr || curAnim->peekNextFrame() == EMPTY_FRAME;
+}
+

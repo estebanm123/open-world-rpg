@@ -18,6 +18,8 @@ public:
 
     virtual void resetAnimation();
 
+    bool noAnimCurrentlyPlaying();
+
     void setDefaultAnim(std::unique_ptr<Animation> anim);
 
     const sf::IntRect & playAnim(Action const * action);

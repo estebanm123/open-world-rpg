@@ -5,9 +5,14 @@
 
 class SurfaceEffect : public Entity {
 public:
+    // For animated SurfaceEffects
+    SurfaceEffect(SpriteReg::Config config);
+
     SurfaceEffect(SpriteReg::CopyableConfig config);
 
     void update(float dt) override;
+
+    bool isFinished();
 
     void accept(EntityVisitor *visitor) override;
 
@@ -16,5 +21,6 @@ protected:
 
 private:
     SpriteReg sprite;
+    bool hasDefaultAnim;
     // todo: ttl/ mark for fade
 };

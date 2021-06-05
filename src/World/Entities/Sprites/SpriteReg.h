@@ -43,6 +43,8 @@ public:
 
     bool isAnimated() override;
 
+    bool notCurrentlyPlayingAnim() override;
+
     void playAnim(Action const *action) override;
 
     void playDefaultAnim() override;

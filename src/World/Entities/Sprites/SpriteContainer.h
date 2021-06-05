@@ -30,6 +30,9 @@ public:
     void setRotation(float angle) override;
 
     void move(const sf::Vector2f &offset) override;
+
+    bool notCurrentlyPlayingAnim() override;
+
 private:
     std::vector<std::unique_ptr<EntitySprite>> sprites;
 };
