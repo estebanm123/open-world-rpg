@@ -87,13 +87,6 @@ void Humanoid::initializeFootprintGenerator() {
     setSurfaceEffectGenerator(std::make_unique<FootprintGenerator>(footprintGenerator));
 }
 
-void Humanoid::renderBy(sf::RenderTarget &renderer) {
-    if (isPickingUp) {
-        pickupZone->renderBy(renderer);
-    }
-    OrganismEntity::renderBy(renderer);
-}
-
 bool Humanoid::isAttemptingPickUp() const {
     return isPickingUp;
 }

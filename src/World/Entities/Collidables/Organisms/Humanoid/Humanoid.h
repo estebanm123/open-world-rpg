@@ -30,8 +30,6 @@ public:
 
     void update(float dt) override;
 
-    void renderBy(sf::RenderTarget &renderer) override;
-
 protected:
     EntitySprite &getSprite() override;
 
