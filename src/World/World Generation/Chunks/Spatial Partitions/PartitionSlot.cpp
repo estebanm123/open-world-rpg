@@ -56,20 +56,8 @@ void PartitionSlot::handleMoveableCollisions(SpatialPartition *spatialPartition)
     }
 }
 
-void PartitionSlot::handleHumanoidItemCollisions(SpatialPartition *spatialPartition) {
-    for (auto humanoid : entityHolder.humanoids) {
-        if (!humanoid->isAttemptingPickUp()) continue;
-
-        auto pickUpHitbox = humanoid->getPickUpHitbox();
-        if (CollisionChecker::intersect(pickUpHitbox, )) {
-
-        }
-    }
-}
-
 void PartitionSlot::handleCollisions(SpatialPartition *slots) {
     handleMoveableCollisions(slots);
-    handleHumanoidItemCollisions(slots);
 }
 
 void PartitionSlot::handleExternalCollision(MoveableEntity *externalEntity) {
