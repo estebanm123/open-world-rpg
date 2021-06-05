@@ -11,17 +11,15 @@ EntitySprite &SurfaceEffect::getSprite() {
 
 void SurfaceEffect::update(float dt) {
     if (hasDefaultAnim) {
+        if (sprite.notCurrentlyPlayingAnim()) isReadyForRemoval = true;
         sprite.playDefaultAnim();
     }
 }
 
 SurfaceEffect::SurfaceEffect(SpriteReg::CopyableConfig config) : sprite(std::move(config)), hasDefaultAnim(false){}
 
-bool SurfaceEffect::isFinished() {
-    if (hasDefaultAnim) {
-        return sprite.notCurrentlyPlayingAnim();
-    }
-    return false;
+bool SurfaceEffect::isReadyToBeRemoved() {
+    return isReadyForRemoval;
 }
 
 SurfaceEffect::SurfaceEffect(SpriteReg::Config config) : sprite(std::move(config)) {

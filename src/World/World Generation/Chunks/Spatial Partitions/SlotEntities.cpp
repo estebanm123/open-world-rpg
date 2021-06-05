@@ -93,6 +93,12 @@ std::shared_ptr<Entity> SlotEntities::removeMoveable(Entity *entity, MoveableIte
 
 SlotEntities::SlotEntities() : adder(this), remover(this) {}
 
+void SlotEntities::removeEntity(Entity * entity) {
+    std::shared_ptr<Entity> tempEntityPtr = std::shared_ptr<Entity>(std::shared_ptr<Entity>{},
+                                                                    entity); // WARNING: has no deleter
+    removeEntity(tempEntityPtr);
+}
+
 
 
 

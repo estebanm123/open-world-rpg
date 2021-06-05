@@ -23,6 +23,8 @@ struct SlotEntities {
 
     void addEntity(const std::shared_ptr<Entity> &entity);
 
+    void removeEntity(Entity * entity);
+
     void removeEntity(const std::shared_ptr<Entity> &entity);
 
     typedef std::unordered_set<MoveableEntity *>::iterator MoveableIter;

@@ -1,8 +1,6 @@
 #include <iostream>
 #include <sstream>
 #include "SpatialPartition.h"
-#include "PartitionSlot.h"
-#include "../Chunk.h"
 #include "../../../Entities/Collidables/Hitbox/EntityCollisionHandler.h"
 #include "../../../Entities/Surface Effects/SurfaceEffect.h"
 
@@ -12,6 +10,12 @@ void PartitionSlot::update(float dt) {
     }
     for (auto &prop : entityHolder.mainProps) {
         prop->update(dt);
+    }
+    for (auto &effect : entityHolder.surfaceEffects) {
+        effect->update(dt);
+        if (effect->isReadyToBeRemoved()) {
+            entityHolder.removeEntity(effect);
+        }
     }
 }
 
@@ -169,7 +173,7 @@ void PartitionSlot::makeMoveablesInteractWithEnvironment(SpatialPartition *spati
 void PartitionSlot::handleSurfaceEffectGeneration(MoveableEntity *moveable, const CompleteEnv *env) {
     auto moveableSurfaceEffectGenerator = moveable->getSurfaceEffectGenerator();
     if (moveableSurfaceEffectGenerator) {
-        auto newSurfaceEffect = moveableSurfaceEffectGenerator->generateSurfaceEffect(moveable);
+        auto newSurfaceEffect = moveableSurfaceEffectGenerator->generateSurfaceEffect(moveable, env? env->getId() : nullptr);
         if (newSurfaceEffect) {
             entityHolder.addEntity(std::move(newSurfaceEffect));
         }
@@ -179,7 +183,7 @@ void PartitionSlot::handleSurfaceEffectGeneration(MoveableEntity *moveable, cons
     auto envSurfaceEffectGenerators = env->getSurfaceEffectGenerators();
     if (!envSurfaceEffectGenerators) return;
     for (auto & surfaceEffectGenerator : *envSurfaceEffectGenerators) {
-        auto newSurfaceEffect = surfaceEffectGenerator->generateSurfaceEffect(moveable);
+        auto newSurfaceEffect = surfaceEffectGenerator->generateSurfaceEffect(moveable, nullptr);
         if (newSurfaceEffect) {
             entityHolder.addEntity(std::move(newSurfaceEffect));
         }

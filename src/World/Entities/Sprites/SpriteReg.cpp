@@ -90,12 +90,12 @@ bool SpriteReg::notCurrentlyPlayingAnim() {
     if (animPlayer) {
         return animPlayer->noAnimCurrentlyPlaying();
     } else {
-        return false;
+        return true;
     }
 }
 
 SpriteReg::Config::Config(const std::string &spriteSheet, const sf::Vector2f &pos, const sf::Vector2f &origin,
-                          std::unique_ptr<AnimationPlayer> animPlayer, const sf::IntRect &defaultFrame) : spriteSheet(
+                          std::unique_ptr<AnimationPlayer> animPlayer, sf::IntRect defaultFrame) : spriteSheet(
         spriteSheet), pos(pos), origin(origin), animPlayer(std::move(animPlayer)), defaultFrame(defaultFrame) {
 
 }

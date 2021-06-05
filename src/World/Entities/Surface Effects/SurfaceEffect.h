@@ -12,7 +12,7 @@ public:
 
     void update(float dt) override;
 
-    bool isFinished();
+    bool isReadyToBeRemoved();
 
     void accept(EntityVisitor *visitor) override;
 
@@ -22,5 +22,6 @@ protected:
 private:
     SpriteReg sprite;
     bool hasDefaultAnim;
+    bool isReadyForRemoval = false;
     // todo: ttl/ mark for fade
 };

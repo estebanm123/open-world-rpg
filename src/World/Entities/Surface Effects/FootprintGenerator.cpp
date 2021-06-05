@@ -1,9 +1,12 @@
 #include "FootprintGenerator.h"
 #include "../../../Util/MathExtra.h"
+#include "../../../Util/Random/GlobalRand.h"
 #include "../Collidables/MoveableEntity.h"
 #include "SurfaceEffect.h"
+#include "../../World Generation/Environments/EnvTypes.h"
+#include "PresetSurfaceEffects.h"
 
-std::unique_ptr<SurfaceEffect> FootprintGenerator::generateSurfaceEffect(MoveableEntity *moveable) {
+std::unique_ptr<SurfaceEffect> FootprintGenerator::generateSurfaceEffect(MoveableEntity *moveable, int *env) {
     auto entityPos = moveable->getPosition();
     auto distFromLastGeneration = distSquared(entityPos.x,lastPositionOfGeneration.x, entityPos.y, lastPositionOfGeneration.y);
     if (distFromLastGeneration >= minDistFromLastGenSquared) { // squared values is for performance
@@ -15,10 +18,7 @@ std::unique_ptr<SurfaceEffect> FootprintGenerator::generateSurfaceEffect(Moveabl
         }
         isLeft = !isLeft;
         lastPositionOfGeneration = newSurfaceEffectPos;
-        auto footprintEffect = std::make_unique<SurfaceEffect>(spriteConfig);
-        footprintEffect->setPosition(newSurfaceEffectPos);
-        footprintEffect->setRotation(moveable->getRotationAngle());
-        return footprintEffect;
+        return createSurfaceEffectBasedOnEnv(env, moveable, newSurfaceEffectPos);
     }
     return nullptr;
 }
@@ -30,3 +30,17 @@ FootprintGenerator::FootprintGenerator(SpriteReg::CopyableConfig config, float m
           minDistFromLastGenSquared(minDistFromLastGeneration * minDistFromLastGeneration),
           footprintOffsetFromEntityCenter(footprintOffsetFromEntityCenter),
           isLeft(false) {}
+
+std::unique_ptr<SurfaceEffect>
+FootprintGenerator::createSurfaceEffectBasedOnEnv(int *envId, MoveableEntity *moveable, sf::Vector2f effectPos) {
+    if (envId && *envId == EnvTypes::WATER) {
+        auto splashEffect = std::make_unique<MediumSplash>(effectPos);
+        splashEffect->rotate(GlobalRand::getRandAngle());
+        return splashEffect;
+    } else {
+        auto footprintEffect = std::make_unique<SurfaceEffect>(spriteConfig);
+        footprintEffect->setPosition(effectPos);
+        footprintEffect->setRotation(moveable->getRotationAngle());
+        return footprintEffect;
+    }
+}

@@ -12,13 +12,13 @@ public:
     struct Config {
         Config(const std::string &spriteSheet, const sf::Vector2f &pos, const sf::Vector2f &origin,
                std::unique_ptr<AnimationPlayer> animPlayer = nullptr,
-               const sf::IntRect &defaultFrame = animConstants::EMPTY_FRAME);
+               sf::IntRect defaultFrame = animConstants::EMPTY_FRAME);
 
-        const std::string &spriteSheet;
-        const sf::Vector2f &pos;
-        const sf::Vector2f &origin;
+        std::string spriteSheet;
+        sf::Vector2f pos;
+        sf::Vector2f origin;
         std::unique_ptr<AnimationPlayer> animPlayer;
-        const sf::IntRect &defaultFrame;
+        sf::IntRect defaultFrame;
     };
 
     struct CopyableConfig {
