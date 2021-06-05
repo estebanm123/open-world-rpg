@@ -15,6 +15,8 @@ InitializerMetadataCollection constructDirtBeastInitializers() {
             std::make_unique<InitializerMetadata<Beast, sf::Vector2f>>(std::make_unique<SnakeInitializer>(), 3));
     beasts.push_back(
             std::make_unique<InitializerMetadata<Beast, sf::Vector2f>>(std::make_unique<BeetleInitializer>(), 10));
+    beasts.push_back(
+            std::make_unique<InitializerMetadata<Beast, sf::Vector2f>>(std::make_unique<Beetle2Initializer>(), 6));
     return beasts;
 }
 
@@ -29,6 +31,8 @@ InitializerMetadataCollection constructSandBeastInitializers() {
             std::make_unique<InitializerMetadata<Beast, sf::Vector2f>>(std::make_unique<SnakeInitializer>(), 25));
     beasts.push_back(
             std::make_unique<InitializerMetadata<Beast, sf::Vector2f>>(std::make_unique<BeetleInitializer>(), 15));
+    beasts.push_back(
+            std::make_unique<InitializerMetadata<Beast, sf::Vector2f>>(std::make_unique<Beetle2Initializer>(), 10));
     return beasts;
 }
 

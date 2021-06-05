@@ -56,7 +56,7 @@ std::unique_ptr<AnimationPlayer> CatInitializer::generateAnimPlayer(BeastInitial
 }
 
 float CatInitializer::getSpeed() {
-    return 150;
+    return GlobalRand::rand.getFloatInRange(100,200);
 }
 
 std::unique_ptr<SurfaceEffectGenerator> CatInitializer::generateSurfaceEffectGenerator(sf::Vector2f pos) {
@@ -113,7 +113,7 @@ std::unique_ptr<AnimationPlayer> SnakeInitializer::generateAnimPlayer(BeastIniti
 }
 
 float SnakeInitializer::getSpeed() {
-    return 23;
+    return GlobalRand::rand.getFloatInRange(15,25);
 }
 
 constexpr int BEETLE_FRAME_WIDTH = 15;
@@ -153,5 +153,45 @@ std::unique_ptr<AnimationPlayer> BeetleInitializer::generateAnimPlayer(BeastInit
 }
 
 float BeetleInitializer::getSpeed() {
-    return 18;
+    return GlobalRand::rand.getFloatInRange(13,20);
+}
+
+constexpr int BEETLE2_FRAME_WIDTH = 17;
+constexpr int BEETLE2_FRAME_HEIGHT = 18;
+constexpr int BEETLE2_HITBOX_WIDTH = 15;
+constexpr int BEETLE2_HITBOX_HEIGHT = 16;
+
+std::unique_ptr<BaseActivity<Beast>> Beetle2Initializer::generateActivities(BeastInitializer::Position pos) {
+    auto testActivities = ActivityManager<Beast>::Activities{};
+    auto randTravel = std::make_unique<RandomTravel<Beast>>(30, pos, 200, Idler{.4, 1, pos});
+    testActivities.push_front(std::move(randTravel));
+    return std::make_unique<ActivityManager<Beast>>(std::move(testActivities));
+}
+
+CollidableEntity::Config Beetle2Initializer::generateHitbox(BeastInitializer::Position pos) {
+    auto secondaryHitboxes = MultiHitbox::Hitboxes{};
+    secondaryHitboxes.push_back(std::make_unique<ViewCone>(pos, BEETLE2_HITBOX_WIDTH, BEETLE2_HITBOX_HEIGHT, 25));
+    return CollidableEntity::Config{
+            std::make_unique<SingleHitbox>(sf::FloatRect{pos.x, pos.y, BEETLE2_HITBOX_WIDTH, BEETLE2_HITBOX_HEIGHT}, 0,
+                                           std::make_unique<CollisionPhysics>()),
+            std::make_unique<MultiHitbox>(std::move(secondaryHitboxes))};
+}
+
+std::unique_ptr<SpriteReg>
+Beetle2Initializer::generateSprite(BeastInitializer::Position pos, std::unique_ptr<AnimationPlayer> animPlayer) {
+    return std::make_unique<ShadowedSpriteReg>(
+            ShadowedSpriteReg{NPC_SHADOW_PATH + "Bugs2", pos, {BEETLE2_FRAME_WIDTH / 2.f, BEETLE2_FRAME_HEIGHT / 2.f},
+                              std::move(animPlayer), .25});
+}
+
+std::unique_ptr<AnimationPlayer> Beetle2Initializer::generateAnimPlayer(BeastInitializer::Position pos) {
+    std::unordered_map<Action const *, std::unique_ptr<Animation>> anims;
+    anims.insert({&MoveableActions::Move, std::make_unique<RepeatingAnim>(
+            Animation::Metadata{BEETLE2_FRAME_WIDTH, BEETLE2_FRAME_HEIGHT, 0, 2, 0, 120, {2}, Animation::Priority::LOW, 0,
+                                true})});
+    return std::make_unique<AnimationPlayer>(std::move(anims));
+}
+
+float Beetle2Initializer::getSpeed() {
+    return GlobalRand::rand.getFloatInRange(50,70);
 }
