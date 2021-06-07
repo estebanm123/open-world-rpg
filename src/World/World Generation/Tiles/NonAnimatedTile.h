@@ -4,10 +4,6 @@
 
 class NonAnimatedTile : public Tile {
 public:
-// spritesheet path is taken from Env
-    NonAnimatedTile(const sf::IntRect &spriteSheetCoords, Metadata metadata);
+	// spritesheet path is taken from Env
+	NonAnimatedTile(const sf::IntRect &spriteSheetCoords, Metadata metadata);
 };
-
-
-
-

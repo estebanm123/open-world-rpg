@@ -1,18 +1,16 @@
 #pragma once
 
-
 #include "../../../../../Util/Initializer/PositionBasedInitializerPool.h"
 #include "Beast.h"
 
 struct DirtBeastFactory : PositionBasedInitializerPool<Beast> {
-    DirtBeastFactory();
+	DirtBeastFactory();
 };
 
 struct SandBeastFactory : PositionBasedInitializerPool<Beast> {
-    SandBeastFactory();
+	SandBeastFactory();
 };
 
 struct WaterBeastFactory : PositionBasedInitializerPool<Beast> {
-    WaterBeastFactory();
+	WaterBeastFactory();
 };
-

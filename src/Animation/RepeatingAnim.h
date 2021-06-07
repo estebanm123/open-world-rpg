@@ -4,9 +4,9 @@
 
 class RepeatingAnim : public Animation {
 public:
-    explicit RepeatingAnim(Metadata data);
+	explicit RepeatingAnim(Metadata data);
 
-    const sf::IntRect &getFrameAndAdvanceAnim() override;
+	const sf::IntRect &getFrameAndAdvanceAnim() override;
 
-    const sf::IntRect &peekNextFrame() const override;
+	const sf::IntRect &peekNextFrame() const override;
 };

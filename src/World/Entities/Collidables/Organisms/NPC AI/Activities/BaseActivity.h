@@ -1,42 +1,31 @@
 #pragma once
 
-
 #include "../../../../EntityVisitor/EntityVisitor.h"
 
-template<class Organism>
+template <class Organism>
 class NpcAi;
 
-
-template<class Organism>
+template <class Organism>
 class BaseActivity {
 public:
-    explicit BaseActivity() : ai(), finished(false), recurring(false) {};
+	explicit BaseActivity() : ai(), finished(false), recurring(false){};
 
-    virtual void initialize(NpcAi<Organism> *npcAi) {
-        ai = npcAi;
-    }
+	virtual void initialize(NpcAi<Organism> *npcAi) { ai = npcAi; }
 
-    virtual void update(float dt) = 0;
+	virtual void update(float dt) = 0;
 
-    virtual bool isFinished() const {
-        return finished;
-    };
+	virtual bool isFinished() const { return finished; };
 
-    virtual bool isRecurring() const {
-        return recurring;
-    };
+	virtual bool isRecurring() const { return recurring; };
 
-    void setFinished(bool activityFinished) {
-        finished = activityFinished;
-    };
+	void setFinished(bool activityFinished) { finished = activityFinished; };
 
-    virtual ~BaseActivity() = default;
+	virtual ~BaseActivity() = default;
 
 protected:
-    NpcAi<Organism> *ai;
+	NpcAi<Organism> *ai;
 
 private:
-    bool recurring;
-    bool finished;
+	bool recurring;
+	bool finished;
 };
-

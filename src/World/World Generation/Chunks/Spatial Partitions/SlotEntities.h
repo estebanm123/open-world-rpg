@@ -1,77 +1,75 @@
 #pragma once
 
-
-#include <unordered_set>
 #include <memory>
+#include <unordered_set>
+
 #include "../../../Entities/EntityVisitor/EntityVisitor.h"
 
 class SurfaceEffect;
 
 class MoveableEntity;
 
+class Entity;
+
 struct SlotEntities {
-    // could make this private, but it would just be a bunch of getters
-    std::unordered_set<std::shared_ptr<Entity>> entities;
-    std::unordered_set<MoveableEntity *> moveableEntities;
-    std::unordered_set<Prop *> mainProps;
-    std::unordered_set<Prop *> itemProps;
-    std::unordered_set<Prop *> decorProps;
-    std::unordered_set<SurfaceEffect *> surfaceEffects;
-    std::unordered_set<Humanoid *> humanoids;
+	// could make this private, but it would just be a bunch of getters
+	std::unordered_set<std::shared_ptr<Entity>> entities;
+	std::unordered_set<MoveableEntity *> moveableEntities;
+	std::unordered_set<Prop *> mainProps;
+	std::unordered_set<Prop *> itemProps;
+	std::unordered_set<Prop *> decorProps;
+	std::unordered_set<SurfaceEffect *> surfaceEffects;
+	std::unordered_set<Humanoid *> humanoids;
 
-    SlotEntities();
+	SlotEntities();
 
-    void addEntity(const std::shared_ptr<Entity> &entity);
+	void addEntity(const std::shared_ptr<Entity> &entity);
 
-    void removeEntity(Entity * entity);
+	void removeEntity(Entity *entity);
 
-    void removeEntity(const std::shared_ptr<Entity> &entity);
+	void removeEntity(const std::shared_ptr<Entity> &entity);
 
-    typedef std::unordered_set<MoveableEntity *>::iterator MoveableIter;
+	typedef std::unordered_set<MoveableEntity *>::iterator MoveableIter;
 
-    std::shared_ptr<Entity> removeMoveable(Entity *entity, MoveableIter &it);
-
+	std::shared_ptr<Entity> removeMoveable(Entity *entity, MoveableIter &it);
 
 private:
-    class Adder : EntityVisitor {
-    public:
-        void addEntity(const std::shared_ptr<Entity> &entity);
+	class Adder : EntityVisitor {
+	public:
+		void addEntity(const std::shared_ptr<Entity> &entity);
 
-        Adder(SlotEntities *slotEntities);
+		Adder(SlotEntities *slotEntities);
 
-    private:
-        void visit(Prop *prop) override;
+	private:
+		void visit(Prop *prop) override;
 
-        void visit(SurfaceEffect *surfaceEffect) override;
+		void visit(SurfaceEffect *surfaceEffect) override;
 
-        void visit(Humanoid *humanoid) override;
+		void visit(Humanoid *humanoid) override;
 
-        void visit(Beast *beast) override;
+		void visit(Beast *beast) override;
 
-        SlotEntities *slotEntities;
-    };
+		SlotEntities *slotEntities;
+	};
 
-    class Remover : EntityVisitor {
-    public:
-        void removeEntity(const std::shared_ptr<Entity> &entity);
+	class Remover : EntityVisitor {
+	public:
+		void removeEntity(const std::shared_ptr<Entity> &entity);
 
-        Remover(SlotEntities *slotEntities);
+		Remover(SlotEntities *slotEntities);
 
-    private:
-        void visit(Prop *prop) override;
+	private:
+		void visit(Prop *prop) override;
 
-        void visit(SurfaceEffect *surfaceEffect) override;
+		void visit(SurfaceEffect *surfaceEffect) override;
 
-        void visit(Humanoid *humanoid) override;
+		void visit(Humanoid *humanoid) override;
 
-        void visit(Beast *beast) override;
+		void visit(Beast *beast) override;
 
-        SlotEntities *slotEntities;
-    };
+		SlotEntities *slotEntities;
+	};
 
-    Adder adder;
-    Remover remover;
+	Adder adder;
+	Remover remover;
 };
-
-
-

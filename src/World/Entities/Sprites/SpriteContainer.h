@@ -6,33 +6,33 @@
 // composite part of composite pattern
 class SpriteContainer : public EntitySprite {
 public:
-    // Order of sprites is render order
-    explicit SpriteContainer(std::vector<std::unique_ptr<EntitySprite>> sprites);
+	// Order of sprites is render order
+	explicit SpriteContainer(std::vector<std::unique_ptr<EntitySprite>> sprites);
 
-    void renderBy(sf::RenderTarget &renderer) override;
+	void renderBy(sf::RenderTarget &renderer) override;
 
-    void playAnim(Action const *action) override;
+	void playAnim(Action const *action) override;
 
-    bool isAnimated() override;
+	bool isAnimated() override;
 
-    sf::Vector2f getSize() override;
+	sf::Vector2f getSize() override;
 
-    void playDefaultAnim() override;
+	void playDefaultAnim() override;
 
-    // TODO: set animPlayers?
+	// TODO: set animPlayers?
 
-    const sf::Vector2f &getPosition() const override;
+	const sf::Vector2f &getPosition() const override;
 
-    void setPosition(const sf::Vector2f &pos) override;
+	void setPosition(const sf::Vector2f &pos) override;
 
-    float getRotation() const override;
+	float getRotation() const override;
 
-    void setRotation(float angle) override;
+	void setRotation(float angle) override;
 
-    void move(const sf::Vector2f &offset) override;
+	void move(const sf::Vector2f &offset) override;
 
-    bool notCurrentlyPlayingAnim() override;
+	bool notCurrentlyPlayingAnim() override;
 
 private:
-    std::vector<std::unique_ptr<EntitySprite>> sprites;
+	std::vector<std::unique_ptr<EntitySprite>> sprites;
 };

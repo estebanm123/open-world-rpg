@@ -1,10 +1,4 @@
 #pragma once
 
-
 //
-struct Action {
-};
-
-
-
-
+struct Action {};

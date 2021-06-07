@@ -1,53 +1,51 @@
 #pragma once
 
-#include "../OrganismEntity.h"
 #include "../../../Sprites/SpriteContainer.h"
+#include "../OrganismEntity.h"
 
 struct HumanoidActions : public Actions {
-    static constexpr Action Touch{};
+	static constexpr Action Touch{};
 };
 
 class Humanoid : public OrganismEntity {
 public:
-    static constexpr int BASE_FRAME_WIDTH = 32;
-    static constexpr int BASE_FRAME_HEIGHT = 32;
+	static constexpr int BASE_FRAME_WIDTH = 32;
+	static constexpr int BASE_FRAME_HEIGHT = 32;
 
-    // TODO: add option to pass in a custom hitbox
-    Humanoid(const sf::Vector2f &globalPosition, const std::string &spriteSheetBody,
-             const std::string &spriteSheetHead, float initialSpeed);
+	// TODO: add option to pass in a custom hitbox
+	Humanoid(const sf::Vector2f &globalPosition,
+			 const std::string &spriteSheetBody,
+			 const std::string &spriteSheetHead,
+			 float initialSpeed);
 
-    ~Humanoid() override = default;
+	~Humanoid() override = default;
 
-    void accept(EntityVisitor * visitor) override;
+	void accept(EntityVisitor *visitor) override;
 
-    void attemptPickup();
+	void attemptPickup();
 
-    bool isAttemptingPickUp() const;
+	bool isAttemptingPickUp() const;
 
-    void setIsAttemptingPickUp(bool isAttemptingPickUp);
+	void setIsAttemptingPickUp(bool isAttemptingPickUp);
 
-    SingleHitbox * getPickUpHitbox();
+	SingleHitbox *getPickUpHitbox();
 
-    void update(float dt) override;
+	void update(float dt) override;
 
 protected:
-    EntitySprite &getSprite() override;
+	EntitySprite &getSprite() override;
 
-    SpriteContainer sprite;
-
+	SpriteContainer sprite;
 
 private:
-    bool isPickingUp = false;
-    SingleHitbox * pickupZone;
+	bool isPickingUp = false;
+	SingleHitbox *pickupZone;
 
-    SingleHitbox * initializePickUpZone(sf::Vector2f pos);
+	SingleHitbox *initializePickUpZone(sf::Vector2f pos);
 
-    static std::vector<std::unique_ptr<EntitySprite>>
-    initializeSprites(const sf::Vector2f &pos, const std::string &spriteSheetBody, const std::string &spriteSheetHead);
+	static std::vector<std::unique_ptr<EntitySprite>> initializeSprites(const sf::Vector2f &pos,
+																		const std::string &spriteSheetBody,
+																		const std::string &spriteSheetHead);
 
-    void initializeFootprintGenerator();
+	void initializeFootprintGenerator();
 };
-
-
-
-

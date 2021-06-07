@@ -1,39 +1,36 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+
 #include "Hitbox.h"
 
 class SingleHitbox;
 
-
 // Proxy for a collection of a Hitboxes
 class MultiHitbox : public Hitbox {
 public:
-    typedef std::vector<std::unique_ptr<SingleHitbox>> Hitboxes;
+	typedef std::vector<std::unique_ptr<SingleHitbox>> Hitboxes;
 
-    MultiHitbox(Hitboxes hitboxes);
+	MultiHitbox(Hitboxes hitboxes);
 
+	void move(const sf::Vector2f &offset) override;
 
-    void move(const sf::Vector2f &offset) override;
+	void handleCollision(CollidableEntity *receiver, MoveableEntity *moving) override;
 
-    void handleCollision(CollidableEntity *receiver, MoveableEntity *moving) override;
+	void handleCollision(CollidableEntity *receiverEntity, Prop *prop) override;
 
-    void handleCollision(CollidableEntity *receiverEntity, Prop *prop) override;
+	void setRotation(float angle) override;
 
-    void setRotation(float angle) override;
+	void rotate(float angle) override;
 
-    void rotate(float angle) override;
+	void setPosition(const sf::Vector2f &pos) override;
 
-    void setPosition(const sf::Vector2f &pos) override;
+	Hitboxes &getHitboxes();
 
-    Hitboxes & getHitboxes();
+	void renderBy(sf::RenderTarget &renderer) override;
 
-    void renderBy(sf::RenderTarget &renderer) override;
-
-    void addSingleHitbox(std::unique_ptr<SingleHitbox> singleHitbox);
+	void addSingleHitbox(std::unique_ptr<SingleHitbox> singleHitbox);
 
 private:
-    Hitboxes hitboxes;
+	Hitboxes hitboxes;
 };
-
-

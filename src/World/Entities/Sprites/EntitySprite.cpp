@@ -2,6 +2,4 @@
 
 #include "EntitySprite.h"
 
-void EntitySprite::rotate(float angle) {
-    setRotation(getRotation() + angle);
-}
+void EntitySprite::rotate(float angle) { setRotation(getRotation() + angle); }

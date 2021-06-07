@@ -1,10 +1,3 @@
 #pragma once
 
-
-class MultiTileContainer {
-
-};
-
-
-
-
+class MultiTileContainer {};

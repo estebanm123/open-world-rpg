@@ -1,14 +1,10 @@
 #pragma once
 
-#include <memory>
 #include <SFML/Audio.hpp>
+#include <memory>
 
-template<class Output, typename Arg>
+template <class Output, typename Arg>
 class ArgDependentInitializer {
 public:
-    virtual std::unique_ptr<Output> initialize(Arg arg) = 0;
+	virtual std::unique_ptr<Output> initialize(Arg arg) = 0;
 };
-
-
-
-

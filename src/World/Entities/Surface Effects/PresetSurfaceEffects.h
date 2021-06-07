@@ -4,6 +4,5 @@
 
 class MediumSplash : public SurfaceEffect {
 public:
-    MediumSplash(sf::Vector2f pos);
+	MediumSplash(sf::Vector2f pos);
 };
-

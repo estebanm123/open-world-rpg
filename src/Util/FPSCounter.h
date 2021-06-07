@@ -4,19 +4,19 @@
 
 class FPSCounter {
 public:
-    FPSCounter(sf::Vector2f pos);
+	FPSCounter(sf::Vector2f pos);
 
-    void setPosition(sf::Vector2f pos);
+	void setPosition(sf::Vector2f pos);
 
-    void update();
+	void update();
 
-    void renderBy(sf::RenderTarget &renderer);
+	void renderBy(sf::RenderTarget &renderer);
 
 private:
-    sf::Text text;
-    sf::Clock delayTimer;
-    sf::Clock fpsTimer;
+	sf::Text text;
+	sf::Clock delayTimer;
+	sf::Clock fpsTimer;
 
-    float fps = 0;
-    int frameCount = 0;
+	float fps = 0;
+	int frameCount = 0;
 };

@@ -5,6 +5,6 @@
 #include <SFML/Graphics.hpp>
 
 struct GlobalEdge {
-    sf::Vector2f vertexA;
-    sf::Vector2f vertexB;
+	sf::Vector2f vertexA;
+	sf::Vector2f vertexB;
 };

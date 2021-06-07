@@ -4,15 +4,14 @@
 
 #include "Observer.h"
 
-
 class Observable {
 public:
-    Observable() = default;
+	Observable() = default;
 
-    void notifyObservers(Observer::NotifType type);
+	void notifyObservers(Observer::NotifType type);
 
-    void addObserver(Observer *observer);
+	void addObserver(Observer *observer);
 
 private:
-    std::vector<Observer *> observers;
+	std::vector<Observer *> observers;
 };

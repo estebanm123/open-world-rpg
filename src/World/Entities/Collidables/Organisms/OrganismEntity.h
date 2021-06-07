@@ -4,17 +4,12 @@
 
 class OrganismEntity : public MoveableEntity {
 public:
+	explicit OrganismEntity(Config hitboxes, float initialSpeed);
 
-    explicit OrganismEntity(Config hitboxes, float initialSpeed);
+	//    virtual void sleep();
+	//    virtual void die();
 
-//    virtual void sleep();
-//    virtual void die();
-
-    ~OrganismEntity() override = default;
+	~OrganismEntity() override = default;
 
 protected:
 };
-
-
-
-

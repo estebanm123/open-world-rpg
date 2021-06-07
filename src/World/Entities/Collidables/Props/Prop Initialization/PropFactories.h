@@ -1,16 +1,15 @@
 #pragma once
 
-
 #include "PropFactory.h"
 
 struct SandPropFactory : public PropFactory {
-    SandPropFactory();
+	SandPropFactory();
 };
 
 struct DirtPropFactory : public PropFactory {
-    DirtPropFactory();
+	DirtPropFactory();
 };
 
 struct WaterPropFactory : public PropFactory {
-    WaterPropFactory();
+	WaterPropFactory();
 };

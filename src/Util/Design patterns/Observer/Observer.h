@@ -2,16 +2,11 @@
 
 class Observable;
 
-
 class Observer {
-
 public:
-    enum NotifType {
-        PLAYER_HIT,
-        ENEMY_KILLED
-    };
+	enum NotifType { PLAYER_HIT, ENEMY_KILLED };
 
-    virtual void update(const Observable &info, NotifType type) = 0;
+	virtual void update(const Observable &info, NotifType type) = 0;
 
-    virtual ~Observer() = default;
+	virtual ~Observer() = default;
 };

@@ -1,14 +1,14 @@
 #include "Semaphore.h"
 
 void Semaphore::down() {
-    std::unique_lock<std::mutex> lck(mux);
+	std::unique_lock<std::mutex> lck(mux);
 
-    if (--value < 0) {
-        waitcond.wait(lck);
-    }
+	if (--value < 0) {
+		waitcond.wait(lck);
+	}
 }
 
 void Semaphore::up() {
-    std::unique_lock<std::mutex> lck(mux);
-    if (++value <= 0) waitcond.notify_one();
+	std::unique_lock<std::mutex> lck(mux);
+	if (++value <= 0) waitcond.notify_one();
 }

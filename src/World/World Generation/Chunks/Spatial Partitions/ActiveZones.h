@@ -4,12 +4,10 @@
 #include "ActiveZone.h"
 
 struct ActiveZones {
-    ActiveZone renderZone;
-    ActiveZone updateZone;
+	ActiveZone renderZone;
+	ActiveZone updateZone;
 
-    ActiveZones(sf::Vector2f playerPos, sf::Vector2i renderZoneSize, sf::Vector2i updateZoneSize);
+	ActiveZones(sf::Vector2f playerPos, sf::Vector2i renderZoneSize, sf::Vector2i updateZoneSize);
 
-    void updateZones(float dt, sf::Vector2f playerPos);
+	void updateZones(float dt, sf::Vector2f playerPos);
 };
-
-

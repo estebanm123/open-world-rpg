@@ -4,11 +4,11 @@
 
 class ToggleKey {
 public:
-    ToggleKey(sf::Keyboard::Key);
+	ToggleKey(sf::Keyboard::Key);
 
-    bool isKeyPressed();
+	bool isKeyPressed();
 
 private:
-    sf::Keyboard::Key key;
-    sf::Clock delayTimer;
+	sf::Keyboard::Key key;
+	sf::Clock delayTimer;
 };

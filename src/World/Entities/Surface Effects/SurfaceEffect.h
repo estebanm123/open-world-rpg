@@ -5,23 +5,23 @@
 
 class SurfaceEffect : public Entity {
 public:
-    // For animated SurfaceEffects
-    SurfaceEffect(SpriteReg::Config config);
+	// For animated SurfaceEffects
+	SurfaceEffect(SpriteReg::Config config);
 
-    SurfaceEffect(SpriteReg::CopyableConfig config);
+	SurfaceEffect(SpriteReg::CopyableConfig config);
 
-    void update(float dt) override;
+	void update(float dt) override;
 
-    bool isReadyToBeRemoved();
+	bool isReadyToBeRemoved();
 
-    void accept(EntityVisitor *visitor) override;
+	void accept(EntityVisitor *visitor) override;
 
 protected:
-    EntitySprite &getSprite() override;
+	EntitySprite &getSprite() override;
 
 private:
-    SpriteReg sprite;
-    bool hasDefaultAnim;
-    bool isReadyForRemoval = false;
-    // todo: ttl/ mark for fade
+	SpriteReg sprite;
+	bool hasDefaultAnim;
+	bool isReadyForRemoval = false;
+	// todo: ttl/ mark for fade
 };

@@ -1,13 +1,12 @@
 
 
-
-//void SmallGunAnimationPlayer::resetAnimation() {
+// void SmallGunAnimationPlayer::resetAnimation() {
 //    curAnim = idleAnim;
 //    curAnim->resetAnimation();
 //}
 //
 //
-//std::shared_ptr<Animation> SmallGunAnimationPlayer::initializeMoveAnim() {
+// std::shared_ptr<Animation> SmallGunAnimationPlayer::initializeMoveAnim() {
 //    using namespace animConstants;
 //    auto row = 1;
 //    auto priority = 0;
@@ -19,7 +18,7 @@
 //    return std::make_shared<RepeatingAnim>(data);
 //}
 //
-//std::shared_ptr<Animation> SmallGunAnimationPlayer::initializeIdleAnim() {
+// std::shared_ptr<Animation> SmallGunAnimationPlayer::initializeIdleAnim() {
 //    using namespace animConstants;
 //    auto row = 1;
 //    auto priority = 0;
@@ -31,7 +30,7 @@
 //    return std::make_shared<RepeatingAnim>(data);
 //}
 //
-//std::shared_ptr<Animation> SmallGunAnimationPlayer::initializeUseAnim() {
+// std::shared_ptr<Animation> SmallGunAnimationPlayer::initializeUseAnim() {
 //    using namespace animConstants;
 //    auto row = 1;
 //    auto priority = 2;
