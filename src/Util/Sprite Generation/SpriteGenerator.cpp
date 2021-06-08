@@ -4,18 +4,28 @@
 
 #include "../../Resource Managers/ResourceHolder.h"
 
-bool spriteAlreadyGenerated(const std::string& spriteSheetPath, const std::string& suffix) {
-	return spriteSheetPath.find(suffix) != std::string::npos;
+bool isSheetPathValid(const std::string& spriteSheetPath, const SpriteGenerator::Config& config) {
+	if (spriteSheetPath.find(config.suffix) != std::string::npos) {
+		return false;
+	}
+	for (auto & keyword : config.keywordsInFilenamesToIgnore) {
+		if (spriteSheetPath.find(keyword) != std::string::npos) {
+			return false;
+		}
+	}
+
+	return true;
 }
 
 void SpriteGenerator::generateSprites(const std::vector<std::string>& directories,
-									  const std::string& suffix,
-									  PixelEffects pixelEffects) {
+									  PixelEffects pixelEffects,
+									  const Config& config) {
+	auto suffix = config.suffix;
 	auto pixelEffectsMoved = std::move(pixelEffects);
 	for (auto& spriteSheetDir : directories) {
 		auto sheetPaths = ResourceHolder::get().textures.fetchAllResourcesInFolder(spriteSheetDir);
 		for (auto& sheetPath : sheetPaths) {
-			if (spriteAlreadyGenerated(sheetPath, suffix)) continue;
+			if (!isSheetPathValid(sheetPath, config)) continue;
 
 			auto spriteSheet = ResourceHolder::get().textures.get(sheetPath);
 			auto img = spriteSheet.copyToImage();
@@ -32,9 +42,9 @@ void SpriteGenerator::generateSprites(const std::vector<std::string>& directorie
 	ResourceHolder::get().textures.clear();
 }
 void SpriteGenerator::generateSprites(const std::vector<std::string>& directories,
-									  const std::string& suffix,
-									  std::unique_ptr<PixelEffect> pixelEffect) {
-	PixelEffects tempContainer{};
-	tempContainer.push_back(std::move(pixelEffect));
-	generateSprites(directories, suffix, std::move(tempContainer));
+									  std::unique_ptr<PixelEffect> pixelEffect,
+									  const Config& config) {
+	PixelEffects effects{};
+	effects.push_back(std::move(pixelEffect));
+	generateSprites(directories, std::move(effects), config);
 }

@@ -8,8 +8,6 @@
 #include <unordered_map>
 #include <unordered_set>
 
-#include "../Util/Sprite Generation/SpriteShadowGenerator.h"
-
 inline const std::string ROOT = "res/";	 // refactor to portable path
 
 namespace fs = std::experimental::filesystem;

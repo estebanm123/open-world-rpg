@@ -9,7 +9,7 @@ Game::Game()
         : window({1280, 720}, "Test") {
 
 
-    int arbitraryPlaceholderSeed = 5;
+    int arbitraryPlaceholderSeed = 10;
     GlobalRand::initGlobalRand(arbitraryPlaceholderSeed);
 	SpriteGeneratorManager::generateSprites();
     window.setPosition({window.getPosition().x, 0});
