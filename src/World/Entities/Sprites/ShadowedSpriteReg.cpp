@@ -1,7 +1,7 @@
 #include "ShadowedSpriteReg.h"
 
 #include "../../../Animation/AnimationPlayer.h"
-#include "../../../Util/SpriteShadowGenerator.h"
+#include "../../../Util/Sprite Generation/SpriteShadowGenerator.h"
 
 const inline auto DEFAULT_SHADOW_OFFSET = 5;
 const inline float OFFSET_HEIGHT_PROPORTION = 0.15;

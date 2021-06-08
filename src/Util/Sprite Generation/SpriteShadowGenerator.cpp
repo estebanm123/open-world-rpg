@@ -4,11 +4,9 @@
 
 #include <unordered_set>
 
-#include "../Resource Managers/ResourceHolder.h"
+#include "../../Resource Managers/ResourceHolder.h"
 
-const std::unordered_set<std::string> SpriteShadowGenerator::DIRECTORIES = {"Foliage/Shadow/",
-																			"Player/Shadow/",
-																			"Npc/Shadow/"};
+const std::unordered_set<std::string> SpriteShadowGenerator::DIRECTORIES;
 
 const std::string SpriteShadowGenerator::SHADOW_SUFFIX = "-shadow";
 

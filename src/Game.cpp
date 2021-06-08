@@ -1,18 +1,19 @@
 #include "Game.h"
 
 #include "States/StatePlaying.h"
-#include "World/World Generation/Environments/EnvTypes.h"
 #include "Util/Random/GlobalRand.h"
+#include "Util/Sprite Generation/SpriteGeneratorManager.h"
+#include "World/World Generation/Environments/EnvTypes.h"
 
 Game::Game()
         : window({1280, 720}, "Test") {
 
 
-    int arbitraryPlaceholderSeed = 1;
+    int arbitraryPlaceholderSeed = 5;
     GlobalRand::initGlobalRand(arbitraryPlaceholderSeed);
-    SpriteShadowGenerator::generateMissingShadowSprites();
+	SpriteGeneratorManager::generateSprites();
     window.setPosition({window.getPosition().x, 0});
-    window.setFramerateLimit(120);
+    window.setFramerateLimit(500);
     EnvTypes::initialize();
     pushState<StatePlaying>(*this);
 }
