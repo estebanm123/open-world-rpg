@@ -13,6 +13,8 @@ public:
 
 	static void print(const sf::ConvexShape &s);
 
+	static void print(const sf::Color & color);
+
 	template <typename T>
 	static void print(const sf::Vector2<T> &v, const std::string &suffix = "") {
 		std::cout << v.x << "," << v.y << suffix;

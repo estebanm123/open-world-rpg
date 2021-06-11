@@ -16,3 +16,7 @@ void DebugPrint::separator() {
 }
 
 void DebugPrint::newLine() { cout << std::endl; }
+
+void DebugPrint::print(const sf::Color& color) {
+	std::cout << to_string(color.r) << " " << to_string(color.g) << " " << to_string(color.b) << " " << to_string(color.a);
+}
