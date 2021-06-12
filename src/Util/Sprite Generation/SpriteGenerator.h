@@ -13,6 +13,7 @@ public:
 	struct Config {
 		std::string suffix;
 		std::vector<std::string> keywordsInFilenamesToIgnore;
+		std::string outputPath;
 	};
 
 	// Creates new files

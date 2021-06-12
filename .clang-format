@@ -3,12 +3,13 @@ BasedOnStyle: Google
 AccessModifierOffset: -4
 AlignConsecutiveAssignments: 'false'
 AlignConsecutiveDeclarations: 'false'
+AlignAfterOpenBracket: 'true'
 AllowAllArgumentsOnNextLine: 'false'
 AllowAllConstructorInitializersOnNextLine: 'false'
 AllowAllParametersOfDeclarationOnNextLine: 'false'
 BinPackArguments: 'false'
 BinPackParameters: 'false'
-ColumnLimit: '120'
+ColumnLimit: '100'
 IndentWidth: '4'
 Standard: Auto
 TabWidth: '4'

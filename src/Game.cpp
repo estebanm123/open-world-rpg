@@ -7,18 +7,15 @@
 
 Game::Game()
         : window({1280, 720}, "Test") {
-
-
     int arbitraryPlaceholderSeed = 10;
     GlobalRand::initGlobalRand(arbitraryPlaceholderSeed);
 	SpriteGeneratorManager::generateSprites();
     window.setPosition({window.getPosition().x, 0});
-    window.setFramerateLimit(500);
+    window.setFramerateLimit(1000);
     EnvTypes::initialize();
     pushState<StatePlaying>(*this);
 }
 
-//Runs the main loop
 void Game::run() {
     constexpr unsigned TPS = 30; //ticks per seconds
     const auto timePerUpdate = sf::seconds(1.0f / float(TPS));
@@ -28,11 +25,9 @@ void Game::run() {
     auto lastTime = sf::Time::Zero;
     auto lag = sf::Time::Zero;
 
-    //Main loop of the game
     while (window.isOpen() && !states.empty()) {
         auto &state = getCurrentState();
 
-        //Get times
         auto const time = timer.getElapsedTime();
         auto const elapsed = time - lastTime;
         lastTime = time;
@@ -49,7 +44,6 @@ void Game::run() {
             state.fixedUpdate(elapsed);
         }
 
-        //Render
         window.clear();
         state.render(window);
         window.display();
