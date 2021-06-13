@@ -34,7 +34,7 @@ void SpriteGenerator::generateSprites(const std::vector<std::string>& directorie
 				pixelEffect->applyPixelEffect(img);
 			}
 
-			auto outputPath = config.outputPath != ""? config.outputPath : sheetPath;
+			auto outputPath = !config.outputPath.empty()? "" : sheetPath;
 			auto completePath = ResourceHolder::get().textures.getFullFilename(outputPath + suffix);
 			img.saveToFile(completePath);
 		}

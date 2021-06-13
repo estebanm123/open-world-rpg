@@ -2,7 +2,7 @@
 
 #include <unordered_set>
 
-#include "ColorFrequencyCounter.h"
+#include "../ColorFrequencyCounter.h"
 #include "PixelEffect.h"
 
 typedef sf::Uint32 ColorInt;

@@ -4,9 +4,9 @@
 
 #include <utility>
 
-#include "../Debug/DebugPrint.h"
-#include "ColorFrequencyCounter.h"
-#include "SpriteGeneratorManager.h"
+#include "../../Debug/DebugPrint.h"
+#include "../ColorFrequencyCounter.h"
+#include "../SpriteGeneratorManager.h"
 
 sf::Uint8 updateRgbComponentBasedOnLimits(int val) { return abs(val) % 256; }
 
