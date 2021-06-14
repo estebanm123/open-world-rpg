@@ -22,32 +22,40 @@ void generateShadows() {
 
 void generateColorsTest() {
 	for (auto i = 1000; i < 1500; i += 3) {
+//		SpriteGenerator::generateSprites(
+//			{"Player/Shadow/"},
+//			std::make_unique<ColorChangerPixelEffect>(i,
+//													  std::vector<ColorInt>{0xffc567ff,
+//																			0xffb236ff,
+//																			0xffb236ff,
+//																			0xffb744ff,
+//																			0xecb356ff,
+//																			0xf6b46bff,
+//																			0xffbb4eff},
+//													  50000,
+//													  false,
+//													  true),
+//			Config{COlOR_TEST_SUFFIX + std::to_string(i),
+//				   {SHADOW_SUFFIX, COlOR_TEST_SUFFIX},
+//				   "Player/TestSprites/body32"});
 		SpriteGenerator::generateSprites(
-			{"Player/Shadow/"},
+			{"Npc/Shadow/"},
 			std::make_unique<ColorChangerPixelEffect>(i,
-													  std::vector<ColorInt>{0xffc567ff,
-																			0xffb236ff,
-																			0xffb236ff,
-																			0xffb744ff,
-																			0xecb356ff,
-																			0xf6b46bff,
-																			0xffbb4eff},
-													  50000,
+													  std::vector<ColorInt>{},
+													  INT32_MAX,
 													  false,
 													  true),
-			Config{COlOR_TEST_SUFFIX + std::to_string(i),
-				   {SHADOW_SUFFIX, COlOR_TEST_SUFFIX},
-				   "Player/TestSprites/body32"});
+			Config{"-variant" + std::to_string(i), {SHADOW_SUFFIX, COlOR_TEST_SUFFIX, "-variant"}});
 	}
 }
 
 void generateSizeTest() {
-	for (auto i = 1; i < 2; i++) {
-		SpriteGenerator::generateSprites({"Player/TestSprites/"},
+	for (auto i = 1; i < 3; i++) {
+		SpriteGenerator::generateSprites({"Player/TestSprites/", "Npc/Shadow/"},
 										 std::make_unique<ExpandEffect>(),
 										 Config{
 											 SIZE_TEST_SUFFIX + std::to_string(i),
-											 {SHADOW_SUFFIX, SIZE_TEST_SUFFIX},
+											 {SHADOW_SUFFIX},
 										 });
 	}
 }
