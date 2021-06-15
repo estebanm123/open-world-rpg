@@ -12,7 +12,7 @@ std::unique_ptr<Beast> BeastInitializer::initialize(BeastInitializer::Position p
 	auto hitbox = generateHitbox(pos);
 
 	auto animPlayer = generateAnimPlayer(pos);
-	auto sprite = generateSprite(pos, std::move(animPlayer));
+	auto sprite = generateSprite(pos, std::move(animPlayer), generateSpriteSheetPath());
 
 	auto beast = std::make_unique<Beast>(std::move(hitbox), std::move(ai), std::move(sprite), getSpeed());
 	auto surfaceEffectGenerator = generateSurfaceEffectGenerator(pos);

@@ -17,7 +17,7 @@ const std::string SIZE_TEST_SUFFIX = "-size";
 void generateShadows() {
 	SpriteGenerator::generateSprites({"Foliage/Shadow/", "Player/Shadow/", "Npc/Shadow/"},
 									 std::make_unique<ShadowPixelEffect>(),
-									 Config{SHADOW_SUFFIX, {COlOR_TEST_SUFFIX}});
+									 Config{SHADOW_SUFFIX, {COlOR_TEST_SUFFIX, SIZE_TEST_SUFFIX}});
 }
 
 void generateColorsTest() {
@@ -45,7 +45,7 @@ void generateColorsTest() {
 													  INT32_MAX,
 													  false,
 													  true),
-			Config{"-variant" + std::to_string(i), {SHADOW_SUFFIX, COlOR_TEST_SUFFIX, "-variant"}});
+			Config{COlOR_TEST_SUFFIX + std::to_string(i), {SHADOW_SUFFIX, COlOR_TEST_SUFFIX, SIZE_TEST_SUFFIX, "-variant"}});
 	}
 }
 
@@ -62,6 +62,7 @@ void generateSizeTest() {
 
 void SpriteGeneratorManager::generateSprites() {
 	generateShadows();
+	return;
 	generateColorsTest();
 	generateSizeTest();
 }

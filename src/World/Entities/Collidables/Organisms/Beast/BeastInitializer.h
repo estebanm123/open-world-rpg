@@ -17,7 +17,11 @@ protected:
 
 	virtual CollidableEntity::Config generateHitbox(Position pos) = 0;
 
-	virtual std::unique_ptr<SpriteReg> generateSprite(Position pos, std::unique_ptr<AnimationPlayer> animPlayer) = 0;
+	virtual std::string generateSpriteSheetPath() = 0;
+
+	virtual std::unique_ptr<SpriteReg> generateSprite(Position pos,
+													  std::unique_ptr<AnimationPlayer> animPlayer,
+													  const std::string& spriteSheetPath) = 0;
 
 	virtual std::unique_ptr<AnimationPlayer> generateAnimPlayer(Position pos) = 0;
 

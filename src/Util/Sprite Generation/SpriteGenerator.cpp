@@ -1,7 +1,6 @@
 
 
 #include "SpriteGenerator.h"
-
 #include "../../Resource Managers/ResourceHolder.h"
 
 bool isSheetPathValid(const std::string& spriteSheetPath, const SpriteGenerator::Config& config) {

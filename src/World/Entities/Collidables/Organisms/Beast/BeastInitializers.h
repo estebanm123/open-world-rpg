@@ -8,11 +8,15 @@ protected:
 
 	CollidableEntity::Config generateHitbox(Position pos) override;
 
-	std::unique_ptr<SpriteReg> generateSprite(Position pos, std::unique_ptr<AnimationPlayer> animPlayer) override;
+	std::unique_ptr<SpriteReg> generateSprite(Position pos,
+											  std::unique_ptr<AnimationPlayer> animPlayer,
+											  const std::string& spriteSheetPath) override;
 
 	std::unique_ptr<AnimationPlayer> generateAnimPlayer(Position pos) override;
+	std::string generateSpriteSheetPath() override;
 
-	std::unique_ptr<SurfaceEffectGenerator> generateSurfaceEffectGenerator(sf::Vector2f pos) override;
+	std::unique_ptr<SurfaceEffectGenerator> generateSurfaceEffectGenerator(
+		sf::Vector2f pos) override;
 
 	float getSpeed() override;
 };
@@ -25,8 +29,10 @@ protected:
 
 	CollidableEntity::Config generateHitbox(Position pos) override;
 
-	std::unique_ptr<SpriteReg> generateSprite(Position pos, std::unique_ptr<AnimationPlayer> animPlayer) override;
-
+	std::unique_ptr<SpriteReg> generateSprite(Position pos,
+											  std::unique_ptr<AnimationPlayer> animPlayer,
+											  const std::string& spriteSheetPath) override;
+	std::string generateSpriteSheetPath() override;
 	std::unique_ptr<AnimationPlayer> generateAnimPlayer(Position pos) override;
 };
 
@@ -36,10 +42,12 @@ protected:
 
 	CollidableEntity::Config generateHitbox(Position pos) override;
 
-	std::unique_ptr<SpriteReg> generateSprite(Position pos, std::unique_ptr<AnimationPlayer> animPlayer) override;
+	std::unique_ptr<SpriteReg> generateSprite(Position pos,
+											  std::unique_ptr<AnimationPlayer> animPlayer,
+											  const std::string& spriteSheetPath) override;
 
 	std::unique_ptr<AnimationPlayer> generateAnimPlayer(Position pos) override;
-
+	std::string generateSpriteSheetPath() override;
 	float getSpeed() override;
 };
 
@@ -49,9 +57,11 @@ protected:
 
 	CollidableEntity::Config generateHitbox(Position pos) override;
 
-	std::unique_ptr<SpriteReg> generateSprite(Position pos, std::unique_ptr<AnimationPlayer> animPlayer) override;
+	std::unique_ptr<SpriteReg> generateSprite(Position pos,
+											  std::unique_ptr<AnimationPlayer> animPlayer,
+											  const std::string& spriteSheetPath) override;
 
 	std::unique_ptr<AnimationPlayer> generateAnimPlayer(Position pos) override;
-
+	std::string generateSpriteSheetPath() override;
 	float getSpeed() override;
 };

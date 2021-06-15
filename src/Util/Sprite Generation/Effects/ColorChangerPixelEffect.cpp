@@ -67,16 +67,24 @@ bool ColorChangerPixelEffect::isColorValid(sf::Color color,
 	return false;
 }
 
-void initializeComponentSemiRandomly(int changeAmount, int& target, bool overrideRandomness) {
-	auto shouldDecrement = SpriteGeneratorManager::rand.getIntInRange(0, 1);
-	if (shouldDecrement || overrideRandomness) {
+void ColorChangerPixelEffect::initializeComponentChangeRandomly(int maxChange,
+																int& target,
+																bool overrideRandomness) {
+	if (overrideRandomness) {
+		target = maxChange;
+		return;
+	}
+
+	auto shouldDecrement = rand.getIntInRange(0, 1);
+	auto changeAmount = rand.getIntInRange(maxChange / 3, maxChange);
+	if (shouldDecrement) {
 		target = -changeAmount;
 	} else {
 		target = changeAmount;
 	}
 }
 
-ColorChangerPixelEffect::ColorChangerPixelEffect(int changeAmount,
+ColorChangerPixelEffect::ColorChangerPixelEffect(int id,
 												 std::vector<ColorInt> targetColors,
 												 int minColorFrequencyForTarget,
 												 bool overrideRandomness,
@@ -84,7 +92,9 @@ ColorChangerPixelEffect::ColorChangerPixelEffect(int changeAmount,
 	: minColorFrequencyForEffect(minColorFrequencyForTarget),
 	  avoidTargetColors(avoidTargetColors) {
 	baseTargetColors.insert(targetColors.begin(), targetColors.end());
-	initializeComponentSemiRandomly(changeAmount, rChange, overrideRandomness);
-	initializeComponentSemiRandomly(changeAmount, gChange, overrideRandomness);
-	initializeComponentSemiRandomly(changeAmount, bChange, overrideRandomness);
+    auto largePrime = 39916801;
+    rand = {id * largePrime};
+	initializeComponentChangeRandomly(id, rChange, overrideRandomness);
+	initializeComponentChangeRandomly(id, gChange, overrideRandomness);
+	initializeComponentChangeRandomly(id, bChange, overrideRandomness);
 }
