@@ -7,20 +7,37 @@
 inline const std::string NPC_BASE_PATH = "Npc/";
 inline const std::string NPC_SHADOW_PATH = NPC_BASE_PATH + "Shadow/";
 
-namespace BeastSpritesConstants {
+inline const std::string SHADOW_SUFFIX = "-sh";
+inline const std::string COlOR_TEST_SUFFIX = "-";
+inline const std::string SIZE_TEST_SUFFIX = "-si";
+
+namespace SpriteConstants {
 inline const std::string CAT = NPC_SHADOW_PATH + "Cat";
 inline const std::string SNAKE = NPC_SHADOW_PATH + "Snake";
 inline const std::string BUGS = NPC_SHADOW_PATH + "Bugs";
 inline const std::string BUGS2 = NPC_SHADOW_PATH + "Bugs2";
 
+constexpr int NO_VARIANT = 0;
+constexpr int NO_SIZE_ID = 0;
+
+struct Paths {
+	std::string
+		basePath;  // includes size id; excludes variant id - shadows, silhouettes, etc.. are based on this
+	std::string variantPath;  // includes variant id
+};
+
 struct VariantMetadata {
-	std::vector<int> whiteListedVariantIds;
-	int numSizeVariations = 2;
+	const std::vector<int> whiteListedVariantIds;
+	const int numSizeVariations = 1;
 };
 
-inline const std::unordered_map<std::string, VariantMetadata> VariantMetadataMap{
-	{CAT, VariantMetadata{std::vector<int>{500}}}
-
+struct SpriteVariantInfo {	// for a single sprite
+	int id;
+	int sizeAmount;
 };
 
-}  // namespace BeastSpritesConstants
+inline const std::unordered_map<std::string, VariantMetadata> variantMetadataMap{
+	//	{CAT, VariantMetadata{std::vector<int>{NO_VARIANT, 500}, 2}}
+};
+
+}  // namespace SpriteConstants

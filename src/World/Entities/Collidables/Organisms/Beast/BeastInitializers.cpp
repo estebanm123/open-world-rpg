@@ -1,13 +1,13 @@
 #include "BeastInitializers.h"
 
 #include "../../../../../Animation/RepeatingAnim.h"
+#include "../../../../../Util/SpriteConstants.h"
 #include "../../../Surface Effects/FootprintGenerator.h"
 #include "../../Collision Physics/BlockingPhysics.h"
 #include "../../Hitbox/ViewCone.h"
 #include "../NPC AI/Activities/Activity Managers/ActivityManager.h"
 #include "../NPC AI/Activities/RandomTravel.h"
 #include "../NPC AI/NpcAi.h"
-#include "../../../../../Util/SpriteConstants.h"
 
 const std::string NPC_FOOTPRINT_PATH = NPC_BASE_PATH + "Footprints/";
 
@@ -38,12 +38,15 @@ CollidableEntity::Config CatInitializer::generateHitbox(BeastInitializer::Positi
 std::unique_ptr<SpriteReg> CatInitializer::generateSprite(
 	Position pos,
 	std::unique_ptr<AnimationPlayer> animPlayer,
-	const std::string &spriteSheetPath) {
+	const SpriteConstants::Paths &spriteSheetPaths) {
 	return std::make_unique<ShadowedSpriteReg>(
-		ShadowedSpriteReg{spriteSheetPath,
+		ShadowedSpriteReg{spriteSheetPaths.basePath,
 						  pos,
 						  {CAT_FRAME_WIDTH / 2.f, CAT_FRAME_HEIGHT / 2.f},
-						  std::move(animPlayer)});
+						  std::move(animPlayer),
+						  1,
+						  sf::IntRect{},
+						  spriteSheetPaths.variantPath});
 }
 
 std::unique_ptr<AnimationPlayer> CatInitializer::generateAnimPlayer(
@@ -83,7 +86,7 @@ std::unique_ptr<SurfaceEffectGenerator> CatInitializer::generateSurfaceEffectGen
 	return nullptr;	 // TEMP
 	return std::make_unique<FootprintGenerator>(footprintGenerator);
 }
-std::string CatInitializer::generateBaseSpriteSheetPath() { return BeastSpritesConstants::CAT; }
+std::string CatInitializer::generateBaseSpriteSheetPath() { return SpriteConstants::CAT; }
 
 constexpr int SNAKE_FRAME_WIDTH = 12;
 constexpr int SNAKE_FRAME_HEIGHT = 34;
@@ -113,13 +116,15 @@ CollidableEntity::Config SnakeInitializer::generateHitbox(BeastInitializer::Posi
 std::unique_ptr<SpriteReg> SnakeInitializer::generateSprite(
 	Position pos,
 	std::unique_ptr<AnimationPlayer> animPlayer,
-	const std::string &spriteSheetPath) {
+	const SpriteConstants::Paths &spriteSheetPaths) {
 	return std::make_unique<ShadowedSpriteReg>(
-		ShadowedSpriteReg{spriteSheetPath,
+		ShadowedSpriteReg{spriteSheetPaths.basePath,
 						  pos,
 						  {SNAKE_FRAME_WIDTH / 2.f, SNAKE_FRAME_HEIGHT / 2.f},
 						  std::move(animPlayer),
-						  .3});
+						  .3,
+						  sf::IntRect{},
+						  spriteSheetPaths.variantPath});
 }
 
 std::unique_ptr<AnimationPlayer> SnakeInitializer::generateAnimPlayer(
@@ -150,7 +155,7 @@ std::unique_ptr<AnimationPlayer> SnakeInitializer::generateAnimPlayer(
 }
 
 float SnakeInitializer::getSpeed() { return GlobalRand::rand.getFloatInRange(15, 25); }
-std::string SnakeInitializer::generateBaseSpriteSheetPath() { return BeastSpritesConstants::SNAKE; }
+std::string SnakeInitializer::generateBaseSpriteSheetPath() { return SpriteConstants::SNAKE; }
 
 constexpr int BEETLE_FRAME_WIDTH = 15;
 constexpr int BEETLE_FRAME_HEIGHT = 10;
@@ -180,13 +185,15 @@ CollidableEntity::Config BeetleInitializer::generateHitbox(BeastInitializer::Pos
 std::unique_ptr<SpriteReg> BeetleInitializer::generateSprite(
 	Position pos,
 	std::unique_ptr<AnimationPlayer> animPlayer,
-	const std::string &spriteSheetPath) {
+	const SpriteConstants::Paths &spriteSheetPaths) {
 	return std::make_unique<ShadowedSpriteReg>(
-		ShadowedSpriteReg{spriteSheetPath,
+		ShadowedSpriteReg{spriteSheetPaths.basePath,
 						  pos,
 						  {BEETLE_FRAME_WIDTH / 2.f, BEETLE_FRAME_HEIGHT / 2.f},
 						  std::move(animPlayer),
-						  .25});
+						  .25,
+						  sf::IntRect{},
+						  spriteSheetPaths.variantPath});
 }
 
 std::unique_ptr<AnimationPlayer> BeetleInitializer::generateAnimPlayer(
@@ -208,7 +215,7 @@ std::unique_ptr<AnimationPlayer> BeetleInitializer::generateAnimPlayer(
 
 float BeetleInitializer::getSpeed() { return GlobalRand::rand.getFloatInRange(13, 20); }
 
-std::string BeetleInitializer::generateBaseSpriteSheetPath() { return BeastSpritesConstants::BUGS; }
+std::string BeetleInitializer::generateBaseSpriteSheetPath() { return SpriteConstants::BUGS; }
 
 constexpr int BEETLE2_FRAME_WIDTH = 17;
 constexpr int BEETLE2_FRAME_HEIGHT = 18;
@@ -238,13 +245,15 @@ CollidableEntity::Config Beetle2Initializer::generateHitbox(BeastInitializer::Po
 std::unique_ptr<SpriteReg> Beetle2Initializer::generateSprite(
 	Position pos,
 	std::unique_ptr<AnimationPlayer> animPlayer,
-	const std::string &spriteSheetPath) {
+	const SpriteConstants::Paths &spriteSheetPaths) {
 	return std::make_unique<ShadowedSpriteReg>(
-		ShadowedSpriteReg{spriteSheetPath,
+		ShadowedSpriteReg{spriteSheetPaths.basePath,
 						  pos,
 						  {BEETLE2_FRAME_WIDTH / 2.f, BEETLE2_FRAME_HEIGHT / 2.f},
 						  std::move(animPlayer),
-						  .25});
+						  .25,
+						  sf::IntRect{},
+						  spriteSheetPaths.variantPath});
 }
 
 std::unique_ptr<AnimationPlayer> Beetle2Initializer::generateAnimPlayer(
@@ -266,4 +275,4 @@ std::unique_ptr<AnimationPlayer> Beetle2Initializer::generateAnimPlayer(
 
 float Beetle2Initializer::getSpeed() { return GlobalRand::rand.getFloatInRange(50, 70); }
 
-std::string Beetle2Initializer::generateBaseSpriteSheetPath() { return BeastSpritesConstants::BUGS2; }
+std::string Beetle2Initializer::generateBaseSpriteSheetPath() { return SpriteConstants::BUGS2; }

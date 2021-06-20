@@ -4,12 +4,13 @@
 
 class ShadowedSpriteReg : public SpriteReg {
 public:
-	ShadowedSpriteReg(const std::string &spriteSheet,
+	ShadowedSpriteReg(const std::string &mainSpriteSheet,
 					  const sf::Vector2f &pos,
 					  const sf::Vector2f &origin,
 					  std::unique_ptr<AnimationPlayer> animPlayer = nullptr,
 					  float shadowOffsetMultiplier = 1,
-					  const sf::IntRect &defaultFrame = animConstants::EMPTY_FRAME);
+					  const sf::IntRect &defaultFrame = animConstants::EMPTY_FRAME,
+					  const std::string &variantSpriteSheet = "");
 
 	void renderBy(sf::RenderTarget &renderer) override;
 

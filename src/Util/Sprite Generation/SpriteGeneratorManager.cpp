@@ -11,13 +11,25 @@ Random<> SpriteGeneratorManager::rand{1};
 
 typedef SpriteGenerator::Config Config;
 
-const std::string COlOR_TEST_SUFFIX = "-color";
-const std::string SIZE_TEST_SUFFIX = "-size";
-
 void generateShadows() {
 	SpriteGenerator::generateSprites({"Foliage/Shadow/", "Player/Shadow/", "Npc/Shadow/"},
 									 std::make_unique<ShadowPixelEffect>(),
 									 Config{SHADOW_SUFFIX, {COlOR_TEST_SUFFIX, SIZE_TEST_SUFFIX}});
+}
+SpriteConstants::Paths SpriteGeneratorManager::makeSheetPathsFrom(
+	const SpriteConstants::SpriteVariantInfo& variantInfo,
+	const std::string& basePath) {
+
+	auto finalBasePath = basePath;
+	std::string variantPath;
+	if (variantInfo.sizeAmount) {
+		finalBasePath.append(SIZE_TEST_SUFFIX + std::to_string(variantInfo.sizeAmount));
+	}
+	if (variantInfo.id) {
+		variantPath = finalBasePath.append(COlOR_TEST_SUFFIX + std::to_string(variantInfo.id));
+	}
+
+	return {finalBasePath, variantPath};
 }
 
 void generateColorsTest() {

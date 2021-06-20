@@ -10,7 +10,7 @@ protected:
 
 	std::unique_ptr<SpriteReg> generateSprite(Position pos,
 											  std::unique_ptr<AnimationPlayer> animPlayer,
-											  const std::string& spriteSheetPath) override;
+		const SpriteConstants::Paths &spriteSheetPaths) override;
 
 	std::unique_ptr<AnimationPlayer> generateAnimPlayer(Position pos) override;
 	std::string generateBaseSpriteSheetPath() override;
@@ -31,7 +31,7 @@ protected:
 
 	std::unique_ptr<SpriteReg> generateSprite(Position pos,
 											  std::unique_ptr<AnimationPlayer> animPlayer,
-											  const std::string& spriteSheetPath) override;
+		const SpriteConstants::Paths &spriteSheetPaths) override;
 	std::string generateBaseSpriteSheetPath() override;
 	std::unique_ptr<AnimationPlayer> generateAnimPlayer(Position pos) override;
 };
@@ -44,7 +44,7 @@ protected:
 
 	std::unique_ptr<SpriteReg> generateSprite(Position pos,
 											  std::unique_ptr<AnimationPlayer> animPlayer,
-											  const std::string& spriteSheetPath) override;
+		const SpriteConstants::Paths &spriteSheetPaths) override;
 
 	std::unique_ptr<AnimationPlayer> generateAnimPlayer(Position pos) override;
 	std::string generateBaseSpriteSheetPath() override;
@@ -59,7 +59,7 @@ protected:
 
 	std::unique_ptr<SpriteReg> generateSprite(Position pos,
 											  std::unique_ptr<AnimationPlayer> animPlayer,
-											  const std::string& spriteSheetPath) override;
+		const SpriteConstants::Paths &spriteSheetPaths) override;
 
 	std::unique_ptr<AnimationPlayer> generateAnimPlayer(Position pos) override;
 	std::string generateBaseSpriteSheetPath() override;

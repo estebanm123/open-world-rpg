@@ -6,16 +6,22 @@
 const inline auto DEFAULT_SHADOW_OFFSET = 5;
 const inline float OFFSET_HEIGHT_PROPORTION = 0.15;
 
-ShadowedSpriteReg::ShadowedSpriteReg(const std::string &spriteSheet,
+ShadowedSpriteReg::ShadowedSpriteReg(const std::string &mainSpriteSheet,
 									 const sf::Vector2f &pos,
 									 const sf::Vector2f &origin,
 									 std::unique_ptr<AnimationPlayer> animPlayer,
-									 float offsetMultiplier,
-									 const sf::IntRect &defaultFrame)
-	: SpriteReg({spriteSheet, pos, origin, std::move(animPlayer), defaultFrame}),
-	  shadow({spriteSheet + SHADOW_SUFFIX, pos, origin, nullptr, defaultFrame}) {
-	float offset = defaultFrame.height == 0 ? DEFAULT_SHADOW_OFFSET * offsetMultiplier
-											: defaultFrame.height * OFFSET_HEIGHT_PROPORTION * offsetMultiplier;
+									 float shadowOffsetMultiplier,
+									 const sf::IntRect &defaultFrame,
+									 const std::string &variantSpriteSheet)
+	: SpriteReg({variantSpriteSheet.empty() ? mainSpriteSheet : variantSpriteSheet,
+				 pos,
+				 origin,
+				 std::move(animPlayer),
+				 defaultFrame}),
+	  shadow({mainSpriteSheet + SHADOW_SUFFIX, pos, origin, nullptr, defaultFrame}) {
+	float offset = defaultFrame.height == 0
+					   ? DEFAULT_SHADOW_OFFSET * shadowOffsetMultiplier
+					   : defaultFrame.height * OFFSET_HEIGHT_PROPORTION * shadowOffsetMultiplier;
 	shadow.move({offset / 2, offset});
 }
 
