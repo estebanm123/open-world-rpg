@@ -13,7 +13,7 @@ protected:
 											  const std::string& spriteSheetPath) override;
 
 	std::unique_ptr<AnimationPlayer> generateAnimPlayer(Position pos) override;
-	std::string generateSpriteSheetPath() override;
+	std::string generateBaseSpriteSheetPath() override;
 
 	std::unique_ptr<SurfaceEffectGenerator> generateSurfaceEffectGenerator(
 		sf::Vector2f pos) override;
@@ -32,7 +32,7 @@ protected:
 	std::unique_ptr<SpriteReg> generateSprite(Position pos,
 											  std::unique_ptr<AnimationPlayer> animPlayer,
 											  const std::string& spriteSheetPath) override;
-	std::string generateSpriteSheetPath() override;
+	std::string generateBaseSpriteSheetPath() override;
 	std::unique_ptr<AnimationPlayer> generateAnimPlayer(Position pos) override;
 };
 
@@ -47,7 +47,7 @@ protected:
 											  const std::string& spriteSheetPath) override;
 
 	std::unique_ptr<AnimationPlayer> generateAnimPlayer(Position pos) override;
-	std::string generateSpriteSheetPath() override;
+	std::string generateBaseSpriteSheetPath() override;
 	float getSpeed() override;
 };
 
@@ -62,6 +62,6 @@ protected:
 											  const std::string& spriteSheetPath) override;
 
 	std::unique_ptr<AnimationPlayer> generateAnimPlayer(Position pos) override;
-	std::string generateSpriteSheetPath() override;
+	std::string generateBaseSpriteSheetPath() override;
 	float getSpeed() override;
 };

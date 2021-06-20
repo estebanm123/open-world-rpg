@@ -1,16 +1,14 @@
 #include "BeastInitializers.h"
 
 #include "../../../../../Animation/RepeatingAnim.h"
-#include "../../../Sprites/SpriteReg.h"
 #include "../../../Surface Effects/FootprintGenerator.h"
 #include "../../Collision Physics/BlockingPhysics.h"
 #include "../../Hitbox/ViewCone.h"
 #include "../NPC AI/Activities/Activity Managers/ActivityManager.h"
 #include "../NPC AI/Activities/RandomTravel.h"
 #include "../NPC AI/NpcAi.h"
+#include "../../../../../Util/SpriteConstants.h"
 
-const std::string NPC_BASE_PATH = "Npc/";
-const std::string NPC_SHADOW_PATH = NPC_BASE_PATH + "Shadow/";
 const std::string NPC_FOOTPRINT_PATH = NPC_BASE_PATH + "Footprints/";
 
 constexpr int CAT_FRAME_WIDTH = 27;
@@ -85,7 +83,7 @@ std::unique_ptr<SurfaceEffectGenerator> CatInitializer::generateSurfaceEffectGen
 	return nullptr;	 // TEMP
 	return std::make_unique<FootprintGenerator>(footprintGenerator);
 }
-std::string CatInitializer::generateSpriteSheetPath() { return NPC_SHADOW_PATH + "Cat"; }
+std::string CatInitializer::generateBaseSpriteSheetPath() { return BeastSpritesConstants::CAT; }
 
 constexpr int SNAKE_FRAME_WIDTH = 12;
 constexpr int SNAKE_FRAME_HEIGHT = 34;
@@ -152,7 +150,7 @@ std::unique_ptr<AnimationPlayer> SnakeInitializer::generateAnimPlayer(
 }
 
 float SnakeInitializer::getSpeed() { return GlobalRand::rand.getFloatInRange(15, 25); }
-std::string SnakeInitializer::generateSpriteSheetPath() { return NPC_SHADOW_PATH + "Snake"; }
+std::string SnakeInitializer::generateBaseSpriteSheetPath() { return BeastSpritesConstants::SNAKE; }
 
 constexpr int BEETLE_FRAME_WIDTH = 15;
 constexpr int BEETLE_FRAME_HEIGHT = 10;
@@ -210,7 +208,7 @@ std::unique_ptr<AnimationPlayer> BeetleInitializer::generateAnimPlayer(
 
 float BeetleInitializer::getSpeed() { return GlobalRand::rand.getFloatInRange(13, 20); }
 
-std::string BeetleInitializer::generateSpriteSheetPath() { return NPC_SHADOW_PATH + "Bugs"; }
+std::string BeetleInitializer::generateBaseSpriteSheetPath() { return BeastSpritesConstants::BUGS; }
 
 constexpr int BEETLE2_FRAME_WIDTH = 17;
 constexpr int BEETLE2_FRAME_HEIGHT = 18;
@@ -268,4 +266,4 @@ std::unique_ptr<AnimationPlayer> Beetle2Initializer::generateAnimPlayer(
 
 float Beetle2Initializer::getSpeed() { return GlobalRand::rand.getFloatInRange(50, 70); }
 
-std::string Beetle2Initializer::generateSpriteSheetPath() { return NPC_SHADOW_PATH + "Bugs2"; }
+std::string Beetle2Initializer::generateBaseSpriteSheetPath() { return BeastSpritesConstants::BUGS2; }

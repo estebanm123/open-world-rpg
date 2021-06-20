@@ -22,22 +22,22 @@ void generateShadows() {
 
 void generateColorsTest() {
 	for (auto i = 1000; i < 1500; i += 3) {
-//		SpriteGenerator::generateSprites(
-//			{"Player/Shadow/"},
-//			std::make_unique<ColorChangerPixelEffect>(i,
-//													  std::vector<ColorInt>{0xffc567ff,
-//																			0xffb236ff,
-//																			0xffb236ff,
-//																			0xffb744ff,
-//																			0xecb356ff,
-//																			0xf6b46bff,
-//																			0xffbb4eff},
-//													  50000,
-//													  false,
-//													  true),
-//			Config{COlOR_TEST_SUFFIX + std::to_string(i),
-//				   {SHADOW_SUFFIX, COlOR_TEST_SUFFIX},
-//				   "Player/TestSprites/body32"});
+		//		SpriteGenerator::generateSprites(
+		//			{"Player/Shadow/"},
+		//			std::make_unique<ColorChangerPixelEffect>(i,
+		//													  std::vector<ColorInt>{0xffc567ff,
+		//																			0xffb236ff,
+		//																			0xffb236ff,
+		//																			0xffb744ff,
+		//																			0xecb356ff,
+		//																			0xf6b46bff,
+		//																			0xffbb4eff},
+		//													  50000,
+		//													  false,
+		//													  true),
+		//			Config{COlOR_TEST_SUFFIX + std::to_string(i),
+		//				   {SHADOW_SUFFIX, COlOR_TEST_SUFFIX},
+		//				   "Player/TestSprites/body32"});
 		SpriteGenerator::generateSprites(
 			{"Npc/Shadow/"},
 			std::make_unique<ColorChangerPixelEffect>(i,
@@ -45,7 +45,8 @@ void generateColorsTest() {
 													  INT32_MAX,
 													  false,
 													  true),
-			Config{COlOR_TEST_SUFFIX + std::to_string(i), {SHADOW_SUFFIX, COlOR_TEST_SUFFIX, SIZE_TEST_SUFFIX, "-variant"}});
+			Config{COlOR_TEST_SUFFIX + std::to_string(i),
+				   {SHADOW_SUFFIX, COlOR_TEST_SUFFIX, SIZE_TEST_SUFFIX, "-variant"}});
 	}
 }
 
