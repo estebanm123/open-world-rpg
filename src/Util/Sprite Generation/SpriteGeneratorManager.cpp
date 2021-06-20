@@ -11,25 +11,24 @@ Random<> SpriteGeneratorManager::rand{1};
 
 typedef SpriteGenerator::Config Config;
 
-void generateShadows() {
-	SpriteGenerator::generateSprites({"Foliage/Shadow/", "Player/Shadow/", "Npc/Shadow/"},
-									 std::make_unique<ShadowPixelEffect>(),
-									 Config{SHADOW_SUFFIX, {COlOR_TEST_SUFFIX, SIZE_TEST_SUFFIX}});
-}
 SpriteConstants::Paths SpriteGeneratorManager::makeSheetPathsFrom(
 	const SpriteConstants::SpriteVariantInfo& variantInfo,
 	const std::string& basePath) {
-
 	auto finalBasePath = basePath;
 	std::string variantPath;
 	if (variantInfo.sizeAmount) {
 		finalBasePath.append(SIZE_TEST_SUFFIX + std::to_string(variantInfo.sizeAmount));
 	}
 	if (variantInfo.id) {
-		variantPath = finalBasePath.append(COlOR_TEST_SUFFIX + std::to_string(variantInfo.id));
+		variantPath = finalBasePath + (COlOR_TEST_SUFFIX + std::to_string(variantInfo.id));
 	}
 
 	return {finalBasePath, variantPath};
+}
+void generateShadows() {
+	SpriteGenerator::generateSprites({"Foliage/Shadow/", "Player/Shadow/", "Npc/Shadow/"},
+									 std::make_unique<ShadowPixelEffect>(),
+									 Config{SHADOW_SUFFIX, {COlOR_TEST_SUFFIX, SHADOW_SUFFIX}});
 }
 
 void generateColorsTest() {
@@ -57,8 +56,7 @@ void generateColorsTest() {
 													  INT32_MAX,
 													  false,
 													  true),
-			Config{COlOR_TEST_SUFFIX + std::to_string(i),
-				   {SHADOW_SUFFIX, COlOR_TEST_SUFFIX, SIZE_TEST_SUFFIX, "-variant"}});
+			Config{COlOR_TEST_SUFFIX + std::to_string(i), {SHADOW_SUFFIX, COlOR_TEST_SUFFIX}});
 	}
 }
 
@@ -68,14 +66,14 @@ void generateSizeTest() {
 										 std::make_unique<ExpandEffect>(),
 										 Config{
 											 SIZE_TEST_SUFFIX + std::to_string(i),
-											 {SHADOW_SUFFIX},
+											 {SHADOW_SUFFIX, COlOR_TEST_SUFFIX, SIZE_TEST_SUFFIX},
 										 });
 	}
 }
 
 void SpriteGeneratorManager::generateSprites() {
-	generateShadows();
 	return;
-	generateColorsTest();
 	generateSizeTest();
+	generateShadows();
+	generateColorsTest();
 }

@@ -44,11 +44,11 @@ SpriteConstants::SpriteVariantInfo BeastInitializer::generateSpriteVariantInfo(
 			variantId = variantMetadata.whiteListedVariantIds[variantIndex];
 		}
 		if (variantMetadata.numSizeVariations > 1) {
-			sizeAmount = GlobalRand::rand.getIntInRange(0, variantMetadata.numSizeVariations);
+			sizeAmount = GlobalRand::rand.getIntInRange(0, variantMetadata.numSizeVariations - 1);
 		}
 	}
 
-	return {sizeAmount, variantId};
+	return {variantId, sizeAmount};
 }
 
 std::unique_ptr<SurfaceEffectGenerator> BeastInitializer::generateSurfaceEffectGenerator(

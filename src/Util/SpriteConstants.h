@@ -8,7 +8,7 @@ inline const std::string NPC_BASE_PATH = "Npc/";
 inline const std::string NPC_SHADOW_PATH = NPC_BASE_PATH + "Shadow/";
 
 inline const std::string SHADOW_SUFFIX = "-sh";
-inline const std::string COlOR_TEST_SUFFIX = "-";
+inline const std::string COlOR_TEST_SUFFIX = "-co";
 inline const std::string SIZE_TEST_SUFFIX = "-si";
 
 namespace SpriteConstants {
@@ -31,13 +31,11 @@ struct VariantMetadata {
 	const int numSizeVariations = 1;
 };
 
-struct SpriteVariantInfo {	// for a single sprite
+struct SpriteVariantInfo {	// for a single sprite, both zero-indexed with 0s as default sprites
 	int id;
 	int sizeAmount;
 };
 
 inline const std::unordered_map<std::string, VariantMetadata> variantMetadataMap{
-	//	{CAT, VariantMetadata{std::vector<int>{NO_VARIANT, 500}, 2}}
-};
-
+	{CAT, VariantMetadata{std::vector<int>{NO_VARIANT, 1003}, 2}}};
 }  // namespace SpriteConstants
