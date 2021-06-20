@@ -14,7 +14,8 @@ std::unique_ptr<Beast> BeastInitializer::initialize(BeastInitializer::Position p
 	auto animPlayer = generateAnimPlayer(pos);
 	auto sprite = generateSprite(pos, std::move(animPlayer), generateSpriteSheetPath());
 
-	auto beast = std::make_unique<Beast>(std::move(hitbox), std::move(ai), std::move(sprite), getSpeed());
+	auto beast =
+		std::make_unique<Beast>(std::move(hitbox), std::move(ai), std::move(sprite), getSpeed());
 	auto surfaceEffectGenerator = generateSurfaceEffectGenerator(pos);
 	if (surfaceEffectGenerator) {
 		beast->setSurfaceEffectGenerator(std::move(surfaceEffectGenerator));
@@ -22,6 +23,7 @@ std::unique_ptr<Beast> BeastInitializer::initialize(BeastInitializer::Position p
 	return beast;
 }
 
-std::unique_ptr<SurfaceEffectGenerator> BeastInitializer::generateSurfaceEffectGenerator(sf::Vector2f pos) {
+std::unique_ptr<SurfaceEffectGenerator> BeastInitializer::generateSurfaceEffectGenerator(
+	sf::Vector2f pos) {
 	return nullptr;
 }

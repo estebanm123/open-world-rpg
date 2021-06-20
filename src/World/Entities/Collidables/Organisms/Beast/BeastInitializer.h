@@ -12,6 +12,8 @@ struct BeastInitializer : public ArgDependentInitializer<Beast, sf::Vector2f> {
 
 	std::unique_ptr<Beast> initialize(Position pos) override;
 
+	struct SpriteSheetVariantInfo;
+
 protected:
 	virtual std::unique_ptr<BaseActivity<Beast>> generateActivities(Position pos) = 0;
 
@@ -27,5 +29,6 @@ protected:
 
 	virtual float getSpeed() = 0;
 
-	virtual std::unique_ptr<SurfaceEffectGenerator> generateSurfaceEffectGenerator(sf::Vector2f pos);
+	virtual std::unique_ptr<SurfaceEffectGenerator> generateSurfaceEffectGenerator(
+		sf::Vector2f pos);
 };
