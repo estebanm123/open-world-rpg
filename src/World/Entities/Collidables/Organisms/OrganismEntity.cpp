@@ -2,5 +2,5 @@
 
 #include "OrganismEntity.h"
 
-OrganismEntity::OrganismEntity(Config hitboxes, float initialSpeed)
+OrganismEntity::OrganismEntity(Config hitboxes, float initialSpeed, FoodChainLevel foodChainLevel)
 	: MoveableEntity(std::move(hitboxes), initialSpeed) {}

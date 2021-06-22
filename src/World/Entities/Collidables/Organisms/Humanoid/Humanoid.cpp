@@ -13,13 +13,16 @@ Humanoid::Humanoid(const sf::Vector2f &globalPosition,
 				   float initialSpeed)
 	: OrganismEntity(
 		  CollidableEntity::Config{
-			  std::make_unique<SingleHitbox>(
-				  sf::FloatRect{globalPosition.x, globalPosition.y, BASE_FRAME_WIDTH / 2.f, BASE_FRAME_HEIGHT / 3.f},
-				  0,
-				  std::make_unique<BlockingPhysics>()),
+			  std::make_unique<SingleHitbox>(sf::FloatRect{globalPosition.x,
+														   globalPosition.y,
+														   BASE_FRAME_WIDTH / 2.f,
+														   BASE_FRAME_HEIGHT / 3.f},
+											 0,
+											 std::make_unique<BlockingPhysics>()),
 			  std::make_unique<MultiHitbox>(MultiHitbox::Hitboxes{}),
 			  std::make_unique<MultiHitbox>(MultiHitbox::Hitboxes{})},
-		  initialSpeed),
+		  initialSpeed,
+		  MEDIUM),
 
 	  sprite(initializeSprites(globalPosition, spriteSheetBody, spriteSheetHead)),
 	  isPickingUp(false),

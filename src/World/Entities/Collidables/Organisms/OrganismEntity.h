@@ -4,10 +4,9 @@
 
 class OrganismEntity : public MoveableEntity {
 public:
-	explicit OrganismEntity(Config hitboxes, float initialSpeed);
+	enum FoodChainLevel { LOWEST = 0, LOW = 1, MEDIUM = 1, HIGH = 2, HIGHEST = 3 };
 
-	//    virtual void sleep();
-	//    virtual void die();
+	explicit OrganismEntity(Config hitboxes, float initialSpeed, FoodChainLevel foodChainLevel);
 
 	~OrganismEntity() override = default;
 
