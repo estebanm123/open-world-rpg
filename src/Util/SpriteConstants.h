@@ -37,5 +37,7 @@ struct SpriteVariantInfo {	// for a single sprite, both zero-indexed with 0s as 
 };
 
 inline const std::unordered_map<std::string, VariantMetadata> variantMetadataMap{
-	{CAT, VariantMetadata{std::vector<int>{NO_VARIANT, 1003}, 2}}};
+	{CAT, VariantMetadata{std::vector<int>{NO_VARIANT, 1003, 1081, 1129}, 2}},
+	{BUGS2, VariantMetadata{std::vector<int>{NO_VARIANT, 1084, 1093,1480,1477}, 1}},
+	{SNAKE, VariantMetadata{std::vector<int>{NO_VARIANT, 1003, 1081, 1129}, 2}}};
 }  // namespace SpriteConstants

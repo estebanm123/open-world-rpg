@@ -26,6 +26,7 @@ std::unique_ptr<Beast> BeastInitializer::initialize(BeastInitializer::Position p
 	if (surfaceEffectGenerator) {
 		beast->setSurfaceEffectGenerator(std::move(surfaceEffectGenerator));
 	}
+	performExtraModifications(beast.get());
 	return beast;
 }
 
@@ -55,3 +56,4 @@ std::unique_ptr<SurfaceEffectGenerator> BeastInitializer::generateSurfaceEffectG
 	sf::Vector2f pos) {
 	return nullptr;
 }
+void BeastInitializer::performExtraModifications(Beast *generatedBeast) {}

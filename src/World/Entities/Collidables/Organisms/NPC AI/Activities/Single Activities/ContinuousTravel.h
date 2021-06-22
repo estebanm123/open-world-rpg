@@ -5,14 +5,14 @@
 #include <iostream>
 #include <utility>
 
-#include "../../../../../../Util/CollisionChecker.h"
-#include "../../../../../../Util/MathExtra.h"
-#include "../../../../../../Util/Random/GlobalRand.h"
-#include "../../../../../../Util/Random/Hash.h"
-#include "../../../MoveableEntity.h"
-#include "../AiDebug.h"
-#include "../Path/NpcPath.h"
-#include "BaseActivity.h"
+#include "../../../../../../../Util/CollisionChecker.h"
+#include "../../../../../../../Util/MathExtra.h"
+#include "../../../../../../../Util/Random/GlobalRand.h"
+#include "../../../../../../../Util/Random/Hash.h"
+#include "../../../../MoveableEntity.h"
+#include "../../AiDebug.h"
+#include "../../Path/NpcPath.h"
+#include "../BaseActivity.h"
 
 // Simulates random idling for an entity
 struct Idler {

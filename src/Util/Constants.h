@@ -41,7 +41,7 @@ constexpr inline int UPDATE_ZONE_HEIGHT = 15;
 constexpr static int SLOT_ROWS_PER_CHUNK = 8;
 constexpr static int SLOT_COLS_PER_CHUNK = SLOT_ROWS_PER_CHUNK;
 
-constexpr inline int TILES_PER_CHUNK_X = 15;  // must be odd
+constexpr inline int TILES_PER_CHUNK_X = 11;  // must be odd
 constexpr inline int TILES_PER_CHUNK_Y = TILES_PER_CHUNK_X;
 const inline sf::Vector2f TILE_SIZE = {48, 48};	 // (all sizes in pixels)
 const inline int TILE_SIZE_INT_X = static_cast<int>(TILE_SIZE.x);

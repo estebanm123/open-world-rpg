@@ -6,7 +6,7 @@
 #include "../../Collision Physics/BlockingPhysics.h"
 #include "../../Hitbox/ViewCone.h"
 #include "../NPC AI/Activities/Activity Managers/ActivityManager.h"
-#include "../NPC AI/Activities/RandomTravel.h"
+#include "../NPC AI/Activities/Single Activities/RandomTravel.h"
 #include "../NPC AI/NpcAi.h"
 
 const std::string NPC_FOOTPRINT_PATH = NPC_BASE_PATH + "Footprints/";
@@ -16,14 +16,13 @@ constexpr int CAT_FRAME_HEIGHT = 50;
 constexpr float CAT_HITBOX_WIDTH = 9;
 constexpr float CAT_HITBOX_HEIGHT = 29;
 
-std::unique_ptr<BaseActivity<Beast>> CatInitializer::generateActivities(
+std::unique_ptr<ActivityManager<Beast>> CatInitializer::generateActivities(
 	BeastInitializer::Position pos) {
 	auto testActivities = ActivityManager<Beast>::Activities{};
 	auto randTravel = std::make_unique<RandomTravel<Beast>>(50.f, pos, 200, Idler{.9, 5.5, pos});
 	testActivities.push_front(std::move(randTravel));
 	return std::make_unique<ActivityManager<Beast>>(std::move(testActivities));
 }
-
 CollidableEntity::Config CatInitializer::generateHitbox(BeastInitializer::Position pos) {
 	auto secondaryHitboxes = MultiHitbox::Hitboxes{};
 	secondaryHitboxes.push_back(std::make_unique<ViewCone>(pos, 250, CAT_HITBOX_WIDTH, 350));
@@ -88,12 +87,16 @@ std::unique_ptr<SurfaceEffectGenerator> CatInitializer::generateSurfaceEffectGen
 }
 std::string CatInitializer::generateBaseSpriteSheetPath() { return SpriteConstants::CAT; }
 
+void CatInitializer::performExtraModifications(Beast *generatedBeast) {
+	generatedBeast->setFoodChainLevel(OrganismEntity::MEDIUM);
+}
+
 constexpr int SNAKE_FRAME_WIDTH = 12;
 constexpr int SNAKE_FRAME_HEIGHT = 34;
 constexpr int SNAKE_HITBOX_WIDTH = 10;
 constexpr int SNAKE_HITBOX_HEIGHT = 29;
 
-std::unique_ptr<BaseActivity<Beast>> SnakeInitializer::generateActivities(
+std::unique_ptr<ActivityManager<Beast>> SnakeInitializer::generateActivities(
 	BeastInitializer::Position pos) {
 	auto testActivities = ActivityManager<Beast>::Activities{};
 	auto randTravel = std::make_unique<RandomTravel<Beast>>(25, pos, 400, Idler{.6, 8, pos});
@@ -162,7 +165,7 @@ constexpr int BEETLE_FRAME_HEIGHT = 10;
 constexpr int BEETLE_HITBOX_WIDTH = 13;
 constexpr int BEETLE_HITBOX_HEIGHT = 8;
 
-std::unique_ptr<BaseActivity<Beast>> BeetleInitializer::generateActivities(
+std::unique_ptr<ActivityManager<Beast>> BeetleInitializer::generateActivities(
 	BeastInitializer::Position pos) {
 	auto testActivities = ActivityManager<Beast>::Activities{};
 	auto randTravel = std::make_unique<RandomTravel<Beast>>(25, pos, 100, Idler{.3, 2, pos});
@@ -222,7 +225,7 @@ constexpr int BEETLE2_FRAME_HEIGHT = 18;
 constexpr int BEETLE2_HITBOX_WIDTH = 15;
 constexpr int BEETLE2_HITBOX_HEIGHT = 16;
 
-std::unique_ptr<BaseActivity<Beast>> Beetle2Initializer::generateActivities(
+std::unique_ptr<ActivityManager<Beast>> Beetle2Initializer::generateActivities(
 	BeastInitializer::Position pos) {
 	auto testActivities = ActivityManager<Beast>::Activities{};
 	auto randTravel = std::make_unique<RandomTravel<Beast>>(30, pos, 200, Idler{.4, 1, pos});

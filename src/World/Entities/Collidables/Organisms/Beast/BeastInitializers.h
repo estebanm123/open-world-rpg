@@ -4,7 +4,7 @@
 
 struct CatInitializer : public BeastInitializer {
 protected:
-	std::unique_ptr<BaseActivity<Beast>> generateActivities(Position pos) override;
+	std::unique_ptr<ActivityManager<Beast>> generateActivities(Position pos) override;
 
 	CollidableEntity::Config generateHitbox(Position pos) override;
 
@@ -19,11 +19,12 @@ protected:
 		sf::Vector2f pos) override;
 
 	float getSpeed() override;
+	void performExtraModifications(Beast *generatedBeast) override;
 };
 
 struct SnakeInitializer : public BeastInitializer {
 protected:
-	std::unique_ptr<BaseActivity<Beast>> generateActivities(Position pos) override;
+	std::unique_ptr<ActivityManager<Beast>> generateActivities(Position pos) override;
 
 	float getSpeed() override;
 
@@ -38,7 +39,7 @@ protected:
 
 struct BeetleInitializer : public BeastInitializer {
 protected:
-	std::unique_ptr<BaseActivity<Beast>> generateActivities(Position pos) override;
+	std::unique_ptr<ActivityManager<Beast>> generateActivities(Position pos) override;
 
 	CollidableEntity::Config generateHitbox(Position pos) override;
 
@@ -53,7 +54,7 @@ protected:
 
 struct Beetle2Initializer : public BeastInitializer {
 protected:
-	std::unique_ptr<BaseActivity<Beast>> generateActivities(Position pos) override;
+	std::unique_ptr<ActivityManager<Beast>> generateActivities(Position pos) override;
 
 	CollidableEntity::Config generateHitbox(Position pos) override;
 

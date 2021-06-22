@@ -6,7 +6,7 @@
 #include "../../../../Debug/DebugLog.h"
 #include "../../../Entities/Collidables/Organisms/Beast/BeastInitializers.h"
 #include "../../../Entities/Collidables/Organisms/Humanoid/HumanoidNpc.h"
-#include "../../../Entities/Collidables/Organisms/NPC AI/Activities/RandomTravel.h"
+#include "../../../Entities/Collidables/Organisms/NPC AI/Activities/Single Activities/RandomTravel.h"
 #include "../../Environments/CompleteEnv.h"
 #include "../../Tiles/Tile.h"
 #include "../Spatial Partitions/SpatialPartition.h"

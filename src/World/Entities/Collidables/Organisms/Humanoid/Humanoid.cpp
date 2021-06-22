@@ -22,7 +22,7 @@ Humanoid::Humanoid(const sf::Vector2f &globalPosition,
 			  std::make_unique<MultiHitbox>(MultiHitbox::Hitboxes{}),
 			  std::make_unique<MultiHitbox>(MultiHitbox::Hitboxes{})},
 		  initialSpeed,
-		  MEDIUM),
+		  HIGH),
 
 	  sprite(initializeSprites(globalPosition, spriteSheetBody, spriteSheetHead)),
 	  isPickingUp(false),

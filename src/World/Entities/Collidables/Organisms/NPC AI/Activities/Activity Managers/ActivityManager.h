@@ -20,6 +20,11 @@ public:
 		}
 	}
 
+	void add(std::unique_ptr<BaseActivity<Organism>> newActivity) {
+		newActivity->initialize(this->ai);
+		activities.push_front(std::move(newActivity));
+	}
+
 	// Only updates first activity (front of q)
 	void update(float dt) override {
 		if (activities.empty()) {
