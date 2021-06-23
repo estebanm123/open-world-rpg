@@ -1,11 +1,9 @@
 #include "BeastInitializers.h"
 
 #include "../../../../../Animation/RepeatingAnim.h"
-#include "../../../../../Util/SpriteConstants.h"
 #include "../../../Surface Effects/FootprintGenerator.h"
 #include "../../Collision Physics/BlockingPhysics.h"
 #include "../../Hitbox/ViewCone.h"
-#include "../NPC AI/Activities/Activity Managers/ActivityManager.h"
 #include "../NPC AI/Activities/Single Activities/RandomTravel.h"
 #include "../NPC AI/NpcAi.h"
 
@@ -30,7 +28,7 @@ CollidableEntity::Config CatInitializer::generateHitbox(BeastInitializer::Positi
 		std::make_unique<SingleHitbox>(
 			sf::FloatRect{pos.x, pos.y, CAT_HITBOX_WIDTH, CAT_HITBOX_HEIGHT},
 			0,
-			std::make_unique<BlockingPhysics>()),
+			std::make_unique<BlockingPhysics>(true)),
 		std::make_unique<MultiHitbox>(std::move(secondaryHitboxes))};
 }
 
@@ -112,7 +110,7 @@ CollidableEntity::Config SnakeInitializer::generateHitbox(BeastInitializer::Posi
 		std::make_unique<SingleHitbox>(
 			sf::FloatRect{pos.x, pos.y, SNAKE_HITBOX_WIDTH, SNAKE_HITBOX_HEIGHT},
 			0,
-			std::make_unique<BlockingPhysics>()),
+			std::make_unique<BlockingPhysics>(true, false)),
 		std::make_unique<MultiHitbox>(std::move(secondaryHitboxes))};
 }
 

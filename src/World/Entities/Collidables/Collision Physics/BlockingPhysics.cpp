@@ -6,15 +6,19 @@
 
 #include "../MoveableEntity.h"
 
-BlockingPhysics::BlockingPhysics() : CollisionPhysics() {}
+BlockingPhysics::BlockingPhysics(bool collisionAnalysisEnabledMoveables,
+								 bool collisionAnalysisEnabledProps)
+	: CollisionPhysics(collisionAnalysisEnabledMoveables, collisionAnalysisEnabledProps) {}
 
 bool isXDistLarger(const sf::Vector2f &vec) { return abs(vec.x) > abs(vec.y); }
 
 bool areVectorsInASharedQuadrant(const sf::Vector2f &a, const sf::Vector2f &b) {
-	return (a.x > 0 && b.x > 0) || (a.x < 0 && b.x < 0) || (a.y > 0 && b.y > 0) || (a.y < 0 && b.y < 0);
+	return (a.x > 0 && b.x > 0) || (a.x < 0 && b.x < 0) || (a.y > 0 && b.y > 0) ||
+		   (a.y < 0 && b.y < 0);
 }
 
 void BlockingPhysics::applyPhysics(CollidableEntity *receivingEntity, MoveableEntity *other) {
+
 	const auto &entityPos = receivingEntity->getPosition();
 	const auto &otherPos = other->getPosition();
 
@@ -28,6 +32,8 @@ void BlockingPhysics::applyPhysics(CollidableEntity *receivingEntity, MoveableEn
 		other->revertLastMove(isXLarger, !isXLarger);
 		// what about the case where x + y are equal (ie. we're moving in a pure diagonal way)
 	}
+
+	CollisionPhysics::applyPhysics(receivingEntity, other);
 }
 
 bool BlockingPhysics::isBlocking() const { return true; }
