@@ -6,6 +6,7 @@
 #include <queue>
 
 #include "../../../../Util/Random/Random.h"
+#include "../../Structures/BuildingGenerator.h"
 #include "../Chunk.h"
 #include "ChunkBeastGenerator.h"
 #include "ChunkDecorPropGenerator.h"
@@ -42,4 +43,5 @@ private:
 	ChunkMainPropGenerator mainPropGenerator;
 	ChunkDecorPropGenerator decorPropGenerator;
 	ChunkBeastGenerator beastGenerator;
+	BuildingGenerator buildingGenerator;
 };

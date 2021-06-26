@@ -71,15 +71,22 @@ void ChunkGenerator::generateChunk(const Chunk::RequestData &data) {
 	using namespace worldConstants;
 	auto center = Chunk::getCenterFromReqData(data);
 	TileMap tileMap{center};
-	std::unique_ptr<SpatialPartition> entitySpatialPartition = std::make_unique<SpatialPartition>(center);
+	std::unique_ptr<SpatialPartition> entitySpatialPartition =
+	 std::make_unique<SpatialPartition>(center);
 
 	// ~~~~ 1 NPC PLACEHOLDER ~~~~
-	if (center.x == 0 && center.y == 0) {
-		CatInitializer x;
-		entitySpatialPartition->addNewEntity(x.initialize(center));
+	if (center.x == INITIAL_PLAYER_POS.x && center.y == INITIAL_PLAYER_POS.y) {
+		//		CatInitializer x;
+		//		entitySpatialPartition->addNewEntity(x.initialize(center));
+		auto testBuildings =
+		 buildingGenerator.generateBuildings(BuildingGenerator::BuildingConfig{center, 3, 3});
+		for (auto &building : testBuildings) {
+			entitySpatialPartition->addNewEntity(std::move(building));
+		}
 	}
 
-	auto chunk = std::make_unique<Chunk>(data, std::move(tileMap), center, std::move(entitySpatialPartition));
+	auto chunk =
+	 std::make_unique<Chunk>(data, std::move(tileMap), center, std::move(entitySpatialPartition));
 	auto chunkPtr = chunk.get();
 
 	mainPropGenerator.generateEntities(chunkPtr);

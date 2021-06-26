@@ -32,7 +32,9 @@ std::unique_ptr<Prop> CactusInitializer::initializeProp(Position pos, sf::IntRec
 
 BushInitializer::BushInitializer() : PropInitializer(std::vector<sf::IntRect>{{0, 0, 36, 28}, {36 * 3, 0, 39, 30}}) {}
 
-std::unique_ptr<Prop> BushInitializer::initializeProp(Position pos, sf::IntRect spriteSheetCoords, int variantIndex) {
+std::unique_ptr<Prop> BushInitializer::initializeProp(Position pos,
+													  sf::IntRect spriteSheetCoords,
+													  int variantIndex) {
 	int delay = 200;
 	int start = 0;
 	int end = 2;
