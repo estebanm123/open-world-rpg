@@ -13,16 +13,17 @@ class Item;
 class Prop : public CollidableEntity {
 public:
 	struct PropOptions {
-		static constexpr auto PRIME = 73924247.f;
-
-		explicit PropOptions(std::string spriteSheet,
-							 const sf::IntRect &defaultFrame,
-							 const sf::Vector2f &pos,
-							 bool hasShadow = false,
-							 sf::Vector2i hitboxSizeOffset = {0, 0},
-							 std::unique_ptr<CollisionPhysics> collisionPhysics = std::make_unique<CollisionPhysics>(),
-							 std::unique_ptr<AnimationPlayer> animPlayer = nullptr,
-							 std::unique_ptr<ItemInitializer> itemInitializer = nullptr)
+		explicit PropOptions(
+		 std::string spriteSheet,
+		 const sf::IntRect &defaultFrame,
+		 const sf::Vector2f &pos,
+		 bool hasShadow = false,
+		 sf::Vector2i hitboxSizeOffset = {0, 0},
+		 std::unique_ptr<CollisionPhysics> collisionPhysics = std::make_unique<CollisionPhysics>(),
+		 std::unique_ptr<AnimationPlayer> animPlayer = nullptr,
+		 std::unique_ptr<ItemInitializer> itemInitializer = nullptr,
+		 bool randomRotationAngle = true,
+		 float rotationAngle = 0)
 			: hasShadow(hasShadow),
 			  spriteSheet(std::move(spriteSheet)),
 			  defaultFrame(defaultFrame),
@@ -30,7 +31,9 @@ public:
 			  pos(pos),
 			  collisionPhysics(std::move(collisionPhysics)),
 			  animPlayer(std::move(animPlayer)),
-			  itemInitializer(std::move(itemInitializer)){};
+			  itemInitializer(std::move(itemInitializer)),
+			  randomRotationAngle(randomRotationAngle),
+			  rotationAngle(rotationAngle){};
 		std::string spriteSheet;
 		sf::IntRect defaultFrame;
 		sf::Vector2f size;
@@ -39,7 +42,8 @@ public:
 		sf::Vector2f pos;
 		bool isBlocking = collisionPhysics->isBlocking();
 		bool hasShadow;
-		float rotationAngle = static_cast<float>(hash2ValuesModSize(pos.x, pos.y *PRIME, 360));
+		bool randomRotationAngle = true;
+		float rotationAngle = 0;
 		std::unique_ptr<ItemInitializer> itemInitializer;
 	};
 

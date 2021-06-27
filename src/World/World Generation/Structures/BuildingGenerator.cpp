@@ -13,7 +13,7 @@ std::vector<std::unique_ptr<Entity>> BuildingGenerator::generateBuildings(
 			auto floorTile = generateFloorTile({x, y}, config);
 			resultProps.push_back(std::move(floorTile));
 			auto size = resultProps.size();
-			std::cout << size <<std::endl;
+			std::cout << size << std::endl;
 		}
 	}
 	return resultProps;
@@ -28,6 +28,13 @@ std::unique_ptr<Prop> BuildingGenerator::generateFloorTile(
 
 	auto PLACEHOLDER_SPRITE_SHEET = "Buildings/logs";
 	return std::make_unique<Prop>(Prop::PropOptions{PLACEHOLDER_SPRITE_SHEET,
-													{0,0,16,16},
-													tilePos});
+													{0, 0, 16, 16},
+													tilePos,
+													false,
+													{0, 0},
+													std::make_unique<CollisionPhysics>(),
+													nullptr,
+													nullptr,
+													false,
+													0});
 }
