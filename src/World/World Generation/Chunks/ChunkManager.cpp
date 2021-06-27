@@ -85,14 +85,14 @@ void ChunkManager::renderChunks(sf::RenderTarget &target) {
 	for (auto i = 0; i < 3; ++i) {
 		for (auto j = 0; j < 3; ++j) {
 			if (chunks[i][j]) {
-				chunks[i][j]->renderSurfaceEffects(target, activeZones);
+				chunks[i][j]->renderSurfaceAndMainProps(target, activeZones);
 			}
 		}
 	}
 	for (auto i = 0; i < 3; ++i) {
 		for (auto j = 0; j < 3; ++j) {
 			if (chunks[i][j]) {
-				chunks[i][j]->renderNonDecorEntities(target, activeZones);
+				chunks[i][j]->renderMoveables(target, activeZones);
 			}
 		}
 	}

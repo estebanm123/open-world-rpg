@@ -9,34 +9,34 @@ void PartitionSlot::update(float dt) {
 	for (auto &moveable : entityHolder.moveableEntities) {
 		moveable->update(dt);
 	}
-	for (auto &prop : entityHolder.mainProps) {
-		prop->update(dt);
-	}
 	for (auto &effect : entityHolder.surfaceEffects) {
 		effect->update(dt);
 		if (effect->isReadyToBeRemoved()) {
 			entityHolder.removeEntity(effect);
 		}
 	}
+	for (auto &prop : entityHolder.mainProps) {
+		prop->update(dt);
+	}
 }
 
-void PartitionSlot::renderNonDecorEntities(sf::RenderTarget &renderer) {
+void PartitionSlot::renderMoveables(sf::RenderTarget &renderer) {
 	for (auto &moveable : entityHolder.moveableEntities) {
 		moveable->renderBy(renderer);
 	}
 }
 
-void PartitionSlot::renderSurfaceEffects(sf::RenderTarget &renderer) {
+void PartitionSlot::renderSurfaceAndMainProps(sf::RenderTarget &renderer) {
 	for (auto &surfaceEffect : entityHolder.surfaceEffects) {
 		surfaceEffect->renderBy(renderer);
+	}
+	for (auto &prop : entityHolder.mainProps) {
+		prop->renderBy(renderer);
 	}
 }
 
 void PartitionSlot::renderDecorEntities(sf::RenderTarget &renderer) {
 	for (auto &prop : entityHolder.decorProps) {
-		prop->renderBy(renderer);
-	}
-	for (auto &prop : entityHolder.mainProps) {
 		prop->renderBy(renderer);
 	}
 }

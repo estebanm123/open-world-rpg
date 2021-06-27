@@ -79,7 +79,7 @@ void ChunkGenerator::generateChunk(const Chunk::RequestData &data) {
 		//		CatInitializer x;
 		//		entitySpatialPartition->addNewEntity(x.initialize(center));
 		auto testBuildings =
-		 buildingGenerator.generateBuildings(BuildingGenerator::BuildingConfig{center, 3, 3});
+		 buildingGenerator.generateBuildings(BuildingGenerator::BuildingConfig{center, 9, 9});
 		for (auto &building : testBuildings) {
 			entitySpatialPartition->addNewEntity(std::move(building));
 		}

@@ -14,7 +14,7 @@ public:
 		int yLength = 1;
 	};
 
-	static constexpr int FLOOR_TILE_SIZEX = 16;
+	static constexpr int FLOOR_TILE_SIZEX = 15;
 	static constexpr int FLOOR_TILE_SIZEY = FLOOR_TILE_SIZEX;
 
 	std::vector<std::unique_ptr<Entity>> generateBuildings(const BuildingConfig & config);

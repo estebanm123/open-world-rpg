@@ -152,11 +152,11 @@ void SpatialPartition::updateEntities(float dt, const ActiveZones &activeZones, 
 	}
 }
 
-void SpatialPartition::renderNonDecorEntities(sf::RenderTarget &renderer, const ActiveZones &activeZones) {
+void SpatialPartition::renderMoveables(sf::RenderTarget &renderer, const ActiveZones &activeZones) {
 	for (auto row = 0; row < slots.size(); row++) {
 		for (auto col = 0; col < slots[0].size(); col++) {
 			if (activeZoneContainsSlot(row, col, activeZones.renderZone)) {
-				slots[row][col]->renderNonDecorEntities(renderer);
+				slots[row][col]->renderMoveables(renderer);
 			}
 		}
 	}
@@ -172,11 +172,11 @@ void SpatialPartition::renderDecorEntities(sf::RenderTarget &renderer, const Act
 	}
 }
 
-void SpatialPartition::renderSurfaceEffects(sf::RenderTarget &renderer, const ActiveZones &activeZones) {
+void SpatialPartition::renderSurfaceAndMainProps(sf::RenderTarget &renderer, const ActiveZones &activeZones) {
 	for (auto row = 0; row < slots.size(); row++) {
 		for (auto col = 0; col < slots[0].size(); col++) {
 			if (activeZoneContainsSlot(row, col, activeZones.renderZone)) {
-				slots[row][col]->renderSurfaceEffects(renderer);
+				slots[row][col]->renderSurfaceAndMainProps(renderer);
 			}
 		}
 	}

@@ -52,10 +52,10 @@ void Chunk::renderDecorEntities(sf::RenderTarget &renderer, const ActiveZones &a
 	entitySpatialPartition->renderDecorEntities(renderer, activeZones);
 }
 
-void Chunk::renderNonDecorEntities(sf::RenderTarget &renderer, const ActiveZones &activeZones) {
-	entitySpatialPartition->renderNonDecorEntities(renderer, activeZones);
+void Chunk::renderMoveables(sf::RenderTarget &renderer, const ActiveZones &activeZones) {
+	entitySpatialPartition->renderMoveables(renderer, activeZones);
 }
 
-void Chunk::renderSurfaceEffects(sf::RenderTarget &renderer, const ActiveZones &activeZones) {
-	entitySpatialPartition->renderSurfaceEffects(renderer, activeZones);
+void Chunk::renderSurfaceAndMainProps(sf::RenderTarget &renderer, const ActiveZones &activeZones) {
+	entitySpatialPartition->renderSurfaceAndMainProps(renderer, activeZones);
 }

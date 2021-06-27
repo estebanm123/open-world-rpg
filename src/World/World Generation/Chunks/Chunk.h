@@ -47,11 +47,11 @@ public:
 
 	void renderDecorEntities(sf::RenderTarget &renderer, const ActiveZones &activeZones);
 
-	void renderNonDecorEntities(sf::RenderTarget &renderer, const ActiveZones &activeZones);
+	void renderMoveables(sf::RenderTarget &renderer, const ActiveZones &activeZones);
 
 	void renderTiles(sf::RenderTarget &renderer, const ActiveZones &activeZones);
 
-	void renderSurfaceEffects(sf::RenderTarget &renderer, const ActiveZones &activeZones);
+	void renderSurfaceAndMainProps(sf::RenderTarget &renderer, const ActiveZones &activeZones);
 
 	void setNeighbors(const Neighbors &newNeighbors);
 
