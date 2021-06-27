@@ -17,8 +17,9 @@ public:
 	static constexpr int FLOOR_TILE_SIZEX = 15;
 	static constexpr int FLOOR_TILE_SIZEY = FLOOR_TILE_SIZEX;
 
-	std::vector<std::unique_ptr<Entity>> generateBuildings(const BuildingConfig & config);
+	std::vector<std::unique_ptr<Entity>> generateBuildings(const BuildingConfig& config);
 
 protected:
-	std::unique_ptr<Prop> generateFloorTile(sf::Vector2i localCoords, const BuildingConfig & config);
+	std::unique_ptr<Prop> generateFloorTile(sf::Vector2i localCoords, const BuildingConfig& config);
+	void generateWall(std::vector <std::unique_ptr<Prop>>& resultProps, const BuildingConfig& config);
 };

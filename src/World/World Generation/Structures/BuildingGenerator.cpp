@@ -12,10 +12,12 @@ std::vector<std::unique_ptr<Entity>> BuildingGenerator::generateBuildings(
 		for (auto x = 0; x < config.xLength; x++) {
 			auto floorTile = generateFloorTile({x, y}, config);
 			resultProps.push_back(std::move(floorTile));
-			auto size = resultProps.size();
-			std::cout << size << std::endl;
 		}
 	}
+
+	generateVerticalWalls(resultProps, config);
+	generateHorizontalWalls(resultProps, config);
+
 	return resultProps;
 }
 
