@@ -2,7 +2,8 @@
 
 #include "SpriteContainer.h"
 
-SpriteContainer::SpriteContainer(std::vector<std::unique_ptr<EntitySprite>> sprites) : sprites(std::move(sprites)) {}
+SpriteContainer::SpriteContainer(std::vector<std::unique_ptr<EntitySprite>> sprites)
+	: sprites(std::move(sprites)) {}
 
 void SpriteContainer::renderBy(sf::RenderTarget &renderer) {
 	for (auto &sprite : sprites) {
@@ -31,10 +32,9 @@ void SpriteContainer::setPosition(const sf::Vector2f &pos) {
 }
 
 bool SpriteContainer::notCurrentlyPlayingAnim() {
-	for (auto &sprite : sprites) {
-		if (sprite->notCurrentlyPlayingAnim()) return true;
-	}
-	return false;
+	return std::any_of(sprites.begin(), sprites.end(), [](auto sprite) {
+		return sprite->notCurrentlyPlayingAnim();
+	});
 }
 
 float SpriteContainer::getRotation() const { return sprites[0]->getRotation(); }
@@ -52,13 +52,9 @@ void SpriteContainer::move(const sf::Vector2f &offset) {
 }
 
 bool SpriteContainer::isAnimated() {
-	for (auto &sprite : sprites) {
-		if (sprite->isAnimated()) {
-			return true;
-		}
-	}
-
-	return false;
+	return std::any_of(sprites.begin(), sprites.end(), [](auto sprite) {
+		return sprite->isAnimated();
+	});
 }
 
 sf::Vector2f SpriteContainer::getSize() { return sprites[0]->getSize(); }

@@ -4,7 +4,6 @@
 
 #include "../../EntityVisitor/EntityVisitor.h"
 #include "../../Sprites/ShadowedSpriteReg.h"
-#include "../Hitbox/SingleHitbox.h"
 
 EntitySprite &Prop::getSprite() {
 	return *sprite;	 // todo: to refactor
