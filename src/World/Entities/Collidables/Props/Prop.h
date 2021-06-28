@@ -23,7 +23,8 @@ public:
 		 std::unique_ptr<AnimationPlayer> animPlayer = nullptr,
 		 std::unique_ptr<ItemInitializer> itemInitializer = nullptr,
 		 bool randomRotationAngle = true,
-		 float rotationAngle = 0)
+		 float rotationAngle = 0,
+		 Entity::Altitude altitude = MEDIUM)
 			: hasShadow(hasShadow),
 			  spriteSheet(std::move(spriteSheet)),
 			  defaultFrame(defaultFrame),
@@ -33,7 +34,8 @@ public:
 			  animPlayer(std::move(animPlayer)),
 			  itemInitializer(std::move(itemInitializer)),
 			  randomRotationAngle(randomRotationAngle),
-			  rotationAngle(rotationAngle){};
+			  rotationAngle(rotationAngle),
+			  altitude(altitude){};
 		std::string spriteSheet;
 		sf::IntRect defaultFrame;
 		sf::Vector2f size;
@@ -44,6 +46,7 @@ public:
 		bool hasShadow;
 		bool randomRotationAngle = true;
 		float rotationAngle = 0;
+		Entity::Altitude altitude;
 		std::unique_ptr<ItemInitializer> itemInitializer;
 	};
 

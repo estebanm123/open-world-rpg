@@ -7,10 +7,11 @@
 #include "PresetSurfaceEffects.h"
 #include "SurfaceEffect.h"
 
-std::unique_ptr<SurfaceEffect> FootprintGenerator::generateSurfaceEffect(MoveableEntity *moveable, int *env) {
+std::unique_ptr<SurfaceEffect> FootprintGenerator::generateSurfaceEffect(MoveableEntity *moveable,
+																		 int *env) {
 	auto entityPos = moveable->getPosition();
 	auto distFromLastGeneration =
-		distSquared(entityPos.x, lastPositionOfGeneration.x, entityPos.y, lastPositionOfGeneration.y);
+	 distSquared(entityPos.x, lastPositionOfGeneration.x, entityPos.y, lastPositionOfGeneration.y);
 	if (distFromLastGeneration >= minDistFromLastGenSquared) {	// squared values is for performance
 		auto newSurfaceEffectPos = entityPos;
 		if (isLeft) {
@@ -35,9 +36,10 @@ FootprintGenerator::FootprintGenerator(SpriteReg::CopyableConfig config,
 	  footprintOffsetFromEntityCenter(footprintOffsetFromEntityCenter),
 	  isLeft(false) {}
 
-std::unique_ptr<SurfaceEffect> FootprintGenerator::createSurfaceEffectBasedOnEnv(int *envId,
-																				 MoveableEntity *moveable,
-																				 sf::Vector2f effectPos) {
+std::unique_ptr<SurfaceEffect> FootprintGenerator::createSurfaceEffectBasedOnEnv(
+ int *envId,
+ MoveableEntity *moveable,
+ sf::Vector2f effectPos) {
 	if (envId && *envId == EnvTypes::WATER) {
 		auto splashEffect = std::make_unique<MediumSplash>(effectPos);
 		splashEffect->rotate(GlobalRand::getRandAngle());

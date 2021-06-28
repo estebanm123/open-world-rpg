@@ -4,6 +4,8 @@
 
 #include <iostream>
 
+#include "../../Entities/Collidables/Collision Physics/BlockingPhysics.h"
+
 
 void BuildingGenerator::generateRoom(std::vector<std::unique_ptr<Entity>>& resultEntities,
 									 const BuildingGenerator::BuildingConfig& config) {
@@ -14,7 +16,7 @@ void BuildingGenerator::generateRoom(std::vector<std::unique_ptr<Entity>>& resul
 		}
 	}
 
-//	generateWalls(resultEntities, config);
+	generateWalls(resultEntities, config);
 }
 
 std::vector<std::unique_ptr<Entity>> BuildingGenerator::generateBuildings(
@@ -26,8 +28,9 @@ std::vector<std::unique_ptr<Entity>> BuildingGenerator::generateBuildings(
 	return resultProps;
 }
 
-std::unique_ptr<Entity> generateWallUtil(std::vector<std::unique_ptr<Entity>>& resultEntities,
-										 sf::Vector2f pos) {
+void generateWallUtil(std::vector<std::unique_ptr<Entity>>& resultEntities,
+					  sf::Vector2f pos,
+					  float rotAngle) {
 	auto PLACEHOLDER_SPRITE_SHEET = "Buildings/wall";
 	resultEntities.push_back(std::make_unique<Prop>(Prop::PropOptions{
 	 PLACEHOLDER_SPRITE_SHEET,
@@ -35,30 +38,33 @@ std::unique_ptr<Entity> generateWallUtil(std::vector<std::unique_ptr<Entity>>& r
 	 pos,
 	 false,
 	 {0, 0},
-	 std::make_unique<CollisionPhysics>(),
+	 std::make_unique<BlockingPhysics>(),
 	 nullptr,
 	 nullptr,
 	 false,
-	 0}));
+	 rotAngle,
+	 Entity::Altitude::MEDIUM}));
 }
 
 void generateHorizontalWall(float fixedLocalY,
 							const BuildingGenerator::BuildingConfig& config,
 							std::vector<std::unique_ptr<Entity>>& resultEntities) {
 	auto y = fixedLocalY * BuildingGenerator::WALL_TILE_SIZEY + config.topLeft.y;
+	float rotAngle = fixedLocalY == 0 ? 90 : 270;
 	for (auto tileIndex = 0; tileIndex < config.xLength; tileIndex++) {
-		auto x = tileIndex * BuildingGenerator::WALL_TILE_SIZEX + config.topLeft.x;
-		generateWallUtil(resultEntities, sf::Vector2f{x, y});
+		auto x = tileIndex * BuildingGenerator::WALL_TILE_SIZEY + config.topLeft.x;
+		generateWallUtil(resultEntities, sf::Vector2f{x, y}, rotAngle);
 	}
 }
 
-void generateVerticalWall(float localX,
+void generateVerticalWall(float fixedLocalX,
 						  const BuildingGenerator::BuildingConfig& config,
 						  std::vector<std::unique_ptr<Entity>>& resultEntities) {
-	auto x = localX * BuildingGenerator::WALL_TILE_SIZEX + config.topLeft.x;
+	auto x = fixedLocalX * BuildingGenerator::WALL_TILE_SIZEY + config.topLeft.x;
+	auto rotAngle = fixedLocalX == 0 ? 0 : 180;
 	for (auto tileIndex = 0; tileIndex < config.yLength; tileIndex++) {
 		auto y = tileIndex * BuildingGenerator::WALL_TILE_SIZEY + config.topLeft.y;
-		generateWallUtil(resultEntities, sf::Vector2f{x, y});
+		generateWallUtil(resultEntities, sf::Vector2f{x, y}, rotAngle);
 	}
 }
 
@@ -87,5 +93,6 @@ std::unique_ptr<Prop> BuildingGenerator::generateFloorTile(
 													nullptr,
 													nullptr,
 													false,
-													0});
+													0,
+													Entity::Altitude::LOW});
 }
