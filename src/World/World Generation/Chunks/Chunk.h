@@ -45,13 +45,9 @@ public:
 
 	SpatialPartition *getSpatialPartition();
 
-	void renderDecorEntities(sf::RenderTarget &renderer, const ActiveZones &activeZones);
-
-	void renderMoveables(sf::RenderTarget &renderer, const ActiveZones &activeZones);
+	void renderEntities(sf::RenderTarget &renderer, Entity::Altitude altitude, const ActiveZones &activeZones);
 
 	void renderTiles(sf::RenderTarget &renderer, const ActiveZones &activeZones);
-
-	void renderSurfaceAndMainProps(sf::RenderTarget &renderer, const ActiveZones &activeZones);
 
 	void setNeighbors(const Neighbors &newNeighbors);
 

@@ -35,6 +35,7 @@ protected:
 		const SpriteConstants::Paths &spriteSheetPaths) override;
 	std::string generateBaseSpriteSheetPath() override;
 	std::unique_ptr<AnimationPlayer> generateAnimPlayer(Position pos) override;
+	void performExtraModifications(Beast *generatedBeast) override;
 };
 
 struct BeetleInitializer : public BeastInitializer {
@@ -50,6 +51,7 @@ protected:
 	std::unique_ptr<AnimationPlayer> generateAnimPlayer(Position pos) override;
 	std::string generateBaseSpriteSheetPath() override;
 	float getSpeed() override;
+	void performExtraModifications(Beast *generatedBeast) override;
 };
 
 struct Beetle2Initializer : public BeastInitializer {
@@ -65,4 +67,5 @@ protected:
 	std::unique_ptr<AnimationPlayer> generateAnimPlayer(Position pos) override;
 	std::string generateBaseSpriteSheetPath() override;
 	float getSpeed() override;
+	void performExtraModifications(Beast *generatedBeast) override;
 };

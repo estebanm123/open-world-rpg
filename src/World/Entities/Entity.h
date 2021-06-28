@@ -8,8 +8,17 @@ class Action;
 
 class EntityVisitor;
 
+
 class Entity : sf::NonCopyable {
 public:
+	enum Altitude {
+		VERY_LOW = 0,
+		LOW = 1,
+		MEDIUM = 2,
+		HIGH = 3,
+		VERY_HIGH = 4
+	};
+
 	virtual void renderBy(sf::RenderTarget &renderer);
 
 	virtual void update(float dt) = 0;
@@ -43,4 +52,9 @@ protected:
 
 private:
 	Action const *currentAction = nullptr;
+	Altitude altitude = MEDIUM;
+
+public:
+	Altitude getAltitude() const;
+	void setAltitude(Altitude altitude);
 };

@@ -31,3 +31,7 @@ void Entity::resetCurrentAction() { currentAction = nullptr; }
 sf::Vector2f Entity::getSize() { return getSprite().getSize(); }
 
 sf::Vector2f Entity::getTopLeftPosition() { return getPosition() - getSize() / 2.f; }
+
+Entity::Altitude Entity::getAltitude() const { return altitude; }
+
+void Entity::setAltitude(Altitude newAltitude) { Entity::altitude = newAltitude; }

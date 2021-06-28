@@ -1,5 +1,4 @@
-﻿
-#include "Chunk.h"
+﻿#include "Chunk.h"
 
 #include <utility>
 
@@ -48,14 +47,6 @@ void Chunk::addEntity(const std::shared_ptr<Entity> &entity) { entitySpatialPart
 
 TileMap &Chunk::getTileMap() { return tiles; }
 
-void Chunk::renderDecorEntities(sf::RenderTarget &renderer, const ActiveZones &activeZones) {
-	entitySpatialPartition->renderDecorEntities(renderer, activeZones);
-}
-
-void Chunk::renderMoveables(sf::RenderTarget &renderer, const ActiveZones &activeZones) {
-	entitySpatialPartition->renderMoveables(renderer, activeZones);
-}
-
-void Chunk::renderSurfaceAndMainProps(sf::RenderTarget &renderer, const ActiveZones &activeZones) {
-	entitySpatialPartition->renderSurfaceAndMainProps(renderer, activeZones);
+void Chunk::renderEntities(sf::RenderTarget &renderer, Entity::Altitude altitude, const ActiveZones &activeZones) {
+	entitySpatialPartition->renderEntities(renderer, altitude, activeZones);
 }

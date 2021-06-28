@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Activities/Single Activities/Flee.h"
+#include "../Activities/Single Activities/Chase.h"
 #include "EntityReactor.h"
 
 template <class OrganismOwner, class OtherOrganism>
@@ -20,9 +21,10 @@ public:
 																			  otherEntity);
 		} else if (ownerFoodChainLvl < otherFoodChainLvl) {
 			ai->getActivitySchedule()->add(
-				std::make_unique<Flee<OrganismOwner, OtherOrganism>>(otherEntity));
+			 std::make_unique<Flee<OrganismOwner, OtherOrganism>>(otherEntity));
 		} else {
-			// todo chase
+//			ai->getActivitySchedule()->add(
+//			 std::make_unique<Chase<OrganismOwner, OtherOrganism>>(otherEntity));
 		}
 	}
 };

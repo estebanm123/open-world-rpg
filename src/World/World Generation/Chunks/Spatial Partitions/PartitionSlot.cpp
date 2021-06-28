@@ -4,6 +4,8 @@
 #include "../../../Entities/Collidables/Hitbox/EntityCollisionHandler.h"
 #include "../../../Entities/Surface Effects/SurfaceEffect.h"
 #include "SpatialPartition.h"
+#include "PartitionSlot.h"
+
 
 void PartitionSlot::update(float dt) {
 	for (auto &moveable : entityHolder.moveableEntities) {
@@ -20,24 +22,11 @@ void PartitionSlot::update(float dt) {
 	}
 }
 
-void PartitionSlot::renderMoveables(sf::RenderTarget &renderer) {
-	for (auto &moveable : entityHolder.moveableEntities) {
-		moveable->renderBy(renderer);
-	}
-}
-
-void PartitionSlot::renderSurfaceAndMainProps(sf::RenderTarget &renderer) {
-	for (auto &surfaceEffect : entityHolder.surfaceEffects) {
-		surfaceEffect->renderBy(renderer);
-	}
-	for (auto &prop : entityHolder.mainProps) {
-		prop->renderBy(renderer);
-	}
-}
-
-void PartitionSlot::renderDecorEntities(sf::RenderTarget &renderer) {
-	for (auto &prop : entityHolder.decorProps) {
-		prop->renderBy(renderer);
+void PartitionSlot::renderEntities(Entity::Altitude altitude, sf::RenderTarget &renderer) {
+	auto mapIter = entityHolder.entities.entityMap.find(altitude);
+	if (mapIter == entityHolder.entities.entityMap.end()) return;
+	for (auto & entity : (*mapIter).second) {
+		entity->renderBy(renderer);
 	}
 }
 

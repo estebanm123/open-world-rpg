@@ -25,11 +25,7 @@ public:
 
 	void updateEntities(float dt, const ActiveZones &activeZones, Chunk *chunkOwner);
 
-	void renderDecorEntities(sf::RenderTarget &renderer, const ActiveZones &activeZones);
-
-	void renderMoveables(sf::RenderTarget &renderer, const ActiveZones &activeZones);
-
-	void renderSurfaceAndMainProps(sf::RenderTarget &renderer, const ActiveZones &activeZones);
+	void renderEntities(sf::RenderTarget &renderer, Entity::Altitude altitude, const ActiveZones &activeZones);
 
 	void addNewEntity(const std::shared_ptr<Entity> &entity);
 

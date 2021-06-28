@@ -5,11 +5,13 @@
 class OrganismEntity : public MoveableEntity {
 public:
 	enum FoodChainLevel {
-		LOWEST = 0,
-		LOW = 1,
+		LOWEST = -2,
+		VERY_LOW = -1,
+		LOW = 0,
 		MEDIUM = 1,
 		HIGH = 2,
-		HIGHEST = 3,
+		VERY_HIGH = 3,
+		HIGHEST = 4,
 		NOT_APPLICABLE = 10
 	};
 

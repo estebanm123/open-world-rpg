@@ -13,6 +13,7 @@ ColumnLimit: '100'
 IndentWidth: '4'
 Standard: Auto
 ContinuationIndentWidth: 1
+MaxEmptyLinesToKeep: 2
 TabWidth: '4'
 UseTab: Always
 ReflowComments: false

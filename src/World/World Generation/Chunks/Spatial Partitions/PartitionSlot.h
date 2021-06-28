@@ -19,11 +19,7 @@ public:
 
 	void makeMoveablesInteractWithEnvironment(SpatialPartition *spatialPartition, Chunk *chunk);
 
-	void renderMoveables(sf::RenderTarget &renderer);
-
-	void renderDecorEntities(sf::RenderTarget &renderer);
-
-	void renderSurfaceAndMainProps(sf::RenderTarget &renderer);
+	void renderEntities(Entity::Altitude altitude, sf::RenderTarget & renderer);
 
 	void handleExternalCollision(MoveableEntity *externalEntity);
 

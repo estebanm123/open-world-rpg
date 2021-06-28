@@ -8,7 +8,9 @@
 MoveableEntity::MoveableEntity(Config hitboxes, float initialSpeed)
 	: CollidableEntity(std::move(hitboxes)),
 	  lastMoveOffset({0, 0}),
-	  speed(initialSpeed) {}
+	  speed(initialSpeed) {
+	setAltitude(HIGH);
+}
 
 bool MoveableEntity::hasMoved() const { return lastMoveOffset.x != 0 || lastMoveOffset.y != 0; }
 

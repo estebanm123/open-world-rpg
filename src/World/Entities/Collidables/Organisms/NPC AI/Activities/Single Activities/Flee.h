@@ -10,13 +10,13 @@ public:
 		: predator(predator),
 		  safeDistFromPredatorSquared(safeDistFromPredator * safeDistFromPredator){};
 
-	void update(float dt) {
-		//      auto& npcPath = this->ai->getPath();
-		//		auto predatorMoveDir = predator->getMoveDirection();
-		//		if (predatorMoveDir.x == 0 && predatorMoveDir.y == 0) {
-		//			return;
-		//		}
+	void initialize(NpcAi<OwnerOrganism>* npcAi) override {
+		BaseActivity<OwnerOrganism>::initialize(npcAi);
+		auto& npcPath = this->ai->getPath();
+		npcPath.reset(this->ai->getEntity());
+	}
 
+	void update(float dt) {
 		auto npcEntity = this->ai->getEntity();
 		auto npcEntityPos = this->ai->getEntity()->getPosition();
 		auto otherPos = predator->getPosition();

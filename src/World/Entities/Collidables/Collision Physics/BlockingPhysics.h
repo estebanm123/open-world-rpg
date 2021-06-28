@@ -4,9 +4,12 @@
 
 class BlockingPhysics : public CollisionPhysics {
 public:
-	BlockingPhysics();
+	BlockingPhysics(bool collisionAnalysisEnabledMoveables = false,
+					bool collisionAnalysisEnabledProps = false);
 
 	bool isBlocking() const override;
 
 	void applyPhysics(CollidableEntity *receivingEntity, MoveableEntity *other) override;
+private:
+	bool collisionAnalysisEnabled;
 };

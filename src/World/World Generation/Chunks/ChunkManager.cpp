@@ -67,6 +67,16 @@ void ChunkManager::handleChunkChange() {
 	chunkGenerationTimer.restart();
 }
 
+void ChunkManager::renderEntitiesAtAltitude(Entity::Altitude altitude, sf::RenderTarget &renderer) {
+	for (auto i = 0; i < 3; ++i) {
+		for (auto j = 0; j < 3; ++j) {
+			if (chunks[i][j]) {
+				chunks[i][j]->renderEntities(renderer, altitude, activeZones);
+			}
+		}
+	}
+}
+
 void ChunkManager::renderChunks(sf::RenderTarget &target) {
 	for (auto i = 0; i < 3; ++i) {
 		for (auto j = 0; j < 3; ++j) {
@@ -75,27 +85,13 @@ void ChunkManager::renderChunks(sf::RenderTarget &target) {
 			}
 		}
 	}
-	for (auto i = 0; i < 3; ++i) {
-		for (auto j = 0; j < 3; ++j) {
-			if (chunks[i][j]) {
-				chunks[i][j]->renderDecorEntities(target, activeZones);
-			}
-		}
+
+	for (auto i = Entity::Altitude::VERY_LOW; i < Entity::Altitude::VERY_HIGH;
+		 i = Entity::Altitude(i + 1)) {
+		renderEntitiesAtAltitude(i, target);
 	}
-	for (auto i = 0; i < 3; ++i) {
-		for (auto j = 0; j < 3; ++j) {
-			if (chunks[i][j]) {
-				chunks[i][j]->renderSurfaceAndMainProps(target, activeZones);
-			}
-		}
-	}
-	for (auto i = 0; i < 3; ++i) {
-		for (auto j = 0; j < 3; ++j) {
-			if (chunks[i][j]) {
-				chunks[i][j]->renderMoveables(target, activeZones);
-			}
-		}
-	}
+
+
 	RENDER_DEBUG_INFO(target, chunks, activeZones);
 }
 
@@ -114,8 +110,9 @@ void ChunkManager::shiftChunksFromDirection(const sf::Vector2i &dir) {
 
 void ChunkManager::handleDiagonalShift(const sf::Vector2i &dir) {
 	auto oppositeDir = dir * -1;
-	allocateChunkFromDirection(chunks[1][1], oppositeDir);	// move center first, so it isn't overriden
-	auto colNum = dir.x + 1;								// coords of the edge slot in direction
+	allocateChunkFromDirection(chunks[1][1],
+							   oppositeDir);  // move center first, so it isn't overriden
+	auto colNum = dir.x + 1;				  // coords of the edge slot in direction
 	auto rowNum = dir.y * -1 + 1;
 	attemptShiftAllocation({colNum, rowNum}, oppositeDir);	// move edge slot to center
 	if (colNum == 2) {
@@ -191,8 +188,9 @@ void ChunkManager::attemptShiftAllocation(const sf::Vector2i &pos, const sf::Vec
 	chunks[pos.y][pos.x] = nullptr;
 	sf::Vector2i dirRelativeToNewCenter = {newPos.x - 1, newPos.y - 1};
 	sf::Vector2i oldPosDirection = {pos.x - 1, pos.y * -1 + 1};
-	auto centerChunk =
-		(dirRelativeToNewCenter == constants::CENTER) ? chunks[newPos.y][newPos.x].get() : chunks[1][1].get();
+	auto centerChunk = (dirRelativeToNewCenter == constants::CENTER)
+						? chunks[newPos.y][newPos.x].get()
+						: chunks[1][1].get();
 	generator.requestChunk({oldPosDirection, centerChunk->getCenter()});
 }
 
@@ -246,7 +244,8 @@ void ChunkManager::allocateInitialChunks(const sf::Vector2f &pos) {
 }
 
 // Allocates chunk to matrix by mapping dir to slot
-void ChunkManager::allocateChunkFromDirection(std::unique_ptr<Chunk> &chunk, const sf::Vector2i &dir) {
+void ChunkManager::allocateChunkFromDirection(std::unique_ptr<Chunk> &chunk,
+											  const sf::Vector2i &dir) {
 	auto y = dir.y * -1;
 	sf::Vector2i newPos = {dir.x + 1, y + 1};
 	allocateChunkNeighbors(newPos, chunk.get());

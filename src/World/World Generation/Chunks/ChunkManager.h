@@ -60,4 +60,6 @@ private:
 	void allocateChunkNeighbors(const sf::Vector2i &matrixPos, Chunk *target);
 
 	Chunk *getChunkFromDirection(const sf::Vector2i &dir);
+
+	void renderEntitiesAtAltitude(Entity::Altitude altitude, sf::RenderTarget& renderer);
 };

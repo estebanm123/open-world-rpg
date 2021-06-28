@@ -1,25 +1,33 @@
 #pragma once
 
 #include <memory>
+#include <unordered_map>
 #include <unordered_set>
 
+#include "../../../Entities/Entity.h"
 #include "../../../Entities/EntityVisitor/EntityVisitor.h"
 
 class SurfaceEffect;
 
 class MoveableEntity;
 
-class Entity;
-
 struct SlotEntities {
+	struct EntitiesByElevation {
+
+		std::unordered_map<Entity::Altitude, std::unordered_set<std::shared_ptr<Entity>>> entityMap;
+
+		void addEntity(const std::shared_ptr<Entity> &entity);
+		void removeEntity(const std::shared_ptr<Entity> &entity);
+	};
+
 	// could make this private, but it would just be a bunch of getters
-	std::unordered_set<std::shared_ptr<Entity>> entities;
+	EntitiesByElevation entities;
 	std::unordered_set<MoveableEntity *> moveableEntities;
 	std::unordered_set<Prop *> mainProps;
 	std::unordered_set<Prop *> itemProps;
-	std::unordered_set<Prop *> decorProps;
 	std::unordered_set<SurfaceEffect *> surfaceEffects;
 	std::unordered_set<Humanoid *> humanoids;
+
 
 	SlotEntities();
 
@@ -33,7 +41,9 @@ struct SlotEntities {
 
 	std::shared_ptr<Entity> removeMoveable(Entity *entity, MoveableIter &it);
 
+
 private:
+
 	class Adder : EntityVisitor {
 	public:
 		void addEntity(const std::shared_ptr<Entity> &entity);

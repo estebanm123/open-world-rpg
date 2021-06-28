@@ -47,6 +47,7 @@ Prop::Prop(PropOptions config)
 		 static_cast<float>(hash2ValuesModSize(config.pos.x, config.pos.y * PRIME, 360));
 	}
 	sprite->rotate(rotationAngle);
+	setAltitude(isDecor ? VERY_LOW : MEDIUM);
 }
 
 void Prop::accept(EntityVisitor *visitor) { visitor->visit(this); }

@@ -14,12 +14,17 @@ public:
 		int yLength = 1;
 	};
 
-	static constexpr int FLOOR_TILE_SIZEX = 15;
+	static constexpr int FLOOR_TILE_SIZEX = 16;
 	static constexpr int FLOOR_TILE_SIZEY = FLOOR_TILE_SIZEX;
+	static constexpr int WALL_TILE_SIZEX = 5;
+	static constexpr int WALL_TILE_SIZEY = FLOOR_TILE_SIZEY;
 
 	std::vector<std::unique_ptr<Entity>> generateBuildings(const BuildingConfig& config);
 
 protected:
 	std::unique_ptr<Prop> generateFloorTile(sf::Vector2i localCoords, const BuildingConfig& config);
-	void generateWall(std::vector <std::unique_ptr<Prop>>& resultProps, const BuildingConfig& config);
+
+	void generateWalls(std::vector <std::unique_ptr<Entity>>& resultEntities, const BuildingConfig& config);
+
+	void generateRoom(std::vector <std::unique_ptr<Entity>>& resultEntities, const BuildingConfig& config);
 };

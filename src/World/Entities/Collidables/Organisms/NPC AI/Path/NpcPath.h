@@ -16,7 +16,7 @@ public:
   struct Point {
     sf::Vector2f pos;
     bool isTemp = false; // temp points are disregarded as soon as another point
-                         // is pushed in front of it
+                         // is pushed in front of it; regular points persist
   };
 
   NpcPath(const std::vector<Point> &points = {});

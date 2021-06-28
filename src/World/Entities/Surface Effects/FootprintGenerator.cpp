@@ -46,6 +46,7 @@ std::unique_ptr<SurfaceEffect> FootprintGenerator::createSurfaceEffectBasedOnEnv
 		auto footprintEffect = std::make_unique<SurfaceEffect>(spriteConfig);
 		footprintEffect->setPosition(effectPos);
 		footprintEffect->setRotation(moveable->getRotationAngle());
+		footprintEffect->setAltitude(Entity::LOW);
 		return footprintEffect;
 	}
 }

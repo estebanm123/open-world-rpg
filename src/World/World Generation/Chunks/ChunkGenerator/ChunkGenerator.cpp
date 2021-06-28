@@ -78,10 +78,10 @@ void ChunkGenerator::generateChunk(const Chunk::RequestData &data) {
 	if (center.x == INITIAL_PLAYER_POS.x && center.y == INITIAL_PLAYER_POS.y) {
 		//		CatInitializer x;
 		//		entitySpatialPartition->addNewEntity(x.initialize(center));
-		auto testBuildings =
+		auto buildingEntities =
 		 buildingGenerator.generateBuildings(BuildingGenerator::BuildingConfig{center, 9, 9});
-		for (auto &building : testBuildings) {
-			entitySpatialPartition->addNewEntity(std::move(building));
+		for (auto &entity : buildingEntities) {
+			entitySpatialPartition->addNewEntity(std::move(entity));
 		}
 	}
 
@@ -92,6 +92,7 @@ void ChunkGenerator::generateChunk(const Chunk::RequestData &data) {
 	mainPropGenerator.generateEntities(chunkPtr);
 	decorPropGenerator.generateEntities(chunkPtr);
 	beastGenerator.generateEntities(chunkPtr);
+
 
 	enqueueNewChunk(std::move(chunk));
 }
