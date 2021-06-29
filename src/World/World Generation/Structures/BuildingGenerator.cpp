@@ -82,7 +82,8 @@ void generateHorizontalWall(float fixedLocalY,
 	auto size =
 	 sf::Vector2f{static_cast<float>(BuildingGenerator::WALL_TILE_SIZEY * config.xLength),
 				  BuildingGenerator::WALL_TILE_SIZEX};
-	auto centrePos = sf::Vector2f{config.topLeft.x + size.x / 2.f, y + size.y / 2.f};
+	auto centrePos =
+	 sf::Vector2f{config.topLeft.x + (size.x - BuildingGenerator::WALL_TILE_SIZEY) / 2.f, y};
 	generateWallUtil(std::move(wallSprites), resultEntities, centrePos, rotAngle, size);
 }
 
@@ -101,7 +102,8 @@ void generateVerticalWall(float fixedLocalX,
 	auto size =
 	 sf::Vector2f{BuildingGenerator::WALL_TILE_SIZEX,
 				  static_cast<float>(config.yLength * BuildingGenerator::WALL_TILE_SIZEY)};
-	auto centrePos = sf::Vector2f{x + size.x / 2.f, config.topLeft.y + size.y / 2.f};
+	auto centrePos =
+	 sf::Vector2f{x, config.topLeft.y + (size.y - BuildingGenerator::WALL_TILE_SIZEY) / 2.f};
 	generateWallUtil(std::move(wallSprites), resultEntities, centrePos, rotAngle, size);
 }
 
