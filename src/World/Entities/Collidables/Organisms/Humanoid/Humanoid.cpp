@@ -24,7 +24,9 @@ Humanoid::Humanoid(const sf::Vector2f &globalPosition,
 		  initialSpeed,
 		  VERY_HIGH),
 
-	  sprite(initializeSprites(globalPosition, spriteSheetBody, spriteSheetHead)),
+	  sprite(initializeSprites(globalPosition, spriteSheetBody, spriteSheetHead),
+			 false,
+			 sf::Vector2f()),
 	  isPickingUp(false),
 	  pickupZone(initializePickUpZone(globalPosition)) {
 	initializeFootprintGenerator();

@@ -7,7 +7,9 @@
 class SpriteContainer : public EntitySprite {
 public:
 	// Order of sprites is render order
-	explicit SpriteContainer(std::vector<std::unique_ptr<EntitySprite>> sprites);
+	explicit SpriteContainer(std::vector<std::unique_ptr<EntitySprite>> sprites,
+							 bool overridePos,
+							 sf::Vector2f customCenterPos);
 
 	void renderBy(sf::RenderTarget &renderer) override;
 
@@ -35,4 +37,6 @@ public:
 
 private:
 	std::vector<std::unique_ptr<EntitySprite>> sprites;
+	bool overridePos;
+	sf::Vector2f customCenterPos;
 };

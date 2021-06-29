@@ -2,8 +2,12 @@
 
 #include "SpriteContainer.h"
 
-SpriteContainer::SpriteContainer(std::vector<std::unique_ptr<EntitySprite>> sprites)
-	: sprites(std::move(sprites)) {}
+SpriteContainer::SpriteContainer(std::vector<std::unique_ptr<EntitySprite>> sprites,
+								 bool overridePos = false,
+								 sf::Vector2f customCenterPos = sf::Vector2f{0, 0})
+	: sprites(std::move(sprites)),
+	  overridePos(overridePos),
+	  customCenterPos(customCenterPos) {}
 
 void SpriteContainer::renderBy(sf::RenderTarget &renderer) {
 	for (auto &sprite : sprites) {
@@ -23,16 +27,21 @@ void SpriteContainer::playDefaultAnim() {
 	}
 }
 
-const sf::Vector2f &SpriteContainer::getPosition() const { return sprites[0]->getPosition(); }
+const sf::Vector2f &SpriteContainer::getPosition() const {
+	return overridePos ? customCenterPos : sprites[0]->getPosition();
+}
 
 void SpriteContainer::setPosition(const sf::Vector2f &pos) {
 	for (auto &sprite : sprites) {
 		sprite->setPosition(pos);
 	}
+	if (overridePos) {
+		customCenterPos = pos;
+	}
 }
 
 bool SpriteContainer::notCurrentlyPlayingAnim() {
-	return std::any_of(sprites.begin(), sprites.end(), [](auto sprite) {
+	return std::any_of(sprites.begin(), sprites.end(), [](auto &sprite) {
 		return sprite->notCurrentlyPlayingAnim();
 	});
 }
@@ -52,7 +61,7 @@ void SpriteContainer::move(const sf::Vector2f &offset) {
 }
 
 bool SpriteContainer::isAnimated() {
-	return std::any_of(sprites.begin(), sprites.end(), [](auto sprite) {
+	return std::any_of(sprites.begin(), sprites.end(), [](auto &sprite) {
 		return sprite->isAnimated();
 	});
 }

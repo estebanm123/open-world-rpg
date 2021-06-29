@@ -5,6 +5,8 @@
 #include <iostream>
 
 #include "../../Entities/Collidables/Collision Physics/BlockingPhysics.h"
+#include "../../Entities/Sprites/SpriteContainer.h"
+#include "../../Entities/Sprites/SpriteReg.h"
 
 
 void BuildingGenerator::generateRoom(std::vector<std::unique_ptr<Entity>>& resultEntities,
@@ -12,7 +14,7 @@ void BuildingGenerator::generateRoom(std::vector<std::unique_ptr<Entity>>& resul
 	for (auto y = 0; y < config.yLength; y++) {
 		for (auto x = 0; x < config.xLength; x++) {
 			auto floorTile = generateFloorTile({x, y}, config);
-			resultEntities.push_back(std::move(floorTile));
+			//			resultEntities.push_back(std::move(floorTile));
 		}
 	}
 
@@ -28,44 +30,79 @@ std::vector<std::unique_ptr<Entity>> BuildingGenerator::generateBuildings(
 	return resultProps;
 }
 
-void generateWallUtil(std::vector<std::unique_ptr<Entity>>& resultEntities,
-					  sf::Vector2f pos,
-					  float rotAngle) {
+std::unique_ptr<EntitySprite> initializeWallSprite(sf::Vector2f pos) {
 	auto PLACEHOLDER_SPRITE_SHEET = "Buildings/wall";
-	resultEntities.push_back(std::make_unique<Prop>(Prop::PropOptions{
-	 PLACEHOLDER_SPRITE_SHEET,
-	 {0, 0, BuildingGenerator::WALL_TILE_SIZEX, BuildingGenerator::WALL_TILE_SIZEY},
-	 pos,
-	 false,
-	 {0, 0},
-	 std::make_unique<BlockingPhysics>(),
-	 nullptr,
-	 nullptr,
-	 false,
-	 rotAngle,
-	 Entity::Altitude::MEDIUM}));
+	sf::IntRect PLACEHOLDER_DEFAULTFRAME = {0,
+											0,
+											BuildingGenerator::WALL_TILE_SIZEX,
+											BuildingGenerator::WALL_TILE_SIZEY};
+	auto size =
+	 sf::Vector2f{BuildingGenerator::WALL_TILE_SIZEX, BuildingGenerator::WALL_TILE_SIZEY};
+	return std::make_unique<SpriteReg>(SpriteReg::Config{PLACEHOLDER_SPRITE_SHEET,
+														 pos,
+														 size / 2.f,
+														 nullptr,
+														 PLACEHOLDER_DEFAULTFRAME});
+}
+
+void generateWallUtil(std::vector<std::unique_ptr<EntitySprite>> wallSprites,
+					  std::vector<std::unique_ptr<Entity>>& resultEntities,
+					  sf::Vector2f pos,
+					  float rotAngle,
+					  sf::Vector2f size) {
+	auto sprite = std::make_unique<SpriteContainer>(std::move(wallSprites), true, pos);
+	sprite->rotate(rotAngle);
+
+	resultEntities.push_back(std::make_unique<Prop>(
+	 Prop::PropOptions{"",
+					   sf::IntRect{0, 0, static_cast<int>(size.x), static_cast<int>(size.y)},
+					   pos,
+					   false,
+					   sf::Vector2i{0, 0},
+					   std::make_unique<BlockingPhysics>(),
+					   nullptr,
+					   nullptr,
+					   std::move(sprite),
+					   false,
+					   0,
+					   Entity::Altitude::MEDIUM}));
 }
 
 void generateHorizontalWall(float fixedLocalY,
 							const BuildingGenerator::BuildingConfig& config,
 							std::vector<std::unique_ptr<Entity>>& resultEntities) {
 	auto y = fixedLocalY * BuildingGenerator::WALL_TILE_SIZEY + config.topLeft.y;
-	float rotAngle = fixedLocalY == 0 ? 90 : 270;
+
+	std::vector<std::unique_ptr<EntitySprite>> wallSprites;
 	for (auto tileIndex = 0; tileIndex < config.xLength; tileIndex++) {
 		auto x = tileIndex * BuildingGenerator::WALL_TILE_SIZEY + config.topLeft.x;
-		generateWallUtil(resultEntities, sf::Vector2f{x, y}, rotAngle);
+		wallSprites.push_back(initializeWallSprite(sf::Vector2f{x, y}));
 	}
+	float rotAngle = fixedLocalY == 0 ? 90 : 270;
+	auto size =
+	 sf::Vector2f{static_cast<float>(BuildingGenerator::WALL_TILE_SIZEY * config.xLength),
+				  BuildingGenerator::WALL_TILE_SIZEX};
+	auto centrePos = sf::Vector2f{config.topLeft.x + size.x / 2.f, y + size.y / 2.f};
+	generateWallUtil(std::move(wallSprites), resultEntities, centrePos, rotAngle, size);
 }
 
 void generateVerticalWall(float fixedLocalX,
 						  const BuildingGenerator::BuildingConfig& config,
 						  std::vector<std::unique_ptr<Entity>>& resultEntities) {
 	auto x = fixedLocalX * BuildingGenerator::WALL_TILE_SIZEY + config.topLeft.x;
-	auto rotAngle = fixedLocalX == 0 ? 0 : 180;
+
+	std::vector<std::unique_ptr<EntitySprite>> wallSprites;
 	for (auto tileIndex = 0; tileIndex < config.yLength; tileIndex++) {
 		auto y = tileIndex * BuildingGenerator::WALL_TILE_SIZEY + config.topLeft.y;
-		generateWallUtil(resultEntities, sf::Vector2f{x, y}, rotAngle);
+		wallSprites.push_back(initializeWallSprite(sf::Vector2f{x, y}));
 	}
+
+	auto rotAngle = fixedLocalX == 0 ? 0 : 180;
+	auto size =
+	 sf::Vector2f{BuildingGenerator::WALL_TILE_SIZEX,
+				  static_cast<float>(config.yLength * BuildingGenerator::WALL_TILE_SIZEY)};
+	auto centrePos = sf::Vector2f{x + size.x / 2.f, config.topLeft.y + size.y / 2.f};
+	generateWallUtil(std::move(wallSprites), resultEntities, centrePos, rotAngle, size);
 }
 
 void BuildingGenerator::generateWalls(std::vector<std::unique_ptr<Entity>>& resultEntities,
@@ -90,6 +127,7 @@ std::unique_ptr<Prop> BuildingGenerator::generateFloorTile(
 													false,
 													{0, 0},
 													std::make_unique<CollisionPhysics>(),
+													nullptr,
 													nullptr,
 													nullptr,
 													false,

@@ -17,6 +17,22 @@ void Prop::update(float dt) {
 
 static constexpr auto PRIME = 73924247.f;
 
+std::unique_ptr<EntitySprite> initializeSprite(Prop::PropOptions &config) {
+	if (config.customSprite) return std::move(config.customSprite);
+	return config.hasShadow
+			? std::make_unique<ShadowedSpriteReg>(config.spriteSheet,
+												  config.pos,
+												  config.size / 2.f,
+												  std::move(config.animPlayer),
+												  1,
+												  config.defaultFrame)
+			: std::make_unique<SpriteReg>(SpriteReg::Config{config.spriteSheet,
+															config.pos,
+															config.size / 2.f,
+															std::move(config.animPlayer),
+															config.defaultFrame});
+}
+
 Prop::Prop(PropOptions config)
 	: CollidableEntity(CollidableEntity::Config{std::make_unique<SingleHitbox>(
 	   sf::FloatRect{config.pos.x, config.pos.y, config.size.x, config.size.y},
@@ -26,18 +42,7 @@ Prop::Prop(PropOptions config)
 	  isBlocking(config.isBlocking),
 	  itemInitializer() {
 	// todo: decouple/refactor defaults to fields
-	sprite = config.hasShadow
-			  ? std::make_unique<ShadowedSpriteReg>(config.spriteSheet,
-													config.pos,
-													config.size / 2.f,
-													std::move(config.animPlayer),
-													1,
-													config.defaultFrame)
-			  : std::make_unique<SpriteReg>(SpriteReg::Config{config.spriteSheet,
-															  config.pos,
-															  config.size / 2.f,
-															  std::move(config.animPlayer),
-															  config.defaultFrame});
+	sprite = initializeSprite(config);
 	hasDefaultAnim = sprite->isAnimated();
 
 	float rotationAngle = config.rotationAngle;

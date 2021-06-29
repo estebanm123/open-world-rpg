@@ -16,12 +16,13 @@ public:
 		explicit PropOptions(
 		 std::string spriteSheet,
 		 const sf::IntRect &defaultFrame,
-		 const sf::Vector2f &pos,
+		 const sf::Vector2f &centrePos,
 		 bool hasShadow = false,
 		 sf::Vector2i hitboxSizeOffset = {0, 0},
 		 std::unique_ptr<CollisionPhysics> collisionPhysics = std::make_unique<CollisionPhysics>(),
 		 std::unique_ptr<AnimationPlayer> animPlayer = nullptr,
 		 std::unique_ptr<ItemInitializer> itemInitializer = nullptr,
+		 std::unique_ptr<EntitySprite> customSprite = nullptr,
 		 bool randomRotationAngle = true,
 		 float rotationAngle = 0,
 		 Entity::Altitude altitude = MEDIUM)
@@ -29,25 +30,28 @@ public:
 			  spriteSheet(std::move(spriteSheet)),
 			  defaultFrame(defaultFrame),
 			  size(hitboxSizeOffset + sf::Vector2i{defaultFrame.width, defaultFrame.height}),
-			  pos(pos),
+			  pos(centrePos),
 			  collisionPhysics(std::move(collisionPhysics)),
 			  animPlayer(std::move(animPlayer)),
 			  itemInitializer(std::move(itemInitializer)),
+			  customSprite(std::move(customSprite)),
 			  randomRotationAngle(randomRotationAngle),
 			  rotationAngle(rotationAngle),
 			  altitude(altitude){};
 		std::string spriteSheet;
 		sf::IntRect defaultFrame;
-		sf::Vector2f size;
+		sf::Vector2f pos;
+		bool hasShadow;
 		std::unique_ptr<CollisionPhysics> collisionPhysics;
 		std::unique_ptr<AnimationPlayer> animPlayer;
-		sf::Vector2f pos;
-		bool isBlocking = collisionPhysics->isBlocking();
-		bool hasShadow;
-		bool randomRotationAngle = true;
-		float rotationAngle = 0;
-		Entity::Altitude altitude;
 		std::unique_ptr<ItemInitializer> itemInitializer;
+		std::unique_ptr<EntitySprite> customSprite;
+		bool randomRotationAngle;
+		float rotationAngle;
+		Entity::Altitude altitude;
+
+		bool isBlocking = collisionPhysics->isBlocking();
+		sf::Vector2f size;
 	};
 
 	Prop(PropOptions config);
