@@ -19,12 +19,12 @@ public:
 	static constexpr int WALL_TILE_SIZEX = 5;
 	static constexpr int WALL_TILE_SIZEY = FLOOR_TILE_SIZEY;
 
-	std::vector<std::unique_ptr<Entity>> generateBuildings(const BuildingConfig& config);
+	std::vector<std::unique_ptr<Prop>> generateBuildings(const BuildingConfig& config);
 
 protected:
 	std::unique_ptr<Prop> generateFloorTile(sf::Vector2i localCoords, const BuildingConfig& config);
 
-	void generateWalls(std::vector <std::unique_ptr<Entity>>& resultEntities, const BuildingConfig& config);
+	void generateWalls(std::vector <std::unique_ptr<Prop>>& resultEntities, const BuildingConfig& config);
 
-	void generateRoom(std::vector <std::unique_ptr<Entity>>& resultEntities, const BuildingConfig& config);
+	void generateRoom(std::vector <std::unique_ptr<Prop>>& resultEntities, const BuildingConfig& config);
 };

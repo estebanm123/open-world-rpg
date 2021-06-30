@@ -9,7 +9,7 @@
 #include "../../Entities/Sprites/SpriteReg.h"
 
 
-void BuildingGenerator::generateRoom(std::vector<std::unique_ptr<Entity>>& resultEntities,
+void BuildingGenerator::generateRoom(std::vector<std::unique_ptr<Prop>>& resultEntities,
 									 const BuildingGenerator::BuildingConfig& config) {
 	for (auto y = 0; y < config.yLength; y++) {
 		for (auto x = 0; x < config.xLength; x++) {
@@ -21,9 +21,9 @@ void BuildingGenerator::generateRoom(std::vector<std::unique_ptr<Entity>>& resul
 	generateWalls(resultEntities, config);
 }
 
-std::vector<std::unique_ptr<Entity>> BuildingGenerator::generateBuildings(
+std::vector<std::unique_ptr<Prop>> BuildingGenerator::generateBuildings(
  const BuildingGenerator::BuildingConfig& config) {
-	std::vector<std::unique_ptr<Entity>> resultProps;
+	std::vector<std::unique_ptr<Prop>> resultProps;
 
 	generateRoom(resultProps, config);
 
@@ -46,7 +46,7 @@ std::unique_ptr<EntitySprite> initializeWallSprite(sf::Vector2f pos) {
 }
 
 void generateWallUtil(std::vector<std::unique_ptr<EntitySprite>> wallSprites,
-					  std::vector<std::unique_ptr<Entity>>& resultEntities,
+					  std::vector<std::unique_ptr<Prop>>& resultEntities,
 					  sf::Vector2f pos,
 					  float rotAngle,
 					  sf::Vector2f size) {
@@ -70,7 +70,7 @@ void generateWallUtil(std::vector<std::unique_ptr<EntitySprite>> wallSprites,
 
 void generateHorizontalWall(float fixedLocalY,
 							const BuildingGenerator::BuildingConfig& config,
-							std::vector<std::unique_ptr<Entity>>& resultEntities) {
+							std::vector<std::unique_ptr<Prop>>& resultEntities) {
 	auto y = fixedLocalY * BuildingGenerator::WALL_TILE_SIZEY + config.topLeft.y;
 
 	std::vector<std::unique_ptr<EntitySprite>> wallSprites;
@@ -89,7 +89,7 @@ void generateHorizontalWall(float fixedLocalY,
 
 void generateVerticalWall(float fixedLocalX,
 						  const BuildingGenerator::BuildingConfig& config,
-						  std::vector<std::unique_ptr<Entity>>& resultEntities) {
+						  std::vector<std::unique_ptr<Prop>>& resultEntities) {
 	auto x = fixedLocalX * BuildingGenerator::WALL_TILE_SIZEY + config.topLeft.x;
 
 	std::vector<std::unique_ptr<EntitySprite>> wallSprites;
@@ -107,7 +107,7 @@ void generateVerticalWall(float fixedLocalX,
 	generateWallUtil(std::move(wallSprites), resultEntities, centrePos, rotAngle, size);
 }
 
-void BuildingGenerator::generateWalls(std::vector<std::unique_ptr<Entity>>& resultEntities,
+void BuildingGenerator::generateWalls(std::vector<std::unique_ptr<Prop>>& resultEntities,
 									  const BuildingGenerator::BuildingConfig& config) {
 	generateHorizontalWall(0, config, resultEntities);
 	generateHorizontalWall(config.yLength - 1, config, resultEntities);
