@@ -64,8 +64,6 @@ public:
 
 	bool isItemProp() const;
 
-	bool isPropBlocking() const;
-
 	void renderBy(sf::RenderTarget &renderTarget) override;
 
 	void setIsDecor(bool isDecorProp);
@@ -77,5 +75,4 @@ protected:
 	std::unique_ptr<EntitySprite> sprite;
 	bool hasDefaultAnim;
 	bool isDecor;
-	bool isBlocking;
 };

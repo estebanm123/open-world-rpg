@@ -34,6 +34,7 @@ public:
 
 	const sf::ConvexShape &getBounds() const;
 
+	CollisionPhysics* getCollisionPhysics() const;
 private:
 	sf::Vector2f size;
 	sf::ConvexShape bounds;

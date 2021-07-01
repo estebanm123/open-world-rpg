@@ -34,6 +34,8 @@ public:
 
 	void renderBy(sf::RenderTarget &renderer) override;
 
+	bool isBlocking() const;
+
 	SingleHitbox *getMainHitbox();
 
 	MultiHitbox *getSecondaryHitboxes();
@@ -44,4 +46,5 @@ protected:
 	std::unique_ptr<SingleHitbox> mainHitbox;  // checked against each main and secondary hitbox of another collidable
 	std::unique_ptr<MultiHitbox> secondaryHitboxes;	 // checked only against main hitbox of other collidable
 	std::unique_ptr<MultiHitbox> tertiaryHitboxes;	 // special cases handled by subclass(es)
+	bool blocking = false;
 };

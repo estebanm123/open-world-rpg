@@ -20,7 +20,9 @@ void SingleHitbox::rotate(float angle) { bounds.rotate(angle); }
 
 void SingleHitbox::setPosition(const sf::Vector2f &pos) { bounds.setPosition(pos); }
 
-SingleHitbox::SingleHitbox(const sf::FloatRect &rect, float rotAngle, std::unique_ptr<CollisionPhysics> physics)
+SingleHitbox::SingleHitbox(const sf::FloatRect &rect,
+						   float rotAngle,
+						   std::unique_ptr<CollisionPhysics> physics)
 	: size({rect.width, rect.height}),
 	  physics(std::move(physics)) {
 	bounds.setPointCount(4);
@@ -32,6 +34,7 @@ SingleHitbox::SingleHitbox(const sf::FloatRect &rect, float rotAngle, std::uniqu
 	bounds.setPosition({rect.left, rect.top});
 	bounds.rotate(rotAngle);
 }
+CollisionPhysics *SingleHitbox::getCollisionPhysics() const { return physics.get(); }
 
 SingleHitbox::SingleHitbox(const sf::ConvexShape &bounds,
 						   const sf::Vector2f &size,

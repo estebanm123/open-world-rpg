@@ -4,7 +4,6 @@
 #include "../MoveableEntity.h"
 
 struct EntityCollisionHandler {
-	// There is always a MoveableEntity involved in any collision
 	template <class CollidableA, class CollidableB>
 	static void handleCollision(CollidableA *a, CollidableB *b) {
 		auto aMainHitbox = a->getMainHitbox();

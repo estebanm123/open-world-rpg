@@ -13,7 +13,6 @@ class MoveableEntity;
 
 struct SlotEntities {
 	struct EntitiesByElevation {
-
 		std::unordered_map<Entity::Altitude, std::unordered_set<std::shared_ptr<Entity>>> entityMap;
 
 		void addEntity(const std::shared_ptr<Entity> &entity);
@@ -28,8 +27,16 @@ struct SlotEntities {
 	std::unordered_set<SurfaceEffect *> surfaceEffects;
 	std::unordered_set<Humanoid *> humanoids;
 
+	// only used for collisions
+	std::unordered_set<std::shared_ptr<Prop>> largePropPtrs;
+	// std::unordered_set<std::shared_ptr<Moveable>> todo ?
+
 
 	SlotEntities();
+
+	void addCollidablePtr(const std::shared_ptr<Prop> &collidable) {
+		largePropPtrs.insert(collidable);
+	}
 
 	void addEntity(const std::shared_ptr<Entity> &entity);
 
@@ -43,7 +50,6 @@ struct SlotEntities {
 
 
 private:
-
 	class Adder : EntityVisitor {
 	public:
 		void addEntity(const std::shared_ptr<Entity> &entity);

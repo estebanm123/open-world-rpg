@@ -27,6 +27,10 @@ protected:
 	virtual bool isEntityBlockingPath(OrganismOwner *receivingEntity,
 									  NpcAi<OrganismOwner> *ai,
 									  CollidingEntity *otherEntity) {
+	    if (!otherEntity->isBlocking()) {
+	        return false;
+	    }
+
 		auto receivingPos = receivingEntity->getPosition();
 		auto otherPos = otherEntity->getPosition();
 		auto otherSize = otherEntity->getSize();

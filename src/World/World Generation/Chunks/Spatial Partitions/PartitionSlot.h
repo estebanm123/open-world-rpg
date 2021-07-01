@@ -23,6 +23,12 @@ public:
 
 	void handleExternalCollision(MoveableEntity *externalEntity);
 
+	// Points to a Collidable in another slot; only collisions are handled through ptr
+	template<class CollidableSubtype>
+	void addCollisionOnlyEntity(const std::shared_ptr<CollidableSubtype> & collidable) {
+		entityStorage.addCollidablePtr(collidable);
+	}
+
 	void addEntity(const std::shared_ptr<Entity> &entity);
 
 	void removeEntity(const std::shared_ptr<Entity> &entity);
@@ -38,8 +44,11 @@ private:
 											   SlotEntities::MoveableIter &it);
 	bool shouldSkipMoveablePair(MoveableEntity *a, MoveableEntity *b);
 
-	SlotEntities entityHolder;
+	SlotEntities entityStorage;
 	std::unordered_set<std::string> moveablePairsSeenForCurUpdate;
 
 	void handleSurfaceEffectGeneration(MoveableEntity *moveable, const CompleteEnv *env);
+
+
+	friend class ChunkDebug;
 };

@@ -7,9 +7,9 @@
 #include "MoveableEntity.h"
 
 #ifdef DEBUG
-#define RENDER_HITBOX(renderTargetRef, hitbox, secondaryHitboxes, tertiaryHitboxes, entity)                  \
-	do {                                                                                  \
-		debugRenderHitbox(renderer, hitbox, secondaryHitboxes, tertiaryHitboxes, entity); \
+#define RENDER_HITBOX(renderTargetRef, hitbox, secondaryHitboxes, tertiaryHitboxes, entity) \
+	do {                                                                                    \
+		debugRenderHitbox(renderer, hitbox, secondaryHitboxes, tertiaryHitboxes, entity);   \
 	} while (0)
 #else
 #define RENDER_HITBOX
@@ -34,7 +34,9 @@ void debugRenderHitbox(sf::RenderTarget &renderer,
 CollidableEntity::CollidableEntity(Config config)
 	: mainHitbox(std::move(config.mainHitbox)),
 	  secondaryHitboxes(std::move(config.secondaryHitboxes)),
-	  tertiaryHitboxes(std::move(config.tertiaryHitboxes)) {}
+	  tertiaryHitboxes(std::move(config.tertiaryHitboxes)),
+	  blocking(mainHitbox->getCollisionPhysics()->isBlocking())
+{}
 
 SingleHitbox *CollidableEntity::getMainHitbox() { return mainHitbox.get(); }
 
@@ -75,3 +77,5 @@ void CollidableEntity::setPosition(const sf::Vector2f &pos) {
 }
 
 void CollidableEntity::analyzeCollision(CollidableEntity *otherEntity) {}
+
+bool CollidableEntity::isBlocking() const { return blocking; }

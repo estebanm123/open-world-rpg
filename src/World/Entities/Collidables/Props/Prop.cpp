@@ -39,7 +39,6 @@ Prop::Prop(PropOptions config)
 	   config.rotationAngle,
 	   std::move(config.collisionPhysics))}),
 	  isDecor(false),
-	  isBlocking(config.isBlocking),
 	  itemInitializer() {
 	// todo: decouple/refactor defaults to fields
 	sprite = initializeSprite(config);
@@ -68,6 +67,5 @@ void Prop::renderBy(sf::RenderTarget &renderTarget) {
 	}
 }
 
-bool Prop::isPropBlocking() const { return isBlocking; }
 
 bool Prop::isItemProp() const { return itemInitializer != nullptr; }

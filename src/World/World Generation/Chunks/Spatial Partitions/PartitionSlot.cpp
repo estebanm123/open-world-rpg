@@ -8,23 +8,23 @@
 
 
 void PartitionSlot::update(float dt) {
-	for (auto &moveable : entityHolder.moveableEntities) {
+	for (auto &moveable : entityStorage.moveableEntities) {
 		moveable->update(dt);
 	}
-	for (auto &effect : entityHolder.surfaceEffects) {
+	for (auto &effect : entityStorage.surfaceEffects) {
 		effect->update(dt);
 		if (effect->isReadyToBeRemoved()) {
-			entityHolder.removeEntity(effect);
+			entityStorage.removeEntity(effect);
 		}
 	}
-	for (auto &prop : entityHolder.mainProps) {
+	for (auto &prop : entityStorage.mainProps) {
 		prop->update(dt);
 	}
 }
 
 void PartitionSlot::renderEntities(Entity::Altitude altitude, sf::RenderTarget &renderer) {
-	auto mapIter = entityHolder.entities.entityMap.find(altitude);
-	if (mapIter == entityHolder.entities.entityMap.end()) return;
+	auto mapIter = entityStorage.entities.entityMap.find(altitude);
+	if (mapIter == entityStorage.entities.entityMap.end()) return;
 	for (auto & entity : (*mapIter).second) {
 		entity->renderBy(renderer);
 	}
@@ -33,7 +33,7 @@ void PartitionSlot::renderEntities(Entity::Altitude altitude, sf::RenderTarget &
 void PartitionSlot::handleMoveableCollisions(SpatialPartition *spatialPartition) {
 	moveablePairsSeenForCurUpdate.clear();
 
-	auto &moveables = entityHolder.moveableEntities;
+	auto &moveables = entityStorage.moveableEntities;
 	for (auto it = moveables.begin(); it != moveables.end();) {
 		auto moveable = *it;
 
@@ -54,9 +54,11 @@ void PartitionSlot::handleCollisions(SpatialPartition *slots) { handleMoveableCo
 
 void PartitionSlot::handleExternalCollision(MoveableEntity *externalEntity) { handleCollisionsFor(externalEntity); }
 
-void PartitionSlot::addEntity(const std::shared_ptr<Entity> &entity) { entityHolder.addEntity(entity); }
+void PartitionSlot::addEntity(const std::shared_ptr<Entity> &entity) {
+	entityStorage.addEntity(entity); }
 
-void PartitionSlot::removeEntity(const std::shared_ptr<Entity> &entity) { entityHolder.removeEntity(entity); }
+void PartitionSlot::removeEntity(const std::shared_ptr<Entity> &entity) {
+	entityStorage.removeEntity(entity); }
 
 std::string moveableAddressesToStr(MoveableEntity *a, MoveableEntity *b) {
 	std::ostringstream stream;
@@ -77,7 +79,7 @@ bool PartitionSlot::shouldSkipMoveablePair(MoveableEntity *a, MoveableEntity *b)
 
 void PartitionSlot::handleCollisionsFor(MoveableEntity *moveable) {
 	if (!moveable->hasMoved()) return;
-	auto &moveableEntities = entityHolder.moveableEntities;
+	auto &moveableEntities = entityStorage.moveableEntities;
 	for (auto otherMoveable : moveableEntities) {
 		if (shouldSkipMoveablePair(moveable, otherMoveable)) continue;
 		moveablePairsSeenForCurUpdate.insert(moveableAddressesToStr(moveable, otherMoveable));
@@ -85,8 +87,11 @@ void PartitionSlot::handleCollisionsFor(MoveableEntity *moveable) {
 		EntityCollisionHandler::handleCollision<MoveableEntity, MoveableEntity>(moveable, otherMoveable);
 	}
 
-	for (auto prop : entityHolder.mainProps) {
+	for (auto prop : entityStorage.mainProps) {
 		EntityCollisionHandler::handleCollision<MoveableEntity, Prop>(moveable, prop);
+	}
+	for (auto prop : entityStorage.largePropPtrs) {
+		EntityCollisionHandler::handleCollision<MoveableEntity, Prop>(moveable, prop.get());
 	}
 }
 
@@ -108,14 +113,14 @@ bool PartitionSlot::handleCollisionsWithOtherSlotEntities(MoveableEntity *moveab
 
 	// check if moveable went out of bounds
 	if (currentSlot == nullptr) {
-		entityHolder.removeMoveable(moveable, it);
+		entityStorage.removeMoveable(moveable, it);
 		return true;
 	}
 
 	// check if moveable was moved to another slot
 	for (auto slot : slotsInRange) {
 		if (currentSlot == slot) {
-			auto entityPtr = entityHolder.removeMoveable(moveable, it);
+			auto entityPtr = entityStorage.removeMoveable(moveable, it);
 			if (entityPtr != nullptr) {
 				slot->addEntity(entityPtr);
 			}
@@ -128,7 +133,7 @@ bool PartitionSlot::handleCollisionsWithOtherSlotEntities(MoveableEntity *moveab
 void PartitionSlot::makeMoveablesInteractWithEnvironment(SpatialPartition *spatialPartition, Chunk *chunk) {
 	auto &tileMap = chunk->getTileMap();
 
-	for (auto moveable : entityHolder.moveableEntities) {
+	for (auto moveable : entityStorage.moveableEntities) {
 		if (!moveable->hasMoved()) continue;
 
 		auto moveablePos = moveable->getPosition();
@@ -155,7 +160,7 @@ void PartitionSlot::handleSurfaceEffectGeneration(MoveableEntity *moveable, cons
 		auto newSurfaceEffect =
 			moveableSurfaceEffectGenerator->generateSurfaceEffect(moveable, env ? env->getId() : nullptr);
 		if (newSurfaceEffect) {
-			entityHolder.addEntity(std::move(newSurfaceEffect));
+			entityStorage.addEntity(std::move(newSurfaceEffect));
 		}
 	}
 
@@ -165,7 +170,7 @@ void PartitionSlot::handleSurfaceEffectGeneration(MoveableEntity *moveable, cons
 	for (auto &surfaceEffectGenerator : *envSurfaceEffectGenerators) {
 		auto newSurfaceEffect = surfaceEffectGenerator->generateSurfaceEffect(moveable, nullptr);
 		if (newSurfaceEffect) {
-			entityHolder.addEntity(std::move(newSurfaceEffect));
+			entityStorage.addEntity(std::move(newSurfaceEffect));
 		}
 	}
 }

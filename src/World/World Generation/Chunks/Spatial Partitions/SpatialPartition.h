@@ -25,12 +25,31 @@ public:
 
 	void updateEntities(float dt, const ActiveZones &activeZones, Chunk *chunkOwner);
 
-	void renderEntities(sf::RenderTarget &renderer, Entity::Altitude altitude, const ActiveZones &activeZones);
+	void renderEntities(sf::RenderTarget &renderer,
+						Entity::Altitude altitude,
+						const ActiveZones &activeZones);
 
 	void addNewEntity(const std::shared_ptr<Entity> &entity);
 
+	template <class CollidableSubtype>
+	void addCollidable(const std::shared_ptr<CollidableSubtype> &entity) {
+		// todo - make this depend on a Collidable flag
+		auto size = entity->getSize();
+		auto pos = entity->getTopLeftPosition();
+		auto slotsInRange = getSlotsAroundEntity(sf::FloatRect{pos.x, pos.y, size.x, size.y});
+
+		auto slotsIter = slotsInRange.begin();
+		auto firstSlot = *slotsIter;
+
+		firstSlot->addEntity(entity);
+		std::for_each(++slotsIter, slotsInRange.end(), [entity](auto* slot) {
+			slot->addCollisionOnlyEntity(entity);
+		});
+	}
+
 	// ASSUMES entity is always moving to chunks that are loaded in
-	PartitionSlot *resolveSlotFromEntityGlobalCoords(sf::Vector2f entityCenterPos, sf::Vector2f entitySize);
+	PartitionSlot *resolveSlotFromEntityGlobalCoords(sf::Vector2f entityCenterPos,
+													 sf::Vector2f entitySize);
 
 	std::unordered_set<PartitionSlot *> getSlotsAroundEntity(sf::FloatRect rangeGlobal);
 
@@ -49,7 +68,9 @@ private:
 
 	sf::Vector2i convertGlobalToLocalCoords(sf::Vector2f globalCoordsTopLeft);
 
-	typedef std::array<std::array<std::unique_ptr<PartitionSlot>, SLOT_COLS_PER_CHUNK>, SLOT_ROWS_PER_CHUNK> Slots;
+	typedef std::array<std::array<std::unique_ptr<PartitionSlot>, SLOT_COLS_PER_CHUNK>,
+					   SLOT_ROWS_PER_CHUNK>
+	 Slots;
 	Slots slots;
 	sf::Vector2f topLeftCoords;
 	Chunk::Neighbors *chunkNeighbors;

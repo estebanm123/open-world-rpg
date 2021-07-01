@@ -80,8 +80,9 @@ void ChunkGenerator::generateChunk(const Chunk::RequestData &data) {
 		//		entitySpatialPartition->addNewEntity(x.initialize(center));
 		auto buildingEntities =
 		 buildingGenerator.generateBuildings(BuildingGenerator::BuildingConfig{center, 9, 9});
-		for (auto &entity : buildingEntities) {
-			entitySpatialPartition->addNewEntity(std::move(entity));
+		for (auto &prop : buildingEntities) {
+			std::shared_ptr<Prop> ptr = std::move(prop);
+			entitySpatialPartition->addCollidable(ptr);
 		}
 	}
 
