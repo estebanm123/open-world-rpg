@@ -75,7 +75,7 @@ void ChunkGenerator::generateChunk(const Chunk::RequestData &data) {
 	 std::make_unique<SpatialPartition>(center);
 
 	// ~~~~ 1 NPC PLACEHOLDER ~~~~
-	if (center.x == INITIAL_PLAYER_POS.x && center.y == INITIAL_PLAYER_POS.y) {
+	if (center.x == INITIAL_PLAYER_POS.x && center.y == INITIAL_PLAYER_POS.y + CHUNK_SIZE.y) {
 		//		CatInitializer x;
 		//		entitySpatialPartition->addNewEntity(x.initialize(center));
 		auto buildingEntities =
@@ -92,7 +92,7 @@ void ChunkGenerator::generateChunk(const Chunk::RequestData &data) {
 
 	mainPropGenerator.generateEntities(chunkPtr);
 	decorPropGenerator.generateEntities(chunkPtr);
-	beastGenerator.generateEntities(chunkPtr);
+//	beastGenerator.generateEntities(chunkPtr);
 
 
 	enqueueNewChunk(std::move(chunk));

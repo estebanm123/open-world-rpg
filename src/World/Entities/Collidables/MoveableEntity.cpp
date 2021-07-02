@@ -14,17 +14,17 @@ MoveableEntity::MoveableEntity(Config hitboxes, float initialSpeed)
 
 bool MoveableEntity::hasMoved() const { return lastMoveOffset.x != 0 || lastMoveOffset.y != 0; }
 
-void MoveableEntity::revertLastMove(bool x, bool y) {
+void MoveableEntity::revertLastMove(bool resetX, bool resetY) {
 	sf::Vector2f moveToReset = lastMoveOffset;
 
-	if (!x) moveToReset.x = 0;
-	if (!y) moveToReset.y = 0;
+	if (!resetX) moveToReset.x = 0;
+	if (!resetY) moveToReset.y = 0;
 
 	getSprite().move(-moveToReset);
 	mainHitbox->move(-moveToReset);
 	if (secondaryHitboxes) secondaryHitboxes->move(-moveToReset);
 	if (tertiaryHitboxes) tertiaryHitboxes->move(-moveToReset);
-	lastMoveOffset = {!x ? lastMoveOffset.x : 0, !y ? lastMoveOffset.y : 0};
+	lastMoveOffset = {!resetX ? lastMoveOffset.x : 0, !resetY ? lastMoveOffset.y : 0};
 }
 
 sf::Vector2f &MoveableEntity::getLastMoveOffset() { return lastMoveOffset; }

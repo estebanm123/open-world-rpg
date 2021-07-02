@@ -18,20 +18,22 @@ bool areVectorsInASharedQuadrant(const sf::Vector2f &a, const sf::Vector2f &b) {
 }
 
 void BlockingPhysics::applyPhysics(CollidableEntity *receivingEntity, MoveableEntity *other) {
-
 	const auto &entityPos = receivingEntity->getPosition();
 	const auto &otherPos = other->getPosition();
 
 	auto &lastMoveOffset = other->getLastMoveOffset();
 	const auto vecFromOtherToEntity = entityPos - otherPos;
 
-	// check to see if each vec shares a common quadrant
-	if (areVectorsInASharedQuadrant(vecFromOtherToEntity, lastMoveOffset)) {
-		// if other is going in the dir of entity
-		auto isXLarger = isXDistLarger(vecFromOtherToEntity);
-		other->revertLastMove(isXLarger, !isXLarger);
-		// what about the case where x + y are equal (ie. we're moving in a pure diagonal way)
-	}
+	other->revertLastMove(true, true);
+
+
+//	// check to see if each vec shares a common quadrant - where origin is vecFromOtherEntity
+//	if (areVectorsInASharedQuadrant(vecFromOtherToEntity, lastMoveOffset)) {
+//		// if other is going in the dir of entity
+//		auto isXLarger = isXDistLarger(vecFromOtherToEntity);
+//		other->revertLastMove(isXLarger, !isXLarger);
+//		// what about the case where x + y are equal (ie. we're moving in a pure diagonal way)
+//	}
 
 	CollisionPhysics::applyPhysics(receivingEntity, other);
 }

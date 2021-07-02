@@ -50,6 +50,8 @@ private:
 		auto point = sf::CircleShape(2, 5);
 		point.setPosition(center);
 		point.setFillColor(slotColor);
+		point.setOutlineThickness(1);
+		point.setOutlineColor(sf::Color::Black);
 		renderTargetRef.draw(point);
 	}
 };

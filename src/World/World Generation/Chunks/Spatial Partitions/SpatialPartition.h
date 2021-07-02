@@ -37,6 +37,7 @@ public:
 		auto size = entity->getSize();
 		auto pos = entity->getTopLeftPosition();
 		auto slotsInRange = getSlotsAroundEntity(sf::FloatRect{pos.x, pos.y, size.x, size.y});
+		auto REMOVE = slotsInRange.size();
 
 		auto slotsIter = slotsInRange.begin();
 		auto firstSlot = *slotsIter;

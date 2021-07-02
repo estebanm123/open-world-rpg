@@ -49,5 +49,5 @@ const inline int TILE_SIZE_INT_Y = static_cast<int>(TILE_SIZE.y);
 const inline sf::Vector2f TILES_PER_CHUNK = {TILES_PER_CHUNK_X, TILES_PER_CHUNK_Y};
 const inline sf::Vector2f CHUNK_SIZE = {TILE_SIZE.x * TILES_PER_CHUNK.x, TILE_SIZE.y* TILES_PER_CHUNK.y};
 
-const inline sf::Vector2f INITIAL_PLAYER_POS = {10000, 12121};
+const inline sf::Vector2f INITIAL_PLAYER_POS = {50000, 12121};
 }  // namespace worldConstants
