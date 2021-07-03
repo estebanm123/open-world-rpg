@@ -3,7 +3,7 @@
 #include "BlockingPhysics.h"
 
 #include <iostream>
-
+#include "../Hitbox/EntityCollisionHandler.h"
 #include "../MoveableEntity.h"
 
 BlockingPhysics::BlockingPhysics(bool collisionAnalysisEnabledMoveables,
@@ -17,23 +17,29 @@ bool areVectorsInASharedQuadrant(const sf::Vector2f &a, const sf::Vector2f &b) {
 		   (a.y < 0 && b.y < 0);
 }
 
+static Random<> random{1};
+
 void BlockingPhysics::applyPhysics(CollidableEntity *receivingEntity, MoveableEntity *other) {
-	const auto &entityPos = receivingEntity->getPosition();
-	const auto &otherPos = other->getPosition();
+	const auto savedPos = other->getPosition();
+	const auto savedMoveOffset = other->getLastMoveOffset();
 
-	auto &lastMoveOffset = other->getLastMoveOffset();
-	const auto vecFromOtherToEntity = entityPos - otherPos;
+	other->revertLastMove(true, false);
+	if (EntityCollisionHandler::areEntitiesColliding(receivingEntity, other)) {
+		other->setPosition(savedPos);
+		other->setLastMoveOffset(savedMoveOffset);
+		other->revertLastMove(false, true);
+		if (EntityCollisionHandler::areEntitiesColliding(receivingEntity, other)) {
+			other->revertLastMove(true, true);
+		}
+	}
 
-	other->revertLastMove(true, true);
-
-
-//	// check to see if each vec shares a common quadrant - where origin is vecFromOtherEntity
-//	if (areVectorsInASharedQuadrant(vecFromOtherToEntity, lastMoveOffset)) {
-//		// if other is going in the dir of entity
-//		auto isXLarger = isXDistLarger(vecFromOtherToEntity);
-//		other->revertLastMove(isXLarger, !isXLarger);
-//		// what about the case where x + y are equal (ie. we're moving in a pure diagonal way)
-//	}
+	//	// check to see if each vec shares a common quadrant - where origin is vecFromOtherEntity
+	//	if (areVectorsInASharedQuadrant(vecFromOtherToEntity, lastMoveOffset)) {
+	//		// if other is going in the dir of entity
+	//		auto isXLarger = isXDistLarger(vecFromOtherToEntity);
+	//		other->revertLastMove(isXLarger, !isXLarger);
+	//		// what about the case where x + y are equal (ie. we're moving in a pure diagonal way)
+	//	}
 
 	CollisionPhysics::applyPhysics(receivingEntity, other);
 }

@@ -15,7 +15,8 @@ MoveableEntity::MoveableEntity(Config hitboxes, float initialSpeed)
 bool MoveableEntity::hasMoved() const { return lastMoveOffset.x != 0 || lastMoveOffset.y != 0; }
 
 void MoveableEntity::revertLastMove(bool resetX, bool resetY) {
-	sf::Vector2f moveToReset = lastMoveOffset;
+	auto safetyMultiplier = 1.02f;
+	sf::Vector2f moveToReset = lastMoveOffset * safetyMultiplier;
 
 	if (!resetX) moveToReset.x = 0;
 	if (!resetY) moveToReset.y = 0;
@@ -71,4 +72,7 @@ SurfaceEffectGenerator *MoveableEntity::getSurfaceEffectGenerator() { return sur
 
 void MoveableEntity::setSurfaceEffectGenerator(std::unique_ptr<SurfaceEffectGenerator> newSurfaceEffectGenerator) {
 	this->surfaceEffectGenerator = std::move(newSurfaceEffectGenerator);
+}
+void MoveableEntity::setLastMoveOffset(sf::Vector2f lastMoveOffsetOverride) {
+	lastMoveOffset = lastMoveOffsetOverride;
 }

@@ -6,7 +6,6 @@
 void SingleHitbox::move(const sf::Vector2f &offset) { bounds.move(offset); }
 
 void SingleHitbox::handleCollision(CollidableEntity *receiverEntity, MoveableEntity *movingEntity) {
-	// loop over all bounds in moving (don't need to touch receiver for now)
 	physics->applyPhysics(receiverEntity, movingEntity);
 }
 
