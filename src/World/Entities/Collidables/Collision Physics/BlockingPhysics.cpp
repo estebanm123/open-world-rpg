@@ -20,16 +20,15 @@ bool areVectorsInASharedQuadrant(const sf::Vector2f &a, const sf::Vector2f &b) {
 static Random<> random{1};
 
 void BlockingPhysics::applyPhysics(CollidableEntity *receivingEntity, MoveableEntity *other) {
-	const auto savedPos = other->getPosition();
+	const auto curPos = other->getPosition();
 	const auto savedMoveOffset = other->getLastMoveOffset();
+	const auto prevPos = curPos - savedMoveOffset;
 
-	other->revertLastMove(true, false);
+	other->setPosition({prevPos.x, curPos.y});
 	if (EntityCollisionHandler::areEntitiesColliding(receivingEntity, other)) {
-		other->setPosition(savedPos);
-		other->setLastMoveOffset(savedMoveOffset);
-		other->revertLastMove(false, true);
+		other->setPosition({curPos.x, prevPos.y});
 		if (EntityCollisionHandler::areEntitiesColliding(receivingEntity, other)) {
-			other->revertLastMove(true, true);
+			other->setPosition(prevPos - sf::Vector2f{.5,.5});
 		}
 	}
 

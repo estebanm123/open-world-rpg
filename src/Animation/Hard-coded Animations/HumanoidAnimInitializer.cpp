@@ -31,7 +31,7 @@ std::unique_ptr<AnimationPlayer> HumanoidAnimInitializer::initializeEmptyBody() 
 				  std::make_unique<NonRepeatingAnim>(Animation::Metadata{BASE_FRAME_WIDTH,
 																		 BASE_FRAME_HEIGHT,
 																		 8,
-																		 12,
+																		 13,
 																		 0,
 																		 BODY_TOUCH_DELAY,
 																		 {12},

@@ -15,7 +15,7 @@ MoveableEntity::MoveableEntity(Config hitboxes, float initialSpeed)
 bool MoveableEntity::hasMoved() const { return lastMoveOffset.x != 0 || lastMoveOffset.y != 0; }
 
 void MoveableEntity::revertLastMove(bool resetX, bool resetY) {
-	auto safetyMultiplier = 1.02f;
+	auto safetyMultiplier = 1.005f;
 	sf::Vector2f moveToReset = lastMoveOffset * safetyMultiplier;
 
 	if (!resetX) moveToReset.x = 0;

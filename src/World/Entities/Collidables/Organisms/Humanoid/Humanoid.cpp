@@ -38,7 +38,7 @@ SingleHitbox *Humanoid::initializePickUpZone(sf::Vector2f pos) {
 	auto bounds = sf::FloatRect{pos.x, pos.y, 20, 30};
 	auto pickUpZone = std::make_unique<SingleHitbox>(bounds);
 	auto tempPickUpZone = pickUpZone.get();
-	tertiaryHitboxes->addSingleHitbox(std::move(pickUpZone));
+//	tertiaryHitboxes->addSingleHitbox(std::move(pickUpZone));
 	return tempPickUpZone;
 }
 
