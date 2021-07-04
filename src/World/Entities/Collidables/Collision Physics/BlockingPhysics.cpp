@@ -23,20 +23,21 @@ void BlockingPhysics::applyPhysics(CollidableEntity *receivingEntity, MoveableEn
 	const auto curPos = other->getPosition();
 	const auto savedMoveOffset = other->getLastMoveOffset();
 	const auto prevPos = curPos - savedMoveOffset;
+	other->revertLastMove(true, true);
 
-	other->setPosition({prevPos.x, curPos.y});
-	if (EntityCollisionHandler::areEntitiesColliding(receivingEntity, other)) {
-		other->setPosition({curPos.x, prevPos.y});
-		if (EntityCollisionHandler::areEntitiesColliding(receivingEntity, other)) {
-			other->setPosition(prevPos - sf::Vector2f{.5,.5});
-		}
-	}
+//	other->setPosition({prevPos.x, curPos.y});
+//	if (EntityCollisionHandler::areEntitiesColliding(receivingEntity, other)) {
+//		other->setPosition({curPos.x, prevPos.y});
+//		if (EntityCollisionHandler::areEntitiesColliding(receivingEntity, other)) {
+//			other->setPosition(prevPos);
+//		}
+//	}
 
 	//	// check to see if each vec shares a common quadrant - where origin is vecFromOtherEntity
 	//	if (areVectorsInASharedQuadrant(vecFromOtherToEntity, lastMoveOffset)) {
 	//		// if other is going in the dir of entity
 	//		auto isXLarger = isXDistLarger(vecFromOtherToEntity);
-	//		other->revertLastMove(isXLarger, !isXLarger);
+//			other->revertLastMove(isXLarger, !isXLarger);
 	//		// what about the case where x + y are equal (ie. we're moving in a pure diagonal way)
 	//	}
 
