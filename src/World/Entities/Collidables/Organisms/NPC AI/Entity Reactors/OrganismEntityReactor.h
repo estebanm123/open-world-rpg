@@ -1,9 +1,10 @@
 #pragma once
 
-#include "../Activities/Single Activities/Flee.h"
 #include "../Activities/Single Activities/Chase.h"
+#include "../Activities/Single Activities/Flee.h"
 #include "EntityReactor.h"
 
+// Foodchain-based default reactions TO other OrganismEntities
 template <class OrganismOwner, class OtherOrganism>
 class OrganismEntityReactor : public EntityReactor<OrganismOwner, OtherOrganism> {
 public:
@@ -23,8 +24,8 @@ public:
 			ai->getActivitySchedule()->add(
 			 std::make_unique<Flee<OrganismOwner, OtherOrganism>>(otherEntity));
 		} else {
-//			ai->getActivitySchedule()->add(
-//			 std::make_unique<Chase<OrganismOwner, OtherOrganism>>(otherEntity));
+			//			ai->getActivitySchedule()->add(
+			//			 std::make_unique<Chase<OrganismOwner, OtherOrganism>>(otherEntity));
 		}
 	}
 };

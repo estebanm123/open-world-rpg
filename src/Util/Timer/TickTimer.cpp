@@ -1,14 +1,14 @@
 #include "TickTimer.h"
 
-TickTimer::TickTimer(const Config& config) : config(config), tickLimit(config.initialTickLimit) {}
+TickTimer::TickTimer(const Config& config) : config(config), tickCount(config.intialTickCount) {}
 
 bool TickTimer::isFinished() {
-	if (tickLimit == 0) {
+	if (tickCount <= 0) {
 		if (config.autoRestart) restart();
 		return true;
 	}
 
-	tickLimit--;
+	tickCount--;
 	return false;
 }
-void TickTimer::restart() { tickLimit = config.initialTickLimit; }
+void TickTimer::restart() { tickCount = config.tickLimit; }

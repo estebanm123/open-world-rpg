@@ -5,7 +5,8 @@
 class TickTimer {
 public:
 	struct Config {
-		int initialTickLimit;
+		int tickLimit;
+		int intialTickCount;
 		bool autoRestart = false;
 	};
 
@@ -15,6 +16,6 @@ public:
 
 	bool isFinished();
 private:
-	int tickLimit;
+	int tickCount;
 	const Config config;
 };
