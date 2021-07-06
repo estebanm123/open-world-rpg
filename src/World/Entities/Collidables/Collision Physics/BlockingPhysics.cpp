@@ -25,6 +25,11 @@ void BlockingPhysics::applyPhysics(CollidableEntity *receivingEntity, MoveableEn
 	const auto prevPos = curPos - savedMoveOffset;
 	other->revertLastMove(true, true);
 
+	// get each side of receiver
+	// find intersecting side with MoveDir
+	//
+	//
+
 //	other->setPosition({prevPos.x, curPos.y});
 //	if (EntityCollisionHandler::areEntitiesColliding(receivingEntity, other)) {
 //		other->setPosition({curPos.x, prevPos.y});

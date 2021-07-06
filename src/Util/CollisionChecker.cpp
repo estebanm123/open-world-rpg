@@ -36,6 +36,7 @@ bool CollisionChecker::intersect(const sf::ConvexShape &shapeA, const GlobalEdge
 	return false;
 }
 
+// SAT implementation
 bool intersectUtil(const sf::ConvexShape &a, const sf::ConvexShape &b) {
 	const auto aGlobalPoints = ConvexShapeExtra::getGlobalPoints(a);
 	const auto bGlobalPoints = ConvexShapeExtra::getGlobalPoints(b);
