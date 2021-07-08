@@ -10,8 +10,10 @@ struct EntityCollisionHandler {
 		auto bMainHitbox = b->getMainHitbox();
 
 		if (CollisionChecker::intersect(aMainHitbox->getBounds(), bMainHitbox->getBounds())) {
-			aMainHitbox->handleCollision(a, b);
-			bMainHitbox->handleCollision(b, a);
+			auto collisionInfoA = CollisionInfo<CollidableB>{a, b, aMainHitbox, bMainHitbox};
+			aMainHitbox->handleCollision(collisionInfoA);
+			auto collisionInfoB = CollisionInfo<CollidableA>{b, a, bMainHitbox, aMainHitbox};
+			bMainHitbox->handleCollision(collisionInfoB);
 			return;	 // short-circuit -> todo later: priority system?
 		}
 
@@ -35,7 +37,8 @@ private:
 		auto &aSecondaryHitboxes = secondaryMultiHitbox->getHitboxes();
 		for (auto &hitbox : aSecondaryHitboxes) {
 			if (CollisionChecker::intersect(hitbox->getBounds(), bMainHitbox->getBounds())) {
-				hitbox->handleCollision(a, b);
+				auto collisionInfo = CollisionInfo<CollidableB>{a, b, hitbox.get(), bMainHitbox};
+				hitbox->handleCollision(collisionInfo);
 				return;	 // todo - maybe don't skip rest?
 			}
 		}

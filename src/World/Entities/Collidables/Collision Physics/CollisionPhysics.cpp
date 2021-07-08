@@ -6,13 +6,17 @@
 #include "../MoveableEntity.h"
 #include "../Props/Prop.h"
 
-void CollisionPhysics::applyPhysics(CollidableEntity *owner, MoveableEntity *movingEntity) {
+void CollisionPhysics::applyPhysics(CollisionInfo<MoveableEntity> &collisionInfo) {
+	auto owner = collisionInfo.receivingEntity;
+	auto movingEntity = collisionInfo.otherEntity;
 	if (collisionAnalysisIsEnabledMoveables) {
 		owner->analyzeCollision(movingEntity);
 	}
 }
 
-void CollisionPhysics::applyPhysics(CollidableEntity *owner, Prop *prop) {
+void CollisionPhysics::applyPhysics(CollisionInfo<Prop> &collisionInfo) {
+	auto owner = collisionInfo.receivingEntity;
+	auto prop = collisionInfo.otherEntity;
 	if (collisionAnalysisIsEnabledProps) {
 		owner->analyzeCollision(prop);
 	}

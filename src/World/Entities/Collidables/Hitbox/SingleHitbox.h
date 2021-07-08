@@ -18,9 +18,9 @@ public:
 
 	void move(const sf::Vector2f &offset) override;
 
-	void handleCollision(CollidableEntity *receiver, MoveableEntity *moving) override;
+	void handleCollision(CollisionInfo<MoveableEntity> &collisionInfo) override;
 
-	void handleCollision(CollidableEntity *receiverEntity, Prop *prop) override;
+	void handleCollision(CollisionInfo<Prop>&collisionInfo) override;
 
 	void setRotation(float angle) override;
 

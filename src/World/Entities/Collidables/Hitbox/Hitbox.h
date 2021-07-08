@@ -1,5 +1,7 @@
 #pragma once
 
+#include "CollisionInfo.h"
+
 class CollidableEntity;
 
 class MoveableEntity;
@@ -20,7 +22,7 @@ public:
 
 	virtual void renderBy(sf::RenderTarget &renderer) = 0;
 
-	virtual void handleCollision(CollidableEntity *receiver, MoveableEntity *moving) = 0;
+	virtual void handleCollision(CollisionInfo<MoveableEntity> &collisionInfo) = 0;
 
-	virtual void handleCollision(CollidableEntity *receiver, Prop *prop) = 0;
+	virtual void handleCollision(CollisionInfo<Prop> &collisionInfo) = 0;
 };

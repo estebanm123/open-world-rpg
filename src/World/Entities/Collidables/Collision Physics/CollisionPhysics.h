@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../Hitbox/CollisionInfo.h"
 class CollidableEntity;
 
 class MoveableEntity;
@@ -11,8 +12,8 @@ public:
 	CollisionPhysics(bool collisionAnalysisIsEnabledMoveables = false,
 					 bool collisionAnalysisIsEnabledProps = false);
 
-	virtual void applyPhysics(CollidableEntity *owner, MoveableEntity *movingEntity);
-	virtual void applyPhysics(CollidableEntity *owner, Prop *prop);
+	virtual void applyPhysics(CollisionInfo<MoveableEntity> &collisionInfo);
+	virtual void applyPhysics(CollisionInfo<Prop> &collisionInfo);
 
 	virtual bool isBlocking() const;
 	virtual ~CollisionPhysics() = default;

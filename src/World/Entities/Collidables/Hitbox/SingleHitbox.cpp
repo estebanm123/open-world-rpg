@@ -5,12 +5,12 @@
 
 void SingleHitbox::move(const sf::Vector2f &offset) { bounds.move(offset); }
 
-void SingleHitbox::handleCollision(CollidableEntity *receiverEntity, MoveableEntity *movingEntity) {
-	physics->applyPhysics(receiverEntity, movingEntity);
+void SingleHitbox::handleCollision(CollisionInfo<MoveableEntity> &collisionInfo) {
+	physics->applyPhysics(collisionInfo);
 }
 
-void SingleHitbox::handleCollision(CollidableEntity *receiverEntity, Prop *prop) {
-	physics->applyPhysics(receiverEntity, prop);
+void SingleHitbox::handleCollision(CollisionInfo<Prop>&collisionInfo) {
+	physics->applyPhysics(collisionInfo);
 }
 
 void SingleHitbox::setRotation(float angle) { bounds.setRotation(angle); }
@@ -40,7 +40,11 @@ SingleHitbox::SingleHitbox(const sf::ConvexShape &bounds,
 						   std::unique_ptr<CollisionPhysics> physics)
 	: bounds(bounds),
 	  size(size),
-	  physics(std::move(physics)) {}
+	  physics(std::move(physics)) {
+	if (bounds.getPointCount() != 4) {
+		throw std::runtime_error("only quads are currently supported, due to BlockingPhysics.applyPhysics");
+	}
+}
 
 void SingleHitbox::renderBy(sf::RenderTarget &renderer) {
 	// (debug)

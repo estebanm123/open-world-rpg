@@ -8,15 +8,17 @@ void MultiHitbox::move(const sf::Vector2f &offset) {
 	}
 }
 
-void MultiHitbox::handleCollision(CollidableEntity *receiver, MoveableEntity *moving) {
+void MultiHitbox::handleCollision(CollisionInfo<MoveableEntity> &collisionInfo) {
 	for (auto &hitbox : hitboxes) {
-		hitbox->handleCollision(receiver, moving);
+		collisionInfo.receivingEntityHitbox = hitbox.get();
+		hitbox->handleCollision(collisionInfo);
 	}
 }
 
-void MultiHitbox::handleCollision(CollidableEntity *receiverEntity, Prop *prop) {
+void MultiHitbox::handleCollision(CollisionInfo<Prop> &collisionInfo) {
 	for (auto &hitbox : hitboxes) {
-		hitbox->handleCollision(receiverEntity, prop);
+		collisionInfo.receivingEntityHitbox = hitbox.get();
+		hitbox->handleCollision(collisionInfo);
 	}
 }
 

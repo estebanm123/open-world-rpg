@@ -19,16 +19,21 @@ bool areVectorsInASharedQuadrant(const sf::Vector2f &a, const sf::Vector2f &b) {
 
 static Random<> random{1};
 
-void BlockingPhysics::applyPhysics(CollidableEntity *receivingEntity, MoveableEntity *other) {
+void BlockingPhysics::applyPhysics(CollisionInfo<MoveableEntity> &collisionInfo) {
+	const auto other = collisionInfo.otherEntity;
 	const auto curPos = other->getPosition();
 	const auto savedMoveOffset = other->getLastMoveOffset();
 	const auto prevPos = curPos - savedMoveOffset;
 	other->revertLastMove(true, true);
 
+
 	// get each side of receiver
-	// find intersecting side with MoveDir
-	//
-	//
+	// find intersecting side with MoveDir, if there is none return immediately
+	// based on side's pos to others, check if MoveDir's angle is within proper range for that side
+
+
+
+
 
 //	other->setPosition({prevPos.x, curPos.y});
 //	if (EntityCollisionHandler::areEntitiesColliding(receivingEntity, other)) {
@@ -46,7 +51,7 @@ void BlockingPhysics::applyPhysics(CollidableEntity *receivingEntity, MoveableEn
 	//		// what about the case where x + y are equal (ie. we're moving in a pure diagonal way)
 	//	}
 
-	CollisionPhysics::applyPhysics(receivingEntity, other);
+	CollisionPhysics::applyPhysics(collisionInfo);
 }
 
 bool BlockingPhysics::isBlocking() const { return true; }

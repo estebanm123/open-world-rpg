@@ -9,7 +9,7 @@ public:
 
 	bool isBlocking() const override;
 
-	void applyPhysics(CollidableEntity *receivingEntity, MoveableEntity *other) override;
+	void applyPhysics(CollisionInfo<MoveableEntity>& collisionInfo) override;
 private:
 	bool collisionAnalysisEnabled;
 };
