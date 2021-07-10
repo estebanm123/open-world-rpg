@@ -58,7 +58,7 @@ sf::Vector2f MoveableEntity::getMoveOffset() { return moveDirection * speed; }
 
 void MoveableEntity::setMoveDirection(const sf::Vector2f &direction) {
 	moveDirection = direction;
-	if (direction.x != 0 && direction.y != 0) normalize(moveDirection);
+	if (direction.x != 0 && direction.y != 0) normalizeRef(moveDirection);
 }
 
 sf::Vector2f MoveableEntity::getMoveDirection() const { return moveDirection; }

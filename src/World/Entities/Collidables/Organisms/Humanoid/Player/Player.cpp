@@ -15,4 +15,3 @@ void Player::handleInput(sf::RenderWindow &window) { inputManager.handleInput(wi
 
 void Player::accept(EntityVisitor *visitor) { visitor->visit(this); }
 
-constexpr float DIAGONAL_SPEED_MULTIPLIER = 0.707f;

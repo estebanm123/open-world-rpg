@@ -76,7 +76,7 @@ private:
 		auto maxReceivingLength = std::max(receivingSize.x, receivingSize.y);
 
 		auto vecBetweenEntities = sf::Vector2f{otherPos - receivingPos};
-		normalize(vecBetweenEntities);
+		normalizeRef(vecBetweenEntities);
 		auto newPointVec = sf::Vector2f{vecBetweenEntities.y, -vecBetweenEntities.x};
 		auto length = maxOtherLength + maxReceivingLength / 2.f;
 		auto newPoint = otherPos + newPointVec * length;

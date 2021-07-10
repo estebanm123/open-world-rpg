@@ -3,7 +3,7 @@
 
 class Player : public Humanoid {
 public:
-	constexpr static float INITIAL_SPEED = 180;
+	constexpr static float INITIAL_SPEED = 50;
 
 	explicit Player(const sf::Vector2f &globalPosition);
 

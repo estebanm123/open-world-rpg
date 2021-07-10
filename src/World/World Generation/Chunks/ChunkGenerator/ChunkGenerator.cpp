@@ -92,7 +92,7 @@ void ChunkGenerator::generateChunk(const Chunk::RequestData &data) {
 
 	mainPropGenerator.generateEntities(chunkPtr);
 	decorPropGenerator.generateEntities(chunkPtr);
-	beastGenerator.generateEntities(chunkPtr);
+//	beastGenerator.generateEntities(chunkPtr);
 
 
 	enqueueNewChunk(std::move(chunk));
