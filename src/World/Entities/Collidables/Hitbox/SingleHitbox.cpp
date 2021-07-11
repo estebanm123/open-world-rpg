@@ -13,6 +13,8 @@ void SingleHitbox::handleCollision(CollisionInfo<Prop>&collisionInfo) {
 	physics->applyPhysics(collisionInfo);
 }
 
+float SingleHitbox::getRotation() const { bounds.getRotation(); }
+
 void SingleHitbox::setRotation(float angle) { bounds.setRotation(angle); }
 
 void SingleHitbox::rotate(float angle) { bounds.rotate(angle); }

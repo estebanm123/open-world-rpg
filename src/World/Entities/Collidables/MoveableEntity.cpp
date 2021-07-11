@@ -75,3 +75,6 @@ void MoveableEntity::setSurfaceEffectGenerator(std::unique_ptr<SurfaceEffectGene
 void MoveableEntity::setLastMoveOffset(sf::Vector2f lastMoveOffsetOverride) {
 	lastMoveOffset = lastMoveOffsetOverride;
 }
+void MoveableEntity::addDebugLine(sf::Vertex *line) {
+	debugLines.push_back(line);
+}

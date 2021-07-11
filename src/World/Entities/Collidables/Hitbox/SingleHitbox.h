@@ -22,6 +22,8 @@ public:
 
 	void handleCollision(CollisionInfo<Prop>&collisionInfo) override;
 
+	float getRotation() const;
+
 	void setRotation(float angle) override;
 
 	void rotate(float angle) override;

@@ -50,10 +50,20 @@ public:
 
 	~MoveableEntity() override = default;
 
+#ifdef DEBUG
+	void addDebugLine(sf::Vertex line[]);
+#endif
+
+
+
 protected:
 	virtual sf::Vector2f getMoveOffset();
 	float speed;
 	sf::Vector2f moveDirection;
+
+#ifdef DEBUG
+	std::vector<sf::Vertex*> debugLines;
+#endif
 
 private:
 	sf::Vector2f lastMoveOffset;					// offset in dir of last move

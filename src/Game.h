@@ -30,7 +30,7 @@ public:
     template<typename T, typename... Args>
     void changeState(Args &&... args);
 
-    sf::RenderWindow &getWindow();
+    static sf::RenderWindow &getWindow();
 
 private:
     void handleEvent();
@@ -39,7 +39,7 @@ private:
 
     StateBase &getCurrentState();
 
-    sf::RenderWindow window;
+    static sf::RenderWindow window;
     std::vector<std::unique_ptr<StateBase>> states;
 
 

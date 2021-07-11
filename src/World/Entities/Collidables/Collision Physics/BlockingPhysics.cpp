@@ -4,6 +4,7 @@
 
 #include <iostream>
 
+#include "../../../../Game.h"
 #include "../../../../Util/MathExtra.h"
 #include "../../../../Util/Shapes/ConvexShapeExtra.h"
 #include "../Hitbox/EntityCollisionHandler.h"
@@ -25,33 +26,57 @@ static Random<> random{1};
 void BlockingPhysics::applyPhysics(CollisionInfo<MoveableEntity> &collisionInfo) {
 	const auto other = collisionInfo.otherEntity;
 	const auto otherPos = collisionInfo.otherEntity->getPosition();
+	const auto receiver = collisionInfo.receivingEntity;
+	const auto receiverPos = receiver->getPosition();
 	//	const auto savedMoveOffset = other->getLastMoveOffset();
 	//	const auto prevPos = otherPos - savedMoveOffset;
 	//	other->revertLastMove(true, true);
 
 	// assumes hitbox is a quad
 	const auto otherHitbox = collisionInfo.otherEntityHitbox;
+	const auto receiverHitbox = collisionInfo.receivingEntityHitbox;
 
-	const auto moveDir = other->getMoveDirection();
-	if (moveDir.x == 0 && moveDir.y == 0) return;
+	auto moveDirCopy{other->getMoveDirection()};
+	if (moveDirCopy.x == 0 && moveDirCopy.y == 0) return;
 
-	const auto receivingEntitySides =
-	 ConvexShapeExtra::getGlobalEdges(collisionInfo.receivingEntityHitbox->getBounds());
+	const auto resetAngle = -receiverHitbox->getRotation();
+	//	collisionInfo.receivingEntity->rotate(resetAngle);
+	auto rotatedOtherPos = rotateVecAroundPoint(otherPos, receiverPos, resetAngle);
+	auto rotatedOtherMoveDir =
+	 rotateVecAroundPoint(otherPos + (moveDirCopy * 50.f), receiverPos, resetAngle);
 
-	GlobalEdge closestEdge;	 // placeholder
-	float minDist = INT_MAX;
+	auto &renderTarget = Game::getWindow();
+	sf::Vertex debugline[] = {sf::Vertex(rotatedOtherPos, sf::Color::Red), sf::Vertex(rotatedOtherMoveDir, sf::Color::Red)};
+	//	renderTarget.draw(debugline, 2, sf::Lines);
 
-	for (auto &edge : receivingEntitySides) {
-		auto newDist = std::min(minDist, minDistPointToLineSquared(otherPos, edge));
-		if (minDist > newDist) {
-			minDist = newDist;
-			closestEdge = edge;
-		}
-	}
+	other->addDebugLine(debugline);
+	auto tempMoveDir = normalize(rotatedOtherMoveDir - rotatedOtherPos);
+	if ((rotatedOtherPos.x > receiverPos.x && isNegative(tempMoveDir.x)) ||
+		(rotatedOtherPos.x < receiverPos.x && isPositive(tempMoveDir.x)))
+		other->revertLastMove(true, false);
+	if ((rotatedOtherPos.y > receiverPos.y && isNegative(tempMoveDir.y)) ||
+		(rotatedOtherPos.y < receiverPos.y && isPositive(tempMoveDir.y)))
+		other->revertLastMove(false, true);
 
-	auto sideVec = closestEdge.vertexB - closestEdge.vertexA;
-	auto angle = toDegrees(angleBetweenTwoVectorsRad(moveDir, normalize(sideVec)));
-	std::cout << "angle: " << angle << "\n";
+
+
+	//	 const auto receivingEntitySides =
+	//	 ConvexShapeExtra::getGlobalEdges(collisionInfo.receivingEntityHitbox->getBounds());
+	//
+	//	GlobalEdge closestEdge;	 // placeholder
+	//	float minDist = INT_MAX;
+	//
+	//	for (auto &edge : receivingEntitySides) {
+	//		auto newDist = std::min(minDist, minDistPointToLineSquared(otherPos, edge));
+	//		if (minDist > newDist) {
+	//			minDist = newDist;
+	//			closestEdge = edge;
+	//		}
+	//	}
+	//
+	//	auto sideVec = closestEdge.vertexB - closestEdge.vertexA;
+	//	auto angle = toDegrees(angleBetweenTwoVectorsRad(moveDir, normalize(sideVec)));
+	//	std::cout << "angle: " << angle << "\n";
 
 
 	// make other move in dir parallel to sideVec in diagonal cases where 1 dir goes straight through receiver
